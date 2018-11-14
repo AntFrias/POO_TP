@@ -115,7 +115,22 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="funcoes.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Mar.cpp" />
+    <ClCompile Include="Mundo.cpp" />
+    <ClCompile Include="Porto.cpp" />
+    <ClCompile Include="Terra.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="funcoes.h" />
+    <ClInclude Include="Mar.h" />
+    <ClInclude Include="Mundo.h" />
+    <ClInclude Include="Porto.h" />
+    <ClInclude Include="Terra.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="configIni.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
