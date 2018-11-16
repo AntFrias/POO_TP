@@ -7,7 +7,7 @@
 
 class Mundo {
 
-	Mar *mar;
+	Mar *mar; // vector <Mar *> mar;
 	Terra *terra;
 	Porto *porto;
 
