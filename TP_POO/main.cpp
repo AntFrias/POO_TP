@@ -19,7 +19,7 @@
 
 using namespace std;
 
-Mundo carregaMundo(vector <Mar> &mar, vector <Terra> &terra, vector <Porto> &porto) {
+Mundo carregaMundo(Mundo &mundo) {
 
 	Mundo mundo;
 
@@ -145,7 +145,7 @@ int main() {
 	vector <Terra> terra;
 	vector <Porto> porto;
 	
-	mundo = carregaMundo(mar,terra,porto);
+	carregaMundo(mundo);
 
 	for (unsigned int i=0; i < terra.size(); i++) {
 
