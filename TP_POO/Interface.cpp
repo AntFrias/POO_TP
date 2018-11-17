@@ -23,10 +23,10 @@ void Interface::start(){
 }
 void Interface::mostraMapa() {
 
-	vector < Mar > aux = mundo.getVetorMar();
+	const vector <const Mar *>  aux = mundo.getVetorMar();
 	
 	for (unsigned int i = 0; i < aux.size(); i++) {
-		int x = aux[i].getX();
+		 int x = aux[i].getX();
 		//int y = mar.getY();
 	}
 }
