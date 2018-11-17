@@ -1,12 +1,13 @@
 #ifndef TERRA_H
 #define TERRA_H
+using namespace std;
 class Terra {
 
 	char t;
 	int x, y;
 
 public:
-	Terra(int x, int y, char t);
+	Terra(int x, int y, char t='+');
 	char getT();
 	int getX();
 	int getY();

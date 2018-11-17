@@ -1,50 +1,36 @@
 #ifndef MUNDO_H
 #define MUNDO_H
+#include <iostream>
+#include <fstream>
+#include <vector>
+#include <sstream>
+#include <string>
+
 #include "Mar.h"
 #include "Terra.h"
 #include "Porto.h"
 #include <vector>
 
+using namespace std;
+
 class Mundo {
 
-	Mar *mar;
-	Terra *terra;
-	Porto *porto;
 
-	int linhas, colunas;
-	int moedas;
-	int probPirata;
-	int precoNavio;
-	int precoSoldado;
-	int precoVendePeixe;
-	int precoCompraMercadoria;
-	int precoVendaMercadoria;
-	int soldadosPorto;
-	int probVento;
-	int probTempestade;
-	int probSereias;
-	int probCalmaria;
-	int probMotin;
+	vector<Mar*> mar; 
+	vector<Terra*> terra;
+	vector<Porto*> porto;
+
 
 public:
 	Mundo();
-	Mundo(int linhas, int colunas,
-		int moedas,
-		int probPirata,
-		int precoNavio,
-		int precoSoldado,
-		int precoVendePeixe,
-		int precoCompraMercadoria,
-		int precoVendaMercadoria,
-		int soldadosPorto,
-		int probVento,
-		int probTempestade,
-		int probSereias,
-		int probCalmaria,
-		int probMotin,
-		Mar &m,
-		Terra &t,
-		Porto &p);
+	void criaCelulaMar(int x,int y);
+
+	void criaCelulaTerra(int x, int y);
+
+	void criaCelulaPorto(int x, int y,char t);
+
+	const vector < const Mar *> getVetorMar() const;
+
 
 	~Mundo();
 };

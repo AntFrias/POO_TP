@@ -27,10 +27,13 @@
     <ClCompile Include="Terra.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="funcoes.cpp">
+    <ClCompile Include="Porto.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Porto.cpp">
+    <ClCompile Include="Interface.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Consola.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -44,10 +47,13 @@
     <ClInclude Include="Terra.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="funcoes.h">
+    <ClInclude Include="Porto.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Porto.h">
+    <ClInclude Include="Interface.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Consola.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

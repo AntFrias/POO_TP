@@ -1,5 +1,6 @@
 #ifndef MAR_H
 #define MAR_H
+using namespace std;
 class Mar {
 
 	char t;
@@ -8,11 +9,15 @@ class Mar {
 
 
 public:
-	Mar();
 	Mar(int x,int y, char t='.');
 
-	char getTipo();
+	const int getX()const ;
 
+	const int getY() const;
+
+	const char getChar() const;
+
+	Mar & getMar();
 
 	~Mar();
 };
