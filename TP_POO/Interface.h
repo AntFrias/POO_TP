@@ -36,7 +36,10 @@ class Interface
 
 public:
 	Interface();
-
+	void mostraLegAndConfig();
+	void mostraMar();
+	void mostraTerra();
+	void mostraPortos();
 	void start();
 	void mostraMapa();
 	void carregaFich();

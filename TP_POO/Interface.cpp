@@ -5,18 +5,55 @@ using namespace std;
 
 Interface::Interface(){}
 
-void Interface::start(){
+void Interface::mostraLegAndConfig() {
 
-	carregaFich();
-	mostraMapa();
+	Consola::gotoxy(25, 0);
+	cout << "Legenda do Mapa";
+
+	Consola::gotoxy(25, 2);
+	cout << "\tMar -> .";
+
+	Consola::gotoxy(25, 3);
+	cout << "\tTerra -> +";
+
+	Consola::gotoxy(25, 4);
+	cout << "\tPortos -> A-Z Amigos";
+
+	Consola::gotoxy(25, 5);
+	cout << "\tPortos -> a-z Inimigos";
+
+	Consola::gotoxy(60, 0);
+	cout << "Moedas: " << this->moedas;
+	Consola::gotoxy(60, 1);
+	cout << "Probalidade Pirata " << this->probPirata;
+	Consola::gotoxy(60, 2);
+	cout << "Preco Navio " << this->precoNavio;
+	Consola::gotoxy(60, 3);
+	cout << "Preco Soldado " << this->precoSoldado;
+	Consola::gotoxy(60, 4);
+	cout << "Preco Vende Peixe " << this->precoVendePeixe;
+	Consola::gotoxy(60, 5);
+	cout << "Preco Compra Mercadoria " << this->precoCompraMercadoria;
+	Consola::gotoxy(60, 6);
+	cout << "Preco Vende Mercadoria " << this->precoVendaMercadoria;
+	Consola::gotoxy(60, 7);
+	cout << "Soldados Porto " << this->soldadosPorto;
+	Consola::gotoxy(60, 8);
+	cout << "Probabilidade Vento " << this->probVento;
+	Consola::gotoxy(60, 9);
+	cout << "Probabilidade Tempestade " << this->probTempestade;
+	Consola::gotoxy(60, 10);
+	cout << "Probabilidade Sereias " << this->probSereias;
+	Consola::gotoxy(60, 11);
+	cout << "Probabilidade Calmaria " << this->probCalmaria;
+	Consola::gotoxy(60, 12);
+	cout << "Probabilidade Motin " << this->probMotin;
 
 }
-void Interface::mostraMapa() {
-
-	const vector <const Mar *>  auxMar = mundo.getVetorMar();
-	const vector <const Terra *>  auxTerra = mundo.getVetorTerra();
-	const vector <const Porto *>  auxPorto = mundo.getVetorPorto();
+void Interface::mostraMar() {
 	
+	const vector <const Mar *>  auxMar = mundo.getVetorMar();
+
 	for (unsigned int i = 0; i < auxMar.size(); i++) {
 		unsigned int x = auxMar[i]->getX();
 		unsigned int y = auxMar[i]->getY();
@@ -24,6 +61,12 @@ void Interface::mostraMapa() {
 		Consola::gotoxy(x, y);
 		cout << auxMar[i]->getChar();
 	}
+
+}
+void Interface::mostraTerra() {
+
+	const vector <const Terra *>  auxTerra = mundo.getVetorTerra();
+
 	for (unsigned int i = 0; i < auxTerra.size(); i++) {
 		unsigned int x = auxTerra[i]->getX();
 		unsigned int y = auxTerra[i]->getY();
@@ -31,6 +74,11 @@ void Interface::mostraMapa() {
 		Consola::gotoxy(x, y);
 		cout << auxTerra[i]->getChar();
 	}
+}
+void Interface::mostraPortos() {
+
+	const vector <const Porto *>  auxPorto = mundo.getVetorPorto();
+
 	for (unsigned int i = 0; i < auxPorto.size(); i++) {
 		unsigned int x = auxPorto[i]->getX();
 		unsigned int y = auxPorto[i]->getY();
@@ -39,6 +87,21 @@ void Interface::mostraMapa() {
 		cout << auxPorto[i]->getChar();
 	}
 }
+
+void Interface::start(){
+
+	carregaFich();
+	mostraMapa();
+
+}
+void Interface::mostraMapa() {
+
+	mostraMar();
+	mostraTerra();
+	mostraPortos();
+	mostraLegAndConfig();
+};
+
 void Interface::carregaFich() {
 	
 	fstream fp;
@@ -62,29 +125,29 @@ void Interface::carregaFich() {
 				this->colunas = inteiro;
 			else if (linha == "moedas")
 				this->moedas = inteiro;
-			else if (linha == "probPirata")
+			else if (linha == "probpirata")
 				this->probPirata = inteiro;
-			else if (linha == "precoNavio")
+			else if (linha == "preconavio")
 				this->precoNavio = inteiro;
-			else if (linha == "precoSoldado")
+			else if (linha == "precosoldado")
 				this->precoSoldado = inteiro;
-			else if (linha == "precoVendePeixe")
+			else if (linha == "precovendpeixe")
 				this->precoVendePeixe = inteiro;
-			else if (linha == "precoCompraMercadoria")
+			else if (linha == "precocompmercad")
 				this->precoCompraMercadoria = inteiro;
-			else if (linha == "precoVendaMercadoria")
+			else if (linha == "precovendmercad")
 				this->precoVendaMercadoria = inteiro;
-			else if (linha == "soldadosPorto")
+			else if (linha == "soldadosporto")
 				this->soldadosPorto = inteiro;
-			else if (linha == "probVento")
+			else if (linha == "probevento")
 				this->probVento = inteiro;
-			else if (linha == "probTempestade")
+			else if (linha == "probtempestade")
 				this->probTempestade = inteiro;
-			else if (linha == "probSereias")
+			else if (linha == "probsereias")
 				this->probSereias = inteiro;
-			else if (linha == "probCalmaria")
+			else if (linha == "probcalmaria")
 				this->probCalmaria = inteiro;
-			else if (linha == "probMotin")
+			else if (linha == "probmotin")
 				this->probMotin = inteiro;
 		}
 		else {
