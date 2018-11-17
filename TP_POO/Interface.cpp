@@ -1,14 +1,4 @@
-#include <iostream>
-#include <fstream>
-#include <vector>
-#include <sstream>
-#include <string>
-
-
 #include "Interface.h"
-
-
-#define configInit "configIni.txt"
 
 using namespace std;
 
@@ -26,8 +16,11 @@ void Interface::mostraMapa() {
 	const vector <const Mar *>  aux = mundo.getVetorMar();
 	
 	for (unsigned int i = 0; i < aux.size(); i++) {
-		 int x = aux[i].getX();
-		//int y = mar.getY();
+		unsigned int x = aux[i]->getX();
+		unsigned int y = aux[i]->getY();
+
+		Consola::gotoxy(x, y);
+		cout << aux[i]->getChar();
 	}
 }
 void Interface::carregaFich() {
@@ -44,8 +37,6 @@ void Interface::carregaFich() {
 	while (getline(fp, linha)) {
 
 		istringstream buffer(linha);
-
-
 
 		if (buffer >> linha && buffer >> inteiro) {
 

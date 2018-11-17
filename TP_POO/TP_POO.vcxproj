@@ -116,7 +116,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Consola.cpp" />
-    <ClCompile Include="funcoes.cpp" />
     <ClCompile Include="Interface.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Mar.cpp" />
@@ -126,7 +125,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Consola.h" />
-    <ClInclude Include="funcoes.h" />
     <ClInclude Include="Interface.h" />
     <ClInclude Include="Mar.h" />
     <ClInclude Include="Mundo.h" />

@@ -1,8 +1,16 @@
 #ifndef INTERFACE_H
 #define INTERFACE_H
-#include "Mundo.h"
+#include <iostream>
+#include <fstream>
 #include <vector>
+#include <sstream>
+#include <string>
 
+#include "Mundo.h"
+#include "Consola.h"
+
+using namespace std;
+#define configInit "configIni.txt"
 
 
 class Interface
@@ -24,8 +32,7 @@ class Interface
 	int probCalmaria;
 	int probMotin;
 
-
-
+	
 
 public:
 	Interface();

@@ -22,10 +22,10 @@ void Mundo::criaCelulaPorto(int x, int y,char t)
 	this->porto.push_back(new Porto(x, y, t));
 
 }
-const vector < const Mar *> Mundo::getVetorMar() const { 
-	
-	return vector<const Mar *> (this->mar.begin() , this->mar.end()); 
 
+const vector<const Mar*> Mundo::getVetorMar() const
+{
+	return vector<const Mar *>(this->mar.begin(), this->mar.end());
 }
 
 

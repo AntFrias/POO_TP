@@ -27,9 +27,6 @@
     <ClCompile Include="Terra.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="funcoes.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Porto.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -48,9 +45,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Terra.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="funcoes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Porto.h">
