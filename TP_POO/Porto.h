@@ -1,6 +1,6 @@
 #ifndef PORTO_H
 #define PORTO_H
-
+using namespace std;
 class Porto {
 
 	char t;
