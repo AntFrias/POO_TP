@@ -6,7 +6,7 @@ class Terra {
 	int x, y;
 
 public:
-	Terra(int x, int y, char t);
+	Terra(int x, int y, char t='+');
 	char getT();
 	int getX();
 	int getY();
