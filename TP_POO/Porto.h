@@ -9,6 +9,10 @@ class Porto {
 
 public:
 	Porto(int x, int y, char t);
+	const int getX() const;
+	const int getY() const;
+	const char getChar() const;
+	Porto & getPorto();
 	~Porto();
 };
 

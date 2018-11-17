@@ -10,6 +10,7 @@ c:\users\jpsd\source\repos\poo_tp\tp_poo\debug\consola.obj
 c:\users\jpsd\source\repos\poo_tp\debug\tp_poo.ilk
 c:\users\jpsd\source\repos\poo_tp\debug\tp_poo.exe
 c:\users\jpsd\source\repos\poo_tp\debug\tp_poo.pdb
+<<<<<<< HEAD
 c:\users\frias\github\poo_tp\tp_poo\debug\consola.obj
 c:\users\frias\github\poo_tp\tp_poo\debug\funcoes.obj
 c:\users\frias\github\poo_tp\tp_poo\debug\interface.obj
@@ -29,3 +30,11 @@ c:\users\frias\github\poo_tp\tp_poo\debug\tp_poo.tlog\cl.write.1.tlog
 c:\users\frias\github\poo_tp\tp_poo\debug\tp_poo.tlog\link.command.1.tlog
 c:\users\frias\github\poo_tp\tp_poo\debug\tp_poo.tlog\link.read.1.tlog
 c:\users\frias\github\poo_tp\tp_poo\debug\tp_poo.tlog\link.write.1.tlog
+=======
+c:\users\jpsd\source\repos\poo_tp\tp_poo\debug\tp_poo.tlog\cl.command.1.tlog
+c:\users\jpsd\source\repos\poo_tp\tp_poo\debug\tp_poo.tlog\cl.read.1.tlog
+c:\users\jpsd\source\repos\poo_tp\tp_poo\debug\tp_poo.tlog\cl.write.1.tlog
+c:\users\jpsd\source\repos\poo_tp\tp_poo\debug\tp_poo.tlog\link.command.1.tlog
+c:\users\jpsd\source\repos\poo_tp\tp_poo\debug\tp_poo.tlog\link.read.1.tlog
+c:\users\jpsd\source\repos\poo_tp\tp_poo\debug\tp_poo.tlog\link.write.1.tlog
+>>>>>>> master
