@@ -28,6 +28,16 @@ const vector<const Mar*> Mundo::getVetorMar() const
 	return vector<const Mar *>(this->mar.begin(), this->mar.end());
 }
 
+const vector<const Terra*> Mundo::getVetorTerra() const
+{
+	return vector<const Terra *>(this->terra.begin(), this->terra.end());
+}
+
+const vector<const Porto*> Mundo::getVetorPorto() const
+{
+	return vector<const Porto *>(this->porto.begin(), this->porto.end());
+}
+
 
 Mundo::~Mundo()
 {

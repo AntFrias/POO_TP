@@ -31,6 +31,10 @@ public:
 
 	const vector < const Mar *> getVetorMar() const;
 
+	const vector<const Terra*> getVetorTerra() const;
+
+	const vector<const Porto*> getVetorPorto() const;
+
 
 	~Mundo();
 };
