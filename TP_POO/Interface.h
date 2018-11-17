@@ -11,7 +11,32 @@
 
 using namespace std;
 #define configInit "configIni.txt"
+#define FICHEIROCONFIGERROR 1 
 
+enum IndiceComandos {
+
+	com_config = 1,
+	com_exec,
+	com_prox,
+	com_compranav,
+	com_vendenav,
+	com_lista,
+	com_compra,
+	com_vende,
+	com_move,
+	com_auto,
+	com_stop,
+	com_pirata,
+	com_evpos,
+	com_evnav,
+	com_moedas,
+	com_vaipara,
+	com_comprasold,
+	com_saveg,
+	com_loadg,
+	com_delg,
+	com_sair
+};
 
 class Interface
 {
@@ -36,10 +61,15 @@ class Interface
 
 public:
 	Interface();
-
+	int FiltaComandos(string acao);
+	void Prompt();
+	void mostraLegAndConfig();
+	void mostraMar();
+	void mostraTerra();
+	void mostraPortos();
 	void start();
 	void mostraMapa();
-	void carregaFich();
+	int carregaFich(string configFile);
 
 	~Interface();
 };
