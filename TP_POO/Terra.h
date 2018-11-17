@@ -1,5 +1,6 @@
 #ifndef TERRA_H
 #define TERRA_H
+using namespace std;
 class Terra {
 
 	char t;

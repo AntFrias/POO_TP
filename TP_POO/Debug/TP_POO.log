@@ -1,9 +1,2 @@
-﻿  Mar.cpp
-  Mundo.cpp
-  Porto.cpp
-  Terra.cpp
-  funcoes.cpp
-  main.cpp
-  Generating Code...
-  LINK : C:\Users\jpsd\Source\Repos\POO_TP\Debug\TP_POO.exe not found or not built by the last incremental link; performing full link
+﻿  Interface.cpp
   TP_POO.vcxproj -> C:\Users\jpsd\Source\Repos\POO_TP\Debug\TP_POO.exe
