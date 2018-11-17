@@ -8,19 +8,20 @@ Terra::Terra(int x, int y, char t)
 	this->y = y;
 }
 
-char Terra::getT()
-{
+const char Terra::getChar()const{
 	return this->t;
 }
 
-int Terra::getX()
-{
+const int Terra::getX()const{
 	return this->x;
 }
 
-int Terra::getY() {
+const int Terra::getY()const{
 
 	return this->y;
+}
+Terra & Terra::getTerra(){
+	return *this;
 }
 
 Terra::~Terra()

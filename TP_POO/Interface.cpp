@@ -13,14 +13,30 @@ void Interface::start(){
 }
 void Interface::mostraMapa() {
 
-	const vector <const Mar *>  aux = mundo.getVetorMar();
+	const vector <const Mar *>  auxMar = mundo.getVetorMar();
+	const vector <const Terra *>  auxTerra = mundo.getVetorTerra();
+	const vector <const Porto *>  auxPorto = mundo.getVetorPorto();
 	
-	for (unsigned int i = 0; i < aux.size(); i++) {
-		unsigned int x = aux[i]->getX();
-		unsigned int y = aux[i]->getY();
+	for (unsigned int i = 0; i < auxMar.size(); i++) {
+		unsigned int x = auxMar[i]->getX();
+		unsigned int y = auxMar[i]->getY();
 
 		Consola::gotoxy(x, y);
-		cout << aux[i]->getChar();
+		cout << auxMar[i]->getChar();
+	}
+	for (unsigned int i = 0; i < auxTerra.size(); i++) {
+		unsigned int x = auxTerra[i]->getX();
+		unsigned int y = auxTerra[i]->getY();
+
+		Consola::gotoxy(x, y);
+		cout << auxTerra[i]->getChar();
+	}
+	for (unsigned int i = 0; i < auxPorto.size(); i++) {
+		unsigned int x = auxPorto[i]->getX();
+		unsigned int y = auxPorto[i]->getY();
+
+		Consola::gotoxy(x, y);
+		cout << auxPorto[i]->getChar();
 	}
 }
 void Interface::carregaFich() {
@@ -76,15 +92,15 @@ void Interface::carregaFich() {
 			for (int i = 0; i < this->colunas; i++) {
 				if (linha[i] == '.') {
 					
-					this->mundo.criaCelulaMar(contaLinhas,i);
+					this->mundo.criaCelulaMar(i,contaLinhas);
 				}
 				if (linha[i] == '+') {
 
-					this->mundo.criaCelulaTerra(contaLinhas, i);
+					this->mundo.criaCelulaTerra(i,contaLinhas);
 				}
 				if (linha[i] >= 'A' && linha[i] <= 'Z' || linha[i] >= 'a' && linha[i] <= 'z') {
 					
-					this->mundo.criaCelulaPorto(contaLinhas, i,linha[i]);
+					this->mundo.criaCelulaPorto(i,contaLinhas,linha[i]);
 
 				}
 			}

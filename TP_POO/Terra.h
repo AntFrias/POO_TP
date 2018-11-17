@@ -8,9 +8,10 @@ class Terra {
 
 public:
 	Terra(int x, int y, char t='+');
-	char getT();
-	int getX();
-	int getY();
+	const char getChar()const;
+	const int getX()const;
+	const int getY()const;
+	Terra & getTerra();
 	~Terra();
 };
 
