@@ -5,16 +5,149 @@ using namespace std;
 
 Interface::Interface(){}
 
+int Interface::FiltaComandos(string acao) {
+
+	vector< string > comandos = { "config", "exec","prox", "compranav", "vendenav", "lista", "compra", "vende", "move", "auto", "stop", "pirata","evpos","evnav",
+								  "moedas","vaipara", "comprasold", "saveg", "loadg", "delg", "sair" };
+
+	for (unsigned int i = 0; i < comandos.size(); i++) {
+		if (comandos[i].compare(acao) == 0)
+			return i + 1;
+	}
+	return 0;
+}
+
+void Interface::Prompt() {
+
+	string linha, acao,configFile;
+	int flag = 0;
+
+	do {
+		Consola::VERDE;
+		Consola::gotoxy(0, 16);
+		cout << "Comando: ";
+		getline(cin, linha);
+
+		istringstream buffer(linha);
+
+		if (buffer >> acao) {
+
+			switch (FiltaComandos(acao)) {
+
+			case com_config:
+				// falta testar os parametros
+				
+				if (buffer >> configFile and flag == 0) {
+
+						flag=carregaFich(configFile);
+						
+						Consola::gotoxy(0, 16);
+						
+						if (flag == 0) {
+							cout << "[ Ficheiro Passado pelo comando carregado com sucesso]" << endl;
+						}
+						else
+							cout << "[ Ficheiro Passado pelo comando Nao existe  --- Ficheiro por default carregado com sucesso]" << endl;
+				flag = 2;
+				}else
+					if(flag==1)
+						cout << "[ SINTAXE DE COMANDO ERRADA -> config < Nome do Ficheiro > ]" << endl;
+					else
+						cout << "Configuraçoes já foram carregadas --- Introduza outro comando" << endl;
+				break;
+			case com_exec:
+				cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
+				break;
+			case com_prox:
+				cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
+				break;
+			case com_compranav:
+				cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
+				break;
+			case com_vendenav:
+				cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
+				break;
+			case com_lista:
+				cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
+				break;
+			case com_compra:
+				cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
+				break;
+			case com_vende:
+				cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
+				break;
+			case com_move:
+				cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
+				break;
+			case com_auto:
+				cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
+				break;
+			case com_stop:
+				cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
+				break;
+			case com_pirata:
+				cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
+				break;
+			case com_evpos:
+				cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
+				break;
+			case com_evnav:
+				cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
+				break;
+			case com_moedas:
+				cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
+				break;
+			case com_vaipara:
+				//este comando tem overload devido aos parametros vaipara <N> <x> <y> e vai para <N> <P>
+				cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
+				break;
+			case com_comprasold:
+				cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
+				break;
+			case com_saveg:
+				cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
+				break;
+			case com_loadg:
+				cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
+				break;
+			case com_delg:
+				cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
+				break;
+			default:
+				if (acao != "sair")
+					cout << " [ ERRO ] Comando Incorreto..!" << endl;
+			}
+		}
+		// validar quantidade de parametros e validar sem parametros
+		// so config tb nao valida
+
+		
+		mostraMapa();
+		Consola::getch();
+		Consola::clrscr();
+		mostraMapa();
+	} while (linha != "sair");
+
+
+
+
+}
+
+
+
+
 void Interface::mostraLegAndConfig() {
+
+	Consola::setTextColor(Consola::BRANCO);
 
 	Consola::gotoxy(25, 0);
 	cout << "Legenda do Mapa";
 
 	Consola::gotoxy(25, 2);
-	cout << "\tMar -> .";
+	cout << "\tMar -> azul";
 
 	Consola::gotoxy(25, 3);
-	cout << "\tTerra -> +";
+	cout << "\tTerra -> amarelo";
 
 	Consola::gotoxy(25, 4);
 	cout << "\tPortos -> A-Z Amigos";
@@ -59,7 +192,8 @@ void Interface::mostraMar() {
 		unsigned int y = auxMar[i]->getY();
 
 		Consola::gotoxy(x, y);
-		cout << auxMar[i]->getChar();
+		Consola::setTextColor(Consola::AZUL_CLARO);
+		cout << char(254);
 	}
 
 }
@@ -72,7 +206,9 @@ void Interface::mostraTerra() {
 		unsigned int y = auxTerra[i]->getY();
 
 		Consola::gotoxy(x, y);
-		cout << auxTerra[i]->getChar();
+		Consola::setTextColor(Consola::AMARELO);
+		cout << char(254);
+		//cout << auxTerra[i]->getChar();
 	}
 }
 void Interface::mostraPortos() {
@@ -83,6 +219,20 @@ void Interface::mostraPortos() {
 		unsigned int x = auxPorto[i]->getX();
 		unsigned int y = auxPorto[i]->getY();
 
+	
+			if (auxPorto[i]->getChar() >= 'A' && auxPorto[i]->getChar() <= 'Z') {
+				
+				Consola::gotoxy(x, y);
+				Consola::setTextColor(Consola::VERDE_CLARO);
+				cout << char(254);
+	}
+			if (auxPorto[i]->getChar() >= 'a' && auxPorto[i]->getChar() <= 'z') {
+				Consola::gotoxy(x, y);
+				Consola::setTextColor(Consola::VERMELHO);
+				cout << char(254);
+			}
+
+
 		Consola::gotoxy(x, y);
 		cout << auxPorto[i]->getChar();
 	}
@@ -90,8 +240,11 @@ void Interface::mostraPortos() {
 
 void Interface::start(){
 
-	carregaFich();
-	mostraMapa();
+
+	Prompt();
+
+	//carregaFich();
+	//mostraMapa();
 
 }
 void Interface::mostraMapa() {
@@ -102,16 +255,25 @@ void Interface::mostraMapa() {
 	mostraLegAndConfig();
 };
 
-void Interface::carregaFich() {
+int Interface::carregaFich(string configFile) {
 	
 	fstream fp;
 
-	int inteiro, contaLinhas = 0;
+	int inteiro, contaLinhas = 0,flag = 0;
 	string linha;
 
 	if (!fp.is_open()) {
-		fp.open(configInit);
+		fp.open(configFile);
+		if (!fp.is_open()) {
+			fp.open(configInit);
+			if (!fp.is_open()) {
+				exit(-1);
+			}
+			flag = FICHEIROCONFIGERROR;
+		}
 	}
+	
+	
 
 	while (getline(fp, linha)) {
 
@@ -171,7 +333,7 @@ void Interface::carregaFich() {
 		}
 	}
 	fp.close();
-
+	return flag;
 }
 
 Interface::~Interface()

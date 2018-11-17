@@ -10,7 +10,6 @@ int main() {
 	Interface intDesc;
 
 	intDesc.start();
-	
-	cin.get();
+
 	return 0;
 }
