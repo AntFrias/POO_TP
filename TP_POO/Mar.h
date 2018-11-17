@@ -11,8 +11,11 @@ public:
 	Mar();
 	Mar(int x,int y, char t='.');
 
-	char getTipo();
+	int getX();
 
+	int getY();
+
+	Mar & getMar();
 
 	~Mar();
 };

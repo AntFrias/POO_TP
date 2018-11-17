@@ -3,42 +3,30 @@
 using namespace std;
 Mundo::Mundo() {
 
-};
-Mundo::Mundo(int linhas, int colunas,
-	int moedas,
-	int probPirata,
-	int precoNavio,
-	int precoSoldado,
-	int precoVendePeixe,
-	int precoCompraMercadoria,
-	int precoVendaMercadoria,
-	int soldadosPorto,
-	int probVento,
-	int probTempestade,
-	int probSereias,
-	int probCalmaria,
-	int probMotin,
-	Mar &m,
-	Terra &t,
-	Porto &p
-	) : mar(&m),terra(&t),porto(&p)
+}
+void Mundo::criaCelulaMar(int x, int y)
 {
-	this->moedas = moedas;
-		this->probPirata = probPirata;
-		this->precoNavio = precoNavio;
-		this->precoSoldado = precoSoldado;
-		this->precoVendePeixe = precoVendePeixe;
-		this->precoCompraMercadoria = precoCompraMercadoria;
-		this->precoVendaMercadoria = precoVendaMercadoria;
-		this->soldadosPorto = soldadosPorto;
-		this->probVento = probVento;
-		this->probTempestade = probTempestade;
-		this->probSereias = probSereias;
-		this->probCalmaria = probCalmaria;
-		this->probMotin = probMotin;
 
+	this->mar.push_back(new Mar(x,y));
 
-};
+}
+void Mundo::criaCelulaTerra(int x, int y)
+{
+
+	this->terra.push_back(new Terra(x, y));
+
+}
+void Mundo::criaCelulaPorto(int x, int y,char t)
+{
+
+	this->porto.push_back(new Porto(x, y, t));
+
+}
+const vector < const Mar *> Mundo::getVetorMar() const { 
+	
+	return vector<const Mar *> (this->mar.begin() , this->mar.end()); 
+
+}
 
 
 Mundo::~Mundo()

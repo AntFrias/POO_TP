@@ -12,11 +12,19 @@ Mar::Mar(int x,int y, char t)
 	this->x = x;
 	this->y = y;
 }
+int Mar::getX() {
 
-char Mar::getTipo()
-{
-	return this->t;
+	return this->x;
 }
+int Mar::getY() {
+
+	return this->y;
+}
+Mar & Mar::getMar()
+{
+	return *this;
+}
+
 
 
 Mar::~Mar()
