@@ -20,12 +20,40 @@ int Interface::FiltaComandos(string acao) {
 void Interface::Prompt() {
 
 	string linha, acao,configFile;
-	int flag = 0;
 
+	//iniciar a fase 1:
+
+	Consola::VERDE;
+
+	Consola::gotoxy(0, 16);
+
+	cout << "Comando: config ";
+
+	getline(cin, linha);
+
+	if (count(linha.begin(), linha.end(), ' ') == 0) {
+
+		if (carregaFich(linha)){
+			cout << "Ficheiro introduzido carregado com sucesso .. !" << endl;
+		}
+		else {
+			carregaFich(configInit);
+			cout << " [ Erro ao carregar ficheiro ] Ficheiro por default carregado com Sucesso.. !" << endl;
+
+		}
+	}
+	else {
+		carregaFich(configInit);
+		cout << " [ Erro ao carregar ficheiro ] Ficheiro por default carregado com Sucesso.. !" << endl;
+	}
+	//iniciar a fase 2:
 	do {
 		Consola::VERDE;
+
 		Consola::gotoxy(0, 16);
+		
 		cout << "Comando: ";
+		
 		getline(cin, linha);
 
 		istringstream buffer(linha);
@@ -34,27 +62,6 @@ void Interface::Prompt() {
 
 			switch (FiltaComandos(acao)) {
 
-			case com_config:
-				// falta testar os parametros
-				
-				if (buffer >> configFile and flag == 0) {
-
-						flag=carregaFich(configFile);
-						
-						Consola::gotoxy(0, 16);
-						
-						if (flag == 0) {
-							cout << "[ Ficheiro Passado pelo comando carregado com sucesso]" << endl;
-						}
-						else
-							cout << "[ Ficheiro Passado pelo comando Nao existe  --- Ficheiro por default carregado com sucesso]" << endl;
-				flag = 2;
-				}else
-					if(flag==1)
-						cout << "[ SINTAXE DE COMANDO ERRADA -> config < Nome do Ficheiro > ]" << endl;
-					else
-						cout << "Configuraçoes já foram carregadas --- Introduza outro comando" << endl;
-				break;
 			case com_exec:
 				cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
 				break;
@@ -127,10 +134,6 @@ void Interface::Prompt() {
 		Consola::clrscr();
 		mostraMapa();
 	} while (linha != "sair");
-
-
-
-
 }
 
 
@@ -255,26 +258,18 @@ void Interface::mostraMapa() {
 	mostraLegAndConfig();
 };
 
-int Interface::carregaFich(string configFile) {
+bool Interface::carregaFich(string configFile) {
 	
 	fstream fp;
 
 	int inteiro, contaLinhas = 0,flag = 0;
 	string linha;
 
-	if (!fp.is_open()) {
+	if (!fp.is_open()){
 		fp.open(configFile);
-		if (!fp.is_open()) {
-			fp.open(configInit);
-			if (!fp.is_open()) {
-				exit(-1);
-			}
-			flag = FICHEIROCONFIGERROR;
-		}
+		if (!fp.is_open())
+			return false;
 	}
-	
-	
-
 	while (getline(fp, linha)) {
 
 		istringstream buffer(linha);
@@ -333,7 +328,8 @@ int Interface::carregaFich(string configFile) {
 		}
 	}
 	fp.close();
-	return flag;
+
+	return true;
 }
 
 Interface::~Interface()
