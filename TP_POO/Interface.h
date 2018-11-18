@@ -69,7 +69,7 @@ public:
 	void mostraPortos();
 	void start();
 	void mostraMapa();
-	int carregaFich(string configFile);
+	bool carregaFich(string configfich);
 
 	~Interface();
 };
