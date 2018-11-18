@@ -61,5 +61,8 @@
     <Text Include="configIni.txt">
       <Filter>Resource Files</Filter>
     </Text>
+    <Text Include="dados.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
   </ItemGroup>
 </Project>
