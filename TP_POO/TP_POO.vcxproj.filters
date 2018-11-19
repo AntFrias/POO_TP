@@ -36,6 +36,12 @@
     <ClCompile Include="Consola.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Jogador.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Navios.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Mundo.h">
@@ -54,6 +60,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Consola.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Jogador.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Navios.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
