@@ -9,7 +9,7 @@
 #include "Mar.h"
 #include "Terra.h"
 #include "Porto.h"
-#include <vector>
+#include "Navios.h"
 
 using namespace std;
 
@@ -19,6 +19,7 @@ class Mundo {
 	vector<Mar*> mar; 
 	vector<Terra*> terra;
 	vector<Porto*> porto;
+	vector<Navios*> navios;
 
 
 public:

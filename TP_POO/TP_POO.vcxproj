@@ -117,17 +117,21 @@
   <ItemGroup>
     <ClCompile Include="Consola.cpp" />
     <ClCompile Include="Interface.cpp" />
+    <ClCompile Include="Jogador.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Mar.cpp" />
     <ClCompile Include="Mundo.cpp" />
+    <ClCompile Include="Navios.cpp" />
     <ClCompile Include="Porto.cpp" />
     <ClCompile Include="Terra.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Consola.h" />
     <ClInclude Include="Interface.h" />
+    <ClInclude Include="Jogador.h" />
     <ClInclude Include="Mar.h" />
     <ClInclude Include="Mundo.h" />
+    <ClInclude Include="Navios.h" />
     <ClInclude Include="Porto.h" />
     <ClInclude Include="Terra.h" />
   </ItemGroup>
