@@ -8,6 +8,7 @@
 
 #include "Mundo.h"
 #include "Consola.h"
+#include "Jogador.h"
 
 using namespace std;
 #define configInit "configIni.txt"
@@ -42,6 +43,8 @@ class Interface
 {
 	Mundo mundo;
 
+	Jogador jogador;
+
 	int linhas, colunas;
 	int moedas;
 	int probPirata;
@@ -62,6 +65,8 @@ class Interface
 public:
 	Interface();
 	int FiltaComandos(string acao);
+	void PromptFase1();
+	void PromptFase2();
 	void Prompt();
 	void mostraLegAndConfig();
 	void mostraMar();

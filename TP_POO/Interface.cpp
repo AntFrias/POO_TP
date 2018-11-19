@@ -3,7 +3,8 @@
 using namespace std;
 
 
-Interface::Interface(){}
+Interface::Interface(){
+}
 
 int Interface::FiltaComandos(string acao) {
 
@@ -15,6 +16,21 @@ int Interface::FiltaComandos(string acao) {
 			return i + 1;
 	}
 	return 0;
+}
+void Interface::PromptFase1() {
+
+
+
+
+
+}
+
+void Interface::PromptFase2() {
+
+
+
+
+
 }
 
 void Interface::Prompt() {
@@ -243,11 +259,8 @@ void Interface::mostraPortos() {
 
 void Interface::start(){
 
-
+	PromptFase1();
 	Prompt();
-
-	//carregaFich();
-	//mostraMapa();
 
 }
 void Interface::mostraMapa() {
