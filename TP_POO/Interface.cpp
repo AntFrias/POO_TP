@@ -14,6 +14,8 @@ void Interface::start() {
 // Metodo Prompt tem como objetivo tratar os comandos introduzidos pelo Jogador	
 void Interface::Prompt() {
 
+	char tipo = 'A';
+
 	string linha, acao, configFile;
 
 	Consola::VERDE;
@@ -31,6 +33,10 @@ void Interface::Prompt() {
 	______________________________________________________________________________________
 	*/
 	PromptFase1(linha);
+	//inicialização do jogador
+	jogador.setMoedas(moedas);
+	jogador.setPortoPrincipal(tipo);
+	//
 	/*
 	______________________________________________________________________________________
 
@@ -47,10 +53,7 @@ void Interface::Prompt() {
 
 		getline(cin, linha);
 
-		istringstream buffer(linha);
-
-		if (buffer >> acao)
-			PromptFase2(acao);
+		PromptFase2(linha);
 
 		mostraMapa();
 
@@ -61,6 +64,8 @@ void Interface::Prompt() {
 		mostraMapa();
 
 	} while (linha != "sair");
+
+
 }
 int Interface::FiltaComandos(string acao) {
 
@@ -164,73 +169,88 @@ bool Interface::carregaFich(string configFile) {
 
 	return true;
 }
-void Interface::PromptFase2(string acao) {
+void Interface::compraNavio(char tipo) {
 
-	switch (FiltaComandos(acao)) {
+	mundo.criaNavio();
 
-	case com_exec:
-		cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
-		break;
-	case com_prox:
-		cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
-		break;
-	case com_compranav:
-		cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
-		break;
-	case com_vendenav:
-		cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
-		break;
-	case com_lista:
-		cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
-		break;
-	case com_compra:
-		cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
-		break;
-	case com_vende:
-		cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
-		break;
-	case com_move:
-		cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
-		break;
-	case com_auto:
-		cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
-		break;
-	case com_stop:
-		cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
-		break;
-	case com_pirata:
-		cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
-		break;
-	case com_evpos:
-		cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
-		break;
-	case com_evnav:
-		cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
-		break;
-	case com_moedas:
-		cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
-		break;
-	case com_vaipara:
-		//este comando tem overload devido aos parametros vaipara <N> <x> <y> e vai para <N> <P>
-		cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
-		break;
-	case com_comprasold:
-		cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
-		break;
-	case com_saveg:
-		cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
-		break;
-	case com_loadg:
-		cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
-		break;
-	case com_delg:
-		cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
-		break;
-	default:
-		if(acao != "sair")
-			cout << " [ ERRO ] Comando Incorreto..!" << endl;
+
+}
+void Interface::PromptFase2(string linha) {
+
+	char tipo;
+	string acao;
+	istringstream buffer(linha);
+
+	if (buffer >> acao)
+		switch (FiltaComandos(acao)) {
+
+		case com_exec:
+			cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
+			break;
+		case com_prox:
+			cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
+			break;
+		case com_compranav:
+			cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
+			break;
+		case com_vendenav:
+			cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
+			break;
+		case com_lista:
+			cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
+			break;
+		case com_compra:
+			cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
+			break;
+		case com_vende:
+			cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
+			break;
+		case com_move:
+			cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
+			break;
+		case com_auto:
+			cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
+			break;
+		case com_stop:
+			cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
+			break;
+		case com_pirata:
+			cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
+			break;
+		case com_evpos:
+			cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
+			break;
+		case com_evnav:
+			if (buffer >> tipo) {
+				compraNavio(tipo);
+				}
+
+			//cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
+			break;
+		case com_moedas:
+			cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
+			break;
+		case com_vaipara:
+			//este comando tem overload devido aos parametros vaipara <N> <x> <y> e vai para <N> <P>
+			cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
+			break;
+		case com_comprasold:
+			cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
+			break;
+		case com_saveg:
+			cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
+			break;
+		case com_loadg:
+			cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
+			break;
+		case com_delg:
+			cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
+			break;
+		default:
+			if(acao != "sair")
+				cout << " [ ERRO ] Comando Incorreto..!" << endl;
 			
-	}
+		}
 }
 void Interface::mostraLegAndConfig() {
 
