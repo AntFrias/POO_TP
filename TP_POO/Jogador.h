@@ -8,6 +8,8 @@
 
 #include "Navios.h"
 
+#include "Porto.h"
+
 
 using namespace std;
 
@@ -16,13 +18,22 @@ class Jogador
 
 	int moedas;
 
+	char portoPrincipal;
+
 	vector<Navios*> navios;
+	vector<Porto*> portos;
 
 public:
 	
 	Jogador();
 
-	Jogador(int moedas);
+	void setMoedas(int moedas);
+
+	const int getMoedas() const;
+
+	bool validaCompra(int valor);
+
+	void setPortoPrincipal(char tipo);
 
 	~Jogador();
 };
