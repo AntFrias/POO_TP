@@ -5,11 +5,67 @@ using namespace std;
 
 Interface::Interface(){
 }
+void Interface::start() {
 
+
+	Prompt();
+
+}
+// Metodo Prompt tem como objetivo tratar os comandos introduzidos pelo Jogador	
+void Interface::Prompt() {
+
+	string linha, acao, configFile;
+
+	Consola::VERDE;
+
+	Consola::gotoxy(0, 16);
+	//cout << "Comando: config " << endl << endl;
+	cout << "Comando: config ";
+
+	getline(cin, linha);
+
+	/*
+	______________________________________________________________________________________
+
+					iniciar a fase 1: trata comando config
+	______________________________________________________________________________________
+	*/
+	PromptFase1(linha);
+	/*
+	______________________________________________________________________________________
+
+					iniciar a fase 2: Trata comandos do jogador
+	______________________________________________________________________________________
+	*/
+	do {
+
+		Consola::VERDE;
+
+		Consola::gotoxy(0, 16);
+
+		cout << "Comando: ";
+
+		getline(cin, linha);
+
+		istringstream buffer(linha);
+
+		if (buffer >> acao)
+			PromptFase2(acao);
+
+		mostraMapa();
+
+		Consola::getch();
+
+		Consola::clrscr();
+
+		mostraMapa();
+
+	} while (linha != "sair");
+}
 int Interface::FiltaComandos(string acao) {
 
-	vector< string > comandos = { "config", "exec","prox", "compranav", "vendenav", "lista", "compra", "vende", "move", "auto", "stop", "pirata","evpos","evnav",
-								  "moedas","vaipara", "comprasold", "saveg", "loadg", "delg", "sair" };
+	vector< string > comandos = {"exec", "prox", "compranav", "vendenav", "lista", "compra", "vende", "move", "auto", "stop", "pirata","evpos","evnav",
+								  "moedas","vaipara", "comprasold", "saveg", "loadg", "delg"};
 
 	for (unsigned int i = 0; i < comandos.size(); i++) {
 		if (comandos[i].compare(acao) == 0)
@@ -17,39 +73,11 @@ int Interface::FiltaComandos(string acao) {
 	}
 	return 0;
 }
-void Interface::PromptFase1() {
-
-
-
-
-
-}
-
-void Interface::PromptFase2() {
-
-
-
-
-
-}
-
-void Interface::Prompt() {
-
-	string linha, acao,configFile;
-
-	//iniciar a fase 1:
-
-	Consola::VERDE;
-
-	Consola::gotoxy(0, 16);
-
-	cout << "Comando: config ";
-
-	getline(cin, linha);
+void Interface::PromptFase1(string linha) {
 
 	if (count(linha.begin(), linha.end(), ' ') == 0) {
 
-		if (carregaFich(linha)){
+		if (carregaFich(linha)) {
 			cout << "Ficheiro introduzido carregado com sucesso .. !" << endl;
 		}
 		else {
@@ -62,99 +90,148 @@ void Interface::Prompt() {
 		carregaFich(configInit);
 		cout << " [ Erro ao carregar ficheiro ] Ficheiro por default carregado com Sucesso.. !" << endl;
 	}
-	//iniciar a fase 2:
-	do {
-		Consola::VERDE;
+}
+bool Interface::carregaFich(string configFile) {
 
-		Consola::gotoxy(0, 16);
-		
-		cout << "Comando: ";
-		
-		getline(cin, linha);
+	fstream fp;
+
+	int inteiro, contaLinhas = 0, flag = 0;
+	string linha;
+
+	if (!fp.is_open()) {
+		fp.open(configFile);
+		if (!fp.is_open())
+			return false;
+	}
+	while (getline(fp, linha)) {
 
 		istringstream buffer(linha);
 
-		if (buffer >> acao) {
+		if (buffer >> linha && buffer >> inteiro) {
 
-			switch (FiltaComandos(acao)) {
-
-			case com_exec:
-				cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
-				break;
-			case com_prox:
-				cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
-				break;
-			case com_compranav:
-				cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
-				break;
-			case com_vendenav:
-				cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
-				break;
-			case com_lista:
-				cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
-				break;
-			case com_compra:
-				cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
-				break;
-			case com_vende:
-				cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
-				break;
-			case com_move:
-				cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
-				break;
-			case com_auto:
-				cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
-				break;
-			case com_stop:
-				cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
-				break;
-			case com_pirata:
-				cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
-				break;
-			case com_evpos:
-				cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
-				break;
-			case com_evnav:
-				cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
-				break;
-			case com_moedas:
-				cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
-				break;
-			case com_vaipara:
-				//este comando tem overload devido aos parametros vaipara <N> <x> <y> e vai para <N> <P>
-				cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
-				break;
-			case com_comprasold:
-				cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
-				break;
-			case com_saveg:
-				cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
-				break;
-			case com_loadg:
-				cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
-				break;
-			case com_delg:
-				cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
-				break;
-			default:
-				if (acao != "sair")
-					cout << " [ ERRO ] Comando Incorreto..!" << endl;
-			}
+			if (linha == "linhas")
+				this->linhas = inteiro;
+			else if (linha == "colunas")
+				this->colunas = inteiro;
+			else if (linha == "moedas")
+				this->moedas = inteiro;
+			else if (linha == "probpirata")
+				this->probPirata = inteiro;
+			else if (linha == "preconavio")
+				this->precoNavio = inteiro;
+			else if (linha == "precosoldado")
+				this->precoSoldado = inteiro;
+			else if (linha == "precovendpeixe")
+				this->precoVendePeixe = inteiro;
+			else if (linha == "precocompmercad")
+				this->precoCompraMercadoria = inteiro;
+			else if (linha == "precovendmercad")
+				this->precoVendaMercadoria = inteiro;
+			else if (linha == "soldadosporto")
+				this->soldadosPorto = inteiro;
+			else if (linha == "probevento")
+				this->probVento = inteiro;
+			else if (linha == "probtempestade")
+				this->probTempestade = inteiro;
+			else if (linha == "probsereias")
+				this->probSereias = inteiro;
+			else if (linha == "probcalmaria")
+				this->probCalmaria = inteiro;
+			else if (linha == "probmotin")
+				this->probMotin = inteiro;
 		}
-		// validar quantidade de parametros e validar sem parametros
-		// so config tb nao valida
+		else {
+			buffer >> linha;
+			for (int i = 0; i < this->colunas; i++) {
+				if (linha[i] == '.') {
 
-		
-		mostraMapa();
-		Consola::getch();
-		Consola::clrscr();
-		mostraMapa();
-	} while (linha != "sair");
+					this->mundo.criaCelulaMar(i, contaLinhas);
+				}
+				if (linha[i] == '+') {
+
+					this->mundo.criaCelulaTerra(i, contaLinhas);
+				}
+				if (linha[i] >= 'A' && linha[i] <= 'Z' || linha[i] >= 'a' && linha[i] <= 'z') {
+
+					this->mundo.criaCelulaPorto(i, contaLinhas, linha[i]);
+
+				}
+			}
+			contaLinhas++;
+		}
+	}
+	fp.close();
+
+	return true;
 }
+void Interface::PromptFase2(string acao) {
 
+	switch (FiltaComandos(acao)) {
 
-
-
+	case com_exec:
+		cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
+		break;
+	case com_prox:
+		cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
+		break;
+	case com_compranav:
+		cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
+		break;
+	case com_vendenav:
+		cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
+		break;
+	case com_lista:
+		cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
+		break;
+	case com_compra:
+		cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
+		break;
+	case com_vende:
+		cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
+		break;
+	case com_move:
+		cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
+		break;
+	case com_auto:
+		cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
+		break;
+	case com_stop:
+		cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
+		break;
+	case com_pirata:
+		cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
+		break;
+	case com_evpos:
+		cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
+		break;
+	case com_evnav:
+		cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
+		break;
+	case com_moedas:
+		cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
+		break;
+	case com_vaipara:
+		//este comando tem overload devido aos parametros vaipara <N> <x> <y> e vai para <N> <P>
+		cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
+		break;
+	case com_comprasold:
+		cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
+		break;
+	case com_saveg:
+		cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
+		break;
+	case com_loadg:
+		cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
+		break;
+	case com_delg:
+		cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
+		break;
+	default:
+		if(acao != "sair")
+			cout << " [ ERRO ] Comando Incorreto..!" << endl;
+			
+	}
+}
 void Interface::mostraLegAndConfig() {
 
 	Consola::setTextColor(Consola::BRANCO);
@@ -256,13 +333,6 @@ void Interface::mostraPortos() {
 		cout << auxPorto[i]->getChar();
 	}
 }
-
-void Interface::start(){
-
-	PromptFase1();
-	Prompt();
-
-}
 void Interface::mostraMapa() {
 
 	mostraMar();
@@ -271,79 +341,6 @@ void Interface::mostraMapa() {
 	mostraLegAndConfig();
 };
 
-bool Interface::carregaFich(string configFile) {
-	
-	fstream fp;
-
-	int inteiro, contaLinhas = 0,flag = 0;
-	string linha;
-
-	if (!fp.is_open()){
-		fp.open(configFile);
-		if (!fp.is_open())
-			return false;
-	}
-	while (getline(fp, linha)) {
-
-		istringstream buffer(linha);
-
-		if (buffer >> linha && buffer >> inteiro) {
-
-			if (linha == "linhas")
-				this->linhas = inteiro;
-			else if (linha == "colunas")
-				this->colunas = inteiro;
-			else if (linha == "moedas")
-				this->moedas = inteiro;
-			else if (linha == "probpirata")
-				this->probPirata = inteiro;
-			else if (linha == "preconavio")
-				this->precoNavio = inteiro;
-			else if (linha == "precosoldado")
-				this->precoSoldado = inteiro;
-			else if (linha == "precovendpeixe")
-				this->precoVendePeixe = inteiro;
-			else if (linha == "precocompmercad")
-				this->precoCompraMercadoria = inteiro;
-			else if (linha == "precovendmercad")
-				this->precoVendaMercadoria = inteiro;
-			else if (linha == "soldadosporto")
-				this->soldadosPorto = inteiro;
-			else if (linha == "probevento")
-				this->probVento = inteiro;
-			else if (linha == "probtempestade")
-				this->probTempestade = inteiro;
-			else if (linha == "probsereias")
-				this->probSereias = inteiro;
-			else if (linha == "probcalmaria")
-				this->probCalmaria = inteiro;
-			else if (linha == "probmotin")
-				this->probMotin = inteiro;
-		}
-		else {
-			buffer >> linha;
-			for (int i = 0; i < this->colunas; i++) {
-				if (linha[i] == '.') {
-					
-					this->mundo.criaCelulaMar(i,contaLinhas);
-				}
-				if (linha[i] == '+') {
-
-					this->mundo.criaCelulaTerra(i,contaLinhas);
-				}
-				if (linha[i] >= 'A' && linha[i] <= 'Z' || linha[i] >= 'a' && linha[i] <= 'z') {
-					
-					this->mundo.criaCelulaPorto(i,contaLinhas,linha[i]);
-
-				}
-			}
-			contaLinhas++;
-		}
-	}
-	fp.close();
-
-	return true;
-}
 
 Interface::~Interface()
 {
