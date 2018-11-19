@@ -4,6 +4,12 @@ using namespace std;
 Mundo::Mundo() {
 
 }
+void Mundo::criaNavio(char tipo) {
+
+
+
+
+}
 void Mundo::criaCelulaMar(int x, int y)
 {
 

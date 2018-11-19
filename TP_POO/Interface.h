@@ -64,7 +64,8 @@ public:
 	Interface();
 	int FiltaComandos(string acao);
 	void PromptFase1(string linha);
-	void PromptFase2(string acao);
+	void PromptFase2(string linha);
+	void compraNavio(char tipo);
 	void Prompt();
 	void mostraLegAndConfig();
 	void mostraMar();

@@ -24,6 +24,7 @@ class Mundo {
 
 public:
 	Mundo();
+	void criaNavio(char tipo);
 	void criaCelulaMar(int x,int y);
 
 	void criaCelulaTerra(int x, int y);
