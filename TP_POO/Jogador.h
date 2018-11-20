@@ -35,6 +35,8 @@ public:
 
 	void setPortoPrincipal(char tipo);
 
+	const char getPortoPrincipal();
+
 	~Jogador();
 };
 
