@@ -71,7 +71,6 @@ const vector<const Navios*> Mundo::getVetorNavios() const
 	return vector<const Navios *>(this->navios.begin(), this->navios.end());
 }
 
-
 Mundo::~Mundo()
 {
 }

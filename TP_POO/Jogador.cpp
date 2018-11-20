@@ -21,7 +21,7 @@ const int Jogador::getMoedas()const {
 
 bool Jogador::validaCompra(int valor) {
 
-	if (this->moedas - valor > 0) {
+	if (this->moedas - valor >= 0) {
 		return true;
 	}
 	else

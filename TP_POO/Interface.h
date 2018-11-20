@@ -12,7 +12,21 @@
 
 using namespace std;
 #define configInit "configIni.txt"
+
+
 #define FICHEIROCONFIGERROR 1 
+
+#define PRECO_VELEIRO 100
+#define PRECO_GALEAO 220
+#define PRECO_ESCUNA 150
+#define PRECO_FRAGATA 300
+#define PRECO_SUBMARINO 500
+
+#define COMPRA_COM_SUCESSO 0
+#define COMPRA_SEM_MOEDAS -1
+#define TIPO_NAVIO_INVALIDO -2
+
+
 
 enum IndiceComandos {
 	com_exec = 1,
@@ -69,7 +83,8 @@ public:
 	int FiltaComandos(string acao);
 	void PromptFase1(string linha);
 	void PromptFase2(string linha);
-	bool compraNavio(char tipo);
+	int ValidaCompraJogador(char tipoNavio);
+	int compraNavio(char tipo);
 	void Prompt();
 	void mostraLegAndConfig();
 	void mostraMar();
@@ -79,6 +94,8 @@ public:
 	void start();
 	void mostraMapa();
 	bool carregaFich(string configfich);
+
+
 
 	~Interface();
 };
