@@ -102,6 +102,19 @@ void Interface::PromptFase1(string linha) {
 		cout << " [ Erro ao carregar ficheiro ] Ficheiro por default carregado com Sucesso.. !" << endl;
 	}
 }
+
+int Interface::verificaDadosFicheiro(string linha) {
+
+	vector < string > dadosEntrada = { "linhas", "colunas" , "moedas" , "probpirata", "preconavio", "precosoldado", "precovendpeixe",  "precocompmercad" ,
+										"precovendmercad", "soldadosporto", "probevento" , "probtempestade" , "probsereias" , "probcalmaria", "probmotin" };
+
+	for (unsigned int i = 0; i < dadosEntrada.size(); i++) 
+		if (linha.compare(dadosEntrada[i]) == 0)
+			return i + 1;
+	
+
+	return 0;
+}
 bool Interface::carregaFich(string configFile) {
 
 	fstream fp;
@@ -109,6 +122,7 @@ bool Interface::carregaFich(string configFile) {
 	int inteiro, contaLinhas = 0, flag = 0;
 	string linha;
 
+	
 	if (!fp.is_open()) {
 		fp.open(configFile);
 		if (!fp.is_open())
@@ -120,36 +134,54 @@ bool Interface::carregaFich(string configFile) {
 
 		if (buffer >> linha && buffer >> inteiro) {
 
-			if (linha == "linhas")
-				this->linhas = inteiro;
-			else if (linha == "colunas")
-				this->colunas = inteiro;
-			else if (linha == "moedas")
-				this->moedas = inteiro;
-			else if (linha == "probpirata")
-				this->probPirata = inteiro;
-			else if (linha == "preconavio")
-				this->precoNavio = inteiro;
-			else if (linha == "precosoldado")
-				this->precoSoldado = inteiro;
-			else if (linha == "precovendpeixe")
-				this->precoVendePeixe = inteiro;
-			else if (linha == "precocompmercad")
-				this->precoCompraMercadoria = inteiro;
-			else if (linha == "precovendmercad")
-				this->precoVendaMercadoria = inteiro;
-			else if (linha == "soldadosporto")
-				this->soldadosPorto = inteiro;
-			else if (linha == "probevento")
-				this->probVento = inteiro;
-			else if (linha == "probtempestade")
-				this->probTempestade = inteiro;
-			else if (linha == "probsereias")
-				this->probSereias = inteiro;
-			else if (linha == "probcalmaria")
-				this->probCalmaria = inteiro;
-			else if (linha == "probmotin")
-				this->probMotin = inteiro;
+			switch (verificaDadosFicheiro(linha)) {
+
+				case nlinhas:
+					this->linhas = inteiro;
+					break;
+				case ncolunas:
+					this->colunas = inteiro;
+					break;
+				case nmoedas:
+					this->moedas = inteiro;
+					break;
+				case probpirata:
+					this->probPirata = inteiro;
+					break;
+				case preconavio:
+					this->precoNavio = inteiro;
+					break;
+				case precosoldado:
+					this->precoSoldado = inteiro;
+					break;
+				case precovendpeixe:
+					this->precoVendePeixe = inteiro;
+					break;
+				case precocompmercad:
+					this->precoCompraMercadoria = inteiro;
+					break;
+				case precovendmercad:
+					this->precoVendaMercadoria = inteiro;
+					break;
+				case soldadosporto:
+					this->soldadosPorto = inteiro;
+					break;
+				case probevento:
+					this->probVento = inteiro;
+					break;
+				case probtempestade:
+					this->probTempestade = inteiro;
+					break;
+				case probsereias:
+					this->probSereias = inteiro;
+					break;
+				case probcalmaria:
+					this->probCalmaria = inteiro;
+					break;
+				case probmotin:
+					this->probMotin = inteiro;
+					break;
+			}
 		}
 		else {
 			buffer >> linha;

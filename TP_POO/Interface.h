@@ -48,11 +48,25 @@ enum IndiceComandos {
 	com_saveg,
 	com_loadg,
 	com_delg,
-	
-	
-	
-	
-	
+};
+enum IndiceConFiguracoes {
+
+
+	nlinhas = 1,
+	ncolunas,
+	nmoedas,
+	probpirata,
+	preconavio,
+	precosoldado,
+	precovendpeixe,
+	precocompmercad,
+	precovendmercad,
+	soldadosporto,
+	probevento,
+	probtempestade,
+	probsereias,
+	probcalmaria,
+	probmotin
 };
 
 class Interface
@@ -93,6 +107,7 @@ public:
 	void mostraNavios();
 	void start();
 	void mostraMapa();
+	int verificaDadosFicheiro(string linha);
 	bool carregaFich(string configfich);
 
 
