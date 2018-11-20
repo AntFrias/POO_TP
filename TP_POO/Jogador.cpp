@@ -21,7 +21,7 @@ const int Jogador::getMoedas()const {
 
 bool Jogador::validaCompra(int valor) {
 
-	if (this->moedas - valor > 0) {
+	if (this->moedas - valor >= 0) {
 		return true;
 	}
 	else
@@ -31,6 +31,12 @@ bool Jogador::validaCompra(int valor) {
 void Jogador::setPortoPrincipal(char tipo) {
 
 	this->portoPrincipal = tipo;
+
+
+}
+const char Jogador::getPortoPrincipal() {
+
+	return this->portoPrincipal;
 
 
 }
