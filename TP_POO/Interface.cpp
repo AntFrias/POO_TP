@@ -55,6 +55,11 @@ void Interface::Prompt() {
 		getline(cin, linha);
 
 		PromptFase2(linha);
+		
+		//execução de comando pendentes | comportamentos automaticos
+		//combates
+		//eventos
+		//piratas
 
 		mostraMapa();
 
