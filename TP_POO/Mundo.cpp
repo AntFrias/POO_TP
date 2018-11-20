@@ -4,10 +4,33 @@ using namespace std;
 Mundo::Mundo() {
 
 }
-void Mundo::criaNavio(char tipo) {
+void Mundo::criaNavio(const char tipo) {
 
+	int x, y;
 
+	for (unsigned int i = 0; i < porto.size(); i++) {
 
+		if (porto[i]->getChar() == tipo) {
+
+			x = porto[i]->getX();
+
+			y = porto[i]->getY();
+		}
+	}
+	this->navios.push_back(new Navios(tipo, x, y));
+	
+}
+const char Mundo::getPortoPrincipal() {
+
+	for (unsigned int i = 0; i < porto.size(); i++) {
+
+		if (porto[i]->getChar() >= 'A' && porto[i]->getChar() <= 'Z') {
+
+			return porto[i]->getChar();
+
+		}	
+	}
+	return '-';
 
 }
 void Mundo::criaCelulaMar(int x, int y)
@@ -42,6 +65,10 @@ const vector<const Terra*> Mundo::getVetorTerra() const
 const vector<const Porto*> Mundo::getVetorPorto() const
 {
 	return vector<const Porto *>(this->porto.begin(), this->porto.end());
+}
+const vector<const Navios*> Mundo::getVetorNavios() const
+{
+	return vector<const Navios *>(this->navios.begin(), this->navios.end());
 }
 
 

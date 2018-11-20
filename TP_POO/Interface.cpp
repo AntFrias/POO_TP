@@ -2,6 +2,7 @@
 
 using namespace std;
 
+int Navios::IncNavio = 0;
 
 Interface::Interface(){
 }
@@ -34,8 +35,10 @@ void Interface::Prompt() {
 	*/
 	PromptFase1(linha);
 	//inicialização do jogador
+		//moedas
 	jogador.setMoedas(moedas);
-	jogador.setPortoPrincipal(tipo);
+		//atribuição do porto principal
+	jogador.setPortoPrincipal( mundo.getPortoPrincipal() );
 	//
 	/*
 	______________________________________________________________________________________
@@ -70,7 +73,7 @@ void Interface::Prompt() {
 int Interface::FiltaComandos(string acao) {
 
 	vector< string > comandos = {"exec", "prox", "compranav", "vendenav", "lista", "compra", "vende", "move", "auto", "stop", "pirata","evpos","evnav",
-								  "moedas","vaipara", "comprasold", "saveg", "loadg", "delg"};
+								  "pirata", "evpos", "evnav","moedas","vaipara", "comprasold", "saveg", "loadg", "delg"};
 
 	for (unsigned int i = 0; i < comandos.size(); i++) {
 		if (comandos[i].compare(acao) == 0)
@@ -169,9 +172,17 @@ bool Interface::carregaFich(string configFile) {
 
 	return true;
 }
-void Interface::compraNavio(char tipo) {
+bool Interface::compraNavio(char tipo) {
 
-	mundo.criaNavio();
+	//tipo, preco, quantSoldados, quantAgua
+	if (jogador.getPortoPrincipal() >= 'A' && jogador.getPortoPrincipal() <= 'Z') {
+
+		mundo.criaNavio(jogador.getPortoPrincipal());
+
+		return true;
+	}
+	else
+		return false;
 
 
 }
@@ -181,7 +192,8 @@ void Interface::PromptFase2(string linha) {
 	string acao;
 	istringstream buffer(linha);
 
-	if (buffer >> acao)
+	if (buffer >> acao){
+		cout << "Acao : " << acao << " : " <<FiltaComandos(acao) << endl;
 		switch (FiltaComandos(acao)) {
 
 		case com_exec:
@@ -191,7 +203,12 @@ void Interface::PromptFase2(string linha) {
 			cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
 			break;
 		case com_compranav:
-			cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
+			if (buffer >> tipo) {
+				if (compraNavio(tipo) == true)
+					cout << "Compra efetuada com sucesso!";
+				else
+					cout << "Compra não efetuada <-> Não existe porto principal";
+			}
 			break;
 		case com_vendenav:
 			cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
@@ -221,11 +238,7 @@ void Interface::PromptFase2(string linha) {
 			cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
 			break;
 		case com_evnav:
-			if (buffer >> tipo) {
-				compraNavio(tipo);
-				}
-
-			//cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
+			cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
 			break;
 		case com_moedas:
 			cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
@@ -251,6 +264,7 @@ void Interface::PromptFase2(string linha) {
 				cout << " [ ERRO ] Comando Incorreto..!" << endl;
 			
 		}
+}
 }
 void Interface::mostraLegAndConfig() {
 
@@ -353,11 +367,27 @@ void Interface::mostraPortos() {
 		cout << auxPorto[i]->getChar();
 	}
 }
+void Interface::mostraNavios() {
+
+	const vector <const Navios *>  auxNavio = mundo.getVetorNavios();
+
+	for (unsigned int i = 0; i < auxNavio.size(); i++) {
+		unsigned int x = auxNavio[i]->getX();
+		unsigned int y = auxNavio[i]->getY();
+
+		Consola::gotoxy(x, y);
+		Consola::setTextColor(Consola::BRANCO_CLARO);
+		Consola::gotoxy(x, y);
+		cout << auxNavio[i]->getId();
+	}
+}
 void Interface::mostraMapa() {
 
 	mostraMar();
 	mostraTerra();
 	mostraPortos();
+	mostraNavios();
+	
 	mostraLegAndConfig();
 };
 

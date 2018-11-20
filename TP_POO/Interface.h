@@ -15,8 +15,7 @@ using namespace std;
 #define FICHEIROCONFIGERROR 1 
 
 enum IndiceComandos {
-	com_config = 1,
-	com_exec,
+	com_exec = 1,
 	com_prox,
 	com_compranav,
 	com_vendenav,
@@ -34,7 +33,12 @@ enum IndiceComandos {
 	com_comprasold,
 	com_saveg,
 	com_loadg,
-	com_delg
+	com_delg,
+	
+	
+	
+	
+	
 };
 
 class Interface
@@ -65,12 +69,13 @@ public:
 	int FiltaComandos(string acao);
 	void PromptFase1(string linha);
 	void PromptFase2(string linha);
-	void compraNavio(char tipo);
+	bool compraNavio(char tipo);
 	void Prompt();
 	void mostraLegAndConfig();
 	void mostraMar();
 	void mostraTerra();
 	void mostraPortos();
+	void mostraNavios();
 	void start();
 	void mostraMapa();
 	bool carregaFich(string configfich);
