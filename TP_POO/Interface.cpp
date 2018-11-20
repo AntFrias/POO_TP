@@ -257,6 +257,7 @@ void Interface::PromptFase2(string linha) {
 				}
 			else
 				cout << "Parametro Tipo de Barco <T> Invalido" << endl;
+				cout << "Saldo atual do Jogador: " << jogador.getMoedas() << endl;
 				
 			break;
 		case com_vendenav:
