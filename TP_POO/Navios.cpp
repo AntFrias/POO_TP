@@ -15,7 +15,7 @@ Navios::Navios()
 //}
 Navios::Navios(char tipo,int x,int y) {
 
-	this->id = ++this->IncNavio;
+	this->id = this->IncNavio++;
 	this->tipo = tipo;
 
 	this->x = x;
