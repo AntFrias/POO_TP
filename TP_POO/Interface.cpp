@@ -2,7 +2,7 @@
 
 using namespace std;
 
-int Navios::IncNavio = 0;
+int Navios::IncNavio = 1;
 
 Interface::Interface(){
 }
@@ -14,8 +14,6 @@ void Interface::start() {
 }
 // Metodo Prompt tem como objetivo tratar os comandos introduzidos pelo Jogador	
 void Interface::Prompt() {
-
-	char tipo = 'A';
 
 	string linha, acao, configFile;
 
@@ -172,19 +170,64 @@ bool Interface::carregaFich(string configFile) {
 
 	return true;
 }
-bool Interface::compraNavio(char tipo) {
+int Interface::ValidaCompraJogador(char tipoNavio) {
+	switch (tipoNavio) {
+	case 'V':
+		if (jogador.validaCompra(PRECO_VELEIRO)) {
+			jogador.setMoedas((jogador.getMoedas() - PRECO_VELEIRO));
+			return 0;
+		}
+		else
+			return -1;
+		break;
+	case 'G':
+		if (jogador.validaCompra(PRECO_GALEAO)) {
+			jogador.setMoedas((jogador.getMoedas() - PRECO_GALEAO));
+			return 0;
+		}
+		else
+			return -1;
+		break;
+	case 'E':
+		if (jogador.validaCompra(PRECO_ESCUNA)) {
+			jogador.setMoedas((jogador.getMoedas() - PRECO_ESCUNA));
+			return 0;
+		}
+		else
+			return -1;
+		break;
+	case 'F':
+		if (jogador.validaCompra(PRECO_FRAGATA)) {
+			jogador.setMoedas((jogador.getMoedas() - PRECO_FRAGATA));
+			return 0;
+		}
+		else
+			return -1;
+		break;
+	case 'S':
+		if (jogador.validaCompra(PRECO_SUBMARINO)) {
+			jogador.setMoedas((jogador.getMoedas() - PRECO_SUBMARINO));
+			return 0;
+		}
+		else
+			return -1;
+		break;
+	}
+	return -2;
+}
+int Interface::compraNavio(char tipo) {
 
-	//tipo, preco, quantSoldados, quantAgua
+	int validacaoCompra = 0;
+
 	if (jogador.getPortoPrincipal() >= 'A' && jogador.getPortoPrincipal() <= 'Z') {
 
-		mundo.criaNavio(jogador.getPortoPrincipal());
+		validacaoCompra = ValidaCompraJogador(tipo);
 
-		return true;
+		if (validacaoCompra == COMPRA_COM_SUCESSO)
+			mundo.criaNavio(jogador.getPortoPrincipal());
+	
 	}
-	else
-		return false;
-
-
+	return validacaoCompra;
 }
 void Interface::PromptFase2(string linha) {
 
@@ -193,7 +236,6 @@ void Interface::PromptFase2(string linha) {
 	istringstream buffer(linha);
 
 	if (buffer >> acao){
-		cout << "Acao : " << acao << " : " <<FiltaComandos(acao) << endl;
 		switch (FiltaComandos(acao)) {
 
 		case com_exec:
@@ -203,12 +245,19 @@ void Interface::PromptFase2(string linha) {
 			cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
 			break;
 		case com_compranav:
-			if (buffer >> tipo) {
-				if (compraNavio(tipo) == true)
-					cout << "Compra efetuada com sucesso!";
-				else
-					cout << "Compra não efetuada <-> Não existe porto principal";
-			}
+			buffer >> tipo;
+				if (tipo =='V' || tipo == 'G' || tipo == 'E' || tipo == 'F' || tipo == 'S') {
+
+					if (compraNavio(tipo) == COMPRA_COM_SUCESSO)
+						cout << "Compra efetuada com sucesso!" <<endl;
+					else if (compraNavio(tipo) == COMPRA_SEM_MOEDAS)
+						cout << "Compra não efetuada <-> Jogador Sem Moedas" << endl;
+					else if((compraNavio(tipo) == TIPO_NAVIO_INVALIDO))
+						cout << "Compra não efetuada <-> Não existe porto principal" << endl;
+				}
+			else
+				cout << "Parametro Tipo de Barco <T> Invalido" << endl;
+				
 			break;
 		case com_vendenav:
 			cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
