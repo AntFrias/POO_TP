@@ -24,6 +24,9 @@ class Mundo {
 
 public:
 	Mundo();
+
+	const char getPortoPrincipal();
+	
 	void criaNavio(char tipo);
 	void criaCelulaMar(int x,int y);
 
@@ -36,6 +39,8 @@ public:
 	const vector<const Terra*> getVetorTerra() const;
 
 	const vector<const Porto*> getVetorPorto() const;
+
+	const vector<const Navios*> getVetorNavios() const;
 
 
 	~Mundo();

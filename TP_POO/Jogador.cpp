@@ -34,6 +34,12 @@ void Jogador::setPortoPrincipal(char tipo) {
 
 
 }
+const char Jogador::getPortoPrincipal() {
+
+	return this->portoPrincipal;
+
+
+}
 
 
 Jogador::~Jogador()
