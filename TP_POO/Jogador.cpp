@@ -1,10 +1,7 @@
 #include "Jogador.h"
 
-
-
 Jogador::Jogador(){
 }
-
 
 void Jogador::setMoedas(int moedas) {
 
@@ -39,8 +36,11 @@ const char Jogador::getPortoPrincipal() {
 	return this->portoPrincipal;
 
 
-}
+}void Jogador::CriaNavioJogador(Navios &navio) {
 
+	this->navios.push_back(&navio);
+
+}
 
 Jogador::~Jogador()
 {

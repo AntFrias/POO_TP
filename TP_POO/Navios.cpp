@@ -38,6 +38,11 @@ const int Navios::getId()const {
 	return this->id;
 }
 
+const Navios Navios::getNavio() const
+{
+	return *this;
+}
+
 int Navios::getIncNavio() {
 	return this->IncNavio;
 }
