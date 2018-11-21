@@ -1,13 +1,36 @@
 #include "Mundo.h"
-
+#include "Jogador.h"
 using namespace std;
 Mundo::Mundo() {
 
 }
-void Mundo::criaNavio(const char tipo) {
+void Mundo::moveNavio(int id,int direcao) {
+
+	signed int x, y;
+
+	for (unsigned int i = 0; i < navios.size(); i++) {
+		
+		if (navios[i]->getId() == id) {
+
+			switch (direcao) {
+
+			case moveEsquerda:
+				x = navios[i]->getX() - 1;
+				//e ver se a nova pos está dentro de agua!
+				if (x >= 0) {
+					navios[i]->setX(navios[i]->getX() - 1);
+				}
+				break;
+			default:
+				break;
+			}
+		}
+	}
+}
+Navios & Mundo::criaNavio(const char tipo) {
 
 	int x, y;
-
+	Navios *aux;
 	for (unsigned int i = 0; i < porto.size(); i++) {
 
 		if (porto[i]->getChar() == tipo) {
@@ -17,8 +40,11 @@ void Mundo::criaNavio(const char tipo) {
 			y = porto[i]->getY();
 		}
 	}
-	this->navios.push_back(new Navios(tipo, x, y));
+	aux = new Navios(tipo, x, y);
 	
+	this->navios.push_back(aux);
+
+	return *aux;
 }
 const char Mundo::getPortoPrincipal() {
 

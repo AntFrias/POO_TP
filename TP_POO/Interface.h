@@ -105,6 +105,7 @@ public:
 	void mostraTerra();
 	void mostraPortos();
 	void mostraNavios();
+	void mostraNaviosJogador();
 	void start();
 	void gotoComando();
 	void gotoErro();

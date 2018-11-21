@@ -270,9 +270,9 @@ int Interface::compraNavio(char tipo) {
 
 		validacaoCompra = ValidaCompraJogador(tipo);
 
-		if (validacaoCompra == COMPRA_COM_SUCESSO)
-			mundo.criaNavio(jogador.getPortoPrincipal());
-	
+		if (validacaoCompra == COMPRA_COM_SUCESSO) {
+			jogador.addNavioJogador(&mundo.criaNavio(jogador.getPortoPrincipal()));
+		}
 	}
 	return validacaoCompra;
 }
@@ -318,6 +318,9 @@ void Interface::PromptFase2(string linha) {
 				}
 				gotoPrint();
 				cout << "Saldo atual do Jogador: " << jogador.getMoedas() << endl;
+				mostraNaviosJogador();
+				mundo.moveNavio(1, moveEsquerda);
+				mostraNaviosJogador();
 			break;
 		case com_vendenav:
 			gotoErro();
@@ -674,6 +677,18 @@ void Interface::mostraNavios() {
 			cout << auxNavio[i]->getId();
 		}
 
+	}
+}
+void Interface::mostraNaviosJogador() {
+
+	const vector <const Navios *>  auxNavio = jogador.getVetorNaviosJogador();
+
+	for (unsigned int i = 0; i < auxNavio.size(); i++) {
+
+		unsigned int x = auxNavio[i]->getX();
+		unsigned int y = auxNavio[i]->getY();
+		Consola::gotoxy(45,28+i);
+		cout << "Navio: " << i << "x:" << x << "y:" << y<<endl;
 	}
 }
 void Interface::mostraMapa() {

@@ -11,7 +11,22 @@
 #include "Porto.h"
 #include "Navios.h"
 
+enum movimentosNavios {
+
+	moveCima = 1,
+	moveBaixo,
+	moveEsquerda,
+	moveDireita,
+	moveCimaEsquerda,
+	moveCimaDireita,
+	moveBaixoDireita,
+	moveBaixoEsquerda
+
+};
+
 using namespace std;
+
+class Jogador;
 
 class Mundo {
 
@@ -25,9 +40,11 @@ class Mundo {
 public:
 	Mundo();
 
+	void moveNavio(int id, int direcao);
+
 	const char getPortoPrincipal();
 	
-	void criaNavio(char tipo);
+	Navios & criaNavio(char tipo);
 
 	void criaCelulaMar(int x,int y);
 
