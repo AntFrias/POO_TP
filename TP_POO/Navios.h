@@ -28,6 +28,7 @@ public:
 	const int getY()const;
 	void setX(int x);
 	const int getId()const;
+	const Navios getNavio() const;	
 	int getIncNavio();
 	void setY(int y);
 	~Navios();

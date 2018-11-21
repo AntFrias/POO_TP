@@ -37,6 +37,8 @@ public:
 
 	const char getPortoPrincipal();
 
+	void CriaNavioJogador(Navios & navio);
+
 	~Jogador();
 };
 
