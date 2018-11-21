@@ -106,6 +106,9 @@ public:
 	void mostraPortos();
 	void mostraNavios();
 	void start();
+	void gotoComando();
+	void gotoErro();
+	void gotoPrint();
 	void mostraMapa();
 	int verificaDadosFicheiro(string linha);
 	bool carregaFich(string configfich);
