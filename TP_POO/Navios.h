@@ -27,10 +27,11 @@ public:
 	const int getX()const;
 	const int getY()const;
 	void setX(int x);
+	void setY(int y);
 	const int getId()const;
 	const Navios getNavio() const;	
 	int getIncNavio();
-	void setY(int y);
+	
 	~Navios();
 
 

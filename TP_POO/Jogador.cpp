@@ -7,7 +7,6 @@ void Jogador::setMoedas(int moedas) {
 
 	this->moedas = moedas;
 
-
 }
 
 const int Jogador::getMoedas()const {
@@ -36,10 +35,14 @@ const char Jogador::getPortoPrincipal() {
 	return this->portoPrincipal;
 
 
-}void Jogador::CriaNavioJogador(Navios &navio) {
+}void Jogador::addNavioJogador(Navios *navio) {
 
-	this->navios.push_back(&navio);
+	this->navios.push_back(navio);
 
+}
+const vector<const Navios*> Jogador::getVetorNaviosJogador() const
+{
+	return vector<const Navios *>(this->navios.begin(), this->navios.end());
 }
 
 Jogador::~Jogador()
