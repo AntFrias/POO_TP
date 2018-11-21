@@ -12,6 +12,15 @@ void Interface::start() {
 	Prompt();
 
 }
+void Interface::gotoComando() {
+	Consola::gotoxy(0, 23);
+}
+void Interface::gotoErro() {
+	Consola::gotoxy(60,23);
+}
+void Interface::gotoPrint() {
+	Consola::gotoxy(45, 27);
+}
 // Metodo Prompt tem como objetivo tratar os comandos introduzidos pelo Jogador	
 void Interface::Prompt() {
 
@@ -19,8 +28,7 @@ void Interface::Prompt() {
 
 	Consola::VERDE;
 
-	Consola::gotoxy(0, 16);
-	//cout << "Comando: config " << endl << endl;
+	gotoComando();
 	cout << "Comando: config ";
 
 	getline(cin, linha);
@@ -48,8 +56,7 @@ void Interface::Prompt() {
 
 		Consola::VERDE;
 
-		Consola::gotoxy(0, 16);
-
+		gotoComando();
 		cout << "Comando: ";
 
 		getline(cin, linha);
@@ -89,9 +96,11 @@ void Interface::PromptFase1(string linha) {
 	if (count(linha.begin(), linha.end(), ' ') == 0) {
 
 		if (carregaFich(linha)) {
+			gotoErro();
 			cout << "Ficheiro introduzido carregado com sucesso .. !" << endl;
 		}
 		else {
+			gotoErro();
 			carregaFich(configInit);
 			cout << " [ Erro ao carregar ficheiro ] Ficheiro por default carregado com Sucesso.. !" << endl;
 
@@ -99,6 +108,7 @@ void Interface::PromptFase1(string linha) {
 	}
 	else {
 		carregaFich(configInit);
+		gotoErro();
 		cout << " [ Erro ao carregar ficheiro ] Ficheiro por default carregado com Sucesso.. !" << endl;
 	}
 }
@@ -276,141 +286,208 @@ void Interface::PromptFase2(string linha) {
 		switch (FiltaComandos(acao)) {
 
 		case com_exec:
+			gotoErro();
 			cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
 			break;
 		case com_prox:
+			gotoErro();
 			cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
 			break;
 		case com_compranav:
 			buffer >> tipo;
 				if (tipo =='V' || tipo == 'G' || tipo == 'E' || tipo == 'F' || tipo == 'S') {
 
-					if (compraNavio(tipo) == COMPRA_COM_SUCESSO)
-						cout << "Compra efetuada com sucesso!" <<endl;
-					else if (compraNavio(tipo) == COMPRA_SEM_MOEDAS)
+					if (compraNavio(tipo) == COMPRA_COM_SUCESSO) {
+						gotoPrint();
+						cout << "Compra efetuada com sucesso!" << endl;
+					}
+					else if (compraNavio(tipo) == COMPRA_SEM_MOEDAS) {
+						gotoErro();
 						cout << "Compra não efetuada <-> Jogador Sem Moedas" << endl;
-					else if((compraNavio(tipo) == TIPO_NAVIO_INVALIDO))
+					}
+					else if ((compraNavio(tipo) == TIPO_NAVIO_INVALIDO)) {
+						gotoErro();
 						cout << "Compra não efetuada <-> Não existe porto principal" << endl;
+					}
 				}
-			else
-				cout << "Parametro Tipo de Barco <T> Invalido" << endl;
+				else {
+					gotoErro();
+					cout << "Parametro Tipo de Barco <T> Invalido" << endl;
+					gotoPrint();
+					cout << "Saldo atual do Jogador: " << jogador.getMoedas() << endl;
+				}
+				gotoPrint();
 				cout << "Saldo atual do Jogador: " << jogador.getMoedas() << endl;
-				
 			break;
 		case com_vendenav:
+			gotoErro();
 			cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
 			break;
 		case com_lista:
+			gotoErro();
 			cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
 			break;
 		case com_compra:
+			gotoErro();
 			cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
 			break;
 		case com_vende:
+			gotoErro();
 			cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
 			break;
 		case com_move:
+			gotoErro();
 			cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
 			break;
 		case com_auto:
+			gotoErro();
 			cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
 			break;
 		case com_stop:
+			gotoErro();
 			cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
 			break;
 		case com_pirata:
+			gotoErro();
 			cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
 			break;
 		case com_evpos:
+			gotoErro();
 			cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
 			break;
 		case com_evnav:
+			gotoErro();
 			cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
 			break;
 		case com_moedas:
+			gotoErro();
 			cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
 			break;
 		case com_vaipara:
 			//este comando tem overload devido aos parametros vaipara <N> <x> <y> e vai para <N> <P>
+			gotoErro();
 			cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
 			break;
 		case com_comprasold:
+			gotoErro();
 			cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
 			break;
 		case com_saveg:
+			gotoErro();
 			cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
 			break;
 		case com_loadg:
+			gotoErro();
 			cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
 			break;
 		case com_delg:
+			gotoErro();
 			cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
 			break;
 		default:
-			if(acao != "sair")
+			if (acao != "sair") {
+				gotoErro();
 				cout << " [ ERRO ] Comando Incorreto..!" << endl;
-			
+			}
 		}
+	}
 }
-}
+
 void Interface::mostraLegAndConfig() {
 
 	Consola::setTextColor(Consola::BRANCO);
 
-	Consola::gotoxy(25, 0);
+	Consola::gotoxy(44, 0);
 	cout << "Legenda do Mapa";
 
-	Consola::gotoxy(25, 2);
+	Consola::gotoxy(45, 2);
 	cout << "\tMar -> azul";
 
-	Consola::gotoxy(25, 3);
+	Consola::gotoxy(45, 3);
 	cout << "\tTerra -> amarelo";
 
-	Consola::gotoxy(25, 4);
+	Consola::gotoxy(45, 4);
 	cout << "\tPortos -> A-Z Amigos";
 
-	Consola::gotoxy(25, 5);
+	Consola::gotoxy(45, 5);
 	cout << "\tPortos -> a-z Inimigos";
 
-	Consola::gotoxy(60, 0);
+	Consola::gotoxy(84, 0);
+	cout << "Configuracoes Iniciais: " << this->moedas;
+	Consola::gotoxy(87, 2);
 	cout << "Moedas: " << this->moedas;
-	Consola::gotoxy(60, 1);
+	Consola::gotoxy(87, 3);
 	cout << "Probalidade Pirata " << this->probPirata;
-	Consola::gotoxy(60, 2);
+	Consola::gotoxy(87, 4);
 	cout << "Preco Navio " << this->precoNavio;
-	Consola::gotoxy(60, 3);
+	Consola::gotoxy(87, 5);
 	cout << "Preco Soldado " << this->precoSoldado;
-	Consola::gotoxy(60, 4);
+	Consola::gotoxy(87, 6);
 	cout << "Preco Vende Peixe " << this->precoVendePeixe;
-	Consola::gotoxy(60, 5);
+	Consola::gotoxy(87, 7);
 	cout << "Preco Compra Mercadoria " << this->precoCompraMercadoria;
-	Consola::gotoxy(60, 6);
+	Consola::gotoxy(87, 8);
 	cout << "Preco Vende Mercadoria " << this->precoVendaMercadoria;
-	Consola::gotoxy(60, 7);
+	Consola::gotoxy(87, 9);
 	cout << "Soldados Porto " << this->soldadosPorto;
-	Consola::gotoxy(60, 8);
+	Consola::gotoxy(87, 10);
 	cout << "Probabilidade Vento " << this->probVento;
-	Consola::gotoxy(60, 9);
+	Consola::gotoxy(87, 11);
 	cout << "Probabilidade Tempestade " << this->probTempestade;
-	Consola::gotoxy(60, 10);
+	Consola::gotoxy(87, 12);
 	cout << "Probabilidade Sereias " << this->probSereias;
-	Consola::gotoxy(60, 11);
+	Consola::gotoxy(87, 13);
 	cout << "Probabilidade Calmaria " << this->probCalmaria;
-	Consola::gotoxy(60, 12);
+	Consola::gotoxy(87, 14);
 	cout << "Probabilidade Motin " << this->probMotin;
 
 }
 void Interface::mostraMar() {
-	
+
 	const vector <const Mar *>  auxMar = mundo.getVetorMar();
 
 	for (unsigned int i = 0; i < auxMar.size(); i++) {
+
 		unsigned int x = auxMar[i]->getX();
 		unsigned int y = auxMar[i]->getY();
+		x *= 2;
+		y *= 2;
 
-		Consola::gotoxy(x, y);
-		Consola::setTextColor(Consola::AZUL_CLARO);
-		cout << char(254);
+		if (i % 2 == 0) {
+			Consola::gotoxy(x, y);
+			Consola::setTextColor(Consola::AZUL);
+			cout << char(254);
+
+			Consola::gotoxy(x + 1, y);
+			Consola::setTextColor(Consola::AZUL);
+			cout << char(254);
+
+			Consola::gotoxy(x, y + 1);
+			Consola::setTextColor(Consola::AZUL);
+			cout << char(254);
+
+			Consola::gotoxy(x + 1, y + 1);
+			Consola::setTextColor(Consola::AZUL);
+			cout << char(254);
+		}
+		if (i % 2 != 0) {
+			Consola::gotoxy(x, y);
+			Consola::setTextColor(Consola::AZUL_CLARO);
+			cout << char(254);
+
+			Consola::gotoxy(x + 1, y);
+			Consola::setTextColor(Consola::AZUL_CLARO);
+			cout << char(254);
+
+			Consola::gotoxy(x, y + 1);
+			Consola::setTextColor(Consola::AZUL_CLARO);
+			cout << char(254);
+
+			Consola::gotoxy(x + 1, y + 1);
+			Consola::setTextColor(Consola::AZUL_CLARO);
+			cout << char(254);
+		}
+
 	}
 
 }
@@ -419,13 +496,47 @@ void Interface::mostraTerra() {
 	const vector <const Terra *>  auxTerra = mundo.getVetorTerra();
 
 	for (unsigned int i = 0; i < auxTerra.size(); i++) {
+
 		unsigned int x = auxTerra[i]->getX();
 		unsigned int y = auxTerra[i]->getY();
+		x *= 2;
+		y *= 2;
 
-		Consola::gotoxy(x, y);
-		Consola::setTextColor(Consola::AMARELO);
-		cout << char(254);
-		//cout << auxTerra[i]->getChar();
+		if (i % 2 == 0) {
+			Consola::gotoxy(x, y);
+			Consola::setTextColor(Consola::AMARELO);
+			cout << char(254);
+
+			Consola::gotoxy(x + 1, y);
+			Consola::setTextColor(Consola::AMARELO);
+			cout << char(254);
+
+			Consola::gotoxy(x, y + 1);
+			Consola::setTextColor(Consola::AMARELO);
+			cout << char(254);
+
+			Consola::gotoxy(x + 1, y + 1);
+			Consola::setTextColor(Consola::AMARELO);
+			cout << char(254);
+		}
+		if (i % 2 != 0) {
+			Consola::gotoxy(x, y);
+			Consola::setTextColor(Consola::AMARELO_CLARO);
+			cout << char(254);
+
+			Consola::gotoxy(x + 1, y);
+			Consola::setTextColor(Consola::AMARELO_CLARO);
+			cout << char(254);
+
+			Consola::gotoxy(x, y + 1);
+			Consola::setTextColor(Consola::AMARELO_CLARO);
+			cout << char(254);
+
+			Consola::gotoxy(x + 1, y + 1);
+			Consola::setTextColor(Consola::AMARELO_CLARO);
+			cout << char(254);
+		}
+
 	}
 }
 void Interface::mostraPortos() {
@@ -436,36 +547,133 @@ void Interface::mostraPortos() {
 		unsigned int x = auxPorto[i]->getX();
 		unsigned int y = auxPorto[i]->getY();
 
-	
-			if (auxPorto[i]->getChar() >= 'A' && auxPorto[i]->getChar() <= 'Z') {
-				
+		x *= 2;
+		y *= 2;
+
+		if (auxPorto[i]->getChar() >= 'A' && auxPorto[i]->getChar() <= 'Z') {
+
+			if (i % 2 == 0) {
+				Consola::gotoxy(x, y);
+				Consola::setTextColor(Consola::VERDE);
+				cout << auxPorto[i]->getChar();
+
+				Consola::gotoxy(x + 1, y);
+				Consola::setTextColor(Consola::VERDE);
+				cout << auxPorto[i]->getChar();
+
+				Consola::gotoxy(x, y + 1);
+				Consola::setTextColor(Consola::VERDE);
+				cout << auxPorto[i]->getChar();
+
+				Consola::gotoxy(x + 1, y + 1);
+				Consola::setTextColor(Consola::VERDE);
+				cout << auxPorto[i]->getChar();
+			}
+			if (i % 2 != 0) {
 				Consola::gotoxy(x, y);
 				Consola::setTextColor(Consola::VERDE_CLARO);
-				cout << char(254);
-	}
-			if (auxPorto[i]->getChar() >= 'a' && auxPorto[i]->getChar() <= 'z') {
-				Consola::gotoxy(x, y);
-				Consola::setTextColor(Consola::VERMELHO);
-				cout << char(254);
+				cout << auxPorto[i]->getChar();
+
+				Consola::gotoxy(x + 1, y);
+				Consola::setTextColor(Consola::VERDE_CLARO);
+				cout << auxPorto[i]->getChar();
+
+				Consola::gotoxy(x, y + 1);
+				Consola::setTextColor(Consola::VERDE_CLARO);
+				cout << auxPorto[i]->getChar();
+
+				Consola::gotoxy(x + 1, y + 1);
+				Consola::setTextColor(Consola::VERDE_CLARO);
+				cout << auxPorto[i]->getChar();
 			}
+		}
 
+		if (auxPorto[i]->getChar() >= 'a' && auxPorto[i]->getChar() <= 'z') {
+			if (i % 2 == 0) {
+				Consola::gotoxy(x, y);
+				Consola::setTextColor(Consola::VERDE);
+				cout << auxPorto[i]->getChar();
 
-		Consola::gotoxy(x, y);
-		cout << auxPorto[i]->getChar();
+				Consola::gotoxy(x + 1, y);
+				Consola::setTextColor(Consola::VERDE);
+				cout << auxPorto[i]->getChar();
+
+				Consola::gotoxy(x, y + 1);
+				Consola::setTextColor(Consola::VERDE);
+				cout << auxPorto[i]->getChar();
+
+				Consola::gotoxy(x + 1, y + 1);
+				Consola::setTextColor(Consola::VERDE);
+				cout << auxPorto[i]->getChar();
+			}
+			if (i % 2 != 0) {
+				Consola::gotoxy(x, y);
+				Consola::setTextColor(Consola::VERDE_CLARO);
+				cout << auxPorto[i]->getChar();
+
+				Consola::gotoxy(x + 1, y);
+				Consola::setTextColor(Consola::VERDE_CLARO);
+				cout << auxPorto[i]->getChar();
+
+				Consola::gotoxy(x, y + 1);
+				Consola::setTextColor(Consola::VERDE_CLARO);
+				cout << auxPorto[i]->getChar();
+
+				Consola::gotoxy(x + 1, y + 1);
+				Consola::setTextColor(Consola::VERDE_CLARO);
+				cout << auxPorto[i]->getChar();
+			}
+		}
 	}
+
 }
 void Interface::mostraNavios() {
 
 	const vector <const Navios *>  auxNavio = mundo.getVetorNavios();
 
 	for (unsigned int i = 0; i < auxNavio.size(); i++) {
+
 		unsigned int x = auxNavio[i]->getX();
 		unsigned int y = auxNavio[i]->getY();
 
-		Consola::gotoxy(x, y);
-		Consola::setTextColor(Consola::BRANCO_CLARO);
-		Consola::gotoxy(x, y);
-		cout << auxNavio[i]->getId();
+		x *= 2;
+		y *= 2;
+
+		if (i % 2 == 0) {
+			Consola::gotoxy(x, y);
+			Consola::setTextColor(Consola::BRANCO_CLARO);
+			cout << auxNavio[i]->getId();
+
+			Consola::gotoxy(x + 1, y);
+			Consola::setTextColor(Consola::BRANCO_CLARO);
+			cout << auxNavio[i]->getId();
+
+			Consola::gotoxy(x, y + 1);
+			Consola::setTextColor(Consola::BRANCO_CLARO);
+			cout << auxNavio[i]->getId();
+
+			Consola::gotoxy(x + 1, y + 1);
+			Consola::setTextColor(Consola::BRANCO_CLARO);
+			cout << auxNavio[i]->getId();
+		}
+		if (i % 2 != 0) {
+			Consola::gotoxy(x, y);
+			Consola::setTextColor(Consola::BRANCO_CLARO);
+			cout << auxNavio[i]->getId();
+
+			Consola::gotoxy(x + 1, y);
+			Consola::setTextColor(Consola::BRANCO_CLARO);
+			cout << auxNavio[i]->getId();
+
+			Consola::gotoxy(x, y + 1);
+			Consola::setTextColor(Consola::BRANCO_CLARO);
+			cout << auxNavio[i]->getId();
+
+			Consola::gotoxy(x + 1, y + 1);
+			Consola::setTextColor(Consola::BRANCO_CLARO);
+			cout << auxNavio[i]->getId();
+		}
+
 	}
 }
 void Interface::mostraMapa() {
