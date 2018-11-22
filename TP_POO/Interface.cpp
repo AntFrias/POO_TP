@@ -63,12 +63,18 @@ void Interface::Prompt() {
 
 		PromptFase2(linha);
 		
+		mundo.moveNavioAuto();
+
 		//execução de comando pendentes | comportamentos automaticos
 		//combates
 		//eventos
 		//piratas
 
-		mostraMapa();
+		//mostraMapa();
+		/*Consola::gotoxy(10, 20);
+		cout << char(254);
+		Consola::gotoxy(20, 10);
+		cout << char(253);*/
 
 		Consola::getch();
 
@@ -147,10 +153,10 @@ bool Interface::carregaFich(string configFile) {
 			switch (verificaDadosFicheiro(linha)) {
 
 				case nlinhas:
-					this->linhas = inteiro;
+					mundo.setDimX(inteiro);
 					break;
 				case ncolunas:
-					this->colunas = inteiro;
+					mundo.setDimY(inteiro);
 					break;
 				case nmoedas:
 					this->moedas = inteiro;
@@ -195,7 +201,7 @@ bool Interface::carregaFich(string configFile) {
 		}
 		else {
 			buffer >> linha;
-			for (int i = 0; i < this->colunas; i++) {
+			for (int i = 0; i < mundo.getDimY(); i++) {
 				if (linha[i] == '.') {
 
 					this->mundo.criaCelulaMar(i, contaLinhas);
@@ -280,6 +286,7 @@ void Interface::PromptFase2(string linha) {
 
 	char tipo;
 	string acao;
+	int idNavio;
 	istringstream buffer(linha);
 
 	if (buffer >> acao){
@@ -319,8 +326,6 @@ void Interface::PromptFase2(string linha) {
 				gotoPrint();
 				cout << "Saldo atual do Jogador: " << jogador.getMoedas() << endl;
 				mostraNaviosJogador();
-				mundo.moveNavio(1, moveEsquerda);
-				mostraNaviosJogador();
 			break;
 		case com_vendenav:
 			gotoErro();
@@ -343,8 +348,17 @@ void Interface::PromptFase2(string linha) {
 			cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
 			break;
 		case com_auto:
-			gotoErro();
-			cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
+			if (buffer >> idNavio) {
+				if (!ativoModeAuto(idNavio)){
+					gotoErro();
+					cout << "[ Id introduzido: " << idNavio << " invalido " << endl;
+				}
+
+			}
+			else {
+				gotoErro();
+				cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
+			}
 			break;
 		case com_stop:
 			gotoErro();
@@ -701,7 +715,15 @@ void Interface::mostraMapa() {
 	mostraLegAndConfig();
 };
 
+bool Interface::ativoModeAuto(int idNavio) {
 
+	if (mundo.validaIdNavio(idNavio)) {
+		return true;
+	}
+
+	return false;
+
+}
 Interface::~Interface()
 {
 }

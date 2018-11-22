@@ -11,20 +11,44 @@ void Mundo::moveNavio(int id,int direcao) {
 	for (unsigned int i = 0; i < navios.size(); i++) {
 		
 		if (navios[i]->getId() == id) {
-
+			cout << "antes-> id " << id <<" X : " << navios[i]->getX() << "Y : " << navios[i]->getY() << endl;
 			switch (direcao) {
 
 			case moveEsquerda:
-				x = navios[i]->getX() - 1;
+				x = navios[i]->getY() - 1;
 				//e ver se a nova pos está dentro de agua!
 				if (x >= 0) {
-					navios[i]->setX(navios[i]->getX() - 1);
+					navios[i]->setY(x);
+				}
+				break;
+			case moveDireita:
+				x = navios[i]->getY() + 1;
+				//e ver se a nova pos está dentro de agua!
+				if (x < getDimX() ) {
+					navios[i]->setY(x);
+				}
+				break;
+			case moveCima:
+				y = navios[i]->getX() - 1;
+				//e ver se a nova pos está dentro de agua!
+				if (y >= 0) {
+					navios[i]->setX(y);
+				}
+				break;
+			case moveBaixo:
+				y = navios[i]->getX() + 1;
+				//e ver se a nova pos está dentro de agua!
+				if (y < dimX) {
+					//Consola::gotoxy(62, 23);
+					
+					navios[i]->setX(y);
 				}
 				break;
 			default:
 				break;
 			}
 		}
+		cout << "depois -> id " << id << " X :  " << navios[i]->getX() << " Y : " << navios[i]->getY() << endl;
 	}
 }
 Navios & Mundo::criaNavio(const char tipo) {
@@ -96,7 +120,52 @@ const vector<const Navios*> Mundo::getVetorNavios() const
 {
 	return vector<const Navios *>(this->navios.begin(), this->navios.end());
 }
+bool Mundo::validaIdNavio(int idNavio) {
 
+
+	for (unsigned int i = 0; i < navios.size(); i++) {
+
+		if (navios[i]->getId() == idNavio) {
+			navios[i]->setAutoMove(true);
+			return true;
+		}
+
+	}
+	return false;
+
+}
+
+void Mundo::moveNavioAuto() {
+
+
+	for (unsigned int i = 0; i < navios.size(); i++) {
+		if (navios[i]->getAutoMove()==true) {
+
+			unsigned int direcao;
+			direcao = rand() % 4 + 1;
+
+			moveNavio(navios[i]->getId(), direcao);
+
+
+		}
+	}
+	
+
+}
+void Mundo::setDimX(int xMax) {
+	this->dimX = xMax;
+}
+void Mundo::setDimY(int yMax) {
+	this->dimY = yMax;
+}
+
+const int Mundo::getDimX()const {
+	return this->dimX;
+}
+
+const int Mundo::getDimY() const{
+	return this->dimY;
+}
 Mundo::~Mundo()
 {
 }
