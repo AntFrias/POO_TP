@@ -15,6 +15,12 @@
 #define CELULA_TERRA 2 
 #define CELULA_PORTO 3
 
+#define AUTOMOVE_ON 1
+#define AUTOMOVE_OFF 0
+
+#define INVAL_MOVE 0
+#define VAL_MOVE 1
+
 enum movimentosNavios {
 	
 	naoMove = 0,
@@ -48,7 +54,7 @@ class Mundo {
 public:
 	Mundo();
 
-	void moveNavio(int id, int direcao);
+	int moveNavio(int id, int direcao);
 
 	const char getPortoPrincipal();
 	
@@ -73,6 +79,8 @@ public:
 	bool validaIdNavio(int idNavio);
 
 	void AlteraAutoMoveNavio(int idNavio, int autoMove);
+
+	bool verificaModoAutomaticoNavio(int idNavio);
 
 	void setDimX(int xMax);
 

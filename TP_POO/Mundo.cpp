@@ -15,9 +15,9 @@ int Mundo::verificaCelula(int x, int y) {
 
 	return 0;
 }
-void Mundo::moveNavio(int id,int direcao) {
+int Mundo::moveNavio(int id,int direcao) {
 	
-	signed int x, y;
+	signed int x, y, ValidaMove = INVAL_MOVE;
 
 	for (unsigned int i = 0; i < navios.size(); i++) {
 		if (navios[i]->getId() == id) {
@@ -28,6 +28,7 @@ void Mundo::moveNavio(int id,int direcao) {
 				//e ver se a nova pos está dentro de agua!
 				if (x >= 0 && verificaCelula( x, navios[i]->getY()) == CELULA_MAR) {
 					navios[i]->setX(x);
+					ValidaMove = VAL_MOVE;
 				}
 				break;
 			case moveDireita:
@@ -35,6 +36,7 @@ void Mundo::moveNavio(int id,int direcao) {
 				//e ver se a nova pos está dentro de agua!
 				if (x < dimX && verificaCelula(x, navios[i]->getY()) == CELULA_MAR) {
 					navios[i]->setX(x);
+					ValidaMove = VAL_MOVE;
 				}
 				break;
 			case moveCima:
@@ -42,20 +44,21 @@ void Mundo::moveNavio(int id,int direcao) {
 				//e ver se a nova pos está dentro de agua!
 				if (y >= 0 && verificaCelula(navios[i]->getX(), y) == CELULA_MAR) {
 					navios[i]->setY(y);
+					ValidaMove = VAL_MOVE;
 				}
 				break;
 			case moveBaixo:
 				y = navios[i]->getY() + 1;
 				//e ver se a nova pos está dentro de agua!
 				if (y < dimY && verificaCelula(navios[i]->getX(), y) == CELULA_MAR) {
-					//Consola::gotoxy(62, 23);
-					
 					navios[i]->setY(y);
+					ValidaMove = VAL_MOVE;
 				}
 				break;
 			}
 		}
 	}
+	return ValidaMove;
 }
 Navios & Mundo::criaNavio(const char tipo) {
 
@@ -143,6 +146,15 @@ void Mundo::AlteraAutoMoveNavio(int idNavio, int autoMove) {
 		if (navios[i]->getId() == idNavio) 
 			navios[i]->setAutoMove(autoMove);
 	}
+}
+bool Mundo::verificaModoAutomaticoNavio(int idNavio) {
+
+	for (unsigned int i = 0; i < this->navios.size(); i++)
+		if ( navios[i]->getId() == idNavio)
+			if (navios[i]->getAutoMove() == AUTOMOVE_ON)
+				return true;
+	
+	return false;
 }
 void Mundo::moveNavioAuto() {
 
