@@ -12,8 +12,9 @@
 #include "Navios.h"
 
 enum movimentosNavios {
-
-	moveCima = 1,
+	
+	naoMove = 0,
+	moveCima,
 	moveBaixo,
 	moveEsquerda,
 	moveDireita,
@@ -63,6 +64,8 @@ public:
 	const vector<const Navios*> getVetorNavios() const;
 
 	bool validaIdNavio(int idNavio);
+
+	bool desvalidaIdNavio(int idNavio);
 
 	void setDimX(int xMax);
 
