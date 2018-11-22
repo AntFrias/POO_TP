@@ -11,6 +11,10 @@
 #include "Porto.h"
 #include "Navios.h"
 
+#define CELULA_MAR 1 
+#define CELULA_TERRA 2 
+#define CELULA_PORTO 3
+
 enum movimentosNavios {
 	
 	naoMove = 0,
@@ -20,8 +24,9 @@ enum movimentosNavios {
 	moveDireita,
 	moveCimaEsquerda,
 	moveCimaDireita,
-	moveBaixoDireita,
-	moveBaixoEsquerda
+	moveBaixoEsquerda,
+	moveBaixoDireita
+	
 
 };
 
@@ -62,10 +67,12 @@ public:
 	const vector<const Porto*> getVetorPorto() const;
 
 	const vector<const Navios*> getVetorNavios() const;
+	
+	int verificaCelula(int x, int y);
 
 	bool validaIdNavio(int idNavio);
 
-	bool desvalidaIdNavio(int idNavio);
+	void AlteraAutoMoveNavio(int idNavio, int autoMove);
 
 	void setDimX(int xMax);
 
@@ -76,8 +83,6 @@ public:
 	const int getDimY() const;
 
 	void moveNavioAuto();
-
-	
 
 	~Mundo();
 };
