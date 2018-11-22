@@ -51,6 +51,12 @@ void Navios::setY(int y) {
 
 	this->y=y;
 }
+void Navios::setAutoMove(bool move) {
+	this->autoMove = move;
+}
+bool Navios::getAutoMove() {
+	return this->autoMove;
+}
 
 Navios::~Navios()
 {

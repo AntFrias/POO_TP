@@ -19,7 +19,7 @@ using namespace std;
 #define PRECO_VELEIRO 100
 #define PRECO_GALEAO 220
 #define PRECO_ESCUNA 150
-#define PRECO_FRAGATA 300
+#define PRECO_FRAGATA 5
 #define PRECO_SUBMARINO 500
 
 #define COMPRA_COM_SUCESSO 0
@@ -75,7 +75,6 @@ class Interface
 
 	Jogador jogador;
 
-	int linhas, colunas;
 	int moedas;
 	int probPirata;
 	int precoNavio;
@@ -111,6 +110,7 @@ public:
 	void gotoErro();
 	void gotoPrint();
 	void mostraMapa();
+	bool ativoModeAuto(int idNavio);
 	int verificaDadosFicheiro(string linha);
 	bool carregaFich(string configfich);
 

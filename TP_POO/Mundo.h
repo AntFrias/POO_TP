@@ -30,6 +30,8 @@ class Jogador;
 
 class Mundo {
 
+	int dimX;
+	int dimY;
 
 	vector<Mar*> mar; 
 	vector<Terra*> terra;
@@ -60,6 +62,19 @@ public:
 
 	const vector<const Navios*> getVetorNavios() const;
 
+	bool validaIdNavio(int idNavio);
+
+	void setDimX(int xMax);
+
+	void setDimY(int yMax);
+
+	const int getDimX() const;
+
+	const int getDimY() const;
+
+	void moveNavioAuto();
+
+	
 
 	~Mundo();
 };
