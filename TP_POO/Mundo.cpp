@@ -11,44 +11,42 @@ void Mundo::moveNavio(int id,int direcao) {
 	for (unsigned int i = 0; i < navios.size(); i++) {
 		
 		if (navios[i]->getId() == id) {
-			cout << "antes-> id " << id <<" X : " << navios[i]->getX() << "Y : " << navios[i]->getY() << endl;
 			switch (direcao) {
-
+			
 			case moveEsquerda:
-				x = navios[i]->getY() - 1;
+				x = navios[i]->getX() - 1;
 				//e ver se a nova pos está dentro de agua!
 				if (x >= 0) {
-					navios[i]->setY(x);
+					navios[i]->setX(x);
 				}
 				break;
 			case moveDireita:
-				x = navios[i]->getY() + 1;
+				x = navios[i]->getX() + 1;
 				//e ver se a nova pos está dentro de agua!
-				if (x < getDimX() ) {
-					navios[i]->setY(x);
+				if (x < dimX ) {
+					navios[i]->setX(x);
 				}
 				break;
 			case moveCima:
-				y = navios[i]->getX() - 1;
+				y = navios[i]->getY() - 1;
 				//e ver se a nova pos está dentro de agua!
 				if (y >= 0) {
-					navios[i]->setX(y);
+					navios[i]->setY(y);
 				}
 				break;
 			case moveBaixo:
-				y = navios[i]->getX() + 1;
+				y = navios[i]->getY() + 1;
 				//e ver se a nova pos está dentro de agua!
-				if (y < dimX) {
+				if (y < dimY) {
 					//Consola::gotoxy(62, 23);
 					
-					navios[i]->setX(y);
+					navios[i]->setY(y);
 				}
 				break;
 			default:
 				break;
 			}
 		}
-		cout << "depois -> id " << id << " X :  " << navios[i]->getX() << " Y : " << navios[i]->getY() << endl;
 	}
 }
 Navios & Mundo::criaNavio(const char tipo) {
@@ -134,6 +132,20 @@ bool Mundo::validaIdNavio(int idNavio) {
 	return false;
 
 }
+bool Mundo::desvalidaIdNavio(int idNavio) {
+
+
+	for (unsigned int i = 0; i < navios.size(); i++) {
+
+		if (navios[i]->getId() == idNavio) {
+			navios[i]->setAutoMove(false);
+			return true;
+		}
+
+	}
+	return false;
+
+}
 
 void Mundo::moveNavioAuto() {
 
@@ -142,7 +154,7 @@ void Mundo::moveNavioAuto() {
 		if (navios[i]->getAutoMove()==true) {
 
 			unsigned int direcao;
-			direcao = rand() % 4 + 1;
+			direcao = rand() % 5 + 1;
 
 			moveNavio(navios[i]->getId(), direcao);
 

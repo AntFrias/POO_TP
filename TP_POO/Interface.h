@@ -111,6 +111,7 @@ public:
 	void gotoPrint();
 	void mostraMapa();
 	bool ativoModeAuto(int idNavio);
+	bool desativoModeAuto(int idNavio);
 	int verificaDadosFicheiro(string linha);
 	bool carregaFich(string configfich);
 
