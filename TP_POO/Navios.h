@@ -14,6 +14,7 @@ class Navios
 	int x, y;
 	static int IncNavio;
 	int id;
+	bool autoMove;
 	int preco;
 	char tipo;
 	int quantSoldados;
@@ -23,14 +24,17 @@ class Navios
 public:
 	Navios();
 	/*Navios(int preco, int tipo, int quantSoldados, int quantAgua);*/
-	Navios(char tipo, const int x, const int y);
+	Navios(char tipo,int x,int y);
 	const int getX()const;
 	const int getY()const;
 	void setX(int x);
+	void setY(int y);
+	void setAutoMove(bool move);
+	bool getAutoMove();
 	const int getId()const;
 	const Navios getNavio() const;	
 	int getIncNavio();
-	void setY(int y);
+	
 	~Navios();
 
 

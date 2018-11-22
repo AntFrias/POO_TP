@@ -37,7 +37,9 @@ public:
 
 	const char getPortoPrincipal();
 
-	void CriaNavioJogador(Navios & navio);
+	void addNavioJogador(Navios * navio);
+
+	const vector<const Navios*> getVetorNaviosJogador() const;
 
 	~Jogador();
 };

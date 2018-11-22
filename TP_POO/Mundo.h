@@ -11,10 +11,28 @@
 #include "Porto.h"
 #include "Navios.h"
 
+enum movimentosNavios {
+	
+	naoMove = 0,
+	moveCima,
+	moveBaixo,
+	moveEsquerda,
+	moveDireita,
+	moveCimaEsquerda,
+	moveCimaDireita,
+	moveBaixoDireita,
+	moveBaixoEsquerda
+
+};
+
 using namespace std;
+
+class Jogador;
 
 class Mundo {
 
+	int dimX;
+	int dimY;
 
 	vector<Mar*> mar; 
 	vector<Terra*> terra;
@@ -25,9 +43,11 @@ class Mundo {
 public:
 	Mundo();
 
+	void moveNavio(int id, int direcao);
+
 	const char getPortoPrincipal();
 	
-	void criaNavio(char tipo);
+	Navios & criaNavio(char tipo);
 
 	void criaCelulaMar(int x,int y);
 
@@ -43,6 +63,21 @@ public:
 
 	const vector<const Navios*> getVetorNavios() const;
 
+	bool validaIdNavio(int idNavio);
+
+	bool desvalidaIdNavio(int idNavio);
+
+	void setDimX(int xMax);
+
+	void setDimY(int yMax);
+
+	const int getDimX() const;
+
+	const int getDimY() const;
+
+	void moveNavioAuto();
+
+	
 
 	~Mundo();
 };

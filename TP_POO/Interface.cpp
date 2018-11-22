@@ -63,13 +63,15 @@ void Interface::Prompt() {
 
 		PromptFase2(linha);
 		
+		mundo.moveNavioAuto();
+
 		//execução de comando pendentes | comportamentos automaticos
 		//combates
 		//eventos
 		//piratas
 
 		mostraMapa();
-
+	
 		Consola::getch();
 
 		Consola::clrscr();
@@ -129,7 +131,7 @@ bool Interface::carregaFich(string configFile) {
 
 	fstream fp;
 
-	int inteiro, contaLinhas = 0, flag = 0;
+	int inteiro, contaColunas = 0, flag = 0;
 	string linha;
 
 	
@@ -147,10 +149,11 @@ bool Interface::carregaFich(string configFile) {
 			switch (verificaDadosFicheiro(linha)) {
 
 				case nlinhas:
-					this->linhas = inteiro;
+					mundo.setDimY(inteiro);
 					break;
 				case ncolunas:
-					this->colunas = inteiro;
+					mundo.setDimX(inteiro);
+					
 					break;
 				case nmoedas:
 					this->moedas = inteiro;
@@ -195,22 +198,22 @@ bool Interface::carregaFich(string configFile) {
 		}
 		else {
 			buffer >> linha;
-			for (int i = 0; i < this->colunas; i++) {
+			for (int i = 0; i < mundo.getDimX(); i++) {
 				if (linha[i] == '.') {
 
-					this->mundo.criaCelulaMar(i, contaLinhas);
+					this->mundo.criaCelulaMar(i, contaColunas);
 				}
 				if (linha[i] == '+') {
 
-					this->mundo.criaCelulaTerra(i, contaLinhas);
+					this->mundo.criaCelulaTerra(i, contaColunas);
 				}
 				if (linha[i] >= 'A' && linha[i] <= 'Z' || linha[i] >= 'a' && linha[i] <= 'z') {
 
-					this->mundo.criaCelulaPorto(i, contaLinhas, linha[i]);
+					this->mundo.criaCelulaPorto(i, contaColunas,linha[i] );
 
 				}
 			}
-			contaLinhas++;
+			contaColunas++;
 		}
 	}
 	fp.close();
@@ -270,16 +273,17 @@ int Interface::compraNavio(char tipo) {
 
 		validacaoCompra = ValidaCompraJogador(tipo);
 
-		if (validacaoCompra == COMPRA_COM_SUCESSO)
-			mundo.criaNavio(jogador.getPortoPrincipal());
-	
+		if (validacaoCompra == COMPRA_COM_SUCESSO) {
+			jogador.addNavioJogador(&mundo.criaNavio(jogador.getPortoPrincipal()));
+		}
 	}
 	return validacaoCompra;
 }
 void Interface::PromptFase2(string linha) {
 
 	char tipo;
-	string acao;
+	string acao,direcao;
+	int idNavio;
 	istringstream buffer(linha);
 
 	if (buffer >> acao){
@@ -318,6 +322,7 @@ void Interface::PromptFase2(string linha) {
 				}
 				gotoPrint();
 				cout << "Saldo atual do Jogador: " << jogador.getMoedas() << endl;
+				mostraNaviosJogador();
 			break;
 		case com_vendenav:
 			gotoErro();
@@ -336,16 +341,40 @@ void Interface::PromptFase2(string linha) {
 			cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
 			break;
 		case com_move:
+			if (buffer >> idNavio && buffer >> direcao) {
+					
+
+			}
+
+			
 			gotoErro();
 			cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
 			break;
 		case com_auto:
-			gotoErro();
-			cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
+			if (buffer >> idNavio) {
+				if (!ativoModeAuto(idNavio)){
+					gotoErro();
+					cout << "[ Id introduzido: " << idNavio << " invalido " << endl;
+				}
+
+			}
+			else {
+				gotoErro();
+				cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
+			}
 			break;
 		case com_stop:
-			gotoErro();
-			cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
+			if (buffer >> idNavio) {
+				if (!desativoModeAuto(idNavio)) {
+					gotoErro();
+					cout << "[ Id introduzido: " << idNavio << " invalido " << endl;
+				}
+
+			}
+			else {
+				gotoErro();
+				cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
+			}
 			break;
 		case com_pirata:
 			gotoErro();
@@ -676,6 +705,18 @@ void Interface::mostraNavios() {
 
 	}
 }
+void Interface::mostraNaviosJogador() {
+
+	const vector <const Navios *>  auxNavio = jogador.getVetorNaviosJogador();
+
+	for (unsigned int i = 0; i < auxNavio.size(); i++) {
+
+		unsigned int x = auxNavio[i]->getX();
+		unsigned int y = auxNavio[i]->getY();
+		Consola::gotoxy(45,28+i);
+		cout << "Navio: " << i << "x:" << x << "y:" << y<<endl;
+	}
+}
 void Interface::mostraMapa() {
 
 	mostraMar();
@@ -686,7 +727,24 @@ void Interface::mostraMapa() {
 	mostraLegAndConfig();
 };
 
+bool Interface::ativoModeAuto(int idNavio) {
 
+	if (mundo.validaIdNavio(idNavio)) {
+		return true;
+	}
+
+	return false;
+
+}
+bool Interface::desativoModeAuto(int idNavio) {
+
+	if (mundo.desvalidaIdNavio(idNavio)) {
+		return true;
+	}
+
+	return false;
+
+}
 Interface::~Interface()
 {
 }
