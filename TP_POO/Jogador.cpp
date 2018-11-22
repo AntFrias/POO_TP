@@ -35,10 +35,10 @@ const char Jogador::getPortoPrincipal() {
 	return this->portoPrincipal;
 
 
-}void Jogador::addNavioJogador(Navios *navio) {
+}
+void Jogador::addNavioJogador(Navios *navio) {
 
 	this->navios.push_back(navio);
-
 }
 const vector<const Navios*> Jogador::getVetorNaviosJogador() const
 {

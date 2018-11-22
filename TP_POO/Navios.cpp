@@ -13,11 +13,11 @@ Navios::Navios()
 //	this->quantSoldados = quantSoldados;
 //	this->quantAgua = quantAgua;
 //}
-Navios::Navios(char tipo,int x,int y) {
+Navios::Navios(char tipo,int x,int y, int autoMove) {
 
 	this->id = this->IncNavio++;
 	this->tipo = tipo;
-
+	this->autoMove = autoMove;
 	this->x = x;
 	this->y = y;
 	
@@ -54,7 +54,7 @@ void Navios::setY(int y) {
 void Navios::setAutoMove(bool move) {
 	this->autoMove = move;
 }
-bool Navios::getAutoMove() {
+int Navios::getAutoMove() {
 	return this->autoMove;
 }
 
