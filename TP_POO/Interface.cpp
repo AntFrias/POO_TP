@@ -114,7 +114,6 @@ void Interface::PromptFase1(string linha) {
 		cout << " [ Erro ao carregar ficheiro ] Ficheiro por default carregado com Sucesso.. !" << endl;
 	}
 }
-
 int Interface::verificaDadosFicheiro(string linha) {
 
 	vector < string > dadosEntrada = { "linhas", "colunas" , "moedas" , "probpirata", "preconavio", "precosoldado", "precovendpeixe",  "precocompmercad" ,
@@ -279,14 +278,26 @@ int Interface::compraNavio(char tipo) {
 	}
 	return validacaoCompra;
 }
+int Interface::ValidaDirecoes(string direcao) {
+
+	vector <string> direcoes = { "C", "B", "E", "D", "CE", "CD", "BE", "BD" };
+
+	for (unsigned int i = 0; i < direcoes.size(); i++) {
+		if (direcoes[i].compare(direcao) == 0)
+
+			return (i + 1);
+
+		}
+	return naoMove;
+}
 void Interface::PromptFase2(string linha) {
 
 	char tipo;
-	string acao,direcao;
+	string acao, direcao;
 	int idNavio;
 	istringstream buffer(linha);
 
-	if (buffer >> acao){
+	if (buffer >> acao) {
 		switch (FiltaComandos(acao)) {
 
 		case com_exec:
@@ -299,30 +310,30 @@ void Interface::PromptFase2(string linha) {
 			break;
 		case com_compranav:
 			buffer >> tipo;
-				if (tipo =='V' || tipo == 'G' || tipo == 'E' || tipo == 'F' || tipo == 'S') {
+			if (tipo == 'V' || tipo == 'G' || tipo == 'E' || tipo == 'F' || tipo == 'S' && count(linha.begin(), linha.end(), ' ') == 1) {
 
-					if (compraNavio(tipo) == COMPRA_COM_SUCESSO) {
-						gotoPrint();
-						cout << "Compra efetuada com sucesso!" << endl;
-					}
-					else if (compraNavio(tipo) == COMPRA_SEM_MOEDAS) {
-						gotoErro();
-						cout << "Compra não efetuada <-> Jogador Sem Moedas" << endl;
-					}
-					else if ((compraNavio(tipo) == TIPO_NAVIO_INVALIDO)) {
-						gotoErro();
-						cout << "Compra não efetuada <-> Não existe porto principal" << endl;
-					}
-				}
-				else {
-					gotoErro();
-					cout << "Parametro Tipo de Barco <T> Invalido" << endl;
+				if (compraNavio(tipo) == COMPRA_COM_SUCESSO) {
 					gotoPrint();
-					cout << "Saldo atual do Jogador: " << jogador.getMoedas() << endl;
+					cout << "Compra efetuada com sucesso!" << endl;
 				}
+				else if (compraNavio(tipo) == COMPRA_SEM_MOEDAS) {
+					gotoErro();
+					cout << "Compra não efetuada <-> Jogador Sem Moedas" << endl;
+				}
+				else if ((compraNavio(tipo) == TIPO_NAVIO_INVALIDO)) {
+					gotoErro();
+					cout << "Compra nao efetuada <-> Não existe porto principal" << endl;
+				}
+			}
+			else {
+				gotoErro();
+				cout << " [ Sintaxe " << acao << " Invalida..! Sintaxe :" << acao << " <N> ]" << endl;
 				gotoPrint();
 				cout << "Saldo atual do Jogador: " << jogador.getMoedas() << endl;
-				mostraNaviosJogador();
+			}
+			gotoPrint();
+			cout << "Saldo atual do Jogador: " << jogador.getMoedas() << endl;
+			mostraNaviosJogador();
 			break;
 		case com_vendenav:
 			gotoErro();
@@ -341,22 +352,35 @@ void Interface::PromptFase2(string linha) {
 			cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
 			break;
 		case com_move:
-			if (buffer >> idNavio && buffer >> direcao) {
-					
+			if (buffer >> idNavio && buffer >> direcao && count(linha.begin(), linha.end(), ' ') == 2) {
 
+				if (ValidaDirecoes(direcao))
+					if (mundo.validaIdNavio(idNavio) == true)
+						if (!mundo.verificaModoAutomaticoNavio(idNavio))
+							if (mundo.moveNavio(idNavio, ValidaDirecoes(direcao)) == VAL_MOVE)
+								cout << "[ Movimentacao Efetuada com Sucesso..! ]" << endl;
+							else
+								cout << "[ Movimentacao Não Efetuada...! ]" << endl;
+						else
+							cout << "[ Erro..! AutoMove do Navio : " << idNavio << " esta ativo ..! ]" << endl;
+					else
+						cout << "[ Erro..! Id : " << idNavio << " de Navio Invalido ..! ]" << endl;
+				else 
+					cout << "[ Erro..! Direcao : " << direcao << " de Navio Invalido ..! ]" << endl;
 			}
-
-			
-			gotoErro();
-			cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
+			else {
+				gotoErro();
+				cout << " [ Sintaxe " << acao << "Invalida..! Use" << acao << "<N> <X> || nota: X = C,B,D,E,CE,CD,BE,BD ]" << endl;
+			}
 			break;
 		case com_auto:
-			if (buffer >> idNavio) {
-				if (!ativoModeAuto(idNavio)){
+			if (buffer >> idNavio && count(linha.begin(), linha.end(), ' ') == 1) {
+				if (mundo.validaIdNavio(idNavio)) 
+					mundo.AlteraAutoMoveNavio(idNavio, 1);
+				else {
 					gotoErro();
-					cout << "[ Id introduzido: " << idNavio << " invalido " << endl;
+					cout << "[ Id introduzido: " << idNavio << " invalido  ]" << endl;
 				}
-
 			}
 			else {
 				gotoErro();
@@ -364,64 +388,61 @@ void Interface::PromptFase2(string linha) {
 			}
 			break;
 		case com_stop:
-			if (buffer >> idNavio) {
-				if (!desativoModeAuto(idNavio)) {
-					gotoErro();
-					cout << "[ Id introduzido: " << idNavio << " invalido " << endl;
-				}
-
+			if (buffer >> idNavio && count(linha.begin(), linha.end(), ' ') == 1) {
+				if (mundo.validaIdNavio(idNavio) == true)
+					mundo.AlteraAutoMoveNavio(idNavio, 0);
 			}
 			else {
 				gotoErro();
-				cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
+				cout << " [ Erro..! o comando introduzido está incorrecto... Sitaxe: stop <ID_N>  ]" << endl;
 			}
-			break;
-		case com_pirata:
+		
+	break;
+	case com_pirata:
+		gotoErro();
+		cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
+		break;
+	case com_evpos:
+		gotoErro();
+		cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
+		break;
+	case com_evnav:
+		gotoErro();
+		cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
+		break;
+	case com_moedas:
+		gotoErro();
+		cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
+		break;
+	case com_vaipara:
+		//este comando tem overload devido aos parametros vaipara <N> <x> <y> e vai para <N> <P>
+		gotoErro();
+		cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
+		break;
+	case com_comprasold:
+		gotoErro();
+		cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
+		break;
+	case com_saveg:
+		gotoErro();
+		cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
+		break;
+	case com_loadg:
+		gotoErro();
+		cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
+		break;
+	case com_delg:
+		gotoErro();
+		cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
+		break;
+	default:
+		if (acao != "sair") {
 			gotoErro();
-			cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
-			break;
-		case com_evpos:
-			gotoErro();
-			cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
-			break;
-		case com_evnav:
-			gotoErro();
-			cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
-			break;
-		case com_moedas:
-			gotoErro();
-			cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
-			break;
-		case com_vaipara:
-			//este comando tem overload devido aos parametros vaipara <N> <x> <y> e vai para <N> <P>
-			gotoErro();
-			cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
-			break;
-		case com_comprasold:
-			gotoErro();
-			cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
-			break;
-		case com_saveg:
-			gotoErro();
-			cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
-			break;
-		case com_loadg:
-			gotoErro();
-			cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
-			break;
-		case com_delg:
-			gotoErro();
-			cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
-			break;
-		default:
-			if (acao != "sair") {
-				gotoErro();
-				cout << " [ ERRO ] Comando Incorreto..!" << endl;
-			}
+			cout << " [ ERRO..! Comando Incorreto..!  ]" << endl;
 		}
 	}
 }
-
+}
 void Interface::mostraLegAndConfig() {
 
 	Consola::setTextColor(Consola::BRANCO);
@@ -726,25 +747,6 @@ void Interface::mostraMapa() {
 	
 	mostraLegAndConfig();
 };
-
-bool Interface::ativoModeAuto(int idNavio) {
-
-	if (mundo.validaIdNavio(idNavio)) {
-		return true;
-	}
-
-	return false;
-
-}
-bool Interface::desativoModeAuto(int idNavio) {
-
-	if (mundo.desvalidaIdNavio(idNavio)) {
-		return true;
-	}
-
-	return false;
-
-}
 Interface::~Interface()
 {
 }

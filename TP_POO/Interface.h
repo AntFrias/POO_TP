@@ -5,6 +5,7 @@
 #include <vector>
 #include <sstream>
 #include <string>
+#include <algorithm>
 
 #include "Mundo.h"
 #include "Consola.h"
@@ -19,7 +20,7 @@ using namespace std;
 #define PRECO_VELEIRO 100
 #define PRECO_GALEAO 220
 #define PRECO_ESCUNA 150
-#define PRECO_FRAGATA 5
+#define PRECO_FRAGATA 100
 #define PRECO_SUBMARINO 500
 
 #define COMPRA_COM_SUCESSO 0
@@ -98,6 +99,7 @@ public:
 	void PromptFase2(string linha);
 	int ValidaCompraJogador(char tipoNavio);
 	int compraNavio(char tipo);
+	int ValidaDirecoes(string direcao);
 	void Prompt();
 	void mostraLegAndConfig();
 	void mostraMar();
@@ -110,8 +112,6 @@ public:
 	void gotoErro();
 	void gotoPrint();
 	void mostraMapa();
-	bool ativoModeAuto(int idNavio);
-	bool desativoModeAuto(int idNavio);
 	int verificaDadosFicheiro(string linha);
 	bool carregaFich(string configfich);
 
