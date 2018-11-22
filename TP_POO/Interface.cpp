@@ -322,12 +322,12 @@ void Interface::PromptFase2(string linha) {
 				}
 				else if ((compraNavio(tipo) == TIPO_NAVIO_INVALIDO)) {
 					gotoErro();
-					cout << "Compra não efetuada <-> Não existe porto principal" << endl;
+					cout << "Compra nao efetuada <-> Não existe porto principal" << endl;
 				}
 			}
 			else {
 				gotoErro();
-				cout << " [ Sintaxe de comando " << acao << "Invalido..! Sintaxe correcta :" << acao << " <N> ]" << endl;
+				cout << " [ Sintaxe " << acao << " Invalida..! Sintaxe :" << acao << " <N> ]" << endl;
 				gotoPrint();
 				cout << "Saldo atual do Jogador: " << jogador.getMoedas() << endl;
 			}
@@ -356,15 +356,21 @@ void Interface::PromptFase2(string linha) {
 
 				if (ValidaDirecoes(direcao))
 					if (mundo.validaIdNavio(idNavio) == true)
-						mundo.moveNavio(idNavio, ValidaDirecoes(direcao));
+						if (!mundo.verificaModoAutomaticoNavio(idNavio))
+							if (mundo.moveNavio(idNavio, ValidaDirecoes(direcao)) == VAL_MOVE)
+								cout << "[ Movimentacao Efetuada com Sucesso..! ]" << endl;
+							else
+								cout << "[ Movimentacao Não Efetuada...! ]" << endl;
+						else
+							cout << "[ Erro..! AutoMove do Navio : " << idNavio << " esta ativo ..! ]" << endl;
 					else
-						cout << "[ Erro..! Id : " << idNavio << " de Navio Inválido ..!" << endl;
+						cout << "[ Erro..! Id : " << idNavio << " de Navio Invalido ..! ]" << endl;
 				else 
-					cout << "[ Erro..! Direcao : " << direcao << " de Navio Inválido ..!" << endl;
+					cout << "[ Erro..! Direcao : " << direcao << " de Navio Invalido ..! ]" << endl;
 			}
 			else {
 				gotoErro();
-				cout << " [ Sintaxe de comando " << acao << "Invalido..! Sintaxe correcta :" << acao << " <N> <X>  || nota: X = C,B,D,E,CE,CD,BE,BD ]" << endl;
+				cout << " [ Sintaxe " << acao << "Invalida..! Use" << acao << "<N> <X> || nota: X = C,B,D,E,CE,CD,BE,BD ]" << endl;
 			}
 			break;
 		case com_auto:
@@ -373,7 +379,7 @@ void Interface::PromptFase2(string linha) {
 					mundo.AlteraAutoMoveNavio(idNavio, 1);
 				else {
 					gotoErro();
-					cout << "[ Id introduzido: " << idNavio << " invalido " << endl;
+					cout << "[ Id introduzido: " << idNavio << " invalido  ]" << endl;
 				}
 			}
 			else {
@@ -388,7 +394,7 @@ void Interface::PromptFase2(string linha) {
 			}
 			else {
 				gotoErro();
-				cout << " [ Erro..! o comando introduzido está incorrecto... Sitaxe: stop <ID_N>" << endl;
+				cout << " [ Erro..! o comando introduzido está incorrecto... Sitaxe: stop <ID_N>  ]" << endl;
 			}
 		
 	break;
@@ -432,7 +438,7 @@ void Interface::PromptFase2(string linha) {
 	default:
 		if (acao != "sair") {
 			gotoErro();
-			cout << " [ ERRO ] Comando Incorreto..!" << endl;
+			cout << " [ ERRO..! Comando Incorreto..!  ]" << endl;
 		}
 	}
 }
