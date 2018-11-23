@@ -185,16 +185,16 @@ const int Mundo::getDimY() const{
 Mundo::~Mundo(){
 
 
-	for (const auto &mar : mar)
+	for (Mar *mar : mar)
 		delete mar;
 
-	for (const auto &terra : terra)
+	for (Terra *terra : terra)
 		delete terra;
 
-	for (const auto &portos : porto)
+	for (Porto *portos : porto)
 		delete portos;
 	
-	for (const auto &navios : navios)
+	for (Navios *navios : navios)
 		delete navios;
 
 }
