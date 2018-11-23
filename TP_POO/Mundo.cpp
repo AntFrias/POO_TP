@@ -182,6 +182,19 @@ const int Mundo::getDimX()const {
 const int Mundo::getDimY() const{
 	return this->dimY;
 }
-Mundo::~Mundo()
-{
+Mundo::~Mundo(){
+
+
+	for (const auto &mar : mar)
+		delete mar;
+
+	for (const auto &terra : terra)
+		delete terra;
+
+	for (const auto &portos : porto)
+		delete portos;
+	
+	for (const auto &navios : navios)
+		delete navios;
+
 }
