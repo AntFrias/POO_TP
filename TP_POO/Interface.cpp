@@ -641,36 +641,36 @@ void Interface::mostraPortos() {
 		if (auxPorto[i]->getChar() >= 'a' && auxPorto[i]->getChar() <= 'z') {
 			if (i % 2 == 0) {
 				Consola::gotoxy(x, y);
-				Consola::setTextColor(Consola::VERDE);
+				Consola::setTextColor(Consola::VERMELHO);
 				cout << auxPorto[i]->getChar();
 
 				Consola::gotoxy(x + 1, y);
-				Consola::setTextColor(Consola::VERDE);
+				Consola::setTextColor(Consola::VERMELHO);
 				cout << auxPorto[i]->getChar();
 
 				Consola::gotoxy(x, y + 1);
-				Consola::setTextColor(Consola::VERDE);
+				Consola::setTextColor(Consola::VERMELHO);
 				cout << auxPorto[i]->getChar();
 
 				Consola::gotoxy(x + 1, y + 1);
-				Consola::setTextColor(Consola::VERDE);
+				Consola::setTextColor(Consola::VERMELHO);
 				cout << auxPorto[i]->getChar();
 			}
 			if (i % 2 != 0) {
 				Consola::gotoxy(x, y);
-				Consola::setTextColor(Consola::VERDE_CLARO);
+				Consola::setTextColor(Consola::VERMELHO_CLARO);
 				cout << auxPorto[i]->getChar();
 
 				Consola::gotoxy(x + 1, y);
-				Consola::setTextColor(Consola::VERDE_CLARO);
+				Consola::setTextColor(Consola::VERMELHO_CLARO);
 				cout << auxPorto[i]->getChar();
 
 				Consola::gotoxy(x, y + 1);
-				Consola::setTextColor(Consola::VERDE_CLARO);
+				Consola::setTextColor(Consola::VERMELHO_CLARO);
 				cout << auxPorto[i]->getChar();
 
 				Consola::gotoxy(x + 1, y + 1);
-				Consola::setTextColor(Consola::VERDE_CLARO);
+				Consola::setTextColor(Consola::VERMELHO_CLARO);
 				cout << auxPorto[i]->getChar();
 			}
 		}

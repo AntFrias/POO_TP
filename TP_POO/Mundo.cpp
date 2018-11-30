@@ -9,7 +9,7 @@ int Mundo::verificaCelula(int x, int y) {
 
 	for (unsigned int i = 0; i < this->mar.size(); i++) {
 
-		if (this->mar[i]->getX() == x && this->mar[i]->getY())
+		if (this->mar[i]->getX() == x && this->mar[i]->getY() == y)
 			return CELULA_MAR;
 	}
 
