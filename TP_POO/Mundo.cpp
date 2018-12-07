@@ -17,51 +17,7 @@ int Mundo::verificaCelula(int x, int y) {
 
 	return 0;
 }
-int Mundo::moveNavio(int id,int direcao) {
-	
-	signed int x, y, ValidaMove = INVAL_MOVE;
 
-	for (unsigned int i = 0; i < navios.size(); i++) {
-		if (navios[i]->getId() == id) {
-			switch (direcao) {
-			
-			case moveEsquerda:
-				x = navios[i]->getX() - 1;
-				//e ver se a nova pos está dentro de agua!
-				if (x >= 0 && verificaCelula( x, navios[i]->getY()) == CELULA_MAR) {
-					navios[i]->setX(x);
-					ValidaMove = VAL_MOVE;
-				}
-				break;
-			case moveDireita:
-				x = navios[i]->getX() + 1;
-				//e ver se a nova pos está dentro de agua!
-				if (x < dimX && verificaCelula(x, navios[i]->getY()) == CELULA_MAR) {
-					navios[i]->setX(x);
-					ValidaMove = VAL_MOVE;
-				}
-				break;
-			case moveCima:
-				y = navios[i]->getY() - 1;
-				//e ver se a nova pos está dentro de agua!
-				if (y >= 0 && verificaCelula(navios[i]->getX(), y) == CELULA_MAR) {
-					navios[i]->setY(y);
-					ValidaMove = VAL_MOVE;
-				}
-				break;
-			case moveBaixo:
-				y = navios[i]->getY() + 1;
-				//e ver se a nova pos está dentro de agua!
-				if (y < dimY && verificaCelula(navios[i]->getX(), y) == CELULA_MAR) {
-					navios[i]->setY(y);
-					ValidaMove = VAL_MOVE;
-				}
-				break;
-			}
-		}
-	}
-	return ValidaMove;
-}
 Navios & Mundo::criaNavio(Mundo *mundo,const char tipo) {
 
 	int x, y;
@@ -128,49 +84,14 @@ const vector<const Navios*> Mundo::getVetorNavios() const
 {
 	return vector<const Navios *>(this->navios.begin(), this->navios.end());
 }
-bool Mundo::validaIdNavio(int idNavio) {
 
+Navios * Mundo::getNavio(int id) {
 
-	for (unsigned int i = 0; i < navios.size(); i++) {
+	for (unsigned int i = 0; i < navios.size(); i++)
+		if (navios[i]->getId() == id)
+			return navios[i];
 
-		if (navios[i]->getId() == idNavio) {
-			//navios[i]->setAutoMove(true);
-			return true;
-		}
-
-	}
-	return false;
-
-}
-void Mundo::AlteraAutoMoveNavio(int idNavio, int autoMove) {
-
-	for (unsigned int i = 0; i < navios.size(); i++) {
-		if (navios[i]->getId() == idNavio) 
-			navios[i]->setAutoMove(autoMove);
-	}
-}
-bool Mundo::verificaModoAutomaticoNavio(int idNavio) {
-
-	for (unsigned int i = 0; i < this->navios.size(); i++)
-		if ( navios[i]->getId() == idNavio)
-			if (navios[i]->getAutoMove() == AUTOMOVE_ON)
-				return true;
-	
-	return false;
-}
-void Mundo::moveNavioAuto() {
-
-	for (unsigned int i = 0; i < navios.size(); i++) {
-
-		if (navios[i]->getAutoMove() == 1) {
-
-			unsigned int direcao;
-
-			direcao = rand() % 5 + 1;
-
-			moveNavio(navios[i]->getId(), direcao);
-		}
-	}
+	return nullptr;
 }
 void Mundo::setDimX(int xMax) {
 	this->dimX = xMax;

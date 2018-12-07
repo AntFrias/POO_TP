@@ -23,10 +23,44 @@ Navios::Navios(Mundo *mundo, char tipo, int x, int y, int autoMove)
 	this->x = x;
 	this->y = y;
 }
+int Navios::moveNavio(int direcao) {
 
+	switch (direcao) {
+
+	case moveEsquerda:
+		//e ver se a nova pos está dentro de agua!
+		if (x >= 0 && mundo->verificaCelula(this->x - 1, this->y) == CELULA_MAR) {
+			this->x = this->x - 1;
+			return VAL_MOVE;
+		}
+		break;
+	case moveDireita:
+		//e ver se a nova pos está dentro de agua!
+		if (x < mundo->getDimX() && mundo->verificaCelula(this->x + 1, this->y) == CELULA_MAR) {
+			this->x = this->x + 1;
+			return VAL_MOVE;
+		}
+		break;
+	case moveCima:
+		//e ver se a nova pos está dentro de agua!
+		if (y >= 0 && mundo->verificaCelula(this->x, this->y - 1) == CELULA_MAR) {
+			this->y = this->y - 1;
+			return VAL_MOVE;
+		}
+		break;
+	case moveBaixo:
+		//e ver se a nova pos está dentro de agua!
+		if (y < mundo->getDimY() && mundo->verificaCelula(this->x, this->y + 1) == CELULA_MAR) {
+			this->y = this->y + 1;
+			return VAL_MOVE;
+		}
+		break;
+	}
+	return INVAL_MOVE;
+}
 
 const int Navios::getX()const {
-
+	
 	return this->x;
 }
 const int Navios::getY()const {
