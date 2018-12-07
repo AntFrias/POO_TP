@@ -63,7 +63,7 @@ void Interface::Prompt() {
 
 		PromptFase2(linha);
 		
-		mundo.moveNavioAuto();
+		jogador.moveNavioAuto();
 
 		//execução de comando pendentes | comportamentos automaticos
 		//combates
@@ -356,9 +356,9 @@ void Interface::PromptFase2(string linha) {
 			if (buffer >> idNavio && buffer >> direcao && count(linha.begin(), linha.end(), ' ') == 2) {
 
 				if (ValidaDirecoes(direcao))
-					if (mundo.validaIdNavio(idNavio) == true)
-						if (!mundo.verificaModoAutomaticoNavio(idNavio))
-							if (mundo.moveNavio(idNavio, ValidaDirecoes(direcao)) == VAL_MOVE)
+					if (jogador.validaIdNavio(idNavio) == true)
+						if (!jogador.verificaModoAutomaticoNavio(idNavio))
+							if (jogador.moveNavioJogador(idNavio, ValidaDirecoes(direcao)) == VAL_MOVE)
 								cout << "[ Movimentacao Efetuada com Sucesso..! ]" << endl;
 							else
 								cout << "[ Movimentacao Não Efetuada...! ]" << endl;
@@ -376,8 +376,8 @@ void Interface::PromptFase2(string linha) {
 			break;
 		case com_auto:
 			if (buffer >> idNavio && count(linha.begin(), linha.end(), ' ') == 1) {
-				if (mundo.validaIdNavio(idNavio)) 
-					mundo.AlteraAutoMoveNavio(idNavio, 1);
+				if (jogador.validaIdNavio(idNavio)) 
+					jogador.AlteraAutoMoveNavio(idNavio, 1);
 				else {
 					gotoErro();
 					cout << "[ Id introduzido: " << idNavio << " invalido  ]" << endl;
@@ -390,8 +390,8 @@ void Interface::PromptFase2(string linha) {
 			break;
 		case com_stop:
 			if (buffer >> idNavio && count(linha.begin(), linha.end(), ' ') == 1) {
-				if (mundo.validaIdNavio(idNavio) == true)
-					mundo.AlteraAutoMoveNavio(idNavio, 0);
+				if (jogador.validaIdNavio(idNavio) == true)
+					jogador.AlteraAutoMoveNavio(idNavio, 0);
 			}
 			else {
 				gotoErro();

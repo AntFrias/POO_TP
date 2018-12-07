@@ -11,6 +11,9 @@
 #include "Porto.h"
 
 
+#define AUTOMOVE_ON 1
+#define AUTOMOVE_OFF 0
+
 using namespace std;
 
 class Jogador
@@ -38,6 +41,16 @@ public:
 	const char getPortoPrincipal();
 
 	void addNavioJogador(Navios * navio);
+
+	bool verificaModoAutomaticoNavio(int idNavio);
+
+	int moveNavioJogador(int id, int direcao);
+
+	void moveNavioAuto();
+
+	bool validaIdNavio(int idNavio);
+
+	void AlteraAutoMoveNavio(int idNavio, int autoMove);
 
 	const vector<const Navios*> getVetorNaviosJogador() const;
 
