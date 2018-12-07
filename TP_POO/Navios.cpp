@@ -1,5 +1,5 @@
 #include "Navios.h"
-
+#include "Mundo.h"
 
 Navios::Navios()
 {
@@ -13,15 +13,18 @@ Navios::Navios()
 //	this->quantSoldados = quantSoldados;
 //	this->quantAgua = quantAgua;
 //}
-Navios::Navios(char tipo,int x,int y, int autoMove) {
 
+Navios::Navios(Mundo *mundo, char tipo, int x, int y, int autoMove)
+{
+	this->mundo = mundo;
 	this->id = this->IncNavio++;
 	this->tipo = tipo;
 	this->autoMove = autoMove;
 	this->x = x;
 	this->y = y;
-	
 }
+
+
 const int Navios::getX()const {
 
 	return this->x;

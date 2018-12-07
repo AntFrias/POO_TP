@@ -1,6 +1,8 @@
 #include "Mundo.h"
 #include "Jogador.h"
 using namespace std;
+
+
 Mundo::Mundo() {
 
 }
@@ -60,7 +62,7 @@ int Mundo::moveNavio(int id,int direcao) {
 	}
 	return ValidaMove;
 }
-Navios & Mundo::criaNavio(const char tipo) {
+Navios & Mundo::criaNavio(Mundo *mundo,const char tipo) {
 
 	int x, y;
 	Navios *aux;
@@ -73,7 +75,7 @@ Navios & Mundo::criaNavio(const char tipo) {
 			y = porto[i]->getY();
 		}
 	}
-	aux = new Navios(tipo, x, y);
+	aux = new Navios(mundo,tipo, x, y);
 	
 	this->navios.push_back(aux);
 

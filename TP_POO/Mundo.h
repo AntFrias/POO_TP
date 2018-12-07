@@ -52,13 +52,14 @@ class Mundo {
 
 
 public:
+
 	Mundo();
 
 	int moveNavio(int id, int direcao);
-
+	
 	const char getPortoPrincipal();
 	
-	Navios & criaNavio(char tipo);
+	Navios & criaNavio(Mundo *mundo,char tipo);
 
 	void criaCelulaMar(int x,int y);
 
