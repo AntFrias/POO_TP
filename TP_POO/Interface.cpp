@@ -273,7 +273,8 @@ int Interface::compraNavio(char tipo) {
 		validacaoCompra = ValidaCompraJogador(tipo);
 
 		if (validacaoCompra == COMPRA_COM_SUCESSO) {
-			jogador.addNavioJogador(&mundo.criaNavio(jogador.getPortoPrincipal()));
+
+			jogador.addNavioJogador(&mundo.criaNavio(&mundo,jogador.getPortoPrincipal()));
 		}
 	}
 	return validacaoCompra;
@@ -739,6 +740,8 @@ void Interface::mostraNaviosJogador() {
 	}
 }
 void Interface::mostraMapa() {
+
+	
 
 	mostraMar();
 	mostraTerra();

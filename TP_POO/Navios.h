@@ -7,10 +7,15 @@
 #include <string>
 
 
+
 using namespace std;
+
+class Mundo;
+
 
 class Navios
 {
+	Mundo *mundo;
 	int x, y;
 	static int IncNavio;
 	int id;
@@ -24,7 +29,7 @@ class Navios
 public:
 	Navios();
 	/*Navios(int preco, int tipo, int quantSoldados, int quantAgua);*/
-	Navios(char tipo,int x,int y, int autoMove = 0);
+	Navios(Mundo *mundo, char tipo,int x,int y, int autoMove = 0);
 	const int getX()const;
 	const int getY()const;
 	void setX(int x);
