@@ -6,11 +6,20 @@
 #include <sstream>
 #include <string>
 
+#define CELULA_MAR 1 
+#define CELULA_TERRA 2 
+#define CELULA_PORTO 3
+
+#define INVAL_MOVE 0
+#define VAL_MOVE 1
 
 using namespace std;
 
+class Mundo;
+
 class Navios
 {
+	Mundo *mundo;
 	int x, y;
 	static int IncNavio;
 	int id;
@@ -24,7 +33,8 @@ class Navios
 public:
 	Navios();
 	/*Navios(int preco, int tipo, int quantSoldados, int quantAgua);*/
-	Navios(char tipo,int x,int y, int autoMove = 0);
+	Navios(Mundo *mundo, char tipo,int x,int y, int autoMove = 0);
+	int moveNavio(int direcao);
 	const int getX()const;
 	const int getY()const;
 	void setX(int x);
