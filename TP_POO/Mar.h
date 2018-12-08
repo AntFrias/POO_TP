@@ -1,24 +1,17 @@
 #ifndef MAR_H
 #define MAR_H
-using namespace std;
-class Mar {
 
-	char t;
-	int x, y;
+#include "Superficie.h"
 
+class Mar : public Superficie {
 
+	char tipo;
 
 public:
-	Mar(int x,int y, char t='.');
 
-	const int getX()const ;
-
-	const int getY() const;
-
-	const char getChar() const;
-
-	Mar & getMar();
-
+	Mar(int x, int y, char auxtipo = '.') : tipo(auxtipo), Superficie(x, y) {}
+	virtual char getTipo()const;
 	~Mar();
 };
-#endif //MAR_H
+
+#endif // !MAR_H
