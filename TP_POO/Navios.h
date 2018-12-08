@@ -9,6 +9,7 @@
 #define CELULA_MAR 1 
 #define CELULA_TERRA 2 
 #define CELULA_PORTO 3
+#define CELULA_NAVIO 4
 
 #define INVAL_MOVE 0
 #define VAL_MOVE 1
