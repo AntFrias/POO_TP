@@ -64,7 +64,9 @@ public:
 
 	const vector<const Navios*> getVetorNavios() const;
 	
-	int verificaCelula(int x, int y);
+	int verificaCelulaMar(int x, int y);
+
+	int verificaCelulaNavio(int x, int y);
 
 	Navios * getNavio(int id);
 

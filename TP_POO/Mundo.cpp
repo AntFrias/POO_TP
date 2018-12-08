@@ -7,12 +7,21 @@ Mundo::Mundo() {
 
 }
 
-int Mundo::verificaCelula(int x, int y) {
+int Mundo::verificaCelulaMar(int x, int y) {
 
 	for (unsigned int i = 0; i < this->superficie.size(); i++) {
 	if(superficie[i]->getTipo() == '.')
 		if (this->superficie[i]->getX() == x && this->superficie[i]->getY() == y)
 			return CELULA_MAR;
+	}
+	
+	return 0;
+}
+int Mundo::verificaCelulaNavio(int x, int y) {
+
+	for (unsigned int i = 0; i < this->navios.size(); i++) {
+		if (navios[i]->getX() == x && navios[i]->getY() == y)
+			return CELULA_NAVIO;
 	}
 
 	return 0;
@@ -101,7 +110,7 @@ const int Mundo::getDimY() const{
 }
 Mundo::~Mundo(){
 
-	// por aqui o destrutor da superficie
+	// questionar o destrutor da superficie
 
 	for (Superficie *superficie : superficie)
 		delete superficie;
