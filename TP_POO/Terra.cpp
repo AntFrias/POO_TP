@@ -1,27 +1,9 @@
 #include "Terra.h"
 
 
-Terra::Terra(int x, int y, char t)
+char Terra::getTipo() const
 {
-	this->t = t;
-	this->x = x;
-	this->y = y;
-}
-
-const char Terra::getChar()const{
-	return this->t;
-}
-
-const int Terra::getX()const{
-	return this->x;
-}
-
-const int Terra::getY()const{
-
-	return this->y;
-}
-Terra & Terra::getTerra(){
-	return *this;
+	return this->tipo;
 }
 
 Terra::~Terra()

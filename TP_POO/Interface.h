@@ -102,8 +102,7 @@ public:
 	int ValidaDirecoes(string direcao);
 	void Prompt();
 	void mostraLegAndConfig();
-	void mostraMar();
-	void mostraTerra();
+	void mostraSuperficie();
 	void mostraPortos();
 	void mostraNavios();
 	void mostraNaviosJogador();

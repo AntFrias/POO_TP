@@ -1,18 +1,16 @@
 #ifndef TERRA_H
 #define TERRA_H
-using namespace std;
-class Terra {
 
-	char t;
-	int x, y;
+#include "Superficie.h"
+
+class Terra : public Superficie {
+
+	char tipo;
 
 public:
-	Terra(int x, int y, char t='+');
-	const char getChar()const;
-	const int getX()const;
-	const int getY()const;
-	Terra & getTerra();
+	Terra(int x, int y, char auxtipo = '+') : tipo(auxtipo), Superficie(x, y) {};
+	virtual char getTipo()const;
 	~Terra();
 };
 
-#endif //TERRA_H
+#endif // !TERRA_H

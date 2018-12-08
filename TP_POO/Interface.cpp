@@ -200,11 +200,11 @@ bool Interface::carregaFich(string configFile) {
 			for (int i = 0; i < mundo.getDimX(); i++) {
 				if (linha[i] == '.') {
 
-					this->mundo.criaCelulaMar(i, contaColunas);
+					this->mundo.criaSuperficie(i, contaColunas, linha[i]);
 				}
 				if (linha[i] == '+') {
 
-					this->mundo.criaCelulaTerra(i, contaColunas);
+					this->mundo.criaSuperficie(i, contaColunas, linha[i]);
 				}
 				if (linha[i] >= 'A' && linha[i] <= 'Z' || linha[i] >= 'a' && linha[i] <= 'z') {
 
@@ -493,102 +493,93 @@ void Interface::mostraLegAndConfig() {
 	cout << "Probabilidade Motin " << this->probMotin;
 
 }
-void Interface::mostraMar() {
+void Interface::mostraSuperficie() {
 
-	const vector <const Mar *>  auxMar = mundo.getVetorMar();
+	const vector <const Superficie *>  auxSuperficie = mundo.getVetorSuperficie();
 
-	for (unsigned int i = 0; i < auxMar.size(); i++) {
-
-		unsigned int x = auxMar[i]->getX();
-		unsigned int y = auxMar[i]->getY();
+	for (unsigned int i = 0; i < auxSuperficie.size(); i++) {
+		
+		unsigned int x = auxSuperficie[i]->getX();
+		unsigned int y = auxSuperficie[i]->getY();
 		x *= 2;
 		y *= 2;
+		
+		if (auxSuperficie[i]->getTipo() == '.') {
+			
+			if (i % 2 == 0) {
+				Consola::gotoxy(x, y);
+				Consola::setTextColor(Consola::AZUL);
+				cout << char(254);
 
-		if (i % 2 == 0) {
-			Consola::gotoxy(x, y);
-			Consola::setTextColor(Consola::AZUL);
-			cout << char(254);
+				Consola::gotoxy(x + 1, y);
+				Consola::setTextColor(Consola::AZUL);
+				cout << char(254);
 
-			Consola::gotoxy(x + 1, y);
-			Consola::setTextColor(Consola::AZUL);
-			cout << char(254);
+				Consola::gotoxy(x, y + 1);
+				Consola::setTextColor(Consola::AZUL);
+				cout << char(254);
 
-			Consola::gotoxy(x, y + 1);
-			Consola::setTextColor(Consola::AZUL);
-			cout << char(254);
+				Consola::gotoxy(x + 1, y + 1);
+				Consola::setTextColor(Consola::AZUL);
+				cout << char(254);
+			}
+			if (i % 2 != 0) {
+				Consola::gotoxy(x, y);
+				Consola::setTextColor(Consola::AZUL_CLARO);
+				cout << char(254);
 
-			Consola::gotoxy(x + 1, y + 1);
-			Consola::setTextColor(Consola::AZUL);
-			cout << char(254);
+				Consola::gotoxy(x + 1, y);
+				Consola::setTextColor(Consola::AZUL_CLARO);
+				cout << char(254);
+
+				Consola::gotoxy(x, y + 1);
+				Consola::setTextColor(Consola::AZUL_CLARO);
+				cout << char(254);
+
+				Consola::gotoxy(x + 1, y + 1);
+				Consola::setTextColor(Consola::AZUL_CLARO);
+				cout << char(254);
+			}
+
 		}
-		if (i % 2 != 0) {
-			Consola::gotoxy(x, y);
-			Consola::setTextColor(Consola::AZUL_CLARO);
-			cout << char(254);
+		if (auxSuperficie[i]->getTipo() == '+') {
+			if (i % 2 == 0) {
+				Consola::gotoxy(x, y);
+				Consola::setTextColor(Consola::AMARELO);
+				cout << char(254);
 
-			Consola::gotoxy(x + 1, y);
-			Consola::setTextColor(Consola::AZUL_CLARO);
-			cout << char(254);
+				Consola::gotoxy(x + 1, y);
+				Consola::setTextColor(Consola::AMARELO);
+				cout << char(254);
 
-			Consola::gotoxy(x, y + 1);
-			Consola::setTextColor(Consola::AZUL_CLARO);
-			cout << char(254);
+				Consola::gotoxy(x, y + 1);
+				Consola::setTextColor(Consola::AMARELO);
+				cout << char(254);
 
-			Consola::gotoxy(x + 1, y + 1);
-			Consola::setTextColor(Consola::AZUL_CLARO);
-			cout << char(254);
+				Consola::gotoxy(x + 1, y + 1);
+				Consola::setTextColor(Consola::AMARELO);
+				cout << char(254);
+			}
+			if (i % 2 != 0) {
+				Consola::gotoxy(x, y);
+				Consola::setTextColor(Consola::AMARELO_CLARO);
+				cout << char(254);
+
+				Consola::gotoxy(x + 1, y);
+				Consola::setTextColor(Consola::AMARELO_CLARO);
+				cout << char(254);
+
+				Consola::gotoxy(x, y + 1);
+				Consola::setTextColor(Consola::AMARELO_CLARO);
+				cout << char(254);
+
+				Consola::gotoxy(x + 1, y + 1);
+				Consola::setTextColor(Consola::AMARELO_CLARO);
+				cout << char(254);
+			}
 		}
-
 	}
 
-}
-void Interface::mostraTerra() {
-
-	const vector <const Terra *>  auxTerra = mundo.getVetorTerra();
-
-	for (unsigned int i = 0; i < auxTerra.size(); i++) {
-
-		unsigned int x = auxTerra[i]->getX();
-		unsigned int y = auxTerra[i]->getY();
-		x *= 2;
-		y *= 2;
-
-		if (i % 2 == 0) {
-			Consola::gotoxy(x, y);
-			Consola::setTextColor(Consola::AMARELO);
-			cout << char(254);
-
-			Consola::gotoxy(x + 1, y);
-			Consola::setTextColor(Consola::AMARELO);
-			cout << char(254);
-
-			Consola::gotoxy(x, y + 1);
-			Consola::setTextColor(Consola::AMARELO);
-			cout << char(254);
-
-			Consola::gotoxy(x + 1, y + 1);
-			Consola::setTextColor(Consola::AMARELO);
-			cout << char(254);
-		}
-		if (i % 2 != 0) {
-			Consola::gotoxy(x, y);
-			Consola::setTextColor(Consola::AMARELO_CLARO);
-			cout << char(254);
-
-			Consola::gotoxy(x + 1, y);
-			Consola::setTextColor(Consola::AMARELO_CLARO);
-			cout << char(254);
-
-			Consola::gotoxy(x, y + 1);
-			Consola::setTextColor(Consola::AMARELO_CLARO);
-			cout << char(254);
-
-			Consola::gotoxy(x + 1, y + 1);
-			Consola::setTextColor(Consola::AMARELO_CLARO);
-			cout << char(254);
-		}
-
-	}
 }
 void Interface::mostraPortos() {
 
@@ -743,8 +734,7 @@ void Interface::mostraMapa() {
 
 	
 
-	mostraMar();
-	mostraTerra();
+	mostraSuperficie();
 	mostraPortos();
 	mostraNavios();
 	
