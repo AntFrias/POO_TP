@@ -29,31 +29,51 @@ int Navios::moveNavio(int direcao) {
 
 	case moveEsquerda:
 		//e ver se a nova pos está dentro de agua!
-		if (x >= 0 && mundo->verificaCelula(this->x - 1, this->y) == CELULA_MAR) {
+		if (x > -1 && mundo->verificaCelulaMar(this->x - 1, this->y) == CELULA_MAR && mundo->verificaCelulaNavio(this->x - 1, this->y)!= CELULA_NAVIO ) {
 			this->x = this->x - 1;
 			return VAL_MOVE;
-		}
+		}else
+			if (x==0 && mundo->verificaCelulaMar(mundo->getDimX()-1, this->y) == CELULA_MAR && mundo->verificaCelulaNavio(mundo->getDimX()-1, this->y) != CELULA_NAVIO) {
+				this->x = mundo->getDimX() - 1;
+				return VAL_MOVE;
+			}
+
 		break;
 	case moveDireita:
 		//e ver se a nova pos está dentro de agua!
-		if (x < mundo->getDimX() && mundo->verificaCelula(this->x + 1, this->y) == CELULA_MAR) {
+		if (x < mundo->getDimX() && mundo->verificaCelulaMar(this->x + 1, this->y) == CELULA_MAR && mundo->verificaCelulaNavio(this->x + 1, this->y) != CELULA_NAVIO) {
 			this->x = this->x + 1;
 			return VAL_MOVE;
 		}
+		else
+			if (x == mundo->getDimX()-1 && mundo->verificaCelulaMar(0, this->y) == CELULA_MAR && mundo->verificaCelulaNavio(0, this->y) != CELULA_NAVIO) {
+				this->x = 0;
+				return VAL_MOVE;
+			}
 		break;
 	case moveCima:
 		//e ver se a nova pos está dentro de agua!
-		if (y >= 0 && mundo->verificaCelula(this->x, this->y - 1) == CELULA_MAR) {
+		if (y > 0 && mundo->verificaCelulaMar(this->x, this->y-1) == CELULA_MAR && mundo->verificaCelulaNavio(this->x, this->y-1) != CELULA_NAVIO) {
 			this->y = this->y - 1;
 			return VAL_MOVE;
 		}
+		else
+			if (y == 0 && mundo->verificaCelulaMar(this->x, mundo->getDimY()-1 ) == CELULA_MAR && mundo->verificaCelulaNavio(this->x, mundo->getDimY()-1) != CELULA_NAVIO) {
+				this->y = mundo->getDimY()-1;
+				return VAL_MOVE;
+			}
 		break;
 	case moveBaixo:
 		//e ver se a nova pos está dentro de agua!
-		if (y < mundo->getDimY() && mundo->verificaCelula(this->x, this->y + 1) == CELULA_MAR) {
+		if (y < mundo->getDimY() && mundo->verificaCelulaMar(this->x, this->y + 1) == CELULA_MAR && mundo->verificaCelulaNavio(this->x, this->y+1) != CELULA_NAVIO) {
 			this->y = this->y + 1;
 			return VAL_MOVE;
 		}
+		else
+			if (y == mundo->getDimY()-1 && mundo->verificaCelulaMar(this->x, 0) == CELULA_MAR && mundo->verificaCelulaNavio(this->x, 0) != CELULA_NAVIO) {
+				this->y = 0;
+				return VAL_MOVE;
+			}
 		break;
 	}
 	return INVAL_MOVE;

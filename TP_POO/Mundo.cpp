@@ -7,12 +7,21 @@ Mundo::Mundo() {
 
 }
 
-int Mundo::verificaCelula(int x, int y) {
+int Mundo::verificaCelulaMar(int x, int y) {
 
-	for (unsigned int i = 0; i < this->mar.size(); i++) {
-
-		if (this->mar[i]->getX() == x && this->mar[i]->getY() == y)
+	for (unsigned int i = 0; i < this->superficie.size(); i++) {
+	if(superficie[i]->getTipo() == '.')
+		if (this->superficie[i]->getX() == x && this->superficie[i]->getY() == y)
 			return CELULA_MAR;
+	}
+	
+	return 0;
+}
+int Mundo::verificaCelulaNavio(int x, int y) {
+
+	for (unsigned int i = 0; i < this->navios.size(); i++) {
+		if (navios[i]->getX() == x && navios[i]->getY() == y)
+			return CELULA_NAVIO;
 	}
 
 	return 0;
@@ -50,32 +59,26 @@ const char Mundo::getPortoPrincipal() {
 	return '-';
 
 }
-void Mundo::criaCelulaMar(int x, int y)
-{
+void Mundo::criaSuperficie(int x, int y, char tipo) {
 
-	this->mar.push_back(new Mar(x,y));
-
+	if (tipo == '+')
+		superficie.push_back(new Terra(x, y));
+	else
+		superficie.push_back(new Mar(x, y));
 }
-void Mundo::criaCelulaTerra(int x, int y)
-{
 
-	this->terra.push_back(new Terra(x, y));
-
-}
 void Mundo::criaCelulaPorto(int x, int y,char t)
 {
 
 	this->porto.push_back(new Porto(x, y, t));
 
 }
-const vector<const Mar*> Mundo::getVetorMar() const
+
+const vector<const Superficie*> Mundo::getVetorSuperficie() const
 {
-	return vector<const Mar *>(this->mar.begin(), this->mar.end());
+	return vector<const Superficie*>(this->superficie.begin(), this->superficie.end());
 }
-const vector<const Terra*> Mundo::getVetorTerra() const
-{
-	return vector<const Terra *>(this->terra.begin(), this->terra.end());
-}
+
 const vector<const Porto*> Mundo::getVetorPorto() const
 {
 	return vector<const Porto *>(this->porto.begin(), this->porto.end());
@@ -107,12 +110,10 @@ const int Mundo::getDimY() const{
 }
 Mundo::~Mundo(){
 
+	// questionar o destrutor da superficie
 
-	for (Mar *mar : mar)
-		delete mar;
-
-	for (Terra *terra : terra)
-		delete terra;
+	for (Superficie *superficie : superficie)
+		delete superficie;
 
 	for (Porto *portos : porto)
 		delete portos;
