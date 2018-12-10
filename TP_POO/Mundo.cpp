@@ -6,7 +6,18 @@ using namespace std;
 Mundo::Mundo() {
 
 }
+int Mundo::ValidaTipoNavio(const char tipo) {
+	cout << "CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC" << endl <<endl << tipo <<endl <<endl;
 
+	if (tipo == 'F')
+		return FRAGATA;
+	else if( tipo  == 'V')
+		return VELEIRO;
+	else if (tipo == 'E')
+		return ESCUNA;
+	else
+		return GALEAO;
+}
 int Mundo::verificaCelulaMar(int x, int y) {
 
 	for (unsigned int i = 0; i < this->superficie.size(); i++) {
@@ -27,20 +38,35 @@ int Mundo::verificaCelulaNavio(int x, int y) {
 	return 0;
 }
 
-Navios & Mundo::criaNavio(Mundo *mundo,const char tipo) {
+Navios & Mundo::criaNavio(Mundo *mundo,const char portoPrincipal, const char TipoNavio) {
 
 	int x, y;
 	Navios *aux;
 	for (unsigned int i = 0; i < porto.size(); i++) {
 
-		if (porto[i]->getChar() == tipo) {
+		if (porto[i]->getChar() == portoPrincipal) {
 
 			x = porto[i]->getX();
 
 			y = porto[i]->getY();
 		}
 	}
-	aux = new Navios(mundo,tipo, x, y);
+	
+	switch (ValidaTipoNavio(TipoNavio))
+	{
+		case VELEIRO:
+			aux = new Veleiro(mundo, x, y);
+			break;
+		case GALEAO:
+			aux = new Galeao(mundo, x, y);
+			break;
+		case ESCUNA:
+			aux = new Escuna(mundo, x, y);
+			break;
+		case FRAGATA:
+			aux = new Fragata(mundo, x, y);
+			break;
+	}
 	
 	this->navios.push_back(aux);
 

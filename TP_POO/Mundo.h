@@ -7,6 +7,11 @@
 #include <string>
 
 #include "Superficie.h"
+#include "Veleiro.h"
+#include "Galeao.h"
+#include "Escuna.h"
+#include "Fragata.h"
+
 #include "Mar.h"
 #include "Terra.h"
 #include "Porto.h"
@@ -28,6 +33,15 @@ enum movimentosNavios {
 	
 };
 
+enum TiposNavios {
+
+	FRAGATA = 1,
+	ESCUNA,
+	VELEIRO,
+	GALEAO
+
+};
+
 using namespace std;
 
 class Jogador;
@@ -46,9 +60,11 @@ public:
 
 	Mundo();
 
+	int ValidaTipoNavio(const char tipo);
+
 	const char getPortoPrincipal();
 	
-	Navios & criaNavio(Mundo *mundo,char tipo);
+	Navios & criaNavio(Mundo *mundo,char PortoPrincipal, char tipoNavio);
 
 	//void criaCelulaMar(int x,int y);
 

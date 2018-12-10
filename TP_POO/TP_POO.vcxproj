@@ -116,6 +116,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Consola.cpp" />
+    <ClCompile Include="Escuna.cpp" />
+    <ClCompile Include="Fragata.cpp" />
+    <ClCompile Include="Galeao.cpp" />
     <ClCompile Include="Interface.cpp" />
     <ClCompile Include="Jogador.cpp" />
     <ClCompile Include="main.cpp" />
@@ -125,9 +128,13 @@
     <ClCompile Include="Porto.cpp" />
     <ClCompile Include="Superficie.cpp" />
     <ClCompile Include="Terra.cpp" />
+    <ClCompile Include="Veleiro.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Consola.h" />
+    <ClInclude Include="Escuna.h" />
+    <ClInclude Include="Fragata.h" />
+    <ClInclude Include="Galeao.h" />
     <ClInclude Include="Interface.h" />
     <ClInclude Include="Jogador.h" />
     <ClInclude Include="Mar.h" />
@@ -136,6 +143,7 @@
     <ClInclude Include="Porto.h" />
     <ClInclude Include="Superficie.h" />
     <ClInclude Include="Terra.h" />
+    <ClInclude Include="Veleiro.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="configIni.txt" />
