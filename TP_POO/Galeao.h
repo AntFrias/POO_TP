@@ -9,7 +9,9 @@ class Galeao : public Navios
 	int QuantPeixe;
 
 public:
-	Galeao(Mundo *mundo, int coordx, int coordy, int numSoldados = 70) : QuantMercadoria(0), QuantPeixe(0), Navios(mundo, 'G', coordx, coordy, numSoldados, 400){};
+	Galeao(Mundo *mundo, int coordx, int coordy) : QuantMercadoria(0), QuantPeixe(0), Navios(mundo, 'G', coordx, coordy, 40, 400){};
+	virtual void AbasteceAguaNavio();
+	bool VerificaCargaNavio(int novaCarga);
 	~Galeao();
 };
 #endif // !GALEAO_H

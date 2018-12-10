@@ -6,11 +6,16 @@
 class Mar : public Superficie {
 
 	char tipo;
+	int TurnoPesca;
+	bool CardumePeixe;
 
 public:
 
-	Mar(int x, int y, char auxtipo = '.') : tipo(auxtipo), Superficie(x, y) {}
+	Mar(int x, int y, char auxtipo = '.') : tipo(auxtipo), CardumePeixe(false),TurnoPesca(0), Superficie(x, y) {}
 	virtual char getTipo()const;
+	void PescaCardumeMar(int turnoPescaria);
+	void VerificaRegenacaoPeixe(int TurnoAtual);
+	bool VerificaCardumePeixe();
 	~Mar();
 };
 

@@ -7,7 +7,8 @@ class Fragata : public Navios
 {
 
 public:
-	Fragata(Mundo *mundo, int coordx, int coordy, int numSoldados = 50) : Navios(mundo, 'F', coordx, coordy, numSoldados, 500) {};
+	Fragata(Mundo *mundo, int coordx, int coordy) : Navios(mundo, 'F', coordx, coordy, 50, 500) {};
+	virtual void AbasteceAguaNavio();
 	~Fragata();
 };
 
