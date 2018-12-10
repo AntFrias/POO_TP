@@ -68,7 +68,7 @@ void Jogador::moveNavioAuto() {
 }
 int Jogador::moveNavioJogador(int id, int direcao) {
 
-	signed int ValidaMove = INVAL_MOVE;
+	signed int ValidaMove = MOVE_INVALIDO;
 
 	for (unsigned int i = 0; i < navios.size(); i++) {
 		if (navios[i]->getId() == id)

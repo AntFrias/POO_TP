@@ -11,8 +11,21 @@
 #define CELULA_PORTO 3
 #define CELULA_NAVIO 4
 
-#define INVAL_MOVE 0
-#define VAL_MOVE 1
+#define MOVE_INVALIDO 0
+#define MOVE_VALIDO 1
+
+#define DESLOCAMENTO_NAVIO_BASE 0
+#define DESLOCAMENTO_NAVIO_RAPIDO 1
+
+#define VELEIRO_QUANT_MAX_CARGA 40
+#define GALEAO_QUANT_MAX_CARGA 70
+#define ESCUNA_QUANT_MAX_CARGA 20
+#define FRAGATA_QUANT_MAX_CARGA 0
+
+#define VELEIRO_MAX_AGUA 200
+#define GALEAO_MAX_AGUA 400
+#define ESCUNA_MAX_AGUA 100
+#define FRAGATA_MAX_AGUA 500
 
 using namespace std;
 
@@ -20,12 +33,17 @@ class Mundo;
 
 class Navios
 {
-	Mundo *mundo;
-	int x, y;
+
+
+
+
+protected:
+
 	static int IncNavio;
 	int id;
+	Mundo *mundo;
 	bool autoMove;
-	int preco;
+	int x, y;
 	char tipo;
 	int quantSoldados;
 	int quantAgua;
@@ -34,10 +52,10 @@ class Navios
 public:
 	Navios();
 	/*Navios(int preco, int tipo, int quantSoldados, int quantAgua);*/
-	Navios(Mundo *mundo, char tipo,int x,int y, int autoMove = 0);
+	Navios(Mundo *mundo, char tipo,int x,int y, int quantSoldados, int quantAgua = 0, int autoMove = false);
 	int moveNavio(int direcao);
-	const int getX()const;
-	const int getY()const;
+	int getX()const;
+	int getY()const;
 	void setX(int x);
 	void setY(int y);
 	void setAutoMove(bool move);
@@ -45,7 +63,6 @@ public:
 	const int getId()const;
 	const Navios getNavio() const;	
 	int getIncNavio();
-	
 	~Navios();
 
 
