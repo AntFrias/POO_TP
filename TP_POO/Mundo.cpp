@@ -7,8 +7,6 @@ Mundo::Mundo() {
 
 }
 int Mundo::ValidaTipoNavio(const char tipo) {
-	cout << "CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC" << endl <<endl << tipo <<endl <<endl;
-
 	if (tipo == 'F')
 		return FRAGATA;
 	else if( tipo  == 'V')
@@ -133,6 +131,16 @@ const int Mundo::getDimX()const {
 }
 const int Mundo::getDimY() const{
 	return this->dimY;
+}
+int Mundo::verificaCelulaPortoAmigo(int x, int y) {
+
+	for (unsigned int i = 0; i < this->porto.size(); i++) {
+		if ((porto[i]->getChar() >= 'A' && porto[i]->getChar() <= 'Z'))
+			if (this->porto[i]->getX() == x && this->porto[i]->getY() == y)
+				return CELULA_PORTO;
+	}
+
+	return 0;
 }
 Mundo::~Mundo(){
 

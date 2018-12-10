@@ -4,8 +4,6 @@ using namespace std;
 
 int Navios::IncNavio = 1;
 
-Interface::Interface(){
-}
 void Interface::start() {
 
 
@@ -77,6 +75,8 @@ void Interface::Prompt() {
 		Consola::clrscr();
 
 		mostraMapa();
+
+		this->Turno = this->incTurno++;
 
 	} while (linha != "sair");
 
@@ -736,7 +736,6 @@ void Interface::mostraMapa() {
 	mostraSuperficie();
 	mostraPortos();
 	mostraNavios();
-	
 	mostraLegAndConfig();
 };
 Interface::~Interface()

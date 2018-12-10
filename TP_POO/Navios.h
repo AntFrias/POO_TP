@@ -33,36 +33,38 @@ class Mundo;
 
 class Navios
 {
-
-
-
-
-protected:
-
+private:
+	Mundo *mundo;
 	static int IncNavio;
 	int id;
-	Mundo *mundo;
-	bool autoMove;
-	int x, y;
 	char tipo;
+	
+
+protected:
+	bool autoMove;
+	bool Atracado;
+	int x, y;
 	int quantSoldados;
 	int quantAgua;
 
 
 public:
 	Navios();
-	/*Navios(int preco, int tipo, int quantSoldados, int quantAgua);*/
-	Navios(Mundo *mundo, char tipo,int x,int y, int quantSoldados, int quantAgua = 0, int autoMove = false);
+	Navios(Mundo *mundo, char tipo,int x,int y, int quantSoldados, int quantAgua = 0, bool autoMove = false, bool atracado = true);
 	int moveNavio(int direcao);
+	char getTipo()const;
 	int getX()const;
 	int getY()const;
 	void setX(int x);
 	void setY(int y);
 	void setAutoMove(bool move);
 	int getAutoMove();
+	bool getNavioAtracado();
+	void setNavioAtracado(bool estado);
 	const int getId()const;
-	const Navios getNavio() const;	
+	const Navios * getNavio() const;	
 	int getIncNavio();
+	virtual void AbasteceAguaNavio() = 0;
 	~Navios();
 
 

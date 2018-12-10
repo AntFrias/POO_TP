@@ -1,10 +1,11 @@
 #include "Porto.h"
 
-Porto::Porto(int x, int y, char t)
+Porto::Porto(int x, int y, char tipoPorto)
 {
-	this->t = t;
+	this->TipoPorto = tipoPorto;
 	this->x = x;
 	this->y = y;
+	
 }
 
 const int Porto::getX() const {
@@ -17,7 +18,7 @@ const int Porto::getY() const {
 }
 const char Porto::getChar() const {
 
-	return this->t;
+	return this->TipoPorto;
 }
 Porto & Porto::getPorto()
 {

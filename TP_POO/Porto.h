@@ -1,11 +1,14 @@
 #ifndef PORTO_H
 #define PORTO_H
+
+#include "Navios.h"
+
 using namespace std;
+
 class Porto {
 
-	char t;
+	char TipoPorto;
 	int x, y;
-
 
 public:
 	Porto(int x, int y, char t);

@@ -90,10 +90,11 @@ class Interface
 	int probCalmaria;
 	int probMotin;
 
-	
+	int Turno;
+	static int incTurno;
 
 public:
-	Interface();
+	Interface() : Turno(0) {};
 	int FiltaComandos(string acao);
 	void PromptFase1(string linha);
 	void PromptFase2(string linha);
@@ -113,6 +114,7 @@ public:
 	void mostraMapa();
 	int verificaDadosFicheiro(string linha);
 	bool carregaFich(string configfich);
+	
 
 
 
