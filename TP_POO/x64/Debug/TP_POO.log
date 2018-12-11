@@ -1,12 +1,4 @@
-﻿  Consola.cpp
-  Interface.cpp
-  Jogador.cpp
+﻿  Interface.cpp
   main.cpp
-  Mar.cpp
-  Mundo.cpp
-  Navios.cpp
-  Porto.cpp
-  Superficie.cpp
-  Terra.cpp
   Generating Code...
-  TP_POO.vcxproj -> C:\Users\jpsd\Source\Repos\POO_TP\x64\Debug\TP_POO.exe
+  TP_POO.vcxproj -> C:\Users\Frias\GitHub\POO_TP\x64\Debug\TP_POO.exe

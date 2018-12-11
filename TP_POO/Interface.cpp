@@ -4,8 +4,6 @@ using namespace std;
 
 int Navios::IncNavio = 1;
 
-Interface::Interface(){
-}
 void Interface::start() {
 
 
@@ -77,6 +75,8 @@ void Interface::Prompt() {
 		Consola::clrscr();
 
 		mostraMapa();
+
+		this->Turno = this->incTurno++;
 
 	} while (linha != "sair");
 
@@ -273,8 +273,7 @@ int Interface::compraNavio(char tipo) {
 		validacaoCompra = ValidaCompraJogador(tipo);
 
 		if (validacaoCompra == COMPRA_COM_SUCESSO) {
-
-			jogador.addNavioJogador(&mundo.criaNavio(&mundo,jogador.getPortoPrincipal()));
+			jogador.addNavioJogador(&mundo.criaNavio(&mundo,jogador.getPortoPrincipal(), tipo));
 		}
 	}
 	return validacaoCompra;
@@ -358,7 +357,7 @@ void Interface::PromptFase2(string linha) {
 				if (ValidaDirecoes(direcao))
 					if (jogador.validaIdNavio(idNavio) == true)
 						if (!jogador.verificaModoAutomaticoNavio(idNavio))
-							if (jogador.moveNavioJogador(idNavio, ValidaDirecoes(direcao)) == VAL_MOVE)
+							if (jogador.moveNavioJogador(idNavio, ValidaDirecoes(direcao)) == MOVE_VALIDO)
 								cout << "[ Movimentacao Efetuada com Sucesso..! ]" << endl;
 							else
 								cout << "[ Movimentacao Não Efetuada...! ]" << endl;
@@ -737,7 +736,6 @@ void Interface::mostraMapa() {
 	mostraSuperficie();
 	mostraPortos();
 	mostraNavios();
-	
 	mostraLegAndConfig();
 };
 Interface::~Interface()

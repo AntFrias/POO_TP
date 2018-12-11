@@ -45,6 +45,18 @@
     <ClCompile Include="Mar.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Veleiro.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Galeao.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Escuna.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Fragata.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Mundo.h">
@@ -72,6 +84,18 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Mar.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Veleiro.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Galeao.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Escuna.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Fragata.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -4,6 +4,8 @@
 
 using namespace std;
 
+int Interface::incTurno = 0;
+
 int main() {
 
 

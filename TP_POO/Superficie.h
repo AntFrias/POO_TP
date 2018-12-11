@@ -1,6 +1,8 @@
 #ifndef SUPERFICIE_H
 #define SUPERFICIE_H
 
+#define TEMPO_REGENERACAO_PEIXE 3
+
 class Superficie
 {
 protected:
@@ -13,6 +15,7 @@ public:
 	int getX()const;
 	int getY()const;
 	virtual ~Superficie();
+	
 };
 
 #endif // !SUPERFICIE_H
