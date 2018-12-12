@@ -11,7 +11,9 @@ protected:
 public:
 	Superficie(int coordx, int coordy) : x(coordx), y(coordy) {};
 	// perguntar este getTipo á prof
-	virtual char getTipo() const = 0;
+	//virtual char getTipo() const = 0;
+	virtual bool VerificaCelulaMar()const = 0;
+	virtual bool VerificaCelulaTerra()const = 0;
 	int getX()const;
 	int getY()const;
 	virtual ~Superficie();

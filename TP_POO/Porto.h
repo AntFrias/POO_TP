@@ -12,6 +12,7 @@ class Porto {
 
 public:
 	Porto(int x, int y, char t);
+	bool verificaPortoAmigo();
 	const int getX() const;
 	const int getY() const;
 	const char getChar() const;

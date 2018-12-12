@@ -503,7 +503,7 @@ void Interface::mostraSuperficie() {
 		x *= 2;
 		y *= 2;
 		
-		if (auxSuperficie[i]->getTipo() == '.') {
+		if (auxSuperficie[i]->VerificaCelulaMar() ) {
 			
 			if (i % 2 == 0) {
 				Consola::gotoxy(x, y);
@@ -541,7 +541,7 @@ void Interface::mostraSuperficie() {
 			}
 
 		}
-		if (auxSuperficie[i]->getTipo() == '+') {
+		if (!auxSuperficie[i]->VerificaCelulaMar()) {
 			if (i % 2 == 0) {
 				Consola::gotoxy(x, y);
 				Consola::setTextColor(Consola::AMARELO);

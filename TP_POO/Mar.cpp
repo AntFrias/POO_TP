@@ -12,7 +12,16 @@ void Mar::PescaCardumeMar(int turnoPescaria)
 	this->TurnoPesca = turnoPescaria;
 	this->CardumePeixe = false;
 }
+bool Mar::VerificaCelulaMar()const{
 
+	return true;
+
+}
+bool Mar::VerificaCelulaTerra()const {
+
+	return false;
+
+}
 void Mar::VerificaRegenacaoPeixe(int TurnoAtual)
 {
 	if (this->CardumePeixe == false && TurnoAtual - this->TurnoPesca == TEMPO_REGENERACAO_PEIXE)
