@@ -21,7 +21,6 @@ int Mundo::verificaCelulaMar(int x, int y) {
 	for (unsigned int i = 0; i < this->superficie.size(); i++) {
 		if (this->superficie[i]->getX() == x && this->superficie[i]->getY() == y) {
 			if (superficie[i]->VerificaCelulaMar() == false){
-				cout << "Cheguei aqui  ---------------------------------------------------- mar false :   "<< CELULA_TERRA;
 				return CELULA_TERRA;
 			}
 		}
