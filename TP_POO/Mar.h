@@ -13,6 +13,8 @@ public:
 
 	Mar(int x, int y, char auxtipo = '.') : tipo(auxtipo), CardumePeixe(false),TurnoPesca(0), Superficie(x, y) {}
 	virtual char getTipo()const;
+	virtual bool VerificaCelulaMar()const;
+	bool VerificaCelulaTerra() const;
 	void PescaCardumeMar(int turnoPescaria);
 	void VerificaRegenacaoPeixe(int TurnoAtual);
 	bool VerificaCardumePeixe();

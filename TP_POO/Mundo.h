@@ -94,7 +94,7 @@ public:
 
 	const int getDimY() const;
 
-	int verificaCelulaPortoAmigo(int x, int y);
+	int verificaCelulaPorto(int x, int y);
 
 	~Mundo();
 };

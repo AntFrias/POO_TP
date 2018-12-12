@@ -8,8 +8,10 @@
 
 #define CELULA_MAR 1 
 #define CELULA_TERRA 2 
-#define CELULA_PORTO 3
-#define CELULA_NAVIO 4
+#define CELULA_PORTO_AMIGO 3
+#define CELULA_PORTO_INIMIGO 4
+#define CELULA_NAVIO 5
+#define CELULA_SEM_PORTO 6
 
 #define MOVE_INVALIDO 0
 #define MOVE_VALIDO 1
