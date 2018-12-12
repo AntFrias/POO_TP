@@ -7,7 +7,13 @@ Porto::Porto(int x, int y, char tipoPorto)
 	this->y = y;
 	
 }
+bool Porto::verificaPortoAmigo() {
 
+	if ((this->TipoPorto >= 'A' && this->TipoPorto <= 'Z'))
+		return true;
+	else
+	return false;	
+}
 const int Porto::getX() const {
 
 	return this->x;

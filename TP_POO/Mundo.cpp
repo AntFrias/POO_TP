@@ -19,12 +19,15 @@ int Mundo::ValidaTipoNavio(const char tipo) {
 int Mundo::verificaCelulaMar(int x, int y) {
 
 	for (unsigned int i = 0; i < this->superficie.size(); i++) {
-	if(superficie[i]->getTipo() == '.')
-		if (this->superficie[i]->getX() == x && this->superficie[i]->getY() == y)
-			return CELULA_MAR;
+		if (this->superficie[i]->getX() == x && this->superficie[i]->getY() == y) {
+			if (superficie[i]->VerificaCelulaMar() == false){
+				cout << "Cheguei aqui  ---------------------------------------------------- mar false :   "<< CELULA_TERRA;
+				return CELULA_TERRA;
+			}
+		}
+
 	}
-	
-	return 0;
+	return CELULA_MAR;
 }
 int Mundo::verificaCelulaNavio(int x, int y) {
 
@@ -132,15 +135,17 @@ const int Mundo::getDimX()const {
 const int Mundo::getDimY() const{
 	return this->dimY;
 }
-int Mundo::verificaCelulaPortoAmigo(int x, int y) {
-
+int Mundo::verificaCelulaPorto(int x, int y) {
+	
 	for (unsigned int i = 0; i < this->porto.size(); i++) {
-		if ((porto[i]->getChar() >= 'A' && porto[i]->getChar() <= 'Z'))
-			if (this->porto[i]->getX() == x && this->porto[i]->getY() == y)
-				return CELULA_PORTO;
+		if (porto[i]->getX() == x && porto[i]->getY() == y) {
+			if (porto[i]->verificaPortoAmigo() == true)
+				return CELULA_PORTO_AMIGO;
+			else
+				return CELULA_PORTO_INIMIGO;
+		}
 	}
-
-	return 0;
+	return CELULA_SEM_PORTO;
 }
 Mundo::~Mundo(){
 
