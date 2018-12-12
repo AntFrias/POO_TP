@@ -18,17 +18,28 @@ Navios::Navios(Mundo *mundo, char tipo, int x, int y, int quantSoldados, int qua
 	this->y = y;
 }
 int Navios::moveNavio(int direcao) {
-
+	int VerificaPorto;
 	switch (direcao) {
 
 	case moveEsquerda:
 		//e ver se a nova pos está dentro de agua!
-		if (x > 0 &&
-			(mundo->verificaCelulaMar(this->x - 1, this->y) == CELULA_MAR &&
-				mundo->verificaCelulaPorto(this->x - 1, this->y) != CELULA_PORTO_INIMIGO) &&
-			mundo->verificaCelulaNavio(this->x - 1, this->y) != CELULA_NAVIO) {
-			this->x = this->x - 1;
-			return MOVE_VALIDO;
+		if (x > 0 && (mundo->verificaCelulaMar(this->x - 1, this->y) == CELULA_MAR)){
+			VerificaPorto = mundo->verificaCelulaPorto(this->x - 1, this->y);
+			if (VerificaPorto == CELULA_PORTO_AMIGO) {
+				this->x = this->x - 1;
+				return MOVE_VALIDO;
+			}
+			if (VerificaPorto == CELULA_SEM_PORTO) {
+				if (mundo->verificaCelulaNavio(this->x - 1, this->y) != CELULA_NAVIO) {
+					this->x = this->x - 1;
+					return MOVE_VALIDO;
+				} else {
+					return MOVE_INVALIDO;
+
+				}
+			}
+			if (VerificaPorto == CELULA_PORTO_INIMIGO)
+				return MOVE_INVALIDO;	
 		}
 		else
 			if (x == 0 &&
