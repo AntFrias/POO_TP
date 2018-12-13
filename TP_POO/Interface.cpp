@@ -43,6 +43,8 @@ void Interface::Prompt() {
 	jogador.setMoedas(moedas);
 		//atribuição do porto principal
 	jogador.setPortoPrincipal( mundo.getPortoPrincipal() );
+	//chamar aqui o verificar porto bem
+
 	//
 	/*
 	______________________________________________________________________________________
@@ -99,6 +101,11 @@ void Interface::PromptFase1(string linha) {
 
 		if (carregaFich(linha)) {
 			gotoErro();
+			if (!mundo.portosBemColocado()) {
+				mundo.limpaVetores();
+
+				carregaFich(configInit);
+			}
 			cout << "Ficheiro introduzido carregado com sucesso .. !" << endl;
 		}
 		else {
@@ -216,7 +223,6 @@ bool Interface::carregaFich(string configFile) {
 		}
 	}
 	fp.close();
-
 	return true;
 }
 int Interface::ValidaCompraJogador(char tipoNavio) {

@@ -15,6 +15,8 @@ public:
 	bool verificaPortoAmigo();
 	const int getX() const;
 	const int getY() const;
+	void setX(int x);
+	void setY(int y);
 	const char getChar() const;
 	Porto & getPorto();
 	~Porto();
