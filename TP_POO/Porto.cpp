@@ -22,6 +22,14 @@ const int Porto::getY() const {
 
 	return this->y;
 }
+void Porto::setX(int x)  {
+
+	this->x = x;
+}
+void Porto::setY(int y) {
+
+	this->y = y;
+}
 const char Porto::getChar() const {
 
 	return this->TipoPorto;

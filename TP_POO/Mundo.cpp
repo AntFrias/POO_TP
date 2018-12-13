@@ -6,6 +6,41 @@ using namespace std;
 Mundo::Mundo() {
 
 }
+
+int Mundo::portosBemColocado() {
+
+
+	for (unsigned int i = 0; i < porto.size(); i++) {
+		
+		int xPorto = porto[i]->getX(), yPorto = porto[i]->getY();
+		int celulasTerra = 0;
+					
+			for (unsigned t = 0; t < superficie.size() ;t++){
+				
+				if(superficie[t]->VerificaCelulaTerra() == true){
+
+					if ((superficie[t]->getX() == xPorto-1) && (superficie[t]->getY()==yPorto)) { //esquerda
+						celulasTerra++;
+					}
+					if ((superficie[t]->getX() == xPorto + 1) && (superficie[t]->getY() == yPorto)) { //direita
+						celulasTerra++;
+					}
+					if ((superficie[t]->getX() == xPorto) && (superficie[t]->getY() == yPorto+1)) { //baixo
+						celulasTerra++;
+					}
+					if ((superficie[t]->getX() == xPorto) && (superficie[t]->getY() == yPorto-1)) { //cima
+						celulasTerra++;
+					}
+			
+				}
+			}
+			if (celulasTerra == 0) {
+				return 0;
+			}
+	}
+	return 1;
+}
+
 int Mundo::ValidaTipoNavio(const char tipo) {
 	if (tipo == 'F')
 		return FRAGATA;
@@ -134,6 +169,13 @@ const int Mundo::getDimX()const {
 const int Mundo::getDimY() const{
 	return this->dimY;
 }
+void Mundo::limpaVetores() {
+
+	superficie.clear();
+	porto.clear();
+	navios.clear();
+
+}
 int Mundo::verificaCelulaPorto(int x, int y) {
 	
 	for (unsigned int i = 0; i < this->porto.size(); i++) {
@@ -147,8 +189,6 @@ int Mundo::verificaCelulaPorto(int x, int y) {
 	return CELULA_SEM_PORTO;
 }
 Mundo::~Mundo(){
-
-	// questionar o destrutor da superficie
 
 	for (Superficie *superficie : superficie)
 		delete superficie;
