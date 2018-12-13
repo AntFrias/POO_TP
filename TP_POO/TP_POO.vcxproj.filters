@@ -57,6 +57,9 @@
     <ClCompile Include="Fragata.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Eventos.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Mundo.h">
@@ -96,6 +99,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Fragata.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Eventos.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
