@@ -117,6 +117,7 @@
   <ItemGroup>
     <ClCompile Include="Consola.cpp" />
     <ClCompile Include="Escuna.cpp" />
+    <ClCompile Include="Eventos.cpp" />
     <ClCompile Include="Fragata.cpp" />
     <ClCompile Include="Galeao.cpp" />
     <ClCompile Include="Interface.cpp" />
@@ -133,6 +134,7 @@
   <ItemGroup>
     <ClInclude Include="Consola.h" />
     <ClInclude Include="Escuna.h" />
+    <ClInclude Include="Eventos.h" />
     <ClInclude Include="Fragata.h" />
     <ClInclude Include="Galeao.h" />
     <ClInclude Include="Interface.h" />
