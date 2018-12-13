@@ -60,6 +60,8 @@ public:
 
 	Mundo();
 
+	int portosBemColocado();
+
 	int ValidaTipoNavio(const char tipo);
 
 	const char getPortoPrincipal();
@@ -93,6 +95,8 @@ public:
 	const int getDimX() const;
 
 	const int getDimY() const;
+
+	void limpaVetores();
 
 	int verificaCelulaPorto(int x, int y);
 

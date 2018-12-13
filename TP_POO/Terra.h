@@ -10,7 +10,7 @@ class Terra : public Superficie {
 public:
 	Terra(int x, int y, char auxtipo = '+') : tipo(auxtipo), Superficie(x, y) {};
 	virtual bool VerificaCelulaMar()const;
-	bool VerificaCelulaTerra() const;
+	bool VerificaCelulaTerra()const;
 	virtual char getTipo()const;
 	~Terra();
 };
