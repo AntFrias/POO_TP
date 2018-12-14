@@ -17,6 +17,38 @@ Navios::Navios(Mundo *mundo, char tipo, int x, int y, int quantSoldados, int qua
 	this->x = x;
 	this->y = y;
 }
+
+void Navios::combate() {
+
+	int xNavio = getX(), yNavio = getY();
+
+	if (mundo->verificaCelulaNavio(xNavio + 1, yNavio)== CELULA_NAVIO) {
+		cout << "Tenho um Navio para atacar à minha direita" << endl;
+	}
+	if (mundo->verificaCelulaNavio(xNavio - 1, yNavio) == CELULA_NAVIO) {
+		cout << "Tenho um Navio para atacar à minha esquerda" << endl;
+	}
+	if (mundo->verificaCelulaNavio(xNavio, yNavio-1) == CELULA_NAVIO) {
+		cout << "Tenho um Navio para atacar em cima" << endl;
+	}
+	if (mundo->verificaCelulaNavio(xNavio, yNavio+1) == CELULA_NAVIO) {
+		cout << "Tenho um Navio para atacar em baixo" << endl;
+	}
+	if (mundo->verificaCelulaNavio(xNavio + 1, yNavio-1) == CELULA_NAVIO) {
+		cout << "Tenho um Navio para atacar à minha cima direita" << endl;
+	}
+	if (mundo->verificaCelulaNavio(xNavio-1, yNavio-1) == CELULA_NAVIO) {
+		cout << "Tenho um Navio para atacar à minha cima esquerda" << endl;
+	}
+	if (mundo->verificaCelulaNavio(xNavio + 1, yNavio+1) == CELULA_NAVIO) {
+		cout << "Tenho um Navio para atacar à minha baixo direita" << endl;
+	}
+	if (mundo->verificaCelulaNavio(xNavio - 1, yNavio + 1) == CELULA_NAVIO) {
+		cout << "Tenho um Navio para atacar à minha baixo esquerda" << endl;
+	}
+
+}
+
 int Navios::FmoveEsquerda() {
 	int VerificaPorto = 0;
 	//e ver se a nova pos está dentro de agua!
