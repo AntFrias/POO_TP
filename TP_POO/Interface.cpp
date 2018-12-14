@@ -359,14 +359,15 @@ void Interface::PromptFase2(string linha) {
 			break;
 		case com_move:
 			if (buffer >> idNavio && buffer >> direcao && count(linha.begin(), linha.end(), ' ') == 2) {
-
+				Navios *auxNavio=nullptr;
 				if (ValidaDirecoes(direcao))
 					if (jogador.validaIdNavio(idNavio) == true)
-						if (!jogador.verificaModoAutomaticoNavio(idNavio))
-							if (jogador.moveNavioJogador(idNavio, ValidaDirecoes(direcao)) == MOVE_VALIDO)
+						if (!jogador.verificaModoAutomaticoNavio(idNavio)) {
+							jogador.moveNavioJogador(idNavio, ValidaDirecoes(direcao));
 								cout << "[ Movimentacao Efetuada com Sucesso..! ]" << endl;
-							else
-								cout << "[ Movimentacao Não Efetuada...! ]" << endl;
+								auxNavio = mundo.getNavio(idNavio);
+								auxNavio->combate();
+						}
 						else
 							cout << "[ Erro..! AutoMove do Navio : " << idNavio << " esta ativo ..! ]" << endl;
 					else

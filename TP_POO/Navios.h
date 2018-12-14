@@ -53,6 +53,7 @@ protected:
 public:
 	Navios();
 	Navios(Mundo *mundo, char tipo,int x,int y, int quantSoldados, int quantAgua = 0, bool autoMove = false, bool atracado = true);
+	void combate();
 	int FmoveEsquerda();
 	int FmoveDireita();
 	int FmoveCima();
