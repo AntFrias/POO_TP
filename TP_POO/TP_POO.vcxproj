@@ -115,6 +115,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Calmaria.cpp" />
     <ClCompile Include="Consola.cpp" />
     <ClCompile Include="Escuna.cpp" />
     <ClCompile Include="Eventos.cpp" />
@@ -124,14 +125,18 @@
     <ClCompile Include="Jogador.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Mar.cpp" />
+    <ClCompile Include="Motim.cpp" />
     <ClCompile Include="Mundo.cpp" />
     <ClCompile Include="Navios.cpp" />
     <ClCompile Include="Porto.cpp" />
+    <ClCompile Include="Sereia.cpp" />
     <ClCompile Include="Superficie.cpp" />
+    <ClCompile Include="Tempestade.cpp" />
     <ClCompile Include="Terra.cpp" />
     <ClCompile Include="Veleiro.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Calmaria.h" />
     <ClInclude Include="Consola.h" />
     <ClInclude Include="Escuna.h" />
     <ClInclude Include="Eventos.h" />
@@ -140,10 +145,13 @@
     <ClInclude Include="Interface.h" />
     <ClInclude Include="Jogador.h" />
     <ClInclude Include="Mar.h" />
+    <ClInclude Include="Motim.h" />
     <ClInclude Include="Mundo.h" />
     <ClInclude Include="Navios.h" />
     <ClInclude Include="Porto.h" />
+    <ClInclude Include="Sereia.h" />
     <ClInclude Include="Superficie.h" />
+    <ClInclude Include="Tempestade.h" />
     <ClInclude Include="Terra.h" />
     <ClInclude Include="Veleiro.h" />
   </ItemGroup>
