@@ -19,6 +19,34 @@ void Interface::gotoErro() {
 void Interface::gotoPrint() {
 	Consola::gotoxy(45, 27);
 }
+void Interface::GeradorEvento()
+{
+		while (mundo.getExistenciaEvento() != true) {
+			switch (rand()%4+1)
+			{
+				case EVENTO_TEMPESTADE:
+					if ((rand() % 100 + 1) <= this->probTempestade)
+						mundo.TrataEventos(EVENTO_TEMPESTADE);
+
+				break;
+				case EVENTO_SEREIAS:
+					if ((rand() % 100 + 1) <= this->probSereias)
+						mundo.TrataEventos(EVENTO_TEMPESTADE);
+	
+					break;
+				case EVENTO_CALMARIA:
+					if ((rand() % 100 + 1) <= this->probCalmaria) 
+						mundo.criaEvento(&mundo, EVENTO_CALMARIA);
+					
+					break;
+				case EVENTO_MOTIM:
+					if ((rand() % 100 + 1) <= this->probMotin)
+						mundo.criaEvento(&mundo, EVENTO_MOTIM);
+					
+					break;
+			}
+		}
+}
 // Metodo Prompt tem como objetivo tratar os comandos introduzidos pelo Jogador	
 void Interface::Prompt() {
 
@@ -64,6 +92,11 @@ void Interface::Prompt() {
 		PromptFase2(linha);
 		
 		jogador.moveNavioAuto();
+
+		if ( mundo.getExistenciaEvento() == EVENTO_OFF) 
+			GeradorEvento();
+		else 
+			mundo.TrataEventos();
 
 		//execução de comando pendentes | comportamentos automaticos
 		//combates

@@ -1,5 +1,6 @@
 #ifndef MUNDO_H
 #define MUNDO_H
+
 #include <iostream>
 #include <fstream>
 #include <vector>
@@ -12,11 +13,21 @@
 #include "Escuna.h"
 #include "Fragata.h"
 
+#include "Calmaria.h"
+#include "Motim.h"
+
 #include "Mar.h"
 #include "Terra.h"
 #include "Porto.h"
 #include "Navios.h"
 
+#define EVENTO_ON true
+#define EVENTO_OFF false
+
+#define EVENTO_TEMPESTADE 1
+#define EVENTO_SEREIAS 2
+#define EVENTO_CALMARIA 3
+#define EVENTO_MOTIM 4
 
 
 enum movimentosNavios {
@@ -44,6 +55,8 @@ enum TiposNavios {
 
 using namespace std;
 
+class Eventos;
+
 class Jogador;
 
 class Mundo {
@@ -51,14 +64,16 @@ class Mundo {
 	int dimX;
 	int dimY;
 
+	bool EstadoEvento;
+	Eventos *Evento;
+
 	vector<Superficie*> superficie;
 	vector<Porto*> porto;
 	vector<Navios*> navios;
 
-
 public:
 
-	Mundo();
+	Mundo(){};
 
 	int portosBemColocado();
 
@@ -67,10 +82,6 @@ public:
 	const char getPortoPrincipal();
 	
 	Navios & criaNavio(Mundo *mundo,char PortoPrincipal, char tipoNavio);
-
-	//void criaCelulaMar(int x,int y);
-
-	//void criaCelulaTerra(int x, int y);
 
 	void criaSuperficie(int x, int y, char tipo);
 
@@ -95,6 +106,16 @@ public:
 	const int getDimX() const;
 
 	const int getDimY() const;
+
+	bool getExistenciaEvento() const;
+
+	void setExistenciaEvento(bool estado);
+
+	void setEventoEmExecucao(Eventos *evento);
+
+	void TrataEventos(int TipoEvento = 0);
+
+	void criaEvento(Mundo *mundo, int tipo);
 
 	void limpaVetores();
 
