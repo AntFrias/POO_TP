@@ -60,12 +60,6 @@
     <ClCompile Include="Eventos.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Tempestade.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Sereia.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Calmaria.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -114,12 +108,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Eventos.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Tempestade.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Sereia.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Calmaria.h">

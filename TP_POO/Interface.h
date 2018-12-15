@@ -1,5 +1,7 @@
 #ifndef INTERFACE_H
 #define INTERFACE_H
+
+
 #include <iostream>
 #include <fstream>
 #include <vector>
@@ -11,7 +13,10 @@
 #include "Consola.h"
 #include "Jogador.h"
 
+
 using namespace std;
+
+
 #define configInit "configIni.txt"
 
 
@@ -27,7 +32,10 @@ using namespace std;
 #define COMPRA_SEM_MOEDAS -1
 #define TIPO_NAVIO_INVALIDO -2
 
-
+#define EVENTO_TEMPESTADE 1
+#define EVENTO_SEREIAS 2
+#define EVENTO_CALMARIA 3
+#define EVENTO_MOTIM 4
 
 enum IndiceComandos {
 	com_exec = 1,
@@ -111,6 +119,7 @@ public:
 	void gotoComando();
 	void gotoErro();
 	void gotoPrint();
+	void GeradorEvento();
 	void mostraMapa();
 	int verificaDadosFicheiro(string linha);
 	bool carregaFich(string configfich);

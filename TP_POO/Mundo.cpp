@@ -1,11 +1,7 @@
 #include "Mundo.h"
 #include "Jogador.h"
+
 using namespace std;
-
-
-Mundo::Mundo() {
-
-}
 
 int Mundo::portosBemColocado() {
 
@@ -169,6 +165,56 @@ const int Mundo::getDimX()const {
 const int Mundo::getDimY() const{
 	return this->dimY;
 }
+bool Mundo::getExistenciaEvento() const
+{
+	return this->EstadoEvento;
+}
+void Mundo::setExistenciaEvento(bool estado)
+{
+	this->EstadoEvento = estado;
+}
+void Mundo::setEventoEmExecucao(Eventos * evento)
+{
+	this->Evento = evento;
+}
+// por defeito o tipo de eventos vai ter valor 0 para entrar no default e executar a acao para eventos que duram mais do que 1 turno
+void Mundo::TrataEventos(int TipoEvento)
+{
+	switch (TipoEvento)
+	{
+	case EVENTO_TEMPESTADE:
+		// executa codigo para a tempestade
+		break;
+	case EVENTO_SEREIAS:
+		//executa codigo para as Sereias
+
+		break;
+	default:
+		if (Evento->ValidaEventoCalmaria() == true)
+			Evento->TrataEventoCalmaria();
+		else
+			Evento->TrataEventoMotim();
+		break;
+	}
+}
+// vai criar os eventos que duram mais que 1 turno;
+void Mundo::criaEvento(Mundo * mundo, int tipo)
+{
+	switch (tipo)
+	{
+	case EVENTO_CALMARIA:
+		this->Evento = new Calmaria(mundo);
+		TrataEventos(EVENTO_CALMARIA);
+		break;
+	case EVENTO_MOTIM:
+		this->Evento = new Motim(mundo);
+		TrataEventos(EVENTO_MOTIM);
+		break;
+	}
+
+	this->EstadoEvento = EVENTO_ON;
+
+}
 void Mundo::limpaVetores() {
 
 	superficie.clear();
@@ -188,6 +234,10 @@ int Mundo::verificaCelulaPorto(int x, int y) {
 	}
 	return CELULA_SEM_PORTO;
 }
+
+
+
+
 Mundo::~Mundo(){
 
 	for (Superficie *superficie : superficie)
