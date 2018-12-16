@@ -131,6 +131,18 @@ void Mundo::criaCelulaPorto(int x, int y,char t)
 
 }
 
+void Mundo::retiraNavAfundados() {
+
+	for (unsigned int i = 0; i < navios.size(); i++) {
+
+		if (navios[i]->getAfundado() == true) {
+			cout << "Navio: " << navios[i]->getId() << "afundado\n";
+		}
+	}
+
+
+}
+
 const vector<const Superficie*> Mundo::getVetorSuperficie() const
 {
 	return vector<const Superficie*>(this->superficie.begin(), this->superficie.end());

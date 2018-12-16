@@ -87,6 +87,8 @@ public:
 
 	void criaCelulaPorto(int x, int y,char t);
 
+	void retiraNavAfundados();
+
 	const vector<const Superficie*> getVetorSuperficie() const;
 
 	const vector<const Porto*> getVetorPorto() const;

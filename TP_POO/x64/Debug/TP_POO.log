@@ -1,23 +1,5 @@
-﻿  Calmaria.cpp
-  Consola.cpp
-  Escuna.cpp
-  Eventos.cpp
-  Fragata.cpp
-  Galeao.cpp
-  Interface.cpp
-  Jogador.cpp
-  main.cpp
-  Mar.cpp
-  Motim.cpp
+﻿  Interface.cpp
   Mundo.cpp
   Navios.cpp
-c:\users\jpsd\source\repos\poo_tp\tp_poo\navios.cpp(14): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-c:\users\jpsd\source\repos\poo_tp\tp_poo\navios.cpp(36): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-c:\users\jpsd\source\repos\poo_tp\tp_poo\navios.cpp(111): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
-c:\users\jpsd\source\repos\poo_tp\tp_poo\navios.cpp(114): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-  Porto.cpp
-  Superficie.cpp
-  Terra.cpp
-  Veleiro.cpp
   Generating Code...
   TP_POO.vcxproj -> C:\Users\jpsd\Source\Repos\POO_TP\x64\Debug\TP_POO.exe

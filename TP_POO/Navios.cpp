@@ -5,7 +5,7 @@ Navios::Navios()
 {
 }
 
-Navios::Navios(Mundo *mundo, char tipo, int x, int y, int quantSoldados, int quantAgua, bool autoMove, bool atracado)
+Navios::Navios(Mundo *mundo, char tipo, int x, int y, int quantSoldados, int quantAgua, bool autoMove, bool atracado,bool afundado)
 {
 	this->mundo = mundo;
 	this->id = this->IncNavio++;
@@ -14,53 +14,66 @@ Navios::Navios(Mundo *mundo, char tipo, int x, int y, int quantSoldados, int qua
 	this->quantSoldados = quantSoldados;
 	this->autoMove = autoMove;
 	this->Atracado = atracado;
+	this->afundado = false;
 	this->x = x;
 	this->y = y;
 }
 int Navios::randNumber(int nSoldados) {
 
-	return rand() % nSoldados + 1;
-
+	if (nSoldados > 0) {
+		return rand() % nSoldados + 1;
+	}
+	return 0;
 }
+void Navios::setAfundado(bool result) {
 
+	this->afundado = result;
+}
+bool Navios::getAfundado() {
+
+	return this->afundado;
+}
 void Navios::acao(int xaAtacar,int yaAtacar) {
 
 	Navios *navioaAtacar=nullptr;
 	navioaAtacar = mundo->getNavioXY(xaAtacar, yaAtacar);
 	int randThis = 0, randNavioaAtacar = 0, soldadosPerdidos = 0;
-	float auxSoldadosPerdidos = 0;
-
-	cout << "Eu navio que vou atacar tenho inicialmente : " << this->quantSoldados << "soldados" << endl;
-	cout << "Eu NAVIOaAaTACAR tenho inicialmente : " << navioaAtacar->getNumSoldados() << "soldados" << endl;
 
 	randThis = randNumber(this->quantSoldados);
 	randNavioaAtacar = randNumber(navioaAtacar->getNumSoldados());
-
+	cout << "This tem soldados: " << this->quantSoldados<<endl;
+	cout << "Outro tem soldados: " << navioaAtacar->getNumSoldados()<<endl;
 	if (randThis == randNavioaAtacar) //se houver empate
 		randThis += 1; //o navio que ataca vai ganhar porque viu primeiro ;-)
 
 	if (randThis > randNavioaAtacar) { // este ganhou
 		cout << "Ganhou o this" << endl;
-		
-		auxSoldadosPerdidos = ((float)20 * (float)this->quantSoldados) / 100;
-		soldadosPerdidos = static_cast<int>(auxSoldadosPerdidos);
+		soldadosPerdidos = (20 * this->quantSoldados) / 100;
 		this->quantSoldados -= soldadosPerdidos;// este perdeu 20% da sua população
 		navioaAtacar->setNumSoldados(navioaAtacar->getNumSoldados() - (soldadosPerdidos * 2));// o outro perde 2 vezes mais que o outro
-		
 		cout << "Agora o this tem: " << this->quantSoldados << "soldados" << endl;
 		cout << "Agora o atacado tem: " << navioaAtacar->getNumSoldados() << "soldados" << endl;
+		if (navioaAtacar->getNumSoldados() <= 0) {
+			//set afundado
+			navioaAtacar->setAfundado(true);
+			//passar a metade da carga
+			//passa a agua toda menos o execesso
+		}
 	}
 	else { //o atacado ganhou 
 		cout << "Ganhou o NAVIOaAaTACAR" << endl;
-		
-		auxSoldadosPerdidos = ((float)20 * (float)navioaAtacar->getNumSoldados()) / 100;
-		soldadosPerdidos = static_cast<int>(auxSoldadosPerdidos);
+		soldadosPerdidos = (20 * navioaAtacar->getNumSoldados()) / 100;
 		cout << "soldadosPerdidos  "<<soldadosPerdidos;
 		navioaAtacar->setNumSoldados(navioaAtacar->getNumSoldados()-soldadosPerdidos);// o atacado perde 20% da sua população
 		this->quantSoldados -= soldadosPerdidos * 2; //este perde 2 vezes mais que o outro
-		
 		cout << "Agora o atacado tem: " << navioaAtacar->getNumSoldados() << "soldados" << endl;
 		cout << "Agora o this tem: " << this->quantSoldados << "soldados" << endl;
+		if (this->quantSoldados <= 0) {
+			//set afundar 
+			this->setAfundado(true);
+			//passar a metade da carga
+			//passa a agua toda menos o execesso
+		}
 	}
 
 }
@@ -105,7 +118,7 @@ void Navios::combate() {
 		//acao(xNavio, yNavio);
 		cout << "Porrada com o Porto Inimigo" << endl;
 	}
-
+	mundo->retiraNavAfundados();
 }
 int Navios::getNumSoldados() {
 	return this->quantSoldados;

@@ -45,15 +45,18 @@ private:
 protected:
 	bool autoMove;
 	bool Atracado;
+	bool afundado;
 	int x, y;
-	float quantSoldados;
+	int quantSoldados;
 	int quantAgua;
 
 
 public:
 	Navios();
-	Navios(Mundo *mundo, char tipo,int x,int y, int quantSoldados, int quantAgua = 0, bool autoMove = false, bool atracado = true);
+	Navios(Mundo *mundo, char tipo,int x,int y, int quantSoldados, int quantAgua = 0, bool autoMove = false, bool atracado = true, bool afundado =false);
 	int randNumber(int nSoldados);
+	void setAfundado(bool result);
+	bool getAfundado();
 	void acao(int x, int y);
 	void combate();
 	int getNumSoldados();
