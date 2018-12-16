@@ -90,8 +90,10 @@ void Interface::Prompt() {
 		getline(cin, linha);
 
 		PromptFase2(linha);
+		mundo.retiraNavAfundados();
 		
 		jogador.moveNavioAuto();
+		mundo.retiraNavAfundados();
 
 		if ( mundo.getExistenciaEvento() == EVENTO_OFF) 
 			GeradorEvento();
@@ -335,10 +337,10 @@ void Interface::PromptFase2(string linha) {
 	string acao, direcao;
 	int idNavio;
 	istringstream buffer(linha);
-
+	
+	
 	if (buffer >> acao) {
 		switch (FiltaComandos(acao)) {
-
 		case com_exec:
 			gotoErro();
 			cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
@@ -396,8 +398,7 @@ void Interface::PromptFase2(string linha) {
 				if (ValidaDirecoes(direcao))
 					if (jogador.validaIdNavio(idNavio) == true)
 						if (!jogador.verificaModoAutomaticoNavio(idNavio)) {
-							jogador.moveNavioJogador(idNavio, ValidaDirecoes(direcao));
-								cout << "[ Movimentacao Efetuada com Sucesso..! ]" << endl;
+							jogador.moveNavioJogador(idNavio, ValidaDirecoes(direcao));//com sucesso
 								auxNavio = mundo.getNavio(idNavio);
 								auxNavio->combate();
 						}

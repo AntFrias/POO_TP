@@ -87,6 +87,8 @@ public:
 
 	void criaCelulaPorto(int x, int y,char t);
 
+	void retiraNavAfundados();
+
 	const vector<const Superficie*> getVetorSuperficie() const;
 
 	const vector<const Porto*> getVetorPorto() const;
@@ -98,6 +100,8 @@ public:
 	int verificaCelulaNavio(int x, int y);
 
 	Navios * getNavio(int id);
+
+	Navios * getNavioXY(int x, int y);
 
 	void setDimX(int xMax);
 
