@@ -17,38 +17,102 @@ Navios::Navios(Mundo *mundo, char tipo, int x, int y, int quantSoldados, int qua
 	this->x = x;
 	this->y = y;
 }
+int Navios::randNumber(int nSoldados) {
+
+	return rand() % nSoldados + 1;
+
+}
+
+void Navios::acao(int xaAtacar,int yaAtacar) {
+
+	Navios *navioaAtacar=nullptr;
+	navioaAtacar = mundo->getNavioXY(xaAtacar, yaAtacar);
+	int randThis = 0, randNavioaAtacar = 0, soldadosPerdidos = 0;
+	float auxSoldadosPerdidos = 0;
+
+	cout << "Eu navio que vou atacar tenho inicialmente : " << this->quantSoldados << "soldados" << endl;
+	cout << "Eu NAVIOaAaTACAR tenho inicialmente : " << navioaAtacar->getNumSoldados() << "soldados" << endl;
+
+	randThis = randNumber(this->quantSoldados);
+	randNavioaAtacar = randNumber(navioaAtacar->getNumSoldados());
+
+	if (randThis == randNavioaAtacar) //se houver empate
+		randThis += 1; //o navio que ataca vai ganhar porque viu primeiro ;-)
+
+	if (randThis > randNavioaAtacar) { // este ganhou
+		cout << "Ganhou o this" << endl;
+		
+		auxSoldadosPerdidos = ((float)20 * (float)this->quantSoldados) / 100;
+		soldadosPerdidos = static_cast<int>(auxSoldadosPerdidos);
+		this->quantSoldados -= soldadosPerdidos;// este perdeu 20% da sua população
+		navioaAtacar->setNumSoldados(navioaAtacar->getNumSoldados() - (soldadosPerdidos * 2));// o outro perde 2 vezes mais que o outro
+		
+		cout << "Agora o this tem: " << this->quantSoldados << "soldados" << endl;
+		cout << "Agora o atacado tem: " << navioaAtacar->getNumSoldados() << "soldados" << endl;
+	}
+	else { //o atacado ganhou 
+		cout << "Ganhou o NAVIOaAaTACAR" << endl;
+		
+		auxSoldadosPerdidos = ((float)20 * (float)navioaAtacar->getNumSoldados()) / 100;
+		soldadosPerdidos = static_cast<int>(auxSoldadosPerdidos);
+		cout << "soldadosPerdidos  "<<soldadosPerdidos;
+		navioaAtacar->setNumSoldados(navioaAtacar->getNumSoldados()-soldadosPerdidos);// o atacado perde 20% da sua população
+		this->quantSoldados -= soldadosPerdidos * 2; //este perde 2 vezes mais que o outro
+		
+		cout << "Agora o atacado tem: " << navioaAtacar->getNumSoldados() << "soldados" << endl;
+		cout << "Agora o this tem: " << this->quantSoldados << "soldados" << endl;
+	}
+
+}
 
 void Navios::combate() {
 
 	int xNavio = getX(), yNavio = getY();
 
-	if (mundo->verificaCelulaNavio(xNavio + 1, yNavio)== CELULA_NAVIO) {
+	if (mundo->verificaCelulaNavio(xNavio + 1, yNavio) == CELULA_NAVIO) {
+		acao(xNavio + 1, yNavio);
 		cout << "Tenho um Navio para atacar à minha direita" << endl;
 	}
-	if (mundo->verificaCelulaNavio(xNavio - 1, yNavio) == CELULA_NAVIO) {
+	if (mundo->verificaCelulaNavio(xNavio - 1, yNavio) == CELULA_NAVIO ) {
+		acao(xNavio - 1, yNavio);
 		cout << "Tenho um Navio para atacar à minha esquerda" << endl;
 	}
-	if (mundo->verificaCelulaNavio(xNavio, yNavio-1) == CELULA_NAVIO) {
+	if (mundo->verificaCelulaNavio(xNavio, yNavio-1) == CELULA_NAVIO ) {
+		acao(xNavio, yNavio - 1);
 		cout << "Tenho um Navio para atacar em cima" << endl;
 	}
-	if (mundo->verificaCelulaNavio(xNavio, yNavio+1) == CELULA_NAVIO) {
+	if (mundo->verificaCelulaNavio(xNavio, yNavio+1) == CELULA_NAVIO ) {
+		acao(xNavio, yNavio + 1);
 		cout << "Tenho um Navio para atacar em baixo" << endl;
 	}
-	if (mundo->verificaCelulaNavio(xNavio + 1, yNavio-1) == CELULA_NAVIO) {
+	if (mundo->verificaCelulaNavio(xNavio + 1, yNavio-1) == CELULA_NAVIO ) {
+		acao(xNavio + 1, yNavio - 1);
 		cout << "Tenho um Navio para atacar à minha cima direita" << endl;
 	}
-	if (mundo->verificaCelulaNavio(xNavio-1, yNavio-1) == CELULA_NAVIO) {
+	if (mundo->verificaCelulaNavio(xNavio-1, yNavio-1) == CELULA_NAVIO ) {
+		acao(xNavio - 1, yNavio - 1);
 		cout << "Tenho um Navio para atacar à minha cima esquerda" << endl;
 	}
-	if (mundo->verificaCelulaNavio(xNavio + 1, yNavio+1) == CELULA_NAVIO) {
+	if (mundo->verificaCelulaNavio(xNavio + 1, yNavio+1) == CELULA_NAVIO ) {
+		acao(xNavio + 1, yNavio + 1);
 		cout << "Tenho um Navio para atacar à minha baixo direita" << endl;
 	}
 	if (mundo->verificaCelulaNavio(xNavio - 1, yNavio + 1) == CELULA_NAVIO) {
+		acao(xNavio - 1, yNavio + 1);
 		cout << "Tenho um Navio para atacar à minha baixo esquerda" << endl;
+	}
+	if (mundo->verificaCelulaPorto(xNavio, yNavio) == CELULA_PORTO_INIMIGO) {
+		//acao(xNavio, yNavio);
+		cout << "Porrada com o Porto Inimigo" << endl;
 	}
 
 }
-
+int Navios::getNumSoldados() {
+	return this->quantSoldados;
+}
+void Navios::setNumSoldados(int num) {
+	this->quantSoldados = num;
+}
 int Navios::FmoveEsquerda() {
 	int VerificaPorto = 0;
 	//e ver se a nova pos está dentro de agua!
@@ -77,8 +141,10 @@ int Navios::FmoveEsquerda() {
 
 			}
 		}
-		if (VerificaPorto == CELULA_PORTO_INIMIGO)
-			return MOVE_INVALIDO;
+		if (VerificaPorto == CELULA_PORTO_INIMIGO) {
+			this->x = this->x - 1;
+			return MOVE_VALIDO;
+		}
 	}
 	else {
 
@@ -106,8 +172,10 @@ int Navios::FmoveEsquerda() {
 
 			}
 		}
-		if (VerificaPorto == CELULA_PORTO_INIMIGO)
-			return MOVE_INVALIDO;
+		if (VerificaPorto == CELULA_PORTO_INIMIGO) {
+			this->x = mundo->getDimX() - 1;
+			return MOVE_VALIDO;
+		}
 	}
 	return MOVE_INVALIDO;
 }
@@ -138,8 +206,10 @@ int Navios::FmoveDireita() {
 
 			}
 		}
-		if (VerificaPorto == CELULA_PORTO_INIMIGO)
-			return MOVE_INVALIDO;
+		if (VerificaPorto == CELULA_PORTO_INIMIGO) {
+			this->x = this->x + 1;
+			return MOVE_VALIDO;
+		}
 	}
 	else {
 		if (x == mundo->getDimX() - 1 && (mundo->verificaCelulaMar(0, this->y) == CELULA_MAR)) {
@@ -168,8 +238,10 @@ int Navios::FmoveDireita() {
 				}
 			}
 
-			if (VerificaPorto == CELULA_PORTO_INIMIGO)
-				return MOVE_INVALIDO;
+			if (VerificaPorto == CELULA_PORTO_INIMIGO) {
+				this->x = 0;
+				return MOVE_VALIDO;
+			}
 		}
 	}
 	return MOVE_INVALIDO;
@@ -203,8 +275,10 @@ int Navios::FmoveCima() {
 			}
 		}
 
-		if (VerificaPorto == CELULA_PORTO_INIMIGO)
-			return MOVE_INVALIDO;
+		if (VerificaPorto == CELULA_PORTO_INIMIGO) {
+			this->y = this->y - 1;
+			return MOVE_VALIDO;
+		}
 
 	}
 	else {
@@ -234,8 +308,10 @@ int Navios::FmoveCima() {
 					return MOVE_INVALIDO;
 				}
 			}
-			if (VerificaPorto == CELULA_PORTO_INIMIGO)
-				return MOVE_INVALIDO;
+			if (VerificaPorto == CELULA_PORTO_INIMIGO) {
+				this->y = mundo->getDimY() - 1;
+				return MOVE_VALIDO;
+			}
 		}
 	}
 
@@ -268,8 +344,10 @@ int Navios::FmoveBaixo() {
 				return MOVE_INVALIDO;
 			}
 		}
-		if (VerificaPorto == CELULA_PORTO_INIMIGO)
-			return MOVE_INVALIDO;
+		if (VerificaPorto == CELULA_PORTO_INIMIGO) {
+			this->y = this->y + 1;
+			return MOVE_VALIDO;
+		}
 
 	}
 	else {
@@ -298,8 +376,10 @@ int Navios::FmoveBaixo() {
 					return MOVE_INVALIDO;
 				}
 			}
-			if (VerificaPorto == CELULA_PORTO_INIMIGO)
-				return MOVE_INVALIDO;
+			if (VerificaPorto == CELULA_PORTO_INIMIGO) {
+				this->y = 0;
+				return MOVE_VALIDO;
+			}
 		}
 	}
 	return MOVE_INVALIDO;
@@ -336,8 +416,11 @@ int Navios::FmoveCimaEsquerda() {
 			}
 		}
 
-		if (VerificaPorto == CELULA_PORTO_INIMIGO)
-			return MOVE_INVALIDO;
+		if (VerificaPorto == CELULA_PORTO_INIMIGO) {
+			this->y = this->y - 1;
+			this->x = this->x - 1;
+			return MOVE_VALIDO;
+		}
 
 	}
 	////encostado a cima
@@ -370,8 +453,11 @@ int Navios::FmoveCimaEsquerda() {
 			}
 		}
 
-		if (VerificaPorto == CELULA_PORTO_INIMIGO)
-			return MOVE_INVALIDO;
+		if (VerificaPorto == CELULA_PORTO_INIMIGO) {
+			this->x = this->x - 1;
+			this->y = mundo->getDimY() - 1;
+			return MOVE_VALIDO;
+		}
 
 	}
 	////encostado à esquerda
@@ -404,8 +490,11 @@ int Navios::FmoveCimaEsquerda() {
 			}
 		}
 
-		if (VerificaPorto == CELULA_PORTO_INIMIGO)
-			return MOVE_INVALIDO;
+		if (VerificaPorto == CELULA_PORTO_INIMIGO) {
+			this->x = mundo->getDimX() - 1;
+			this->y = this->y - 1;
+			return MOVE_VALIDO;
+		}
 
 	}
 	//canto superior esquerdo
@@ -438,8 +527,11 @@ int Navios::FmoveCimaEsquerda() {
 			}
 		}
 
-		if (VerificaPorto == CELULA_PORTO_INIMIGO)
-			return MOVE_INVALIDO;
+		if (VerificaPorto == CELULA_PORTO_INIMIGO) {
+			this->x = mundo->getDimX() - 1;
+			this->y = mundo->getDimY() - 1;
+			return MOVE_VALIDO;
+		}
 
 	}
 	return MOVE_INVALIDO;
@@ -476,8 +568,11 @@ int Navios::FmoveCimaDireita() {
 			}
 		}
 
-		if (VerificaPorto == CELULA_PORTO_INIMIGO)
-			return MOVE_INVALIDO;
+		if (VerificaPorto == CELULA_PORTO_INIMIGO) {
+			this->y = this->y - 1;
+			this->x = this->x + 1;
+			return MOVE_VALIDO;
+		}
 
 	}
 	//encostado a cima
@@ -510,8 +605,11 @@ int Navios::FmoveCimaDireita() {
 			}
 		}
 
-		if (VerificaPorto == CELULA_PORTO_INIMIGO)
-			return MOVE_INVALIDO;
+		if (VerificaPorto == CELULA_PORTO_INIMIGO) {
+			this->x = this->x + 1;
+			this->y = mundo->getDimY() - 1;
+			return MOVE_VALIDO;
+		}
 
 	}
 	//encostado à direita
@@ -544,8 +642,11 @@ int Navios::FmoveCimaDireita() {
 			}
 		}
 
-		if (VerificaPorto == CELULA_PORTO_INIMIGO)
-			return MOVE_INVALIDO;
+		if (VerificaPorto == CELULA_PORTO_INIMIGO) {
+			this->x = 0;
+			this->y = this->y - 1;
+			return MOVE_VALIDO;
+		}
 
 	}
 	//canto superior direito
@@ -578,9 +679,11 @@ int Navios::FmoveCimaDireita() {
 			}
 		}
 
-		if (VerificaPorto == CELULA_PORTO_INIMIGO)
-			return MOVE_INVALIDO;
-
+		if (VerificaPorto == CELULA_PORTO_INIMIGO) {
+			this->x = 0;
+			this->y = mundo->getDimY() - 1;
+			return MOVE_VALIDO;
+		}
 	}
 	return MOVE_INVALIDO;
 }
@@ -616,9 +719,11 @@ int Navios::FmoveBaixoEsquerda() {
 			}
 		}
 
-		if (VerificaPorto == CELULA_PORTO_INIMIGO)
-			return MOVE_INVALIDO;
-
+		if (VerificaPorto == CELULA_PORTO_INIMIGO) {
+			this->y = this->y + 1;
+			this->x = this->x - 1;
+			return MOVE_VALIDO;
+		}
 	}
 	//////encostado a baixo
 	if ((y == mundo->getDimY() - 1) && (x > 0 && x <= mundo->getDimX() - 1) && (mundo->verificaCelulaMar(this->x - 1, 0) == CELULA_MAR)) {
@@ -650,8 +755,11 @@ int Navios::FmoveBaixoEsquerda() {
 			}
 		}
 
-		if (VerificaPorto == CELULA_PORTO_INIMIGO)
-			return MOVE_INVALIDO;
+		if (VerificaPorto == CELULA_PORTO_INIMIGO) {
+			this->x = this->x - 1;
+			this->y = 0;
+			return MOVE_VALIDO;
+		}
 
 	}
 	//////encostado à esquerda
@@ -682,9 +790,11 @@ int Navios::FmoveBaixoEsquerda() {
 			}
 		}
 
-		if (VerificaPorto == CELULA_PORTO_INIMIGO)
-			return MOVE_INVALIDO;
-
+		if (VerificaPorto == CELULA_PORTO_INIMIGO) {
+			this->x = mundo->getDimX() - 1;
+			this->y = this->y + 1;
+			return MOVE_VALIDO;
+		}
 	}
 	//canto inferior esquerdo
 	if ((y == mundo->getDimY() - 1 && x == 0) && (mundo->verificaCelulaMar(mundo->getDimX() - 1, 0) == CELULA_MAR)) {
@@ -716,8 +826,11 @@ int Navios::FmoveBaixoEsquerda() {
 			}
 		}
 
-		if (VerificaPorto == CELULA_PORTO_INIMIGO)
-			return MOVE_INVALIDO;
+		if (VerificaPorto == CELULA_PORTO_INIMIGO) {
+			this->x = mundo->getDimX() - 1;
+			this->y = 0;
+			return MOVE_VALIDO;
+		}
 	}
 	return MOVE_INVALIDO;
 }
@@ -752,8 +865,11 @@ int Navios::FmoveBaixoDireita() {
 			}
 		}
 
-		if (VerificaPorto == CELULA_PORTO_INIMIGO)
-			return MOVE_INVALIDO;
+		if (VerificaPorto == CELULA_PORTO_INIMIGO) {
+			this->y = this->y + 1;
+			this->x = this->x + 1;
+			return MOVE_VALIDO;
+		}
 	}
 	////////encostado a baixo
 	if ((y == mundo->getDimY() - 1) && (x >= 0 && x < mundo->getDimX() - 1) && (mundo->verificaCelulaMar(this->x + 1, 0) == CELULA_MAR)) {
@@ -785,8 +901,11 @@ int Navios::FmoveBaixoDireita() {
 			}
 		}
 
-		if (VerificaPorto == CELULA_PORTO_INIMIGO)
-			return MOVE_INVALIDO;
+		if (VerificaPorto == CELULA_PORTO_INIMIGO) {
+			this->x = this->x + 1;
+			this->y = 0;
+			return MOVE_VALIDO;
+		}
 
 	}
 	////////encostado à direita
@@ -819,8 +938,11 @@ int Navios::FmoveBaixoDireita() {
 			}
 		}
 
-		if (VerificaPorto == CELULA_PORTO_INIMIGO)
-			return MOVE_INVALIDO;
+		if (VerificaPorto == CELULA_PORTO_INIMIGO) {
+			this->x = 0;
+			this->y = this->y + 1;
+			return MOVE_VALIDO;
+		}
 	}
 	////canto inferior esquerdo
 	if ((y == mundo->getDimY() - 1 && x == mundo->getDimX() - 1) && (mundo->verificaCelulaMar(0, 0) == CELULA_MAR)) {
@@ -852,15 +974,14 @@ int Navios::FmoveBaixoDireita() {
 			}
 		}
 
-		if (VerificaPorto == CELULA_PORTO_INIMIGO)
-			return MOVE_INVALIDO;
+		if (VerificaPorto == CELULA_PORTO_INIMIGO){
+			this->x = 0;
+			this->y = 0;
+			return MOVE_VALIDO;
+		}
 	}
 	return MOVE_INVALIDO;
 }
-
-
-
-
 int Navios::moveNavio(int direcao) {
 
 	switch (direcao) {

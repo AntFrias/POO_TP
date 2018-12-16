@@ -5,6 +5,7 @@
 #include <vector>
 #include <sstream>
 #include <string>
+#include <cmath>
 
 #define CELULA_MAR 1 
 #define CELULA_TERRA 2 
@@ -40,20 +41,23 @@ private:
 	static int IncNavio;
 	int id;
 	char tipo;
-	
 
 protected:
 	bool autoMove;
 	bool Atracado;
 	int x, y;
-	int quantSoldados;
+	float quantSoldados;
 	int quantAgua;
 
 
 public:
 	Navios();
 	Navios(Mundo *mundo, char tipo,int x,int y, int quantSoldados, int quantAgua = 0, bool autoMove = false, bool atracado = true);
+	int randNumber(int nSoldados);
+	void acao(int x, int y);
 	void combate();
+	int getNumSoldados();
+	void setNumSoldados(int num);
 	int FmoveEsquerda();
 	int FmoveDireita();
 	int FmoveCima();

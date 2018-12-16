@@ -99,6 +99,8 @@ public:
 
 	Navios * getNavio(int id);
 
+	Navios * getNavioXY(int x, int y);
+
 	void setDimX(int xMax);
 
 	void setDimY(int yMax);

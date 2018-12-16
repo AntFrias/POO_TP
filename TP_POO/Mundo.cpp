@@ -153,6 +153,14 @@ Navios * Mundo::getNavio(int id) {
 
 	return nullptr;
 }
+Navios * Mundo::getNavioXY(int x,int y) {
+
+	for (unsigned int i = 0; i < navios.size(); i++)
+		if (navios[i]->getX() == x && navios[i]->getY() == y)
+			return navios[i];
+
+	return nullptr;
+}
 void Mundo::setDimX(int xMax) {
 	this->dimX = xMax;
 }
