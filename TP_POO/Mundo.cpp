@@ -131,6 +131,21 @@ void Mundo::criaCelulaPorto(int x, int y,char t)
 
 }
 
+void Mundo::retiraNavAfundados() { // NAO FAÇO IDEIA O QUE FIZ AQUI FRIAS .. SEM QUE TEM HAVER COM A CENA DE APAGAR UMA COISA ENQUANTO ESTAMOS A PERCORRER A MESMA
+
+	for (auto it = navios.begin(); it != navios.end();) {
+
+		if ((*it)->getAfundado() == true) {
+
+			delete *it;
+			it = navios.erase(it);
+		}
+		else
+			++it;
+	}
+}
+
+
 const vector<const Superficie*> Mundo::getVetorSuperficie() const
 {
 	return vector<const Superficie*>(this->superficie.begin(), this->superficie.end());
@@ -149,6 +164,14 @@ Navios * Mundo::getNavio(int id) {
 
 	for (unsigned int i = 0; i < navios.size(); i++)
 		if (navios[i]->getId() == id)
+			return navios[i];
+
+	return nullptr;
+}
+Navios * Mundo::getNavioXY(int x,int y) {
+
+	for (unsigned int i = 0; i < navios.size(); i++)
+		if (navios[i]->getX() == x && navios[i]->getY() == y)
 			return navios[i];
 
 	return nullptr;
