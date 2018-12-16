@@ -131,17 +131,20 @@ void Mundo::criaCelulaPorto(int x, int y,char t)
 
 }
 
-void Mundo::retiraNavAfundados() {
+void Mundo::retiraNavAfundados() { // NAO FAÇO IDEIA O QUE FIZ AQUI FRIAS .. SEM QUE TEM HAVER COM A CENA DE APAGAR UMA COISA ENQUANTO ESTAMOS A PERCORRER A MESMA
 
-	for (unsigned int i = 0; i < navios.size(); i++) {
+	for (auto it = navios.begin(); it != navios.end();) {
 
-		if (navios[i]->getAfundado() == true) {
-			cout << "Navio: " << navios[i]->getId() << "afundado\n";
+		if ((*it)->getAfundado() == true) {
+
+			delete *it;
+			it = navios.erase(it);
 		}
+		else
+			++it;
 	}
-
-
 }
+
 
 const vector<const Superficie*> Mundo::getVetorSuperficie() const
 {

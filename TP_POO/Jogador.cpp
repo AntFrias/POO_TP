@@ -63,6 +63,7 @@ void Jogador::moveNavioAuto() {
 			direcao = rand() % 9 + 1;
 
 			this->navios[i]->moveNavio(direcao);
+			this->navios[i]->combate(); //aqui
 		}
 	}
 }

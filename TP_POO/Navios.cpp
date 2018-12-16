@@ -38,44 +38,53 @@ void Navios::acao(int xaAtacar,int yaAtacar) {
 	Navios *navioaAtacar=nullptr;
 	navioaAtacar = mundo->getNavioXY(xaAtacar, yaAtacar);
 	int randThis = 0, randNavioaAtacar = 0, soldadosPerdidos = 0;
-
+	cout << "----------------------------Combate----------------------------" << endl;
+	cout << "O " << this->getId() << "moveu-se e encontrou o: " << navioaAtacar->getId()<<endl;
+	
 	randThis = randNumber(this->quantSoldados);
 	randNavioaAtacar = randNumber(navioaAtacar->getNumSoldados());
-	cout << "This tem soldados: " << this->quantSoldados<<endl;
-	cout << "Outro tem soldados: " << navioaAtacar->getNumSoldados()<<endl;
+	
+	cout << "O " << this->getId() << "ficou com o nr sorteado: " << randThis<<"e tem neste momento "<< this->quantSoldados<<"soldados" << endl;
+	cout << "O " << navioaAtacar->getId() << "ficou com o nr sorteado: " << randNavioaAtacar<<"e tem neste momento"<<navioaAtacar->getNumSoldados()<<"soldados"<<endl;
+
+
 	if (randThis == randNavioaAtacar) //se houver empate
 		randThis += 1; //o navio que ataca vai ganhar porque viu primeiro ;-)
 
 	if (randThis > randNavioaAtacar) { // este ganhou
-		cout << "Ganhou o this" << endl;
 		soldadosPerdidos = (20 * this->quantSoldados) / 100;
+		cout << "O Navio " << this->getId() << " ganhou esta investida, ira perder " << soldadosPerdidos << " soldados."<<endl;
+		cout << "O Navio " << navioaAtacar->getId() << " perdeu esta investida, ira perder " << soldadosPerdidos * 2 << " soldados."<<endl;
 		this->quantSoldados -= soldadosPerdidos;// este perdeu 20% da sua população
 		navioaAtacar->setNumSoldados(navioaAtacar->getNumSoldados() - (soldadosPerdidos * 2));// o outro perde 2 vezes mais que o outro
-		cout << "Agora o this tem: " << this->quantSoldados << "soldados" << endl;
-		cout << "Agora o atacado tem: " << navioaAtacar->getNumSoldados() << "soldados" << endl;
+			
 		if (navioaAtacar->getNumSoldados() <= 0) {
 			//set afundado
 			navioaAtacar->setAfundado(true);
 			//passar a metade da carga
 			//passa a agua toda menos o execesso
 		}
+		cout << "O Navio " << this->getId() << " ficou com  " << this->quantSoldados << "soldados."<<endl;
+		cout << "O Navio " << navioaAtacar->getId() << " ficou com " << navioaAtacar->getNumSoldados() << "soldados." << endl;
 	}
 	else { //o atacado ganhou 
-		cout << "Ganhou o NAVIOaAaTACAR" << endl;
+	
 		soldadosPerdidos = (20 * navioaAtacar->getNumSoldados()) / 100;
-		cout << "soldadosPerdidos  "<<soldadosPerdidos;
+		cout << "O Navio " << this->getId() << " perdeu esta investida, ira perder " << soldadosPerdidos * 2 << "soldados." << endl;
+		cout << "O Navio " << navioaAtacar->getId() << " ganhour esta investida, ira perder " << soldadosPerdidos << "soldados." << endl;
 		navioaAtacar->setNumSoldados(navioaAtacar->getNumSoldados()-soldadosPerdidos);// o atacado perde 20% da sua população
 		this->quantSoldados -= soldadosPerdidos * 2; //este perde 2 vezes mais que o outro
-		cout << "Agora o atacado tem: " << navioaAtacar->getNumSoldados() << "soldados" << endl;
-		cout << "Agora o this tem: " << this->quantSoldados << "soldados" << endl;
+		
 		if (this->quantSoldados <= 0) {
 			//set afundar 
 			this->setAfundado(true);
 			//passar a metade da carga
 			//passa a agua toda menos o execesso
 		}
+		cout << "O Navio " << this->getId() << " ficou com  " << this->quantSoldados << " soldados." << endl;
+		cout << "O Navio " << navioaAtacar->getId() << " ficou com " << navioaAtacar->getNumSoldados() << " soldados." << endl;
 	}
-
+	cout << "---------------------------------------------------------------" << endl;
 }
 
 void Navios::combate() {
@@ -84,41 +93,32 @@ void Navios::combate() {
 
 	if (mundo->verificaCelulaNavio(xNavio + 1, yNavio) == CELULA_NAVIO) {
 		acao(xNavio + 1, yNavio);
-		cout << "Tenho um Navio para atacar à minha direita" << endl;
 	}
 	if (mundo->verificaCelulaNavio(xNavio - 1, yNavio) == CELULA_NAVIO ) {
 		acao(xNavio - 1, yNavio);
-		cout << "Tenho um Navio para atacar à minha esquerda" << endl;
 	}
 	if (mundo->verificaCelulaNavio(xNavio, yNavio-1) == CELULA_NAVIO ) {
 		acao(xNavio, yNavio - 1);
-		cout << "Tenho um Navio para atacar em cima" << endl;
 	}
 	if (mundo->verificaCelulaNavio(xNavio, yNavio+1) == CELULA_NAVIO ) {
 		acao(xNavio, yNavio + 1);
-		cout << "Tenho um Navio para atacar em baixo" << endl;
 	}
 	if (mundo->verificaCelulaNavio(xNavio + 1, yNavio-1) == CELULA_NAVIO ) {
 		acao(xNavio + 1, yNavio - 1);
-		cout << "Tenho um Navio para atacar à minha cima direita" << endl;
 	}
 	if (mundo->verificaCelulaNavio(xNavio-1, yNavio-1) == CELULA_NAVIO ) {
 		acao(xNavio - 1, yNavio - 1);
-		cout << "Tenho um Navio para atacar à minha cima esquerda" << endl;
 	}
 	if (mundo->verificaCelulaNavio(xNavio + 1, yNavio+1) == CELULA_NAVIO ) {
 		acao(xNavio + 1, yNavio + 1);
-		cout << "Tenho um Navio para atacar à minha baixo direita" << endl;
 	}
 	if (mundo->verificaCelulaNavio(xNavio - 1, yNavio + 1) == CELULA_NAVIO) {
 		acao(xNavio - 1, yNavio + 1);
-		cout << "Tenho um Navio para atacar à minha baixo esquerda" << endl;
 	}
 	if (mundo->verificaCelulaPorto(xNavio, yNavio) == CELULA_PORTO_INIMIGO) {
 		//acao(xNavio, yNavio);
 		cout << "Porrada com o Porto Inimigo" << endl;
 	}
-	mundo->retiraNavAfundados();
 }
 int Navios::getNumSoldados() {
 	return this->quantSoldados;

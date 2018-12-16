@@ -90,8 +90,10 @@ void Interface::Prompt() {
 		getline(cin, linha);
 
 		PromptFase2(linha);
+		mundo.retiraNavAfundados();
 		
 		jogador.moveNavioAuto();
+		mundo.retiraNavAfundados();
 
 		if ( mundo.getExistenciaEvento() == EVENTO_OFF) 
 			GeradorEvento();
