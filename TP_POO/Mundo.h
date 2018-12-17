@@ -29,21 +29,6 @@
 #define EVENTO_CALMARIA 3
 #define EVENTO_MOTIM 4
 
-
-enum movimentosNavios {
-	
-	naoMove = 0,
-	moveCima,
-	moveBaixo,
-	moveEsquerda,
-	moveDireita,
-	moveCimaEsquerda,
-	moveCimaDireita,
-	moveBaixoEsquerda,
-	moveBaixoDireita
-	
-};
-
 enum TiposNavios {
 
 	FRAGATA = 1,

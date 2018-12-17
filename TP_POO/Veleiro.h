@@ -10,8 +10,18 @@ class Veleiro : public Navios
 	int QuantPeixe;
 
 public:
-	Veleiro(Mundo *mundo, int coordx, int coordy) : QuantMercadoria(0), QuantPeixe(0), Navios(mundo, 'V', coordx,coordy, 20, 200){};
+	Veleiro(Mundo *auxMundo, int coordx, int coordy) : QuantMercadoria(0), QuantPeixe(0), Navios(auxMundo,'V', coordx,coordy, 20, 200){};
 	virtual void AbasteceAguaNavio();
+	virtual int moveNavio(int direcao) override;
+	int FmoveEsquerda();
+	int FmoveDireita();
+	int FmoveCima();
+	int FmoveBaixo();
+	int FmoveCimaEsquerda();
+	int FmoveCimaDireita();
+	int FmoveBaixoEsquerda();
+	int FmoveBaixoDireita();
+	bool souVeleiro();
 	bool VerificaCargaNavio(int novaCarga);
 	~Veleiro();
 };
