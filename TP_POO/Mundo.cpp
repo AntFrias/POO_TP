@@ -203,9 +203,26 @@ void Mundo::setEventoEmExecucao(Eventos * evento)
 int Mundo::TrataEventoTempestade(int x, int y)
 {
 	for (auto it = navios.begin(); it != navios.end();) {
+		
 		if (x >= (*it)->getX() -2 && x <= (*it)->getX() + 2 && y >= (*it)->getY() - 2 && y <= (*it)->getY() - 2 ) {
+			
 			(*it)->AbasteceAguaNavio();
-			 ....
+			
+			switch ((*it)->getTipo()) {
+				(*it)->
+			case 'F' :
+
+				break;
+			case 'G':
+				break;
+			case 'V':
+				break;
+			case 'E':
+				break;
+
+
+			}
+
 
 
 		}
