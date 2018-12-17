@@ -69,22 +69,16 @@ protected:
 public:
 	Navios();
 	Navios(Mundo *mundo, char tipo,int x,int y, int quantSoldados, int quantAgua = 0, bool autoMove = false, bool atracado = true, bool afundado =false);
+	
+	virtual int moveNavio(int direcao)=0;
+	virtual void combate() = 0;
 	int randNumber(int nSoldados);
-	void setAfundado(bool result);
-	bool getAfundado();
-	void acao(int x, int y);
-	void combate();
 	int getNumSoldados();
 	void setNumSoldados(int num);
-	/*int FmoveEsquerda();
-	int FmoveDireita();
-	int FmoveCima();
-	int FmoveBaixo();
-	int FmoveCimaEsquerda();
-	int FmoveCimaDireita();
-	int FmoveBaixoEsquerda();
-	int FmoveBaixoDireita();*/
-	virtual int moveNavio(int direcao)=0;
+	void setAfundado(bool result);
+	bool getAfundado();
+
+
 	char getTipo()const;
 	int getX()const;
 	int getY()const;

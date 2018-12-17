@@ -11,7 +11,7 @@ class Galeao : public Navios
 public:
 	Galeao(Mundo *mundo, int coordx, int coordy) : QuantMercadoria(0), QuantPeixe(0), Navios(mundo, 'G', coordx, coordy, 40, 400){};
 	virtual void AbasteceAguaNavio();
-	virtual int moveNavio(int direcao);
+	virtual int moveNavio(int direcao)override;
 	int FmoveEsquerda();
 	int FmoveDireita();
 	int FmoveCima();
@@ -22,6 +22,8 @@ public:
 	int FmoveBaixoDireita();
 	bool VerificaCargaNavio(int novaCarga);
 	bool souGaleao();
+	void acao(int xaAtacar, int yaAtacar);
+	virtual void combate();
 	~Galeao();
 };
 #endif // !GALEAO_H
