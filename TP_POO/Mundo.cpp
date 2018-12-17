@@ -200,12 +200,38 @@ void Mundo::setEventoEmExecucao(Eventos * evento)
 {
 	this->Evento = evento;
 }
+int Mundo::TrataEventoTempestade(int x, int y)
+{
+	for (auto it = navios.begin(); it != navios.end();) {
+		if (x >= (*it)->getX() -2 && x <= (*it)->getX() + 2 && y >= (*it)->getY() - 2 && y <= (*it)->getY() - 2 ) {
+			(*it)->AbasteceAguaNavio();
+			 ....
+
+
+		}
+			
+		++it;
+	}
+}
 // por defeito o tipo de eventos vai ter valor 0 para entrar no default e executar a acao para eventos que duram mais do que 1 turno
 void Mundo::TrataEventos(int TipoEvento)
 {
+	unsigned int epicentroX, epicentroY;
+
 	switch (TipoEvento)
 	{
 	case EVENTO_TEMPESTADE:
+
+		do {
+
+			epicentroX = rand() % this->dimX + 1;
+			
+			epicentroY = rand() % this->dimY + 1;
+		
+		} while (epicentroX >= 0 + 2 && epicentroX < this->dimX - 3 && epicentroX >= 0 + 2 && epicentroY < this->dimY - 3);
+	
+		TrataEventoTempestade(epicentroX, epicentroY);
+		
 		// executa codigo para a tempestade
 		break;
 	case EVENTO_SEREIAS:

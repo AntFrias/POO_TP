@@ -101,6 +101,8 @@ public:
 	void setExistenciaEvento(bool estado);
 
 	void setEventoEmExecucao(Eventos *evento);
+	
+	int TrataEventoTempestade(int x, int y);
 
 	void TrataEventos(int TipoEvento = 0);
 
