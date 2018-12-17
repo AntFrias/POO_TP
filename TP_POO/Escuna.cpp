@@ -11,6 +11,23 @@ bool Escuna::souEscuna() {
 int Escuna::getMaxAgua() {
 	return ESCUNA_MAX_AGUA;
 }
+int Escuna::getAgua() {
+	return this->quantAgua;
+}
+void Escuna::adicionaAgua(int agua) {
+	this->quantAgua += agua;
+}
+void Escuna::soldadosBebemAgua() {
+	
+	if(mundo->verificaCelulaMar(this->x,this->y) || (mundo->verificaCelulaPorto(this->x, this->y) !=CELULA_PORTO_AMIGO)){
+
+		this->quantAgua -= this->getNumSoldados();
+		cout << "blublublu";
+	}
+	if (this->quantAgua == 0) {
+		cout << "Fiquei sem agua crlh!";
+	}
+}
 bool Escuna::VerificaCargaNavio(int novaCarga)
 {
 	if (this->QuantMercadoria + novaCarga <= ESCUNA_QUANT_MAX_CARGA)
@@ -895,48 +912,56 @@ int Escuna::moveNavio(int direcao) {
 
 	case moveEsquerda:
 		if (FmoveEsquerda() == MOVE_VALIDO) {
+			this->soldadosBebemAgua();
 			return MOVE_VALIDO;
 		}
 		else
 			break;
 	case moveDireita:
 		if (FmoveDireita() == MOVE_VALIDO) {
+			this->soldadosBebemAgua();
 			return MOVE_VALIDO;
 		}
 		else
 			break;
 	case moveCima:
 		if (FmoveCima() == MOVE_VALIDO) {
+			this->soldadosBebemAgua();
 			return MOVE_VALIDO;
 		}
 		else
 			break;
 	case moveBaixo:
 		if (FmoveBaixo() == MOVE_VALIDO) {
+			this->soldadosBebemAgua();
 			return MOVE_VALIDO;
 		}
 		else
 			break;
 	case moveCimaEsquerda:
 		if (FmoveCimaEsquerda() == MOVE_VALIDO) {
+			this->soldadosBebemAgua();
 			return MOVE_VALIDO;
 		}
 		else
 			break;
 	case moveCimaDireita:
 		if (FmoveCimaDireita() == MOVE_VALIDO) {
+			this->soldadosBebemAgua();
 			return MOVE_VALIDO;
 		}
 		else
 			break;
 	case moveBaixoEsquerda:
 		if (FmoveBaixoEsquerda() == MOVE_VALIDO) {
+			this->soldadosBebemAgua();
 			return MOVE_VALIDO;
 		}
 		else
 			break;
 	case moveBaixoDireita:
 		if (FmoveBaixoDireita() == MOVE_VALIDO) {
+			this->soldadosBebemAgua();
 			return MOVE_VALIDO;
 		}
 		else
