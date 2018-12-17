@@ -26,7 +26,7 @@ public:
 	int FmoveCimaDireita();
 	int FmoveBaixoEsquerda();
 	int FmoveBaixoDireita();
-	bool souVeleiro();
+	int sou();
 	void acao(int xaAtacar, int yaAtacar);
 	bool VerificaCargaNavio(int novaCarga);
 	~Veleiro();

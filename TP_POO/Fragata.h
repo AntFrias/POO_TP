@@ -21,7 +21,7 @@ public:
 	int FmoveCimaDireita();
 	int FmoveBaixoEsquerda();
 	int FmoveBaixoDireita();
-	bool souFragata();
+	int sou();
 	int getMaxAgua();
 	int getAgua();
 	void adicionaAgua(int agua);

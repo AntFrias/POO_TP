@@ -25,8 +25,8 @@ bool Galeao::VerificaCargaNavio(int novaCarga)
 	else
 		return false;
 }
-bool Galeao::souGaleao() {
-	return true;
+int Galeao::sou() {
+	return GALEAO;
 }
 void Galeao::acao(int xaAtacar, int yaAtacar) {
 

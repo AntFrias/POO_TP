@@ -5,8 +5,8 @@ void Escuna::AbasteceAguaNavio()
 {
 	this->quantAgua = ESCUNA_MAX_AGUA;
 }
-bool Escuna::souEscuna() {
-	return true;
+int Escuna::sou() {
+	return ESCUNA;
 }
 int Escuna::getMaxAgua() {
 	return ESCUNA_MAX_AGUA;
@@ -20,12 +20,16 @@ void Escuna::adicionaAgua(int agua) {
 void Escuna::soldadosBebemAgua() {
 	
 	if(mundo->verificaCelulaMar(this->x,this->y) || (mundo->verificaCelulaPorto(this->x, this->y) !=CELULA_PORTO_AMIGO)){
-
-		this->quantAgua -= this->getNumSoldados();
-		cout << "blublublu";
+		if(this->quantAgua>0)
+			this->quantAgua -= this->getNumSoldados();
 	}
-	if (this->quantAgua == 0) {
-		cout << "Fiquei sem agua crlh!";
+	if (this->quantAgua <= 0) {
+		if (this->quantSoldados > 0) {
+			this->quantSoldados -= 1;
+		}
+		if (this->quantSoldados == 0){
+			this->autoMove = true;
+		}
 	}
 }
 bool Escuna::VerificaCargaNavio(int novaCarga)

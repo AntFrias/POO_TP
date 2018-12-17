@@ -20,8 +20,8 @@ int Veleiro::getAgua() {
 void Veleiro::adicionaAgua(int agua) {
 	this->quantAgua += agua;
 }
-bool Veleiro::souVeleiro() {
-	return true;
+int Veleiro::sou() {
+	return VELEIRO;
 }
 
 void Veleiro::acao(int xaAtacar, int yaAtacar) {
