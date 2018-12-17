@@ -5,7 +5,19 @@ void Galeao::AbasteceAguaNavio()
 {
 	this->quantAgua = GALEAO_MAX_AGUA;
 }
+void Galeao::soldadosBebemAgua() {
 
+	this->quantAgua -= this->getNumSoldados();
+}
+int Galeao::getMaxAgua() {
+	return GALEAO_MAX_AGUA;
+}
+int Galeao::getAgua() {
+	return this->quantAgua;
+}
+void Galeao::adicionaAgua(int agua) {
+	this->quantAgua += agua;
+}
 bool Galeao::VerificaCargaNavio(int novaCarga)
 {
 	if (this->QuantMercadoria + novaCarga <= GALEAO_QUANT_MAX_CARGA)
@@ -48,6 +60,11 @@ void Galeao::acao(int xaAtacar, int yaAtacar) {
 			navioaAtacar->setAfundado(true);
 			//passar a metade da carga
 			//passa a agua toda menos o execesso
+			if (this->getAgua() + navioaAtacar->getAgua() > this->getMaxAgua()) {
+				this->adicionaAgua(this->getMaxAgua() - this->getAgua());
+			}
+			else
+				this->adicionaAgua(navioaAtacar->getAgua());
 		}
 		cout << "O Navio " << this->getId() << " ficou com  " << this->quantSoldados << "soldados." << endl;
 		cout << "O Navio " << navioaAtacar->getId() << " ficou com " << navioaAtacar->getNumSoldados() << "soldados." << endl;
@@ -67,6 +84,12 @@ void Galeao::acao(int xaAtacar, int yaAtacar) {
 			this->setAfundado(true);
 			//passar a metade da carga
 			//passa a agua toda menos o execesso
+			if (navioaAtacar->getAgua() + this->getAgua() > navioaAtacar->getMaxAgua()) {
+				navioaAtacar->adicionaAgua(navioaAtacar->getMaxAgua() - navioaAtacar->getAgua());
+			}
+			else
+				navioaAtacar->adicionaAgua(this->getAgua());
+
 		}
 		cout << "O Navio " << this->getId() << " ficou com  " << this->quantSoldados << " soldados." << endl;
 		cout << "O Navio " << navioaAtacar->getId() << " ficou com " << navioaAtacar->getNumSoldados() << " soldados." << endl;

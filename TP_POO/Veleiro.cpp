@@ -8,9 +8,22 @@ void Veleiro::AbasteceAguaNavio()
 	this->quantAgua = VELEIRO_MAX_AGUA;
 	
 }
+void Veleiro::soldadosBebemAgua() {
+	this->quantAgua -= this->getNumSoldados();
+}
+int Veleiro::getMaxAgua() {
+	return VELEIRO_MAX_AGUA;
+}
+int Veleiro::getAgua() {
+	return this->quantAgua;
+}
+void Veleiro::adicionaAgua(int agua) {
+	this->quantAgua += agua;
+}
 bool Veleiro::souVeleiro() {
 	return true;
 }
+
 void Veleiro::acao(int xaAtacar, int yaAtacar) {
 
 	Navios *navioaAtacar = nullptr;
@@ -43,6 +56,11 @@ void Veleiro::acao(int xaAtacar, int yaAtacar) {
 			navioaAtacar->setAfundado(true);
 			//passar a metade da carga
 			//passa a agua toda menos o execesso
+			if (this->getAgua() + navioaAtacar->getAgua() > this->getMaxAgua()) {
+				this->adicionaAgua(this->getMaxAgua() - this->getAgua());
+			}
+			else
+				this->adicionaAgua(navioaAtacar->getAgua());
 		}
 		cout << "O Navio " << this->getId() << " ficou com  " << this->quantSoldados << "soldados." << endl;
 		cout << "O Navio " << navioaAtacar->getId() << " ficou com " << navioaAtacar->getNumSoldados() << "soldados." << endl;
@@ -62,6 +80,12 @@ void Veleiro::acao(int xaAtacar, int yaAtacar) {
 			this->setAfundado(true);
 			//passar a metade da carga
 			//passa a agua toda menos o execesso
+			if (navioaAtacar->getAgua() + this->getAgua() > navioaAtacar->getMaxAgua()) {
+				navioaAtacar->adicionaAgua(navioaAtacar->getMaxAgua() - navioaAtacar->getAgua());
+			}
+			else
+				navioaAtacar->adicionaAgua(this->getAgua());
+
 		}
 		cout << "O Navio " << this->getId() << " ficou com  " << this->quantSoldados << " soldados." << endl;
 		cout << "O Navio " << navioaAtacar->getId() << " ficou com " << navioaAtacar->getNumSoldados() << " soldados." << endl;
