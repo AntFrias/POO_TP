@@ -12,6 +12,7 @@ public:
 	Galeao(Mundo *mundo, int coordx, int coordy) : QuantMercadoria(0), QuantPeixe(0), Navios(mundo, 'G', coordx, coordy, 40, 400){};
 	virtual void AbasteceAguaNavio();
 	bool VerificaCargaNavio(int novaCarga);
+	bool souGaleao();
 	~Galeao();
 };
 #endif // !GALEAO_H
