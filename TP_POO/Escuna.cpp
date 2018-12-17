@@ -15,6 +15,8 @@ bool Escuna::VerificaCargaNavio(int novaCarga)
 	else
 		return false;
 }
+void Escuna::combate() {
+}
 int Escuna::FmoveEsquerda() {
 	int VerificaPorto = 0;
 	//e ver se a nova pos está dentro de agua!
