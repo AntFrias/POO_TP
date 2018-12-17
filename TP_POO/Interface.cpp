@@ -90,7 +90,7 @@ void Interface::Prompt() {
 		getline(cin, linha);
 
 		PromptFase2(linha);
-		mundo.retiraNavAfundados();
+		mundo.retiraNavAfundados(); //mudar para dentro quando for implemento do ciclo do navios
 		
 		jogador.moveNavioAuto();
 		mundo.retiraNavAfundados();

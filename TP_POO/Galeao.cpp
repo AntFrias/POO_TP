@@ -16,6 +16,9 @@ bool Galeao::VerificaCargaNavio(int novaCarga)
 	else
 		return false;
 }
+bool Galeao::souGaleao() {
+	return true;
+}
 
 Galeao::~Galeao()
 {

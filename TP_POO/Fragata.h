@@ -9,6 +9,7 @@ class Fragata : public Navios
 public:
 	Fragata(Mundo *mundo, int coordx, int coordy) : Navios(mundo, 'F', coordx, coordy, 50, 500) {};
 	virtual void AbasteceAguaNavio();
+	bool souFragata();
 	~Fragata();
 };
 
