@@ -10,9 +10,9 @@ void Fragata::soldadosBebemAgua() {
 	this->quantAgua -= this->getNumSoldados();
 
 }
-bool Fragata::souFragata() {
+int Fragata::sou() {
 
-	return true;
+	return FRAGATA;
 
 }
 int Fragata::getMaxAgua() {
