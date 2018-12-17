@@ -30,6 +30,20 @@
 #define ESCUNA_MAX_AGUA 100
 #define FRAGATA_MAX_AGUA 500
 
+enum movimentosNavios {
+
+	naoMove = 0,
+	moveCima,
+	moveBaixo,
+	moveEsquerda,
+	moveDireita,
+	moveCimaEsquerda,
+	moveCimaDireita,
+	moveBaixoEsquerda,
+	moveBaixoDireita
+
+};
+
 using namespace std;
 
 class Mundo;
@@ -37,12 +51,13 @@ class Mundo;
 class Navios
 {
 private:
-	Mundo *mundo;
+	
 	static int IncNavio;
 	int id;
 	char tipo;
-
+	
 protected:
+	Mundo *mundo;
 	bool autoMove;
 	bool Atracado;
 	bool afundado;
@@ -61,15 +76,15 @@ public:
 	void combate();
 	int getNumSoldados();
 	void setNumSoldados(int num);
-	int FmoveEsquerda();
+	/*int FmoveEsquerda();
 	int FmoveDireita();
 	int FmoveCima();
 	int FmoveBaixo();
 	int FmoveCimaEsquerda();
 	int FmoveCimaDireita();
 	int FmoveBaixoEsquerda();
-	int FmoveBaixoDireita();
-	int moveNavio(int direcao);
+	int FmoveBaixoDireita();*/
+	virtual int moveNavio(int direcao)=0;
 	char getTipo()const;
 	int getX()const;
 	int getY()const;
