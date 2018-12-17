@@ -25,7 +25,7 @@ public:
 	int FmoveBaixoEsquerda();
 	int FmoveBaixoDireita();
 	bool VerificaCargaNavio(int novaCarga);
-	bool souGaleao();
+	int sou();
 	void acao(int xaAtacar, int yaAtacar);
 	virtual void combate();
 	~Galeao();

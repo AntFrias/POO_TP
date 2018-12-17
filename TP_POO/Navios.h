@@ -30,6 +30,7 @@
 #define ESCUNA_MAX_AGUA 100
 #define FRAGATA_MAX_AGUA 500
 
+
 enum movimentosNavios {
 
 	naoMove = 0,
@@ -77,6 +78,7 @@ public:
 	virtual int getAgua() = 0;
 	virtual void adicionaAgua(int agua) = 0;
 	virtual void soldadosBebemAgua() = 0;
+	virtual int sou() = 0;
 	int randNumber(int nSoldados);
 	int getNumSoldados();
 	void setNumSoldados(int num);
