@@ -11,6 +11,16 @@ class Escuna : public Navios
 public:
 	Escuna(Mundo *mundo, int coordx, int coordy) : QuantMercadoria(0), QuantPeixe(0), Navios(mundo, 'E', coordx, coordy, 10, 100) {};
 	virtual void AbasteceAguaNavio();
+	virtual int moveNavio(int direcao);
+	int FmoveEsquerda();
+	int FmoveDireita();
+	int FmoveCima();
+	int FmoveBaixo();
+	int FmoveCimaEsquerda();
+	int FmoveCimaDireita();
+	int FmoveBaixoEsquerda();
+	int FmoveBaixoDireita();
+	bool souEscuna();
 	bool VerificaCargaNavio(int novaCarga);
 	~Escuna();
 };
