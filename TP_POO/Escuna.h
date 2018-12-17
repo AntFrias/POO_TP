@@ -21,6 +21,10 @@ public:
 	int FmoveBaixoEsquerda();
 	int FmoveBaixoDireita();
 	bool souEscuna();
+	int getMaxAgua();
+	int getAgua();
+	void adicionaAgua(int agua);
+	void soldadosBebemAgua();
 	bool VerificaCargaNavio(int novaCarga);
 	virtual void combate();
 	~Escuna();

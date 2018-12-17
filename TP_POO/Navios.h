@@ -20,9 +20,9 @@
 #define DESLOCAMENTO_NAVIO_BASE 0
 #define DESLOCAMENTO_NAVIO_RAPIDO 1
 
-#define VELEIRO_QUANT_MAX_CARGA 40
-#define GALEAO_QUANT_MAX_CARGA 70
-#define ESCUNA_QUANT_MAX_CARGA 20
+#define VELEIRO_QUANT_MAX_CARGA 40000
+#define GALEAO_QUANT_MAX_CARGA 70000
+#define ESCUNA_QUANT_MAX_CARGA 20000
 #define FRAGATA_QUANT_MAX_CARGA 0
 
 #define VELEIRO_MAX_AGUA 200
@@ -64,6 +64,7 @@ protected:
 	int x, y;
 	int quantSoldados;
 	int quantAgua;
+	bool zonaEvento;
 
 
 public:
@@ -72,6 +73,10 @@ public:
 	
 	virtual int moveNavio(int direcao)=0;
 	virtual void combate() = 0;
+	virtual int getMaxAgua() = 0;
+	virtual int getAgua() = 0;
+	virtual void adicionaAgua(int agua) = 0;
+	virtual void soldadosBebemAgua() = 0;
 	int randNumber(int nSoldados);
 	int getNumSoldados();
 	void setNumSoldados(int num);

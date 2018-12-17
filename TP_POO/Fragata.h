@@ -9,6 +9,7 @@ class Fragata : public Navios
 public:
 	Fragata(Mundo *mundo, int coordx, int coordy) : Navios(mundo, 'F', coordx, coordy, 50, 500) {};
 	virtual void AbasteceAguaNavio();
+	void soldadosBebemAgua();
 	virtual int moveNavio(int direcao);
 	virtual void combate();
 	void acao(int xaAtacar, int yaAtacar);
@@ -21,6 +22,9 @@ public:
 	int FmoveBaixoEsquerda();
 	int FmoveBaixoDireita();
 	bool souFragata();
+	int getMaxAgua();
+	int getAgua();
+	void adicionaAgua(int agua);
 	~Fragata();
 };
 
