@@ -53,6 +53,8 @@ void Navios::acao(int xaAtacar,int yaAtacar) {
 
 	if (randThis > randNavioaAtacar) { // este ganhou
 		soldadosPerdidos = (20 * this->quantSoldados) / 100;
+		if (soldadosPerdidos == 0)
+			soldadosPerdidos = 1;
 		cout << "O Navio " << this->getId() << " ganhou esta investida, ira perder " << soldadosPerdidos << " soldados."<<endl;
 		cout << "O Navio " << navioaAtacar->getId() << " perdeu esta investida, ira perder " << soldadosPerdidos * 2 << " soldados."<<endl;
 		this->quantSoldados -= soldadosPerdidos;// este perdeu 20% da sua população
@@ -70,6 +72,8 @@ void Navios::acao(int xaAtacar,int yaAtacar) {
 	else { //o atacado ganhou 
 	
 		soldadosPerdidos = (20 * navioaAtacar->getNumSoldados()) / 100;
+		if (soldadosPerdidos == 0)
+			soldadosPerdidos = 1;
 		cout << "O Navio " << this->getId() << " perdeu esta investida, ira perder " << soldadosPerdidos * 2 << "soldados." << endl;
 		cout << "O Navio " << navioaAtacar->getId() << " ganhour esta investida, ira perder " << soldadosPerdidos << "soldados." << endl;
 		navioaAtacar->setNumSoldados(navioaAtacar->getNumSoldados()-soldadosPerdidos);// o atacado perde 20% da sua população
