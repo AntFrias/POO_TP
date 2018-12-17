@@ -8,6 +8,9 @@ void Veleiro::AbasteceAguaNavio()
 	this->quantAgua = VELEIRO_MAX_AGUA;
 	
 }
+int Veleiro::getMaxAgua() {
+	return VELEIRO_MAX_AGUA;
+}
 bool Veleiro::souVeleiro() {
 	return true;
 }

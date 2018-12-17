@@ -8,6 +8,9 @@ void Escuna::AbasteceAguaNavio()
 bool Escuna::souEscuna() {
 	return true;
 }
+int Escuna::getMaxAgua() {
+	return ESCUNA_MAX_AGUA;
+}
 bool Escuna::VerificaCargaNavio(int novaCarga)
 {
 	if (this->QuantMercadoria + novaCarga <= ESCUNA_QUANT_MAX_CARGA)

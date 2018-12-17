@@ -21,6 +21,7 @@ public:
 	int FmoveBaixoEsquerda();
 	int FmoveBaixoDireita();
 	bool souFragata();
+	int getMaxAgua();
 	~Fragata();
 };
 

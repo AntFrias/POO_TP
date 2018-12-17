@@ -12,6 +12,7 @@ class Veleiro : public Navios
 public:
 	Veleiro(Mundo *auxMundo, int coordx, int coordy) : QuantMercadoria(0), QuantPeixe(0), Navios(auxMundo,'V', coordx,coordy, 20, 200){};
 	virtual void AbasteceAguaNavio();
+	int getMaxAgua();
 	virtual int moveNavio(int direcao);
 	virtual void combate();
 	int FmoveEsquerda();

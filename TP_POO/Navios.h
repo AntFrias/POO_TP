@@ -64,6 +64,7 @@ protected:
 	int x, y;
 	int quantSoldados;
 	int quantAgua;
+	bool zonaEvento;
 
 
 public:
@@ -72,6 +73,7 @@ public:
 	
 	virtual int moveNavio(int direcao)=0;
 	virtual void combate() = 0;
+	virtual int getMaxAgua() = 0;
 	int randNumber(int nSoldados);
 	int getNumSoldados();
 	void setNumSoldados(int num);

@@ -10,6 +10,9 @@ bool Fragata::souFragata() {
 	return true;
 
 }
+int Fragata::getMaxAgua() {
+	return FRAGATA_MAX_AGUA;
+}
 void Fragata::acao(int xaAtacar, int yaAtacar) {
 
 	Navios *navioaAtacar = nullptr;
@@ -41,7 +44,13 @@ void Fragata::acao(int xaAtacar, int yaAtacar) {
 			//set afundado
 			navioaAtacar->setAfundado(true);
 			//passar a metade da carga
+			//-> Fragata não tem carga n passa nada
 			//passa a agua toda menos o execesso
+				navioaAtacar->getMaxAgua();
+				
+		
+		
+		
 		}
 		cout << "O Navio " << this->getId() << " ficou com  " << this->quantSoldados << "soldados." << endl;
 		cout << "O Navio " << navioaAtacar->getId() << " ficou com " << navioaAtacar->getNumSoldados() << "soldados." << endl;
