@@ -249,7 +249,7 @@ string Mundo::TrataEventoTempestade(int epiX, int epiY)
 {
 	ostringstream os;
 
-	unsigned int x, y;
+	int x, y;
 
 	for (auto it = navios.begin(); it != navios.end();) {
 
@@ -257,7 +257,7 @@ string Mundo::TrataEventoTempestade(int epiX, int epiY)
 
 		y = (*it)->getY();
 
-		if (x >= epiX - RANGE_TEMPESTADE && x <= epiX + RANGE_TEMPESTADE && y >= epiY - RANGE_TEMPESTADE && y <= epiY + RANGE_TEMPESTADE) {
+		if (x >= (epiX - RANGE_TEMPESTADE) && x <= (epiX + RANGE_TEMPESTADE) && y >= (epiY - RANGE_TEMPESTADE) && y <= (epiY + RANGE_TEMPESTADE)) {
 
 			os << "Foi Encontrado um Navio com o id " << (*it)->getId() << "na posicao " << x << " , " << y << endl;
 
