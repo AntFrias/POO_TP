@@ -1007,6 +1007,31 @@ void Escuna::RetiraCargaNavio(int quantCarga)
 		this->QuantMercadoria = 0;
 }
 
+string Escuna::TrataNavioTempestade()
+{
+	int QuantCargaPerder, probAfundar;
+
+	ostringstream os;
+
+	os << "O navio é do tipo Escuna" << endl;
+
+	QuantCargaPerder = rand() % 100 + 1;
+
+	probAfundar = rand() % 100 + 1;
+
+	if (probAfundar > PROB_ESCUNA_AFUNDAR_TEMPESTADE && QuantCargaPerder <= PROB_ESCUNA_PERDER_CARGA)
+		RetiraCargaNavio(QuantCargaPerder);
+
+	else if (probAfundar <= PROB_ESCUNA_AFUNDAR_TEMPESTADE)
+		this->afundado = NAVIO_AFUNDADO;
+
+	this->quantSoldados = this->quantSoldados - ((this->quantSoldados * 15) / 100);
+	
+	AbasteceAguaNavio();
+
+	return os.str();
+}
+
 
 Escuna::~Escuna()
 {

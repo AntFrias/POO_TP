@@ -1108,6 +1108,31 @@ void Veleiro::RetiraCargaNavio(int quantCarga)
 		this->QuantMercadoria = 0;
 }
 
+string Veleiro::TrataNavioTempestade()
+{
+	ostringstream os;
+
+	os << "O navio é do tipo Veleiro" << endl;
+
+	int QuantCarga = ( this->QuantMercadoria * 100 ) / VELEIRO_QUANT_MAX_CARGA;
+
+	int probAfundar = rand() % 100 + 1;
+
+	if (probAfundar <= PROB_VELEIRO_AFUNDAR_TEMPESTADE_1 && QuantCarga >= PROB_VELEIRO_PERDER_CARGA)
+		this->afundado = NAVIO_AFUNDADO;
+
+	else if (probAfundar <= PROB_VELEIRO_AFUNDAR_TEMPESTADE_2)  // aqui a probabilidade é diferente pelo facto do 
+		this->afundado = NAVIO_AFUNDADO;    					//navio pedir apenas 20% de prob caso tenha menos que 50%
+																// de capacidade de carga
+	else
+	{
+		RetiraCargaNavio( QuantMercadoria / 2 );
+	}
+	AbasteceAguaNavio();
+
+	return os.str();
+}
+
 
 bool Veleiro::VerificaCargaNavio(int novaCarga)
 {

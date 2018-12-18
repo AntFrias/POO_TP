@@ -19,6 +19,7 @@ public:
 	virtual int moveNavio(int direcao)override;
 	virtual void setCargaNavio(int quantCarga);
 	virtual void RetiraCargaNavio(int quantCarga);
+	string TrataNavioTempestade();
 	int FmoveEsquerda();
 	int FmoveDireita();
 	int FmoveCima();

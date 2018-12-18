@@ -204,6 +204,22 @@ void Fragata::setCargaNavio(int quantCarga)
 void Fragata::RetiraCargaNavio(int quantCarga)
 {
 }
+string Fragata::TrataNavioTempestade()
+{
+	ostringstream os;
+
+	os << "O navio é do tipo Fragata" << endl;
+
+	if (rand() % 100 + 1 <= PROB_FRAGATA_AFUNDAR_TEMPESTADE)
+		this->afundado = NAVIO_AFUNDADO;
+
+	else {
+
+		this->quantSoldados = this->quantSoldados - ((quantSoldados * 15) / 100);
+		
+		AbasteceAguaNavio();
+	}
+}
 int Fragata::FmoveEsquerda() {
 	int VerificaPorto = 0;
 	//e ver se a nova pos está dentro de agua!
