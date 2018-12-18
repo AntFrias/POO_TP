@@ -8,6 +8,7 @@
 #include <sstream>
 #include <string>
 #include <algorithm>
+#include <iomanip>
 
 #include "Mundo.h"
 #include "Consola.h"

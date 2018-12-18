@@ -36,7 +36,16 @@ int Mundo::portosBemColocado() {
 	}
 	return 1;
 }
+void Mundo::bebemTodosAgua() {
 
+	for (unsigned int i = 0; i < navios.size(); i++) {
+
+		navios[i]->soldadosBebemAgua();
+
+	}
+
+
+}
 int Mundo::ValidaTipoNavio(const char tipo) {
 	if (tipo == 'F')
 		return FRAGATA;
