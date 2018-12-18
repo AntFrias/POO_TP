@@ -7,8 +7,30 @@ void Fragata::AbasteceAguaNavio()
 }
 void Fragata::soldadosBebemAgua() {
 
-	this->quantAgua -= this->getNumSoldados();
+	if (mundo->verificaCelulaMar(this->x, this->y) || (mundo->verificaCelulaPorto(this->x, this->y) != CELULA_PORTO_AMIGO)) {
+		if (this->quantAgua > 0)
+			this->quantAgua -= this->getNumSoldados();
+	}
+	if (this->quantAgua <= 0) {
+		if (this->quantSoldados > 0) {
+			this->quantSoldados -= 1;
+		}
+		if (this->quantSoldados == 0) {
+			this->autoMove = true;
+		}
+	}
 
+}
+void Fragata::moveNavioAuto() {
+
+	if (this->getAutoMove() == 1) {
+
+		unsigned int direcao;
+		direcao = rand() % 9 + 1;
+		this->moveNavio(direcao);
+		this->soldadosBebemAgua();
+		this->combate(); //aqui
+	}
 }
 int Fragata::sou() {
 
@@ -24,19 +46,23 @@ int Fragata::getAgua() {
 void Fragata::adicionaAgua(int agua) {
 	this->quantAgua += agua;
 }
-void Fragata::acao(int xaAtacar, int yaAtacar) {
+string Fragata::acao(int xaAtacar, int yaAtacar) {
+
+	ostringstream os;
+
+	
 
 	Navios *navioaAtacar = nullptr;
 	navioaAtacar = mundo->getNavioXY(xaAtacar, yaAtacar);
 	int randThis = 0, randNavioaAtacar = 0, soldadosPerdidos = 0;
-	cout << "----------------------------Combate----------------------------" << endl;
-	cout << "O " << this->getId() << "moveu-se e encontrou o: " << navioaAtacar->getId() << endl;
+	os << "---------------Combate------------------" << endl;
+	os << "O " << this->getId() << " moveu-se e encontrou o: " << navioaAtacar->getId() << endl;
 
 	randThis = randNumber(this->quantSoldados);
 	randNavioaAtacar = randNumber(navioaAtacar->getNumSoldados());
 
-	cout << "O " << this->getId() << "ficou com o nr sorteado: " << randThis << "e tem neste momento " << this->quantSoldados << "soldados" << endl;
-	cout << "O " << navioaAtacar->getId() << "ficou com o nr sorteado: " << randNavioaAtacar << "e tem neste momento" << navioaAtacar->getNumSoldados() << "soldados" << endl;
+	os << "O " << this->getId() << " ficou com o nr sorteado: " << randThis << " e tem neste momento " << this->quantSoldados << " soldados " << endl;
+	os << "O " << navioaAtacar->getId() << " ficou com o nr sorteado: " << randNavioaAtacar << " e tem neste momento " << navioaAtacar->getNumSoldados() << " soldados " << endl;
 
 
 	if (randThis == randNavioaAtacar) //se houver empate
@@ -46,8 +72,8 @@ void Fragata::acao(int xaAtacar, int yaAtacar) {
 		soldadosPerdidos = (20 * this->quantSoldados) / 100;
 		if (soldadosPerdidos == 0)
 			soldadosPerdidos = 1;
-		cout << "O Navio " << this->getId() << " ganhou esta investida, ira perder " << soldadosPerdidos << " soldados." << endl;
-		cout << "O Navio " << navioaAtacar->getId() << " perdeu esta investida, ira perder " << soldadosPerdidos * 2 << " soldados." << endl;
+		os << "O Navio " << this->getId() << " ganhou esta investida, ira perder " << soldadosPerdidos << " soldados." << endl;
+		os << "O Navio " << navioaAtacar->getId() << " perdeu esta investida, ira perder " << soldadosPerdidos * 2 << " soldados." << endl;
 		this->quantSoldados -= soldadosPerdidos;// este perdeu 20% da sua população
 		navioaAtacar->setNumSoldados(navioaAtacar->getNumSoldados() - (soldadosPerdidos * 2));// o outro perde 2 vezes mais que o outro
 
@@ -64,16 +90,16 @@ void Fragata::acao(int xaAtacar, int yaAtacar) {
 				this->adicionaAgua(navioaAtacar->getAgua());
 		
 		}
-		cout << "O Navio " << this->getId() << " ficou com  " << this->quantSoldados << "soldados." << endl;
-		cout << "O Navio " << navioaAtacar->getId() << " ficou com " << navioaAtacar->getNumSoldados() << "soldados." << endl;
+		os << "O Navio " << this->getId() << " ficou com " << this->quantSoldados << " soldados." << endl;
+		os << "O Navio " << navioaAtacar->getId() << " ficou com " << navioaAtacar->getNumSoldados() << " soldados." << endl;
 	}
 	else { //o atacado ganhou 
 
 		soldadosPerdidos = (20 * navioaAtacar->getNumSoldados()) / 100;
 		if (soldadosPerdidos == 0)
 			soldadosPerdidos = 1;
-		cout << "O Navio " << this->getId() << " perdeu esta investida, ira perder " << soldadosPerdidos * 2 << "soldados." << endl;
-		cout << "O Navio " << navioaAtacar->getId() << " ganhour esta investida, ira perder " << soldadosPerdidos << "soldados." << endl;
+		os << "O Navio " << this->getId() << " perdeu esta investida, ira perder " << soldadosPerdidos * 2 << " soldados." << endl;
+		os << "O Navio " << navioaAtacar->getId() << " ganhour esta investida, ira perder " << soldadosPerdidos << " soldados." << endl;
 		navioaAtacar->setNumSoldados(navioaAtacar->getNumSoldados() - soldadosPerdidos);// o atacado perde 20% da sua população
 		this->quantSoldados -= soldadosPerdidos * 2; //este perde 2 vezes mais que o outro
 
@@ -90,43 +116,46 @@ void Fragata::acao(int xaAtacar, int yaAtacar) {
 				navioaAtacar->adicionaAgua(this->getAgua());
 
 		}
-		cout << "O Navio " << this->getId() << " ficou com  " << this->quantSoldados << " soldados." << endl;
-		cout << "O Navio " << navioaAtacar->getId() << " ficou com " << navioaAtacar->getNumSoldados() << " soldados." << endl;
+		os << "O Navio " << this->getId() << " ficou com  " << this->quantSoldados << " soldados." << endl;
+		os << "O Navio " << navioaAtacar->getId() << " ficou com " << navioaAtacar->getNumSoldados() << " soldados." << endl;
 	}
-	cout << "---------------------------------------------------------------" << endl;
+	os << "-------------Fim_Combate----------------" << endl<< endl;
+	return os.str();
 }
-void Fragata::combate() {
+string Fragata::combate() {
 
 	int xNavio = getX(), yNavio = getY();
+	ostringstream os;
 
 	if (mundo->verificaCelulaNavio(xNavio + 1, yNavio) == CELULA_NAVIO) {
-		acao(xNavio + 1, yNavio);
+		os << acao(xNavio + 1, yNavio);
 	}
 	if (mundo->verificaCelulaNavio(xNavio - 1, yNavio) == CELULA_NAVIO) {
-		acao(xNavio - 1, yNavio);
+		os << acao(xNavio - 1, yNavio);
 	}
 	if (mundo->verificaCelulaNavio(xNavio, yNavio - 1) == CELULA_NAVIO) {
-		acao(xNavio, yNavio - 1);
+		os << acao(xNavio, yNavio - 1);
 	}
 	if (mundo->verificaCelulaNavio(xNavio, yNavio + 1) == CELULA_NAVIO) {
-		acao(xNavio, yNavio + 1);
+		os << acao(xNavio, yNavio + 1);
 	}
 	if (mundo->verificaCelulaNavio(xNavio + 1, yNavio - 1) == CELULA_NAVIO) {
-		acao(xNavio + 1, yNavio - 1);
+		os << acao(xNavio + 1, yNavio - 1);
 	}
 	if (mundo->verificaCelulaNavio(xNavio - 1, yNavio - 1) == CELULA_NAVIO) {
-		acao(xNavio - 1, yNavio - 1);
+		os << acao(xNavio - 1, yNavio - 1);
 	}
 	if (mundo->verificaCelulaNavio(xNavio + 1, yNavio + 1) == CELULA_NAVIO) {
-		acao(xNavio + 1, yNavio + 1);
+		os << acao(xNavio + 1, yNavio + 1);
 	}
 	if (mundo->verificaCelulaNavio(xNavio - 1, yNavio + 1) == CELULA_NAVIO) {
-		acao(xNavio - 1, yNavio + 1);
+		os << acao(xNavio - 1, yNavio + 1);
 	}
 	if (mundo->verificaCelulaPorto(xNavio, yNavio) == CELULA_PORTO_INIMIGO) {
 		//acao(xNavio, yNavio);
 		cout << "Porrada com o Porto Inimigo" << endl;
 	}
+	return os.str();
 }
 void Fragata::setCargaNavio(int quantCarga)
 {

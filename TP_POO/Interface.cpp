@@ -97,7 +97,8 @@ void Interface::Prompt() {
 
 		PromptFase2(linha);
 		mundo.retiraNavAfundados(); //mudar para dentro quando for implemento do ciclo do navios
-		
+		mundo.bebemTodosAgua();
+
 		jogador.moveNavioAuto();
 		mundo.retiraNavAfundados();
 
@@ -406,7 +407,9 @@ void Interface::PromptFase2(string linha) {
 						if (!jogador.verificaModoAutomaticoNavio(idNavio)) {
 							jogador.moveNavioJogador(idNavio, ValidaDirecoes(direcao));//com sucesso
 								auxNavio = mundo.getNavio(idNavio);
-								auxNavio->combate();
+								Consola::setTextColor(Consola::BRANCO);
+								Consola::gotoxy(0, 26);
+								cout << auxNavio->combate();
 						}
 						else
 							cout << "[ Erro..! AutoMove do Navio : " << idNavio << " esta ativo ..! ]" << endl;
@@ -730,36 +733,37 @@ void Interface::mostraNavios() {
 		if (i % 2 == 0) {
 			Consola::gotoxy(x, y);
 			Consola::setTextColor(Consola::BRANCO_CLARO);
-			cout << auxNavio[i]->getId();
+			cout << setfill('0') << setw(2) << auxNavio[i]->getId();
+		
 
-			Consola::gotoxy(x + 1, y);
+			/*Consola::gotoxy(x + 1, y);
 			Consola::setTextColor(Consola::BRANCO_CLARO);
 			cout << auxNavio[i]->getId();
-
+*/
 			Consola::gotoxy(x, y + 1);
 			Consola::setTextColor(Consola::BRANCO_CLARO);
-			cout << auxNavio[i]->getId();
+			cout << setfill('0') << setw(2) << auxNavio[i]->getId();
 
-			Consola::gotoxy(x + 1, y + 1);
+			/*Consola::gotoxy(x + 1, y + 1);
 			Consola::setTextColor(Consola::BRANCO_CLARO);
-			cout << auxNavio[i]->getId();
+			cout << auxNavio[i]->getId();*/
 		}
 		if (i % 2 != 0) {
 			Consola::gotoxy(x, y);
 			Consola::setTextColor(Consola::BRANCO_CLARO);
-			cout << auxNavio[i]->getId();
+			cout << setfill('0') << setw(2) << auxNavio[i]->getId();
 
-			Consola::gotoxy(x + 1, y);
+			/*Consola::gotoxy(x + 1, y);
 			Consola::setTextColor(Consola::BRANCO_CLARO);
-			cout << auxNavio[i]->getId();
+			cout << auxNavio[i]->getId();*/
 
 			Consola::gotoxy(x, y + 1);
 			Consola::setTextColor(Consola::BRANCO_CLARO);
-			cout << auxNavio[i]->getId();
+			cout << setfill('0') << setw(2) << auxNavio[i]->getId();
 
-			Consola::gotoxy(x + 1, y + 1);
+			/*Consola::gotoxy(x + 1, y + 1);
 			Consola::setTextColor(Consola::BRANCO_CLARO);
-			cout << auxNavio[i]->getId();
+			cout << auxNavio[i]->getId();*/
 		}
 
 	}
@@ -777,8 +781,6 @@ void Interface::mostraNaviosJogador() {
 	}
 }
 void Interface::mostraMapa() {
-
-	
 
 	mostraSuperficie();
 	mostraPortos();

@@ -17,6 +17,18 @@ int Escuna::getAgua() {
 void Escuna::adicionaAgua(int agua) {
 	this->quantAgua += agua;
 }
+void Escuna::moveNavioAuto() {
+
+	
+		if (this->getAutoMove() == 1) {
+
+			unsigned int direcao;
+			direcao = rand() % 9 + 1;
+			this->moveNavio(direcao);
+			this->soldadosBebemAgua();
+			this->combate(); //aqui
+		}
+}
 void Escuna::soldadosBebemAgua() {
 	
 	if(mundo->verificaCelulaMar(this->x,this->y) || (mundo->verificaCelulaPorto(this->x, this->y) !=CELULA_PORTO_AMIGO)){
@@ -39,7 +51,9 @@ bool Escuna::VerificaCargaNavio(int novaCarga)
 	else
 		return false;
 }
-void Escuna::combate() {
+string Escuna::combate() {
+	ostringstream os;
+	return os.str();
 }
 int Escuna::FmoveEsquerda() {
 	int VerificaPorto = 0;

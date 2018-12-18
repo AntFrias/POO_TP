@@ -73,6 +73,8 @@ public:
 
 	int portosBemColocado();
 
+	void bebemTodosAgua();
+
 	int ValidaTipoNavio(const char tipo);
 
 	const char getPortoPrincipal();
