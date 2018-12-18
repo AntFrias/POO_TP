@@ -12,6 +12,8 @@ public:
 	void soldadosBebemAgua();
 	virtual int moveNavio(int direcao);
 	virtual void combate();
+	virtual void setCargaNavio(int quantCarga)override;
+	virtual void RetiraCargaNavio(int quantCarga);
 	void acao(int xaAtacar, int yaAtacar);
 	int FmoveEsquerda();
 	int FmoveDireita();

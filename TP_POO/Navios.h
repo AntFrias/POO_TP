@@ -78,6 +78,8 @@ public:
 	virtual int getAgua() = 0;
 	virtual void adicionaAgua(int agua) = 0;
 	virtual void soldadosBebemAgua() = 0;
+	virtual void setCargaNavio(int quantCarga) = 0;
+	virtual void RetiraCargaNavio(int quantCarga) = 0;
 	virtual int sou() = 0;
 	int randNumber(int nSoldados);
 	int getNumSoldados();

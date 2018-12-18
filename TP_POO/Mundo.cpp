@@ -200,40 +200,87 @@ void Mundo::setEventoEmExecucao(Eventos * evento)
 {
 	this->Evento = evento;
 }
-int Mundo::TrataEventoTempestade(int x, int y)
+void Mundo::TrataEventoSereias(int indice) {
+
+	this->navios[indice]->setNumSoldados((this->navios[indice]->getNumSoldados() * 10) / 100);
+
+}
+void Mundo::TrataEventoTempestade(int x, int y)
 {
+	int QuantCargaPerder, probAfundar;
+
 	for (auto it = navios.begin(); it != navios.end();) {
 		
 		if (x >= (*it)->getX() -2 && x <= (*it)->getX() + 2 && y >= (*it)->getY() - 2 && y <= (*it)->getY() - 2 ) {
 			
-			(*it)->AbasteceAguaNavio();
-			
-			switch ((*it)->getTipo()) {
-				(*it)->
-			case 'F' :
+			switch ((*it)->sou()) {
+				
+			case FRAGATA:
+
+				if (rand() % 100 + 1 <= PROB_FRAGATA_AFUNDAR_TEMPESTADE) 
+					(*it)->setAfundado(NAVIO_AFUNDADO);
+				
+				(*it)->setNumSoldados(((*it)->getNumSoldados()*15)/100);
+				
+				(*it)->AbasteceAguaNavio();
 
 				break;
-			case 'G':
-				break;
-			case 'V':
-				break;
-			case 'E':
+
+			case ESCUNA:
+				
+				QuantCargaPerder = rand() % 100 + 1;
+
+				probAfundar = rand() % 100 + 1;
+				
+				if (probAfundar > PROB_ESCUNA_AFUNDAR_TEMPESTADE && QuantCargaPerder <= PROB_ESCUNA_PERDER_CARGA)
+					(*it)->RetiraCargaNavio(QuantCargaPerder);
+
+				else if (probAfundar <= PROB_ESCUNA_AFUNDAR_TEMPESTADE)
+					(*it)->setAfundado(NAVIO_AFUNDADO);
+
+				(*it)->setNumSoldados(((*it)->getNumSoldados() * 15) / 100);
+
+				(*it)->AbasteceAguaNavio();
+
 				break;
 
+			case VELEIRO:
+
+				QuantCargaPerder = rand() % 100 + 1;
+
+				probAfundar = rand() % 100 + 1;
+
+				if (probAfundar > PROB_VELEIRO_AFUNDAR_TEMPESTADE_1 && QuantCargaPerder >= PROB_VELEIRO_PERDER_CARGA)
+					(*it)->RetiraCargaNavio(QuantCargaPerder);
+				
+				else if (probAfundar <= PROB_VELEIRO_AFUNDAR_TEMPESTADE_2) // aqui a probabilidade é diferente pelo facto do 
+					(*it)->setAfundado(NAVIO_AFUNDADO);						//navio pedir apenas 20% de prob caso tenha menos que 50%
+						    												// de capacidade de carga
+
+				(*it)->AbasteceAguaNavio();
+				break;
+			case GALEAO:
+
+				probAfundar = rand() % 100 + 1;
+
+				if (probAfundar <= PROB_GALEAO_AFUNDAR_TEMPESTADE) // aqui a probabilidade é diferente pelo facto do 
+					(*it)->setAfundado(NAVIO_AFUNDADO);
+
+				(*it)->setNumSoldados(((*it)->getNumSoldados() * 10) / 100);
+
+				(*it)->AbasteceAguaNavio();
+
+				break;
 
 			}
-
-
-
-		}
-			
+		}	
 		++it;
 	}
 }
 // por defeito o tipo de eventos vai ter valor 0 para entrar no default e executar a acao para eventos que duram mais do que 1 turno
 void Mundo::TrataEventos(int TipoEvento)
 {
-	unsigned int epicentroX, epicentroY;
+	int epicentroX, epicentroY, indice;
 
 	switch (TipoEvento)
 	{
@@ -245,21 +292,25 @@ void Mundo::TrataEventos(int TipoEvento)
 			
 			epicentroY = rand() % this->dimY + 1;
 		
-		} while (epicentroX >= 0 + 2 && epicentroX < this->dimX - 3 && epicentroX >= 0 + 2 && epicentroY < this->dimY - 3);
-	
+		} while (epicentroX >= 0 + 2 && epicentroX < this->dimX - 3 && epicentroX >= 0 + 2 && epicentroY <= this->dimY - 3);
+
 		TrataEventoTempestade(epicentroX, epicentroY);
-		
+
 		// executa codigo para a tempestade
 		break;
 	case EVENTO_SEREIAS:
-		//executa codigo para as Sereias
+		
+		indice = rand() % navios.size() + 1;
+
+		TrataEventoSereias(indice);
 
 		break;
+
 	default:
 		if (Evento->ValidaEventoCalmaria() == true)
-			Evento->TrataEventoCalmaria();
+			Evento->TrataEvento();
 		else
-			Evento->TrataEventoMotim();
+			Evento->TrataEvento();
 		break;
 	}
 }

@@ -974,6 +974,26 @@ int Escuna::moveNavio(int direcao) {
 	return MOVE_INVALIDO;
 }
 
+void Escuna::setCargaNavio(int quantCarga)
+{
+	if (this->QuantMercadoria + quantCarga <= ESCUNA_QUANT_MAX_CARGA)
+		this->QuantMercadoria = QuantMercadoria + quantCarga;
+	else
+		this->QuantMercadoria = ESCUNA_QUANT_MAX_CARGA;
+}
+
+void Escuna::RetiraCargaNavio(int quantCarga)
+{
+	if (this->QuantPeixe - (quantCarga / 2) >= 0)
+		this->QuantPeixe = this->QuantPeixe - (quantCarga / 2);
+
+	if (this->QuantMercadoria - quantCarga >= 0)
+		this->QuantMercadoria = QuantMercadoria - quantCarga;
+	else
+		this->QuantMercadoria = 0;
+}
+
+
 Escuna::~Escuna()
 {
 }

@@ -16,6 +16,8 @@ public:
 	int getAgua();
 	void adicionaAgua(int agua);
 	virtual int moveNavio(int direcao)override;
+	virtual void setCargaNavio(int quantCarga);
+	virtual void RetiraCargaNavio(int quantCarga);
 	int FmoveEsquerda();
 	int FmoveDireita();
 	int FmoveCima();

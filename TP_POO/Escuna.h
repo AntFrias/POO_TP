@@ -12,6 +12,8 @@ public:
 	Escuna(Mundo *mundo, int coordx, int coordy) : QuantMercadoria(0), QuantPeixe(0), Navios(mundo, 'E', coordx, coordy, 10, 100) {};
 	virtual void AbasteceAguaNavio();
 	virtual int moveNavio(int direcao)override;
+	virtual void setCargaNavio(int quantCarga)override;
+	virtual void RetiraCargaNavio(int quantCarga);
 	int FmoveEsquerda();
 	int FmoveDireita();
 	int FmoveCima();

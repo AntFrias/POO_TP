@@ -1052,6 +1052,25 @@ int Veleiro::moveNavio(int direcao) {
 	return MOVE_INVALIDO;
 }
 
+void Veleiro::setCargaNavio(int quantCarga)
+{
+	if (this->QuantMercadoria + quantCarga <= VELEIRO_QUANT_MAX_CARGA)
+		this->QuantMercadoria = QuantMercadoria + quantCarga;
+	else
+		this->QuantMercadoria = VELEIRO_QUANT_MAX_CARGA;
+}
+
+void Veleiro::RetiraCargaNavio(int quantCarga)
+{
+	if (this->QuantPeixe - (quantCarga / 2) >= 0)
+		this->QuantPeixe = this->QuantPeixe - (quantCarga / 2);
+
+	if (this->QuantMercadoria - quantCarga >= 0)
+		this->QuantMercadoria = QuantMercadoria - quantCarga;
+	else
+		this->QuantMercadoria = 0;
+}
+
 
 bool Veleiro::VerificaCargaNavio(int novaCarga)
 {

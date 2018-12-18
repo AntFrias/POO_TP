@@ -128,6 +128,12 @@ void Fragata::combate() {
 		cout << "Porrada com o Porto Inimigo" << endl;
 	}
 }
+void Fragata::setCargaNavio(int quantCarga)
+{
+}
+void Fragata::RetiraCargaNavio(int quantCarga)
+{
+}
 int Fragata::FmoveEsquerda() {
 	int VerificaPorto = 0;
 	//e ver se a nova pos está dentro de agua!

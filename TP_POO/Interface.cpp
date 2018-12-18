@@ -22,29 +22,35 @@ void Interface::gotoPrint() {
 void Interface::GeradorEvento()
 {
 		while (mundo.getExistenciaEvento() != true) {
-			switch (rand()%4+1)
+
+			switch (rand()%3+1)
 			{
 				case EVENTO_TEMPESTADE:
+					cout << " Vai acontecer uma TEMPESTADE" << endl;
 					if ((rand() % 100 + 1) <= this->probTempestade)
 						mundo.TrataEventos(EVENTO_TEMPESTADE);
-
+					return;
 				break;
 				case EVENTO_SEREIAS:
+					cout << " Vai acontecer uma Ataque de uma Sereia" << endl;
 					if ((rand() % 100 + 1) <= this->probSereias)
 						mundo.TrataEventos(EVENTO_TEMPESTADE);
-	
+					return;
 					break;
 				case EVENTO_CALMARIA:
+					cout << " Vai acontecer uma Calmaria" << endl;
 					if ((rand() % 100 + 1) <= this->probCalmaria) 
 						mundo.criaEvento(&mundo, EVENTO_CALMARIA);
 					
 					break;
 				case EVENTO_MOTIM:
+					cout << " Vai acontecer um Motim" << endl;
 					if ((rand() % 100 + 1) <= this->probMotin)
 						mundo.criaEvento(&mundo, EVENTO_MOTIM);
 					
 					break;
 			}
+			break;
 		}
 }
 // Metodo Prompt tem como objetivo tratar os comandos introduzidos pelo Jogador	
