@@ -10,8 +10,9 @@ class Motim : public Eventos
 public:
 	Motim(Mundo *mundo) : Eventos(mundo, EVENTO_MOTIM) {};
 	virtual bool ValidaEventoCalmaria();
-	virtual void TrataEventoCalmaria() {};
-	virtual void TrataEventoMotim();
+	int getTTL() const;
+	void setTTL();
+	virtual void TrataEvento();
 	~Motim();
 };
 #endif // !MOTIM_H

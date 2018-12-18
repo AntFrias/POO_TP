@@ -8,7 +8,7 @@ bool Calmaria::ValidaEventoCalmaria()
 	return true;
 }
 
-void Calmaria::TrataEventoCalmaria()
+void Calmaria::TrataEvento()
 {
 	// fazer aqui as açoes para a Calmaria
 }
