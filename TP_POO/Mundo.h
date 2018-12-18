@@ -75,6 +75,10 @@ public:
 
 	void bebemTodosAgua();
 
+	void mudaPorto(int xPorto, int yPorto, char letra);
+
+	char LastPortoAmigo();
+
 	int ValidaTipoNavio(const char tipo);
 
 	const char getPortoPrincipal();

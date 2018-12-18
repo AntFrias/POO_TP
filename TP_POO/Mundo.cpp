@@ -46,6 +46,33 @@ void Mundo::bebemTodosAgua() {
 
 
 }
+void Mundo::mudaPorto(int xPorto,int yPorto,char letra) {
+
+	for (unsigned int i = 0; i < porto.size(); i++) {
+		if (porto[i]->getX() == xPorto && porto[i]->getY() == yPorto) {
+			porto[i]->MudaTipoPorto(letra);
+		}
+
+	}
+
+}
+char Mundo::LastPortoAmigo() {
+
+	char primeiroMaior ='A';
+
+	for (unsigned int i = 0; i < porto.size(); i++) {
+
+
+		if (porto[i]->getChar() >= 'A' && porto[i]->getChar() <= 'Z') {//se for amigo
+			if (porto[i]->getChar() > primeiroMaior) {//se a letra que eu estou a ver agora for maior que a primeriaMaior
+				primeiroMaior = porto[i]->getChar();//substituo
+			}
+		}
+	}
+
+	return primeiroMaior;
+	
+}
 int Mundo::ValidaTipoNavio(const char tipo) {
 	if (tipo == 'F')
 		return FRAGATA;
