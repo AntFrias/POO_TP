@@ -18,6 +18,7 @@ public:
 	virtual string acaoPorto();
 	virtual void setCargaNavio(int quantCarga)override;
 	virtual void RetiraCargaNavio(int quantCarga);
+	string TrataNavioTempestade();
 	int FmoveEsquerda();
 	int FmoveDireita();
 	int FmoveCima();

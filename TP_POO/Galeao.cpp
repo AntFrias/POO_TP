@@ -1111,6 +1111,24 @@ void Galeao::RetiraCargaNavio(int quantCarga)
 		this->QuantMercadoria = 0;
 }
 
+string Galeao::TrataNavioTempestade()
+{
+	ostringstream os;
+
+	os << "O Navio é do tipo Galeao" << endl;
+
+	int probAfundar = rand() % 100 + 1;
+
+	if (probAfundar <= PROB_GALEAO_AFUNDAR_TEMPESTADE) // aqui a probabilidade é diferente pelo facto do 
+		this->afundado = NAVIO_AFUNDADO;
+	else
+		this->quantSoldados = this->quantSoldados - ((this->quantSoldados * 10) / 100);
+	
+	AbasteceAguaNavio();
+
+	return os.str();
+}
+
 
 Galeao::~Galeao()
 {

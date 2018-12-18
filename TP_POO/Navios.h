@@ -80,6 +80,7 @@ public:
 	virtual void soldadosBebemAgua() = 0;
 	virtual void setCargaNavio(int quantCarga) = 0;
 	virtual void RetiraCargaNavio(int quantCarga) = 0;
+	virtual string TrataNavioTempestade() = 0;
 	virtual int sou() = 0;
 	virtual void moveNavioAuto()=0;
 	int randNumber(int nSoldados);
@@ -95,9 +96,11 @@ public:
 	void setX(int x);
 	void setY(int y);
 	void setAutoMove(bool move);
+	void setNavioDeriva();
 	int getAutoMove();
 	bool getNavioAtracado();
 	void setNavioAtracado(bool estado);
+	string AlteraSoldadosPosEvento(int prob);
 	const int getId()const;
 	const Navios * getNavio() const;	
 	int getIncNavio();
