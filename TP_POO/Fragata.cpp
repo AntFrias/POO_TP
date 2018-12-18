@@ -219,6 +219,7 @@ string Fragata::TrataNavioTempestade()
 		
 		AbasteceAguaNavio();
 	}
+	return os.str();
 }
 int Fragata::FmoveEsquerda() {
 	int VerificaPorto = 0;
