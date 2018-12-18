@@ -73,12 +73,13 @@ public:
 	Navios(Mundo *mundo, char tipo,int x,int y, int quantSoldados, int quantAgua = 0, bool autoMove = false, bool atracado = true, bool afundado =false);
 	
 	virtual int moveNavio(int direcao)=0;
-	virtual void combate() = 0;
+	virtual string combate() = 0;
 	virtual int getMaxAgua() = 0;
 	virtual int getAgua() = 0;
 	virtual void adicionaAgua(int agua) = 0;
 	virtual void soldadosBebemAgua() = 0;
 	virtual int sou() = 0;
+	virtual void moveNavioAuto()=0;
 	int randNumber(int nSoldados);
 	int getNumSoldados();
 	void setNumSoldados(int num);

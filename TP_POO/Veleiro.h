@@ -12,12 +12,13 @@ class Veleiro : public Navios
 public:
 	Veleiro(Mundo *auxMundo, int coordx, int coordy) : QuantMercadoria(0), QuantPeixe(0), Navios(auxMundo,'V', coordx,coordy, 20, 200){};
 	virtual void AbasteceAguaNavio();
+	void moveNavioAuto();
 	void soldadosBebemAgua();
 	int getMaxAgua();
 	int getAgua();
 	void adicionaAgua(int agua);
 	virtual int moveNavio(int direcao);
-	virtual void combate();
+	virtual string combate();
 	int FmoveEsquerda();
 	int FmoveDireita();
 	int FmoveCima();
@@ -27,7 +28,7 @@ public:
 	int FmoveBaixoEsquerda();
 	int FmoveBaixoDireita();
 	int sou();
-	void acao(int xaAtacar, int yaAtacar);
+	string acao(int xaAtacar, int yaAtacar);
 	bool VerificaCargaNavio(int novaCarga);
 	~Veleiro();
 };
