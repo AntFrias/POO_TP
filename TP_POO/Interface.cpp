@@ -10,6 +10,13 @@ void Interface::start() {
 	Prompt();
 
 }
+
+void Interface::acrescentaMoedas(int moedas) {
+
+	jogador.setMoedas(jogador.getMoedas() + moedas);
+
+
+}
 void Interface::gotoComando() {
 	Consola::gotoxy(0, 23);
 }
@@ -149,7 +156,7 @@ void Interface::Prompt() {
 int Interface::FiltaComandos(string acao) {
 
 	vector< string > comandos = {"exec", "prox", "compranav", "vendenav", "lista", "compra", "vende", "move", "auto", "stop", "pirata","evpos","evnav",
-								  "pirata", "evpos", "evnav","moedas","vaipara", "comprasold", "saveg", "loadg", "delg"};
+								  "moedas", "evpos", "evnav","pirata","vaipara", "comprasold", "saveg", "loadg", "delg"};
 
 	for (unsigned int i = 0; i < comandos.size(); i++) {
 		if (comandos[i].compare(acao) == 0)
@@ -481,8 +488,10 @@ void Interface::PromptFase2(string linha) {
 		cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
 		break;
 	case com_moedas:
-		gotoErro();
-		cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
+		
+		if (buffer >> idNavio) {
+			acrescentaMoedas(idNavio);// neste caso idNavio é o nr de moedas que o jogador introduziu
+		}
 		break;
 	case com_vaipara:
 		//este comando tem overload devido aos parametros vaipara <N> <x> <y> e vai para <N> <P>
@@ -533,32 +542,34 @@ void Interface::mostraLegAndConfig() {
 	cout << "\tPortos -> a-z Inimigos";
 
 	Consola::gotoxy(84, 0);
-	cout << "Configuracoes Iniciais: " << this->moedas;
+	cout << "Configuracoes Iniciais: ";
 	Consola::gotoxy(87, 2);
-	cout << "Moedas: " << this->moedas;
+	cout << "Moedas: " << this->moedas<<endl;
 	Consola::gotoxy(87, 3);
-	cout << "Probalidade Pirata " << this->probPirata;
+	cout << "Moedas Atuais: " <<  jogador.getMoedas();
 	Consola::gotoxy(87, 4);
-	cout << "Preco Navio " << this->precoNavio;
+	cout << "Probalidade Pirata " << this->probPirata;
 	Consola::gotoxy(87, 5);
-	cout << "Preco Soldado " << this->precoSoldado;
+	cout << "Preco Navio " << this->precoNavio;
 	Consola::gotoxy(87, 6);
-	cout << "Preco Vende Peixe " << this->precoVendePeixe;
+	cout << "Preco Soldado " << this->precoSoldado;
 	Consola::gotoxy(87, 7);
-	cout << "Preco Compra Mercadoria " << this->precoCompraMercadoria;
+	cout << "Preco Vende Peixe " << this->precoVendePeixe;
 	Consola::gotoxy(87, 8);
-	cout << "Preco Vende Mercadoria " << this->precoVendaMercadoria;
+	cout << "Preco Compra Mercadoria " << this->precoCompraMercadoria;
 	Consola::gotoxy(87, 9);
-	cout << "Soldados Porto " << this->soldadosPorto;
+	cout << "Preco Vende Mercadoria " << this->precoVendaMercadoria;
 	Consola::gotoxy(87, 10);
-	cout << "Probabilidade Vento " << this->probVento;
+	cout << "Soldados Porto " << this->soldadosPorto;
 	Consola::gotoxy(87, 11);
-	cout << "Probabilidade Tempestade " << this->probTempestade;
+	cout << "Probabilidade Vento " << this->probVento;
 	Consola::gotoxy(87, 12);
-	cout << "Probabilidade Sereias " << this->probSereias;
+	cout << "Probabilidade Tempestade " << this->probTempestade;
 	Consola::gotoxy(87, 13);
-	cout << "Probabilidade Calmaria " << this->probCalmaria;
+	cout << "Probabilidade Sereias " << this->probSereias;
 	Consola::gotoxy(87, 14);
+	cout << "Probabilidade Calmaria " << this->probCalmaria;
+	Consola::gotoxy(87, 15);
 	cout << "Probabilidade Motin " << this->probMotin;
 
 }

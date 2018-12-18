@@ -14,6 +14,8 @@ public:
 	virtual int moveNavio(int direcao);
 	virtual string combate();
 	string acao(int xaAtacar, int yaAtacar);
+	void conquistaPorto(int xPorto,int yPorto);
+	virtual string acaoPorto();
 	virtual void setCargaNavio(int quantCarga)override;
 	virtual void RetiraCargaNavio(int quantCarga);
 	string TrataNavioTempestade();

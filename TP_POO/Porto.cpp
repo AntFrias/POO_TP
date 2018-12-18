@@ -30,6 +30,9 @@ void Porto::setY(int y) {
 
 	this->y = y;
 }
+void Porto::MudaTipoPorto(char letra) {
+	this->TipoPorto = letra;
+}
 const char Porto::getChar() const {
 
 	return this->TipoPorto;

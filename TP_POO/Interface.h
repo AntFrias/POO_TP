@@ -117,6 +117,7 @@ public:
 	void mostraNavios();
 	void mostraNaviosJogador();
 	void start();
+	void acrescentaMoedas(int moedas);
 	void gotoComando();
 	void gotoErro();
 	void gotoPrint();

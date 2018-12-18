@@ -17,6 +17,7 @@ public:
 	const int getY() const;
 	void setX(int x);
 	void setY(int y);
+	void MudaTipoPorto(char letra);
 	const char getChar() const;
 	Porto & getPorto();
 	~Porto();
