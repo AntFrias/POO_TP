@@ -32,6 +32,8 @@
 #define PROB_VELEIRO_AFUNDAR_TEMPESTADE_2 20
 #define PROB_GALEAO_AFUNDAR_TEMPESTADE 40
 
+#define PROB_SEREIAS_AFETAR_SOLDADOS 10
+
 #define PROB_ESCUNA_PERDER_CARGA 20
 #define PROB_VELEIRO_PERDER_CARGA 50
 
@@ -39,6 +41,8 @@
 #define EVENTO_SEREIAS 2
 #define EVENTO_CALMARIA 3
 #define EVENTO_MOTIM 4
+
+#define RANGE_TEMPESTADE 2
 
 enum TiposNavios {
 
@@ -115,11 +119,11 @@ public:
 
 	void setEventoEmExecucao(Eventos *evento);
 
-	void TrataEventoSereias(int indice);
+	string TrataEventoSereias(int indice);
 	
-	void TrataEventoTempestade(int x, int y);
+	string TrataEventoTempestade(int x, int y);
 
-	void TrataEventos(int TipoEvento = 0);
+	string TrataEventos(int TipoEvento = 0);
 
 	void criaEvento(Mundo *mundo, int tipo);
 

@@ -209,86 +209,42 @@ void Mundo::setEventoEmExecucao(Eventos * evento)
 {
 	this->Evento = evento;
 }
-void Mundo::TrataEventoSereias(int indice) {
+string Mundo::TrataEventoSereias(int indice) {
 
-	this->navios[indice]->setNumSoldados((this->navios[indice]->getNumSoldados() * 10) / 100);
+	ostringstream os;
+	
+	os << navios[indice]->AlteraSoldadosPosEvento(PROB_SEREIAS_AFETAR_SOLDADOS);
+
+	return os.str();
 
 }
-void Mundo::TrataEventoTempestade(int x, int y)
+string Mundo::TrataEventoTempestade(int epiX, int epiY)
 {
-	int QuantCargaPerder, probAfundar;
+	ostringstream os;
+
+	unsigned int x, y;
 
 	for (auto it = navios.begin(); it != navios.end();) {
-		
-		if (x >= (*it)->getX() -2 && x <= (*it)->getX() + 2 && y >= (*it)->getY() - 2 && y <= (*it)->getY() - 2 ) {
-			
-			switch ((*it)->sou()) {
-				
-			case FRAGATA:
 
-				if (rand() % 100 + 1 <= PROB_FRAGATA_AFUNDAR_TEMPESTADE) 
-					(*it)->setAfundado(NAVIO_AFUNDADO);
-				
-				(*it)->setNumSoldados(((*it)->getNumSoldados()*15)/100);
-				
-				(*it)->AbasteceAguaNavio();
+		x = (*it)->getX();
 
-				break;
+		y = (*it)->getY();
 
-			case ESCUNA:
-				
-				QuantCargaPerder = rand() % 100 + 1;
+		if (x >= epiX - RANGE_TEMPESTADE && x <= epiX + RANGE_TEMPESTADE && y >= epiY - RANGE_TEMPESTADE && y <= epiY + RANGE_TEMPESTADE) {
 
-				probAfundar = rand() % 100 + 1;
-				
-				if (probAfundar > PROB_ESCUNA_AFUNDAR_TEMPESTADE && QuantCargaPerder <= PROB_ESCUNA_PERDER_CARGA)
-					(*it)->RetiraCargaNavio(QuantCargaPerder);
+			os << "Foi Encontrado um Navio com o id " << (*it)->getId() << "na posicao " << x << " , " << y << endl;
 
-				else if (probAfundar <= PROB_ESCUNA_AFUNDAR_TEMPESTADE)
-					(*it)->setAfundado(NAVIO_AFUNDADO);
-
-				(*it)->setNumSoldados(((*it)->getNumSoldados() * 15) / 100);
-
-				(*it)->AbasteceAguaNavio();
-
-				break;
-
-			case VELEIRO:
-
-				QuantCargaPerder = rand() % 100 + 1;
-
-				probAfundar = rand() % 100 + 1;
-
-				if (probAfundar > PROB_VELEIRO_AFUNDAR_TEMPESTADE_1 && QuantCargaPerder >= PROB_VELEIRO_PERDER_CARGA)
-					(*it)->RetiraCargaNavio(QuantCargaPerder);
-				
-				else if (probAfundar <= PROB_VELEIRO_AFUNDAR_TEMPESTADE_2) // aqui a probabilidade é diferente pelo facto do 
-					(*it)->setAfundado(NAVIO_AFUNDADO);						//navio pedir apenas 20% de prob caso tenha menos que 50%
-						    												// de capacidade de carga
-
-				(*it)->AbasteceAguaNavio();
-				break;
-			case GALEAO:
-
-				probAfundar = rand() % 100 + 1;
-
-				if (probAfundar <= PROB_GALEAO_AFUNDAR_TEMPESTADE) // aqui a probabilidade é diferente pelo facto do 
-					(*it)->setAfundado(NAVIO_AFUNDADO);
-
-				(*it)->setNumSoldados(((*it)->getNumSoldados() * 10) / 100);
-
-				(*it)->AbasteceAguaNavio();
-
-				break;
-
-			}
-		}	
+			(*it)->TrataNavioTempestade();
+		}
 		++it;
 	}
+	return os.str();
 }
 // por defeito o tipo de eventos vai ter valor 0 para entrar no default e executar a acao para eventos que duram mais do que 1 turno
-void Mundo::TrataEventos(int TipoEvento)
+string Mundo::TrataEventos(int TipoEvento)
 {
+	ostringstream os;
+
 	int epicentroX, epicentroY, indice;
 
 	switch (TipoEvento)
@@ -303,25 +259,56 @@ void Mundo::TrataEventos(int TipoEvento)
 		
 		} while (epicentroX >= 0 + 2 && epicentroX < this->dimX - 3 && epicentroX >= 0 + 2 && epicentroY <= this->dimY - 3);
 
+		os << "Vai ser gerada uma tempestade nas coordenadas: " << epicentroX << ", " << epicentroY << endl;
+		
 		TrataEventoTempestade(epicentroX, epicentroY);
+
+		this->EstadoEvento = EVENTO_OFF;
 
 		// executa codigo para a tempestade
 		break;
 	case EVENTO_SEREIAS:
 		
-		indice = rand() % navios.size() + 1;
+		if (navios.size() > 0) {
 
-		TrataEventoSereias(indice);
+			indice = rand() % navios.size();
+			
+			if ( navios[indice]->getNumSoldados() > 0){
+				
+				os << "Navio com o ID : " << navios[indice]->getId() << " vai sofrer ataque de sereia" << endl;
+				
+				os << TrataEventoSereias(indice);
 
+				return os.str();
+
+			}
+			else {
+
+				os << "O navio com o ID " << navios[indice]->getId() << "nao tem soldados " << endl;
+				
+				return os.str();
+			
+			}
+		}
+		else
+			os <<"Nao existem navios para efetuar o ataque da sereia" << endl;
+
+		this->EstadoEvento = EVENTO_OFF;
+
+		return os.str();
+		
 		break;
 
 	default:
+
 		if (Evento->ValidaEventoCalmaria() == true)
 			Evento->TrataEvento();
 		else
 			Evento->TrataEvento();
+		
 		break;
-	}
+	}	
+	return os.str();
 }
 // vai criar os eventos que duram mais que 1 turno;
 void Mundo::criaEvento(Mundo * mundo, int tipo)
@@ -337,8 +324,6 @@ void Mundo::criaEvento(Mundo * mundo, int tipo)
 		TrataEventos(EVENTO_MOTIM);
 		break;
 	}
-
-	this->EstadoEvento = EVENTO_ON;
 
 }
 void Mundo::limpaVetores() {
