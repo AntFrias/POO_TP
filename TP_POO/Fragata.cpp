@@ -50,7 +50,6 @@ string Fragata::acao(int xaAtacar, int yaAtacar) {
 
 	ostringstream os;
 
-	
 
 	Navios *navioaAtacar = nullptr;
 	navioaAtacar = mundo->getNavioXY(xaAtacar, yaAtacar);
@@ -122,6 +121,48 @@ string Fragata::acao(int xaAtacar, int yaAtacar) {
 	os << "-------------Fim_Combate----------------" << endl<< endl;
 	return os.str();
 }
+void Fragata::conquistaPorto(int xPorto,int yPorto) {
+	
+	char lastPortoAmigo = 'Z';
+
+	// ultimo porto amigo
+	lastPortoAmigo=mundo->LastPortoAmigo();
+	//
+	mundo->mudaPorto(xPorto, yPorto,lastPortoAmigo+1);
+
+
+}
+string Fragata::acaoPorto() {
+
+	ostringstream os;
+	int sorteio = 0,soldadosPerdidos =0;
+
+	sorteio = randNumber(100);
+
+	if (sorteio <= this->getNumSoldados()) {// o navio ganhou e conquista o porto
+		soldadosPerdidos = (10 * this->getNumSoldados()) / 100;
+		this->setNumSoldados( this->getNumSoldados() - soldadosPerdidos);
+		
+		//conquista Porto
+		conquistaPorto(this->x,this->y);
+
+
+		if (this->quantSoldados <= 0) 
+			this->setAfundado(true);
+
+	}
+	else {
+		soldadosPerdidos = (10 * this->getNumSoldados()) / 100;
+		this->setNumSoldados(this->getNumSoldados() - soldadosPerdidos);
+		if (this->quantSoldados <= 0)
+			this->setAfundado(true);
+	}
+
+
+
+
+	return os.str();
+}
 string Fragata::combate() {
 
 	int xNavio = getX(), yNavio = getY();
@@ -152,7 +193,7 @@ string Fragata::combate() {
 		os << acao(xNavio - 1, yNavio + 1);
 	}
 	if (mundo->verificaCelulaPorto(xNavio, yNavio) == CELULA_PORTO_INIMIGO) {
-		//acao(xNavio, yNavio);
+		acaoPorto();
 		cout << "Porrada com o Porto Inimigo" << endl;
 	}
 	return os.str();
