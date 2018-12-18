@@ -12,7 +12,6 @@ Eventos::Eventos(Mundo *mundo, int TTL)
 	this->TTL = TTL;
 
 }
-
 Eventos::~Eventos()
 {
 }

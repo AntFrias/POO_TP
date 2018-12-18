@@ -7,10 +7,20 @@ bool Motim::ValidaEventoCalmaria()
 {
 	return false;
 }
+int Motim::getTTL() const {
 
-void Motim::TrataEventoMotim()
+	return this->TTL;
+
+}
+void Motim::setTTL()
 {
-	// Trata Açoes do Motim
+	this->TTL = TTL_MOTIM;
+}
+void Motim::TrataEvento()
+{
+
+	
+	
 }
 
 Motim::~Motim()

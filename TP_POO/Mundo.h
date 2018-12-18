@@ -24,6 +24,17 @@
 #define EVENTO_ON true
 #define EVENTO_OFF false
 
+#define NAVIO_AFUNDADO true
+
+#define PROB_FRAGATA_AFUNDAR_TEMPESTADE 20
+#define PROB_ESCUNA_AFUNDAR_TEMPESTADE 35 
+#define PROB_VELEIRO_AFUNDAR_TEMPESTADE_1 35
+#define PROB_VELEIRO_AFUNDAR_TEMPESTADE_2 20
+#define PROB_GALEAO_AFUNDAR_TEMPESTADE 40
+
+#define PROB_ESCUNA_PERDER_CARGA 20
+#define PROB_VELEIRO_PERDER_CARGA 50
+
 #define EVENTO_TEMPESTADE 1
 #define EVENTO_SEREIAS 2
 #define EVENTO_CALMARIA 3
@@ -103,6 +114,10 @@ public:
 	void setExistenciaEvento(bool estado);
 
 	void setEventoEmExecucao(Eventos *evento);
+
+	void TrataEventoSereias(int indice);
+	
+	void TrataEventoTempestade(int x, int y);
 
 	void TrataEventos(int TipoEvento = 0);
 

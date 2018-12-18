@@ -157,6 +157,12 @@ string Fragata::combate() {
 	}
 	return os.str();
 }
+void Fragata::setCargaNavio(int quantCarga)
+{
+}
+void Fragata::RetiraCargaNavio(int quantCarga)
+{
+}
 int Fragata::FmoveEsquerda() {
 	int VerificaPorto = 0;
 	//e ver se a nova pos está dentro de agua!

@@ -12,6 +12,7 @@ class Eventos
 {
 	Mundo *mundo;
 
+protected:
 	int TTL;
 	
 
@@ -19,8 +20,7 @@ public:
 
 	Eventos(Mundo *mundo, int TTL);
 	virtual bool ValidaEventoCalmaria() = 0;
-	virtual void TrataEventoCalmaria() = 0;
-	virtual void TrataEventoMotim() = 0;
+	virtual void TrataEvento() = 0;
 	~Eventos();
 };
 #endif // !EVENTOS_H
