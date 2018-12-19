@@ -63,6 +63,8 @@ protected:
 	bool autoMove;
 	bool Atracado;
 	bool afundado;
+	bool Calmaria;
+	bool Motim;
 	int x, y;
 	int quantSoldados;
 	int quantAgua;
@@ -71,20 +73,23 @@ protected:
 
 public:
 	Navios();
-	Navios(Mundo *mundo, char tipo,bool pirata,int x,int y, int quantSoldados, int quantAgua = 0, bool autoMove = false, bool atracado = true, bool afundado =false);
+	Navios(Mundo *mundo, char tipo,bool pirata,int x,int y, int quantSoldados, int quantAgua = 0,bool calmaria = false, bool autoMove = false, bool atracado = true, bool afundado =false);
 	
 	virtual int moveNavio(int direcao)=0;
 	virtual string combate() = 0;
 	virtual int getMaxAgua() = 0;
 	virtual int getAgua() = 0;
 	virtual void adicionaAgua(int agua) = 0;
-	virtual bool souPirata()=0;
+	virtual bool souPirata()const=0;
 	virtual void soldadosBebemAgua() = 0;
 	virtual void setCargaNavio(int quantCarga) = 0;
 	virtual void RetiraCargaNavio(int quantCarga) = 0;
 	virtual string TrataNavioTempestade() = 0;
 	virtual int sou() = 0;
 	virtual void moveNavioAuto()=0;
+	bool getCalmaria()const;
+	void setCalmaria( bool estado);
+	void SetMotim(bool estado);
 	int randNumber(int nSoldados);
 	int getNumSoldados();
 	void setNumSoldados(int num);

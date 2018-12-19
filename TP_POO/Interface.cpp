@@ -37,7 +37,7 @@ void Interface::GeradorEvento()
 						
 						cout << " Vai criar uma TEMPESTADE" << endl;
 					
-						cout << mundo.TrataEventos(EVENTO_TEMPESTADE);
+						cout << mundo.trataEventos(EVENTO_TEMPESTADE);
 
 						return;
 					}
@@ -48,7 +48,7 @@ void Interface::GeradorEvento()
 
 						cout << "Vai criar uma Ataque de uma Sereia" << endl << endl;
 
-						cout << mundo.TrataEventos(EVENTO_SEREIAS);
+						cout << mundo.trataEventos(EVENTO_SEREIAS);
 						
 						return;
 					}
@@ -61,7 +61,6 @@ void Interface::GeradorEvento()
 						
 						mundo.criaEvento(&mundo, EVENTO_CALMARIA);
 					
-						return;
 					}
 					
 
@@ -74,7 +73,6 @@ void Interface::GeradorEvento()
 
 						mundo.criaEvento(&mundo, EVENTO_MOTIM);
 						
-						return;
 					}
 					break;
 			}
@@ -129,10 +127,15 @@ void Interface::Prompt() {
 		jogador.moveNavioAuto();
 		mundo.retiraNavAfundados();
 
-		if ( mundo.getExistenciaEvento() == EVENTO_OFF) 
+		if ( mundo.getExistenciaEvento() == EVENTO_OFF)
 			GeradorEvento();
-		else 
-			mundo.TrataEventos();
+		else {
+			cout << mundo.trataEventos();
+			if (mundo.VerificaTipoEventoEmExecucao() == true)
+				cout << "Existe um evento Calmaria a decorrer..!" << endl;
+			else
+				cout << "Existe um evento Motim a decorrer..!" << endl;
+		}
 
 		//execução de comando pendentes | comportamentos automaticos
 		//combates

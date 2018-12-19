@@ -132,7 +132,7 @@ void Fragata::conquistaPorto(int xPorto,int yPorto) {
 
 
 }
-bool Fragata::souPirata() {
+bool Fragata::souPirata()const {
 	
 	return this->pirata;
 

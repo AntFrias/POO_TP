@@ -30,7 +30,7 @@ public:
 	int FmoveBaixoDireita();
 	bool VerificaCargaNavio(int novaCarga);
 	int sou();
-	bool souPirata();
+	bool souPirata()const;
 	virtual string combate();
 	~Galeao();
 };

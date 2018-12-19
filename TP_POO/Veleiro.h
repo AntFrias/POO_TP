@@ -32,7 +32,7 @@ public:
 	int FmoveBaixoDireita();
 	int sou();
 	void conquistaPorto(int xPorto, int yPorto);
-	bool souPirata();
+	bool souPirata()const;
 	string acaoPorto();
 	string acao(int xaAtacar, int yaAtacar);
 	bool VerificaCargaNavio(int novaCarga);
