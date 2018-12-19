@@ -34,9 +34,9 @@ void Interface::GeradorEvento()
 			{
 				case EVENTO_TEMPESTADE:
 					if ((rand() % 100 + 1) <= this->probTempestade) {
-						
+						gotoErro();
 						cout << " Vai criar uma TEMPESTADE" << endl;
-					
+						gotoErro();
 						cout << mundo.TrataEventos(EVENTO_TEMPESTADE);
 
 						return;
@@ -45,9 +45,9 @@ void Interface::GeradorEvento()
 				case EVENTO_SEREIAS:
 					
 					if ((rand() % 100 + 1) <= this->probSereias) {
-
+						gotoErro();
 						cout << "Vai criar uma Ataque de uma Sereia" << endl << endl;
-
+						gotoErro();
 						cout << mundo.TrataEventos(EVENTO_SEREIAS);
 						
 						return;
@@ -56,7 +56,7 @@ void Interface::GeradorEvento()
 				case EVENTO_CALMARIA:
 					
 					if ((rand() % 100 + 1) <= this->probCalmaria) {
-
+						gotoErro();
 						cout << " Vai acontecer uma Calmaria" << endl;
 						
 						mundo.criaEvento(&mundo, EVENTO_CALMARIA);
@@ -69,7 +69,7 @@ void Interface::GeradorEvento()
 				case EVENTO_MOTIM:
 					
 					if ((rand() % 100 + 1) <= this->probMotin) {
-
+						gotoErro();
 						cout << " Vai acontecer um Motim" << endl;
 
 						mundo.criaEvento(&mundo, EVENTO_MOTIM);
@@ -127,6 +127,8 @@ void Interface::Prompt() {
 		mundo.bebemTodosAgua();
 
 		jogador.moveNavioAuto();
+		mundo.moveNavioPirataAuto();
+
 		mundo.retiraNavAfundados();
 
 		if ( mundo.getExistenciaEvento() == EVENTO_OFF) 
@@ -369,7 +371,7 @@ void Interface::PromptFase2(string linha) {
 
 	char tipo;
 	string acao, direcao;
-	int idNavio;
+	int idNavio,x,y;
 	istringstream buffer(linha);
 	
 	
@@ -408,7 +410,7 @@ void Interface::PromptFase2(string linha) {
 			}
 			gotoPrint();
 			cout << "Saldo atual do Jogador: " << jogador.getMoedas() << endl;
-			mostraNaviosJogador();
+			//mostraNaviosJogador();
 			break;
 		case com_vendenav:
 			gotoErro();
@@ -476,8 +478,17 @@ void Interface::PromptFase2(string linha) {
 		
 	break;
 	case com_pirata:
-		gotoErro();
-		cout << "[ COMANDO pirata : " << acao << " ainda nao Implementado ] " << endl;
+		cout << "comando pirata\n";
+		if (buffer >> tipo && buffer >> x && buffer >> y && count(linha.begin(), linha.end(), ' ') == 3) {
+			cout << "dentro tipo x e y"<< "x: "<< x << "y "<< y<<endl;
+
+			if (tipo == 'V' || tipo == 'F') {
+				cout << "a criar\n";
+				mundo.criaNavPirata(&mundo, tipo, x, y);
+				cout << "depois de criar\n";
+			}
+		}
+		
 		break;
 	case com_evpos:
 		gotoErro();
@@ -752,6 +763,7 @@ void Interface::mostraPortos() {
 void Interface::mostraNavios() {
 
 	const vector <const Navios *>  auxNavio = mundo.getVetorNavios();
+	
 
 	for (unsigned int i = 0; i < auxNavio.size(); i++) {
 
@@ -762,39 +774,47 @@ void Interface::mostraNavios() {
 		y *= 2;
 
 		if (i % 2 == 0) {
-			Consola::gotoxy(x, y);
-			Consola::setTextColor(Consola::BRANCO_CLARO);
-			cout << setfill('0') << setw(2) << auxNavio[i]->getId();
+			
+			if (auxNavio[i]->souPirata() == true) {
+				Consola::gotoxy(x, y);
+				Consola::setTextColor(Consola::VERMELHO_CLARO);
+				cout << setfill('0') << setw(2) << auxNavio[i]->getId();
+
+				Consola::gotoxy(x, y + 1);
+				Consola::setTextColor(Consola::VERMELHO_CLARO);
+				cout << setfill('0') << setw(2) << auxNavio[i]->getId();
+			}
+			else {
+				Consola::gotoxy(x, y);
+				Consola::setTextColor(Consola::VERDE_CLARO);
+				cout << setfill('0') << setw(2) << auxNavio[i]->getId();
+
+				Consola::gotoxy(x, y + 1);
+				Consola::setTextColor(Consola::VERDE_CLARO);
+				cout << setfill('0') << setw(2) << auxNavio[i]->getId();
+			}
 		
-
-			/*Consola::gotoxy(x + 1, y);
-			Consola::setTextColor(Consola::BRANCO_CLARO);
-			cout << auxNavio[i]->getId();
-*/
-			Consola::gotoxy(x, y + 1);
-			Consola::setTextColor(Consola::BRANCO_CLARO);
-			cout << setfill('0') << setw(2) << auxNavio[i]->getId();
-
-			/*Consola::gotoxy(x + 1, y + 1);
-			Consola::setTextColor(Consola::BRANCO_CLARO);
-			cout << auxNavio[i]->getId();*/
 		}
 		if (i % 2 != 0) {
-			Consola::gotoxy(x, y);
-			Consola::setTextColor(Consola::BRANCO_CLARO);
-			cout << setfill('0') << setw(2) << auxNavio[i]->getId();
 
-			/*Consola::gotoxy(x + 1, y);
-			Consola::setTextColor(Consola::BRANCO_CLARO);
-			cout << auxNavio[i]->getId();*/
+			if (auxNavio[i]->souPirata() == true) {
+				Consola::gotoxy(x, y);
+				Consola::setTextColor(Consola::VERMELHO_CLARO);
+				cout << setfill('0') << setw(2) << auxNavio[i]->getId();
 
-			Consola::gotoxy(x, y + 1);
-			Consola::setTextColor(Consola::BRANCO_CLARO);
-			cout << setfill('0') << setw(2) << auxNavio[i]->getId();
+				Consola::gotoxy(x, y + 1);
+				Consola::setTextColor(Consola::VERMELHO_CLARO);
+				cout << setfill('0') << setw(2) << auxNavio[i]->getId();
+			}
+			else {
+				Consola::gotoxy(x, y);
+				Consola::setTextColor(Consola::VERDE_CLARO);
+				cout << setfill('0') << setw(2) << auxNavio[i]->getId();
 
-			/*Consola::gotoxy(x + 1, y + 1);
-			Consola::setTextColor(Consola::BRANCO_CLARO);
-			cout << auxNavio[i]->getId();*/
+				Consola::gotoxy(x, y + 1);
+				Consola::setTextColor(Consola::VERDE_CLARO);
+				cout << setfill('0') << setw(2) << auxNavio[i]->getId();
+			}
 		}
 
 	}
