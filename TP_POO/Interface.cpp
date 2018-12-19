@@ -477,7 +477,7 @@ void Interface::PromptFase2(string linha) {
 	break;
 	case com_pirata:
 		gotoErro();
-		cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
+		cout << "[ COMANDO pirata : " << acao << " ainda nao Implementado ] " << endl;
 		break;
 	case com_evpos:
 		gotoErro();

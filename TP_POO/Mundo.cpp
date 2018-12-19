@@ -122,16 +122,16 @@ Navios & Mundo::criaNavio(Mundo *mundo,const char portoPrincipal, const char Tip
 	switch (ValidaTipoNavio(TipoNavio))
 	{
 		case VELEIRO:
-			aux = new Veleiro(mundo, x, y);
+			aux = new Veleiro(mundo,false,x, y);
 			break;
 		case GALEAO:
-			aux = new Galeao(mundo, x, y);
+			aux = new Galeao(mundo,false,x, y);
 			break;
 		case ESCUNA:
-			aux = new Escuna(mundo, x, y);
+			aux = new Escuna(mundo, false,x, y);
 			break;
 		case FRAGATA:
-			aux = new Fragata(mundo, x, y);
+			aux = new Fragata(mundo,false,x, y);
 			break;
 	}
 	
