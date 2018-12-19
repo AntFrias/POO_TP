@@ -57,7 +57,7 @@ void Veleiro::conquistaPorto(int xPorto, int yPorto) {
 
 
 }
-bool Veleiro::souPirata() {
+bool Veleiro::souPirata()const{
 
 	return this->pirata;
 

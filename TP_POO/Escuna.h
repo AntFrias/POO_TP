@@ -31,7 +31,7 @@ public:
 	void soldadosBebemAgua();
 	bool VerificaCargaNavio(int novaCarga);
 	virtual string combate();
-	bool souPirata();
+	bool souPirata()const;
 	~Escuna();
 };
 

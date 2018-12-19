@@ -55,7 +55,7 @@ string Escuna::combate() {
 	ostringstream os;
 	return os.str();
 }
-bool Escuna::souPirata() {
+bool Escuna::souPirata()const {
 
 	return false;
 

@@ -5,7 +5,7 @@ Navios::Navios()
 {
 }
 
-Navios::Navios(Mundo *mundo, char tipo,bool pirata, int x, int y, int quantSoldados, int quantAgua, bool autoMove, bool atracado,bool afundado)
+Navios::Navios(Mundo *mundo, char tipo,bool pirata, int x, int y, int quantSoldados, int quantAgua, bool calmaria, bool autoMove, bool atracado,bool afundado)
 {
 	this->mundo = mundo;
 	this->id = this->IncNavio++;
@@ -13,11 +13,24 @@ Navios::Navios(Mundo *mundo, char tipo,bool pirata, int x, int y, int quantSolda
 	this->pirata = pirata;
 	this->quantAgua = quantAgua;
 	this->quantSoldados = quantSoldados;
+	this->Calmaria = calmaria;
 	this->autoMove = autoMove;
 	this->Atracado = atracado;
 	this->afundado = false;
 	this->x = x;
 	this->y = y;
+}
+bool Navios::getCalmaria() const
+{
+	return this->Calmaria;
+}
+void Navios::setCalmaria(bool estado)
+{
+	this->Calmaria = estado;
+}
+void Navios::SetMotim(bool estado)
+{
+	this->Motim = estado;
 }
 int Navios::randNumber(int nSoldados) {
 
