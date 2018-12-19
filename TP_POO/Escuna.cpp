@@ -55,6 +55,11 @@ string Escuna::combate() {
 	ostringstream os;
 	return os.str();
 }
+bool Escuna::souPirata() {
+
+	return false;
+
+}
 int Escuna::FmoveEsquerda() {
 	int VerificaPorto = 0;
 	//e ver se a nova pos está dentro de agua!

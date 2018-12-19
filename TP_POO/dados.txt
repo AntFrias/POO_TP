@@ -18,8 +18,8 @@ precovendpeixe 1
 precocompmercad 2
 precovendmercad 3
 soldadosporto 100
-probevento 30
-probtempestade 30
-probsereias 30
-probcalmaria 20
-probmotin 20
+probevento 10
+probtempestade 10
+probsereias 10
+probcalmaria 10
+probmotin 10

@@ -132,6 +132,11 @@ void Fragata::conquistaPorto(int xPorto,int yPorto) {
 
 
 }
+bool Fragata::souPirata() {
+	
+	return this->pirata;
+
+}
 string Fragata::acaoPorto() {
 
 	ostringstream os;
@@ -145,22 +150,23 @@ string Fragata::acaoPorto() {
 		
 		//conquista Porto
 		conquistaPorto(this->x,this->y);
-
-
-		if (this->quantSoldados <= 0) 
+		os << " O Porto foi conquistado ! " << endl;
+		os << " O Navio " << this->getId() << " ficou com " << this->getNumSoldados() << " soldados" << endl;
+		if (this->quantSoldados <= 0) {
 			this->setAfundado(true);
-
+			os << " O Navio " << this->getId() << " afundou " << endl;
+		}
 	}
 	else {
 		soldadosPerdidos = (10 * this->getNumSoldados()) / 100;
 		this->setNumSoldados(this->getNumSoldados() - soldadosPerdidos);
-		if (this->quantSoldados <= 0)
+		os << " O Porto nao foi conquistado ! " << endl;
+		os << " O Navio " << this->getId() << " ficou com " << this->getNumSoldados() << " soldados" << endl;
+		if (this->quantSoldados <= 0) {
 			this->setAfundado(true);
+			os << " O Navio " << this->getId() << " afundou " << endl;
+		}
 	}
-
-
-
-
 	return os.str();
 }
 string Fragata::combate() {
