@@ -42,7 +42,7 @@
 #define EVENTO_CALMARIA 3
 #define EVENTO_MOTIM 4
 
-#define RANGE_TEMPESTADE 2
+#define RANGE_EVENTO 2
 
 enum TiposNavios {
 
@@ -65,6 +65,7 @@ class Mundo {
 	int dimY;
 
 	bool EstadoEvento;
+
 	Eventos *Evento;
 
 	vector<Superficie*> superficie;
@@ -131,11 +132,17 @@ public:
 
 	void setEventoEmExecucao(Eventos *evento);
 
+	string TrataEventoMotim();
+
+	bool VerificaTipoEventoEmExecucao() { return Evento->VerificaEventoCalmaria(); };
+
+	string TrataEventoCalmaria(int epiX, int epiY);
+
 	string TrataEventoSereias(int indice);
 	
 	string TrataEventoTempestade(int x, int y);
 
-	string TrataEventos(int TipoEvento = 0);
+	string trataEventos(int TipoEvento = 0);
 
 	void criaEvento(Mundo *mundo, int tipo);
 

@@ -292,6 +292,58 @@ void Mundo::setEventoEmExecucao(Eventos * evento)
 {
 	this->Evento = evento;
 }
+string Mundo::TrataEventoMotim() {
+
+	ostringstream os;
+
+	unsigned int indice;
+	if ( navios.size() > 0) {
+		
+		do {
+
+			indice = rand() % navios.size();
+
+		} while (navios[indice]->souPirata() != false);
+		
+		os << "O navio com o ID" << navios[indice]->getId() << "foi apanhado por 1 Motim" << endl;
+		
+		os << "O navio Ira tornar-se Pirata Temporariamente" << endl;
+		
+		navios[indice]->SetMotim(true);
+	}
+	else
+		os << "Não Existem Navios para o Motim no Mundo" << endl;
+
+	return os.str();
+}
+string Mundo::TrataEventoCalmaria(int epiX, int epiY) {
+
+	ostringstream os;
+
+	int x, y;
+
+	if (navios.size() > 0)
+		for (auto it = navios.begin(); it != navios.end();) {
+
+			x = (*it)->getX();
+
+			y = (*it)->getY();
+
+			if (x >= (epiX - RANGE_EVENTO) && x <= (epiX + RANGE_EVENTO) && y >= (epiY - RANGE_EVENTO) && y <= (epiY + RANGE_EVENTO)) {
+
+				os << "Foi Encontrado um Navio com o id " << (*it)->getId() << "na posicao " << x << " , " << y << endl;
+
+				os << "O navio Vai ser afetado por uma calmaria" << endl;
+
+				(*it)->setCalmaria(true);
+
+			}
+			++it;
+		}
+	else
+		os << "Nao existem Navios afetados pela Calmaria No Mundo" << endl;
+		return os.str();
+}
 string Mundo::TrataEventoSereias(int indice) {
 
 	ostringstream os;
@@ -313,7 +365,7 @@ string Mundo::TrataEventoTempestade(int epiX, int epiY)
 
 		y = (*it)->getY();
 
-		if (x >= (epiX - RANGE_TEMPESTADE) && x <= (epiX + RANGE_TEMPESTADE) && y >= (epiY - RANGE_TEMPESTADE) && y <= (epiY + RANGE_TEMPESTADE)) {
+		if (x >= (epiX - RANGE_EVENTO) && x <= (epiX + RANGE_EVENTO) && y >= (epiY - RANGE_EVENTO) && y <= (epiY + RANGE_EVENTO)) {
 
 			os << "Foi Encontrado um Navio com o id " << (*it)->getId() << "na posicao " << x << " , " << y << endl;
 
@@ -324,7 +376,7 @@ string Mundo::TrataEventoTempestade(int epiX, int epiY)
 	return os.str();
 }
 // por defeito o tipo de eventos vai ter valor 0 para entrar no default e executar a acao para eventos que duram mais do que 1 turno
-string Mundo::TrataEventos(int TipoEvento)
+string Mundo::trataEventos(int TipoEvento)
 {
 	ostringstream os;
 
@@ -340,7 +392,7 @@ string Mundo::TrataEventos(int TipoEvento)
 			
 			epicentroY = rand() % this->dimY + 1;
 		
-		} while (epicentroX >= 0 + 2 && epicentroX < this->dimX - 3 && epicentroX >= 0 + 2 && epicentroY <= this->dimY - 3);
+		} while (epicentroX >= 0 + 2 && epicentroX < this->dimX - 3 && epicentroY >= 0 + 2 && epicentroY <= this->dimY - 3);
 
 		os << "Vai ser gerada uma tempestade nas coordenadas: " << epicentroX << ", " << epicentroY << endl;
 		
@@ -384,12 +436,15 @@ string Mundo::TrataEventos(int TipoEvento)
 
 	default:
 
-		if (Evento->ValidaEventoCalmaria() == true)
-			Evento->TrataEvento();
-		else
-			Evento->TrataEvento();
+			os << Evento->TrataEvento();
+
+			if (Evento->getTTL() == 0){
+
+				this->EstadoEvento = EVENTO_OFF;
+
+			}
 		
-		break;
+			break;
 	}	
 	return os.str();
 }
@@ -400,11 +455,13 @@ void Mundo::criaEvento(Mundo * mundo, int tipo)
 	{
 	case EVENTO_CALMARIA:
 		this->Evento = new Calmaria(mundo);
-		TrataEventos(EVENTO_CALMARIA);
+		this->EstadoEvento = EVENTO_ON;
+		trataEventos(EVENTO_CALMARIA);
 		break;
 	case EVENTO_MOTIM:
 		this->Evento = new Motim(mundo);
-		TrataEventos(EVENTO_MOTIM);
+		this->EstadoEvento = EVENTO_ON;
+		trataEventos(EVENTO_MOTIM);
 		break;
 	}
 

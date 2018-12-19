@@ -61,7 +61,6 @@ void Interface::GeradorEvento()
 						
 						mundo.criaEvento(&mundo, EVENTO_CALMARIA);
 					
-						return;
 					}
 					
 
@@ -74,7 +73,6 @@ void Interface::GeradorEvento()
 
 						mundo.criaEvento(&mundo, EVENTO_MOTIM);
 						
-						return;
 					}
 					break;
 			}
@@ -99,10 +97,10 @@ void Interface::Prompt() {
 	______________________________________________________________________________________
 	*/
 	PromptFase1(linha);
-	//inicialização do jogador
+	//inicializaï¿½ï¿½o do jogador
 		//moedas
 	jogador.setMoedas(moedas);
-		//atribuição do porto principal
+		//atribuiï¿½ï¿½o do porto principal
 	jogador.setPortoPrincipal( mundo.getPortoPrincipal() );
 	//chamar aqui o verificar porto bem
 
@@ -131,12 +129,17 @@ void Interface::Prompt() {
 
 		mundo.retiraNavAfundados();
 
-		if ( mundo.getExistenciaEvento() == EVENTO_OFF) 
+		if ( mundo.getExistenciaEvento() == EVENTO_OFF)
 			GeradorEvento();
-		else 
-			mundo.TrataEventos();
+		else {
+			cout << mundo.trataEventos();
+			if (mundo.VerificaTipoEventoEmExecucao() == true)
+				cout << "Existe um evento Calmaria a decorrer..!" << endl;
+			else
+				cout << "Existe um evento Motim a decorrer..!" << endl;
+		}
 
-		//execução de comando pendentes | comportamentos automaticos
+		//execuï¿½ï¿½o de comando pendentes | comportamentos automaticos
 		//combates
 		//eventos
 		//piratas
@@ -395,11 +398,11 @@ void Interface::PromptFase2(string linha) {
 				}
 				else if (compraNavio(tipo) == COMPRA_SEM_MOEDAS) {
 					gotoErro();
-					cout << "Compra não efetuada <-> Jogador Sem Moedas" << endl;
+					cout << "Compra nï¿½o efetuada <-> Jogador Sem Moedas" << endl;
 				}
 				else if ((compraNavio(tipo) == TIPO_NAVIO_INVALIDO)) {
 					gotoErro();
-					cout << "Compra nao efetuada <-> Não existe porto principal" << endl;
+					cout << "Compra nao efetuada <-> Nï¿½o existe porto principal" << endl;
 				}
 			}
 			else {
@@ -473,7 +476,7 @@ void Interface::PromptFase2(string linha) {
 			}
 			else {
 				gotoErro();
-				cout << " [ Erro..! o comando introduzido está incorrecto... Sitaxe: stop <ID_N>  ]" << endl;
+				cout << " [ Erro..! o comando introduzido estï¿½ incorrecto... Sitaxe: stop <ID_N>  ]" << endl;
 			}
 		
 	break;
@@ -501,7 +504,7 @@ void Interface::PromptFase2(string linha) {
 	case com_moedas:
 		
 		if (buffer >> idNavio) {
-			acrescentaMoedas(idNavio);// neste caso idNavio é o nr de moedas que o jogador introduziu
+			acrescentaMoedas(idNavio);// neste caso idNavio ï¿½ o nr de moedas que o jogador introduziu
 		}
 		break;
 	case com_vaipara:
