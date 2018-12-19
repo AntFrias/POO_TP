@@ -50,7 +50,7 @@ bool Galeao::VerificaCargaNavio(int novaCarga)
 int Galeao::sou() {
 	return GALEAO;
 }
-bool Galeao::souPirata()const {
+bool Galeao::souPirata()const{
 
 	return false;
 
@@ -62,7 +62,7 @@ string Galeao::combate() {
 
 int Galeao::FmoveEsquerda() {
 	int VerificaPorto = 0;
-	//e ver se a nova pos está dentro de agua!
+	//e ver se a nova pos estï¿½ dentro de agua!
 	if (x > 0 && (mundo->verificaCelulaMar(this->x - 1, this->y) == CELULA_MAR)) {
 
 		VerificaPorto = mundo->verificaCelulaPorto(this->x - 1, this->y);
@@ -128,7 +128,7 @@ int Galeao::FmoveEsquerda() {
 }
 int Galeao::FmoveDireita() {
 	int VerificaPorto = 0;
-	//e ver se a nova pos está dentro de agua!
+	//e ver se a nova pos estï¿½ dentro de agua!
 	if (x < mundo->getDimX() - 1 && (mundo->verificaCelulaMar(this->x + 1, this->y) == CELULA_MAR)) {
 
 		VerificaPorto = mundo->verificaCelulaPorto(this->x + 1, this->y);
@@ -195,7 +195,7 @@ int Galeao::FmoveDireita() {
 }
 int Galeao::FmoveCima() {
 	int VerificaPorto = 0;
-	//e ver se a nova pos está dentro de agua!
+	//e ver se a nova pos estï¿½ dentro de agua!
 	if (y > 0 && (mundo->verificaCelulaMar(this->x, this->y - 1) == CELULA_MAR)) {
 
 		VerificaPorto = mundo->verificaCelulaPorto(this->x, this->y - 1);
@@ -266,7 +266,7 @@ int Galeao::FmoveCima() {
 }
 int Galeao::FmoveBaixo() {
 	int VerificaPorto = 0;
-	//e ver se a nova pos está dentro de agua!
+	//e ver se a nova pos estï¿½ dentro de agua!
 	if (y < mundo->getDimY() - 1 && (mundo->verificaCelulaMar(this->x, this->y + 1) == CELULA_MAR)) {
 
 		VerificaPorto = mundo->verificaCelulaPorto(this->x, this->y + 1);
@@ -407,7 +407,7 @@ int Galeao::FmoveCimaEsquerda() {
 		}
 
 	}
-	////encostado à esquerda
+	////encostado ï¿½ esquerda
 	if ((x == 0 && (y > 0 && y <= mundo->getDimY() - 1)) && (mundo->verificaCelulaMar(mundo->getDimX() - 1, this->y - 1) == CELULA_MAR)) {
 
 		VerificaPorto = mundo->verificaCelulaPorto(mundo->getDimX() - 1, this->y - 1);
@@ -559,7 +559,7 @@ int Galeao::FmoveCimaDireita() {
 		}
 
 	}
-	//encostado à direita
+	//encostado ï¿½ direita
 	if ((x == mundo->getDimX() - 1 && y > 0 && y <= mundo->getDimY() - 1) && (mundo->verificaCelulaMar(0, this->y - 1) == CELULA_MAR)) {
 
 		VerificaPorto = mundo->verificaCelulaPorto(0, this->y - 1);
@@ -709,7 +709,7 @@ int Galeao::FmoveBaixoEsquerda() {
 		}
 
 	}
-	//////encostado à esquerda
+	//////encostado ï¿½ esquerda
 	if ((x == 0) && (y >= 0 && y < mundo->getDimY() - 1) && (mundo->verificaCelulaMar(mundo->getDimX() - 1, this->y + 1) == CELULA_MAR)) {
 
 		VerificaPorto = mundo->verificaCelulaPorto(mundo->getDimX() - 1, this->y + 1);
@@ -855,7 +855,7 @@ int Galeao::FmoveBaixoDireita() {
 		}
 
 	}
-	////////encostado à direita
+	////////encostado ï¿½ direita
 	if ((x == mundo->getDimX() - 1) && (y >= 0 && y < mundo->getDimY() - 1) && (mundo->verificaCelulaMar(0, this->y + 1) == CELULA_MAR)) {
 
 		VerificaPorto = mundo->verificaCelulaPorto(0, this->y + 1);
@@ -1017,11 +1017,11 @@ string Galeao::TrataNavioTempestade()
 {
 	ostringstream os;
 
-	os << "O Navio é do tipo Galeao" << endl;
+	os << "O Navio ï¿½ do tipo Galeao" << endl;
 
 	int probAfundar = rand() % 100 + 1;
 
-	if (probAfundar <= PROB_GALEAO_AFUNDAR_TEMPESTADE) // aqui a probabilidade é diferente pelo facto do 
+	if (probAfundar <= PROB_GALEAO_AFUNDAR_TEMPESTADE) // aqui a probabilidade ï¿½ diferente pelo facto do 
 		this->afundado = NAVIO_AFUNDADO;
 	else
 		this->quantSoldados = this->quantSoldados - ((this->quantSoldados * 10) / 100);

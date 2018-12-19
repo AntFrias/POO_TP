@@ -86,9 +86,15 @@ public:
 
 	int ValidaTipoNavio(const char tipo);
 
+	int ValidaTipoNavioP(const char tipo);
+
 	const char getPortoPrincipal();
 	
 	Navios & criaNavio(Mundo *mundo,char PortoPrincipal, char tipoNavio);
+
+	void moveNavioPirataAuto();
+
+	void criaNavPirata(Mundo *mundo, const char TipoNavio, int x, int y);
 
 	void criaSuperficie(int x, int y, char tipo);
 
@@ -105,6 +111,8 @@ public:
 	int verificaCelulaMar(int x, int y);
 
 	int verificaCelulaNavio(int x, int y);
+
+	int verificaCelulaNavioPirata(int x, int y);
 
 	Navios * getNavio(int id);
 

@@ -55,14 +55,14 @@ string Escuna::combate() {
 	ostringstream os;
 	return os.str();
 }
-bool Escuna::souPirata()const {
+bool Escuna::souPirata()const{
 
 	return false;
 
 }
 int Escuna::FmoveEsquerda() {
 	int VerificaPorto = 0;
-	//e ver se a nova pos está dentro de agua!
+	//e ver se a nova pos estï¿½ dentro de agua!
 	if (x > 0 && (mundo->verificaCelulaMar(this->x - 1, this->y) == CELULA_MAR)) {
 
 		VerificaPorto = mundo->verificaCelulaPorto(this->x - 1, this->y);
@@ -128,7 +128,7 @@ int Escuna::FmoveEsquerda() {
 }
 int Escuna::FmoveDireita() {
 	int VerificaPorto = 0;
-	//e ver se a nova pos está dentro de agua!
+	//e ver se a nova pos estï¿½ dentro de agua!
 	if (x < mundo->getDimX() - 1 && (mundo->verificaCelulaMar(this->x + 1, this->y) == CELULA_MAR)) {
 
 		VerificaPorto = mundo->verificaCelulaPorto(this->x + 1, this->y);
@@ -195,7 +195,7 @@ int Escuna::FmoveDireita() {
 }
 int Escuna::FmoveCima() {
 	int VerificaPorto = 0;
-	//e ver se a nova pos está dentro de agua!
+	//e ver se a nova pos estï¿½ dentro de agua!
 	if (y > 0 && (mundo->verificaCelulaMar(this->x, this->y - 1) == CELULA_MAR)) {
 
 		VerificaPorto = mundo->verificaCelulaPorto(this->x, this->y - 1);
@@ -266,7 +266,7 @@ int Escuna::FmoveCima() {
 }
 int Escuna::FmoveBaixo() {
 	int VerificaPorto = 0;
-	//e ver se a nova pos está dentro de agua!
+	//e ver se a nova pos estï¿½ dentro de agua!
 	if (y < mundo->getDimY() - 1 && (mundo->verificaCelulaMar(this->x, this->y + 1) == CELULA_MAR)) {
 
 		VerificaPorto = mundo->verificaCelulaPorto(this->x, this->y + 1);
@@ -407,7 +407,7 @@ int Escuna::FmoveCimaEsquerda() {
 		}
 
 	}
-	////encostado à esquerda
+	////encostado ï¿½ esquerda
 	if ((x == 0 && (y > 0 && y <= mundo->getDimY() - 1)) && (mundo->verificaCelulaMar(mundo->getDimX() - 1, this->y - 1) == CELULA_MAR)) {
 
 		VerificaPorto = mundo->verificaCelulaPorto(mundo->getDimX() - 1, this->y - 1);
@@ -559,7 +559,7 @@ int Escuna::FmoveCimaDireita() {
 		}
 
 	}
-	//encostado à direita
+	//encostado ï¿½ direita
 	if ((x == mundo->getDimX() - 1 && y > 0 && y <= mundo->getDimY() - 1) && (mundo->verificaCelulaMar(0, this->y - 1) == CELULA_MAR)) {
 
 		VerificaPorto = mundo->verificaCelulaPorto(0, this->y - 1);
@@ -709,7 +709,7 @@ int Escuna::FmoveBaixoEsquerda() {
 		}
 
 	}
-	//////encostado à esquerda
+	//////encostado ï¿½ esquerda
 	if ((x == 0) && (y >= 0 && y < mundo->getDimY() - 1) && (mundo->verificaCelulaMar(mundo->getDimX() - 1, this->y + 1) == CELULA_MAR)) {
 
 		VerificaPorto = mundo->verificaCelulaPorto(mundo->getDimX() - 1, this->y + 1);
@@ -855,7 +855,7 @@ int Escuna::FmoveBaixoDireita() {
 		}
 
 	}
-	////////encostado à direita
+	////////encostado ï¿½ direita
 	if ((x == mundo->getDimX() - 1) && (y >= 0 && y < mundo->getDimY() - 1) && (mundo->verificaCelulaMar(0, this->y + 1) == CELULA_MAR)) {
 
 		VerificaPorto = mundo->verificaCelulaPorto(0, this->y + 1);
@@ -1018,7 +1018,7 @@ string Escuna::TrataNavioTempestade()
 
 	ostringstream os;
 
-	os << "O navio é do tipo Escuna" << endl;
+	os << "O navio ï¿½ do tipo Escuna" << endl;
 
 	QuantCargaPerder = rand() % 100 + 1;
 
