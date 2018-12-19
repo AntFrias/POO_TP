@@ -75,7 +75,7 @@ protected:
 
 public:
 	Navios();
-	Navios(Mundo *mundo, char tipo,bool pirata,int x,int y, int quantSoldados, int quantAgua = 0,bool calmaria = false, bool autoMove = false, bool atracado = true, bool afundado =false);
+	Navios(Mundo *mundo, char tipo, bool pirata, int x, int y, int quantSoldados, int quantAgua = 0, bool autoMove = false, bool atracado = true, bool afundado = false);
 	
 	virtual int moveNavio(int direcao)=0;
 	virtual string combate() = 0;

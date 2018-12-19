@@ -37,7 +37,7 @@ void Interface::GeradorEvento()
 						gotoErro();
 						cout << " Vai criar uma TEMPESTADE" << endl;
 						gotoErro();
-						cout << mundo.TrataEventos(EVENTO_TEMPESTADE);
+						cout << mundo.trataEventos(EVENTO_TEMPESTADE);
 
 						return;
 					}
@@ -48,7 +48,7 @@ void Interface::GeradorEvento()
 						gotoErro();
 						cout << "Vai criar uma Ataque de uma Sereia" << endl << endl;
 						gotoErro();
-						cout << mundo.TrataEventos(EVENTO_SEREIAS);
+						cout << mundo.trataEventos(EVENTO_SEREIAS);
 						
 						return;
 					}
@@ -129,7 +129,7 @@ void Interface::Prompt() {
 
 		mundo.retiraNavAfundados();
 
-		if ( mundo.getExistenciaEvento() == EVENTO_OFF)
+		/*if ( mundo.getExistenciaEvento() == EVENTO_OFF)
 			GeradorEvento();
 		else {
 			cout << mundo.trataEventos();
@@ -137,7 +137,7 @@ void Interface::Prompt() {
 				cout << "Existe um evento Calmaria a decorrer..!" << endl;
 			else
 				cout << "Existe um evento Motim a decorrer..!" << endl;
-		}
+		}*/
 
 		//execu��o de comando pendentes | comportamentos automaticos
 		//combates
@@ -481,14 +481,14 @@ void Interface::PromptFase2(string linha) {
 		
 	break;
 	case com_pirata:
-		cout << "comando pirata\n";
 		if (buffer >> tipo && buffer >> x && buffer >> y && count(linha.begin(), linha.end(), ' ') == 3) {
-			cout << "dentro tipo x e y"<< "x: "<< x << "y "<< y<<endl;
 
 			if (tipo == 'V' || tipo == 'F') {
-				cout << "a criar\n";
-				mundo.criaNavPirata(&mundo, tipo, x, y);
-				cout << "depois de criar\n";
+				if (x >= 0 && x < mundo.getDimX() && y >= 0 && y < mundo.getDimY()) {
+					if (mundo.verificaCelulaMar(x, y) == CELULA_MAR && mundo.verificaCelulaNavio(x,y)!= CELULA_NAVIO) {
+						mundo.criaNavPirata(&mundo, tipo, x, y);
+					}
+					}
 			}
 		}
 		
