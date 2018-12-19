@@ -5,11 +5,12 @@ Navios::Navios()
 {
 }
 
-Navios::Navios(Mundo *mundo, char tipo, int x, int y, int quantSoldados, int quantAgua, bool autoMove, bool atracado,bool afundado)
+Navios::Navios(Mundo *mundo, char tipo,bool pirata, int x, int y, int quantSoldados, int quantAgua, bool autoMove, bool atracado,bool afundado)
 {
 	this->mundo = mundo;
 	this->id = this->IncNavio++;
 	this->tipo = tipo;
+	this->pirata = pirata;
 	this->quantAgua = quantAgua;
 	this->quantSoldados = quantSoldados;
 	this->autoMove = autoMove;

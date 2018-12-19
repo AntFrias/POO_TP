@@ -59,6 +59,7 @@ private:
 	
 protected:
 	Mundo *mundo;
+	bool pirata;
 	bool autoMove;
 	bool Atracado;
 	bool afundado;
@@ -70,13 +71,14 @@ protected:
 
 public:
 	Navios();
-	Navios(Mundo *mundo, char tipo,int x,int y, int quantSoldados, int quantAgua = 0, bool autoMove = false, bool atracado = true, bool afundado =false);
+	Navios(Mundo *mundo, char tipo,bool pirata,int x,int y, int quantSoldados, int quantAgua = 0, bool autoMove = false, bool atracado = true, bool afundado =false);
 	
 	virtual int moveNavio(int direcao)=0;
 	virtual string combate() = 0;
 	virtual int getMaxAgua() = 0;
 	virtual int getAgua() = 0;
 	virtual void adicionaAgua(int agua) = 0;
+	virtual bool souPirata()=0;
 	virtual void soldadosBebemAgua() = 0;
 	virtual void setCargaNavio(int quantCarga) = 0;
 	virtual void RetiraCargaNavio(int quantCarga) = 0;

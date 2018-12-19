@@ -46,7 +46,56 @@ void Veleiro::adicionaAgua(int agua) {
 int Veleiro::sou() {
 	return VELEIRO;
 }
+void Veleiro::conquistaPorto(int xPorto, int yPorto) {
 
+	char lastPortoAmigo = 'Z';
+
+	// ultimo porto amigo
+	lastPortoAmigo = mundo->LastPortoAmigo();
+	//
+	mundo->mudaPorto(xPorto, yPorto, lastPortoAmigo + 1);
+
+
+}
+bool Veleiro::souPirata() {
+
+	return this->pirata;
+
+}
+string Veleiro::acaoPorto() {
+
+	ostringstream os;
+	int sorteio = 0, soldadosPerdidos = 0;
+
+	sorteio = randNumber(100);
+
+	if (sorteio <= this->getNumSoldados()) {// o navio ganhou e conquista o porto
+		soldadosPerdidos = (10 * this->getNumSoldados()) / 100;
+		this->setNumSoldados(this->getNumSoldados() - soldadosPerdidos);
+
+		//conquista Porto
+		conquistaPorto(this->x, this->y);
+		os << " O Porto foi conquistado ! " << endl;
+		os << " O Navio " << this->getId() << " ficou com " << this->getNumSoldados() << " soldados" << endl;
+		if (this->quantSoldados <= 0) {
+			this->setAfundado(true);
+			os << " O Navio " << this->getId() << " afundou " << endl;
+		}
+		if (this->quantSoldados <= 0)
+			this->setAfundado(true);
+	}
+	else {
+		soldadosPerdidos = (10 * this->getNumSoldados()) / 100;
+		this->setNumSoldados(this->getNumSoldados() - soldadosPerdidos);
+		os << " O Porto nao foi conquistado ! " << endl;
+		os << " O Navio " << this->getId() << " ficou com " << this->getNumSoldados() << " soldados" << endl;
+		if (this->quantSoldados <= 0) {
+			this->setAfundado(true);
+			os << " O Navio " << this->getId() << " afundou " << endl;
+		}
+	}
+	return os.str();
+}
 string Veleiro::acao(int xaAtacar, int yaAtacar) {
 
 	ostringstream os;

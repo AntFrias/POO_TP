@@ -9,7 +9,7 @@ class Escuna : public Navios
 	int QuantPeixe;
 
 public:
-	Escuna(Mundo *mundo, int coordx, int coordy) : QuantMercadoria(0), QuantPeixe(0), Navios(mundo, 'E', coordx, coordy, 10, 100) {};
+	Escuna(Mundo *mundo, bool Pirata, int coordx, int coordy) : QuantMercadoria(0), QuantPeixe(0), Navios(mundo, 'E', Pirata, coordx, coordy, 10, 100) {};
 	virtual void AbasteceAguaNavio();
 	virtual int moveNavio(int direcao)override;
 	virtual void setCargaNavio(int quantCarga)override;
@@ -31,6 +31,7 @@ public:
 	void soldadosBebemAgua();
 	bool VerificaCargaNavio(int novaCarga);
 	virtual string combate();
+	bool souPirata();
 	~Escuna();
 };
 
