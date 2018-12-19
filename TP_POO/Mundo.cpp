@@ -40,8 +40,9 @@ void Mundo::bebemTodosAgua() {
 
 	for (unsigned int i = 0; i < navios.size(); i++) {
 
-		navios[i]->soldadosBebemAgua();
-
+		if (navios[i]->souPirata() != true) {
+			navios[i]->soldadosBebemAgua();
+		}
 	}
 
 
@@ -83,6 +84,12 @@ int Mundo::ValidaTipoNavio(const char tipo) {
 	else
 		return GALEAO;
 }
+int Mundo::ValidaTipoNavioP(const char tipo) {
+	if (tipo == 'F')
+		return FRAGATA;
+	else
+		return VELEIRO;
+}
 int Mundo::verificaCelulaMar(int x, int y) {
 
 	for (unsigned int i = 0; i < this->superficie.size(); i++) {
@@ -100,6 +107,20 @@ int Mundo::verificaCelulaNavio(int x, int y) {
 	for (unsigned int i = 0; i < this->navios.size(); i++) {
 		if (navios[i]->getX() == x && navios[i]->getY() == y)
 			return CELULA_NAVIO;
+	}
+
+	return 0;
+}
+int Mundo::verificaCelulaNavioPirata(int x, int y) {
+
+	for (unsigned int i = 0; i < this->navios.size(); i++) {
+		if (navios[i]->getX() == x && navios[i]->getY() == y) {
+			if (navios[i]->souPirata()) {
+				return CELULA_NAVIO_PIRATA;
+			}
+			else
+				return CELULA_NAVIO_NORMAL;
+		}
 	}
 
 	return 0;
@@ -122,22 +143,57 @@ Navios & Mundo::criaNavio(Mundo *mundo,const char portoPrincipal, const char Tip
 	switch (ValidaTipoNavio(TipoNavio))
 	{
 		case VELEIRO:
-			aux = new Veleiro(mundo,false,x, y);
+			aux = new Veleiro(mundo,false,false,x, y);
 			break;
 		case GALEAO:
-			aux = new Galeao(mundo,false,x, y);
+			aux = new Galeao(mundo,false,false,x, y);
 			break;
 		case ESCUNA:
-			aux = new Escuna(mundo, false,x, y);
+			aux = new Escuna(mundo, false,false,x, y);
 			break;
 		case FRAGATA:
-			aux = new Fragata(mundo,false,x, y);
+			aux = new Fragata(mundo,false,false,x, y);
 			break;
 	}
 	
 	this->navios.push_back(aux);
 
 	return *aux;
+}
+void Mundo::moveNavioPirataAuto() {
+
+	for (unsigned int i = 0; i < navios.size(); i++) {
+		if (navios[i]->souPirata()== true) {
+			if (navios[i]->getAutoMove() == 1) {
+
+				unsigned int direcao;
+
+				direcao = rand() % 9 + 1;
+
+				this->navios[i]->moveNavio(direcao);
+				this->navios[i]->combate(); //aqui
+			}
+		}
+	}
+}
+void Mundo::criaNavPirata(Mundo *mundo, const char TipoNavio,int x,int y) {
+
+	//pirata
+	Navios *aux=nullptr;
+	
+	switch (ValidaTipoNavioP(TipoNavio))
+	{
+	case VELEIRO:
+		aux = new Veleiro(mundo, true, true, x, y);
+		break;
+	case FRAGATA:
+		aux = new Fragata(mundo, true,true, x, y);
+		break;
+	}
+
+
+	this->navios.push_back(aux);
+
 }
 const char Mundo::getPortoPrincipal() {
 

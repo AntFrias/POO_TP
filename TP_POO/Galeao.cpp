@@ -50,7 +50,7 @@ bool Galeao::VerificaCargaNavio(int novaCarga)
 int Galeao::sou() {
 	return GALEAO;
 }
-bool Galeao::souPirata() {
+bool Galeao::souPirata()const{
 
 	return false;
 

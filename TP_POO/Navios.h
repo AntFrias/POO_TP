@@ -13,6 +13,8 @@
 #define CELULA_PORTO_INIMIGO 4
 #define CELULA_NAVIO 5
 #define CELULA_SEM_PORTO 6
+#define CELULA_NAVIO_PIRATA 7
+#define CELULA_NAVIO_NORMAL 8
 
 #define MOVE_INVALIDO 0
 #define MOVE_VALIDO 1
@@ -78,7 +80,7 @@ public:
 	virtual int getMaxAgua() = 0;
 	virtual int getAgua() = 0;
 	virtual void adicionaAgua(int agua) = 0;
-	virtual bool souPirata()=0;
+	virtual bool souPirata()const=0;
 	virtual void soldadosBebemAgua() = 0;
 	virtual void setCargaNavio(int quantCarga) = 0;
 	virtual void RetiraCargaNavio(int quantCarga) = 0;
