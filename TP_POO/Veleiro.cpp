@@ -10,7 +10,6 @@ void Veleiro::AbasteceAguaNavio()
 }
 void Veleiro::moveNavioAuto() {
 
-
 	if (this->getAutoMove() == 1) {
 
 		unsigned int direcao;
@@ -19,6 +18,7 @@ void Veleiro::moveNavioAuto() {
 		this->soldadosBebemAgua();
 		this->combate(); //aqui
 	}
+	
 }
 void Veleiro::soldadosBebemAgua() {
 	if (mundo->verificaCelulaMar(this->x, this->y) || (mundo->verificaCelulaPorto(this->x, this->y) != CELULA_PORTO_AMIGO)) {
