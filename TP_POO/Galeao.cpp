@@ -16,19 +16,21 @@ void Galeao::soldadosBebemAgua() {
 			this->quantSoldados -= 1;
 		}
 		if (this->quantSoldados == 0) {
-			this->autoMove = true;
+			this->estado = aDeriva;
 		}
 	}
 }
 void Galeao::moveNavioAuto() {
 
-	if (this->getAutoMove() == 1) {
+	if (this->estado == autoMove || this->estado == aDeriva) {
 
 		unsigned int direcao;
 		direcao = rand() % 9 + 1;
 		this->moveNavio(direcao);
-		this->soldadosBebemAgua();
-		this->combate(); //aqui
+		if (this->estado == autoMove) {
+			this->soldadosBebemAgua();
+			this->combate(); 
+		}
 	}
 }
 int Galeao::getMaxAgua() {
@@ -50,16 +52,10 @@ bool Galeao::VerificaCargaNavio(int novaCarga)
 int Galeao::sou() {
 	return GALEAO;
 }
-bool Galeao::souPirata()const{
-
-	return false;
-
-}
 string Galeao::combate() {
 	ostringstream os;
 	return os.str();
 }
-
 int Galeao::FmoveEsquerda() {
 	int VerificaPorto = 0;
 	//e ver se a nova pos est� dentro de agua!
@@ -992,7 +988,6 @@ int Galeao::moveNavio(int direcao) {
 	}
 	return MOVE_INVALIDO;
 }
-
 void Galeao::setCargaNavio(int quantCarga)
 {
 	if (this->QuantMercadoria + quantCarga <= GALEAO_QUANT_MAX_CARGA)
@@ -1001,7 +996,6 @@ void Galeao::setCargaNavio(int quantCarga)
 		this->QuantMercadoria = GALEAO_QUANT_MAX_CARGA;
 
 }
-
 void Galeao::RetiraCargaNavio(int quantCarga)
 {
 	if (this->QuantPeixe - (quantCarga / 2) >= 0)
@@ -1012,7 +1006,6 @@ void Galeao::RetiraCargaNavio(int quantCarga)
 	else
 		this->QuantMercadoria = 0;
 }
-
 string Galeao::TrataNavioTempestade()
 {
 	ostringstream os;
@@ -1022,7 +1015,7 @@ string Galeao::TrataNavioTempestade()
 	int probAfundar = rand() % 100 + 1;
 
 	if (probAfundar <= PROB_GALEAO_AFUNDAR_TEMPESTADE) // aqui a probabilidade � diferente pelo facto do 
-		this->afundado = NAVIO_AFUNDADO;
+		this->estado = afundado;
 	else
 		this->quantSoldados = this->quantSoldados - ((this->quantSoldados * 10) / 100);
 	
@@ -1030,8 +1023,6 @@ string Galeao::TrataNavioTempestade()
 
 	return os.str();
 }
-
-
 Galeao::~Galeao()
 {
 }
