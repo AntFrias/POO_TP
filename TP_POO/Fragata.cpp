@@ -1129,7 +1129,6 @@ int Fragata::FmoveBaixoDireita() {
 }
 int Fragata::moveNavio(int direcao) {
 		
-	cout << "move id: " << this->getId()<<endl;
 	switch (direcao) {
 
 	case moveEsquerda:
