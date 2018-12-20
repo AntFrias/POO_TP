@@ -36,17 +36,7 @@ int Mundo::portosBemColocado() {
 	}
 	return 1;
 }
-void Mundo::bebemTodosAgua() {
 
-	for (unsigned int i = 0; i < navios.size(); i++) {
-
-		if (navios[i]->souPirata() != true) {
-			navios[i]->soldadosBebemAgua();
-		}
-	}
-
-
-}
 void Mundo::mudaPorto(int xPorto,int yPorto,char letra) {
 
 	for (unsigned int i = 0; i < porto.size(); i++) {
@@ -115,7 +105,7 @@ int Mundo::verificaCelulaNavioPirata(int x, int y) {
 
 	for (unsigned int i = 0; i < this->navios.size(); i++) {
 		if (navios[i]->getX() == x && navios[i]->getY() == y) {
-			if (navios[i]->souPirata()) {
+			if (navios[i]->getEstado()==pirata) {
 				return CELULA_NAVIO_PIRATA;
 			}
 			else
@@ -143,16 +133,17 @@ Navios & Mundo::criaNavio(Mundo *mundo,const char portoPrincipal, const char Tip
 	switch (ValidaTipoNavio(TipoNavio))
 	{
 		case VELEIRO:
-			aux = new Veleiro(mundo,false,false,x, y);
+			//Navios(Mundo *mundo, char tipo, int x, int y, int quantSoldados, int quantAgua = 0, int estado=normal);
+			aux = new Veleiro(mundo,x, y,normal);
 			break;
 		case GALEAO:
-			aux = new Galeao(mundo,false,false,x, y);
+			aux = new Galeao(mundo, x, y, normal);
 			break;
 		case ESCUNA:
-			aux = new Escuna(mundo, false,false,x, y);
+			aux = new Escuna(mundo, x, y, normal);
 			break;
 		case FRAGATA:
-			aux = new Fragata(mundo,false,false,x, y);
+			aux = new Fragata(mundo, x, y, normal);
 			break;
 	}
 	
@@ -163,8 +154,7 @@ Navios & Mundo::criaNavio(Mundo *mundo,const char portoPrincipal, const char Tip
 void Mundo::moveNavioPirataAuto() {
 
 	for (unsigned int i = 0; i < navios.size(); i++) {
-		if (navios[i]->souPirata()== true) {
-			if (navios[i]->getAutoMove() == 1) {
+		if (navios[i]->getEstado()== pirata) {
 
 				unsigned int direcao;
 
@@ -172,7 +162,7 @@ void Mundo::moveNavioPirataAuto() {
 
 				this->navios[i]->moveNavio(direcao);
 				this->navios[i]->combate(); //aqui
-			}
+			
 		}
 	}
 }
@@ -184,10 +174,10 @@ void Mundo::criaNavPirata(Mundo *mundo, const char TipoNavio,int x,int y) {
 	switch (ValidaTipoNavioP(TipoNavio))
 	{
 	case VELEIRO:
-		aux = new Veleiro(mundo, true, true, x, y);
+		aux = new Veleiro(mundo, x, y, pirata);
 		break;
 	case FRAGATA:
-		aux = new Fragata(mundo, true,true, x, y);
+		aux = new Fragata(mundo,x, y,pirata);
 		break;
 	}
 
@@ -227,8 +217,8 @@ void Mundo::retiraNavAfundados() { // NAO FAÇO IDEIA O QUE FIZ AQUI FRIAS .. SEM
 
 	for (auto it = navios.begin(); it != navios.end();) {
 
-		if ((*it)->getAfundado() == true) {
-
+		if ((*it)->getEstado() == afundado) {
+			cout << "morreu navio: " << (*it)->getId()<<endl;
 			delete *it;
 			it = navios.erase(it);
 		}
@@ -303,13 +293,13 @@ string Mundo::TrataEventoMotim() {
 
 			indice = rand() % navios.size();
 
-		} while (navios[indice]->souPirata() != false);
+		} while (navios[indice]->getEstado() != normal);
 		
 		os << "O navio com o ID" << navios[indice]->getId() << "foi apanhado por 1 Motim" << endl;
 		
 		os << "O navio Ira tornar-se Pirata Temporariamente" << endl;
 		
-		navios[indice]->SetMotim(true);
+		navios[indice]->setEstado(motim);
 	}
 	else
 		os << "Não Existem Navios para o Motim no Mundo" << endl;
@@ -329,13 +319,13 @@ string Mundo::TrataEventoCalmaria(int epiX, int epiY) {
 
 			y = (*it)->getY();
 
-			if (x >= (epiX - RANGE_EVENTO) && x <= (epiX + RANGE_EVENTO) && y >= (epiY - RANGE_EVENTO) && y <= (epiY + RANGE_EVENTO)) {
+			if (x >= (epiX - RANGE_EVENTO) || x <= (epiX + RANGE_EVENTO) && y >= (epiY - RANGE_EVENTO) || y <= (epiY + RANGE_EVENTO)) {
 
 				os << "Foi Encontrado um Navio com o id " << (*it)->getId() << "na posicao " << x << " , " << y << endl;
 
 				os << "O navio Vai ser afetado por uma calmaria" << endl;
 
-				(*it)->setCalmaria(true);
+				(*it)->setEstado(calmaria);
 
 			}
 			++it;

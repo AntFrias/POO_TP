@@ -44,13 +44,15 @@ public:
 
 	bool verificaModoAutomaticoNavio(int idNavio);
 
+	bool verificaNaviosJogador();
+
 	int moveNavioJogador(int id, int direcao);
 
 	void moveNavioAuto();
 
 	bool validaIdNavio(int idNavio);
 
-	void AlteraAutoMoveNavio(int idNavio, int autoMove);
+	void AlteraAutoMoveNavio(int idNavio, int estado);
 
 	const vector<const Navios*> getVetorNaviosJogador() const;
 

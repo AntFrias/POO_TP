@@ -20,13 +20,16 @@ void Escuna::adicionaAgua(int agua) {
 void Escuna::moveNavioAuto() {
 
 	
-		if (this->getAutoMove() == 1) {
+		if (this->estado == autoMove || this->estado == aDeriva) {
 
 			unsigned int direcao;
 			direcao = rand() % 9 + 1;
 			this->moveNavio(direcao);
-			this->soldadosBebemAgua();
-			this->combate(); //aqui
+			
+			if (this->estado == autoMove) {
+				this->soldadosBebemAgua();
+				this->combate(); 
+			}
 		}
 }
 void Escuna::soldadosBebemAgua() {
@@ -40,7 +43,7 @@ void Escuna::soldadosBebemAgua() {
 			this->quantSoldados -= 1;
 		}
 		if (this->quantSoldados == 0){
-			this->autoMove = true;
+			this->estado = aDeriva;
 		}
 	}
 }
@@ -54,11 +57,6 @@ bool Escuna::VerificaCargaNavio(int novaCarga)
 string Escuna::combate() {
 	ostringstream os;
 	return os.str();
-}
-bool Escuna::souPirata()const{
-
-	return false;
-
 }
 int Escuna::FmoveEsquerda() {
 	int VerificaPorto = 0;
@@ -992,7 +990,6 @@ int Escuna::moveNavio(int direcao) {
 	}
 	return MOVE_INVALIDO;
 }
-
 void Escuna::setCargaNavio(int quantCarga)
 {
 	if (this->QuantMercadoria + quantCarga <= ESCUNA_QUANT_MAX_CARGA)
@@ -1000,7 +997,6 @@ void Escuna::setCargaNavio(int quantCarga)
 	else
 		this->QuantMercadoria = ESCUNA_QUANT_MAX_CARGA;
 }
-
 void Escuna::RetiraCargaNavio(int quantCarga)
 {
 	if (this->QuantPeixe - (quantCarga / 2) >= 0)
@@ -1011,7 +1007,6 @@ void Escuna::RetiraCargaNavio(int quantCarga)
 	else
 		this->QuantMercadoria = 0;
 }
-
 string Escuna::TrataNavioTempestade()
 {
 	int QuantCargaPerder, probAfundar;
@@ -1024,15 +1019,13 @@ string Escuna::TrataNavioTempestade()
 
 	probAfundar = rand() % 100 + 1;
 
-	if (probAfundar > PROB_ESCUNA_AFUNDAR_TEMPESTADE && QuantCargaPerder <= PROB_ESCUNA_PERDER_CARGA)
+	if (probAfundar > PROB_ESCUNA_AFUNDAR_TEMPESTADE && QuantCargaPerder <= PROB_ESCUNA_PERDER_CARGA) {
 		RetiraCargaNavio(QuantCargaPerder);
-
+		this->quantSoldados = this->quantSoldados - ((this->quantSoldados * 15) / 100);
+		AbasteceAguaNavio();
+	}
 	else if (probAfundar <= PROB_ESCUNA_AFUNDAR_TEMPESTADE)
-		this->afundado = NAVIO_AFUNDADO;
-
-	this->quantSoldados = this->quantSoldados - ((this->quantSoldados * 15) / 100);
-	
-	AbasteceAguaNavio();
+		this->estado = afundado;
 
 	return os.str();
 }

@@ -78,8 +78,6 @@ public:
 
 	int portosBemColocado();
 
-	void bebemTodosAgua();
-
 	void mudaPorto(int xPorto, int yPorto, char letra);
 
 	char LastPortoAmigo();

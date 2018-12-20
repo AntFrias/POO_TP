@@ -20,7 +20,7 @@ string Calmaria::TrataEvento()
 
 		} while (epicentroX >= 0 + 2 && epicentroX < dimX - 3 && epicentroY >= 0 + 2 && epicentroY <= dimY - 3);
 
-		os << "Vai ser gerada uma calmaria nas coordenadas: " << epicentroX << ", " << epicentroY << endl;
+		os << "Vai ser gerada uma calmaria nas coordenadas: " << epicentroX << " , " << epicentroY << endl;
 
 	}
 
