@@ -16,20 +16,28 @@ void Fragata::soldadosBebemAgua() {
 			this->quantSoldados -= 1;
 		}
 		if (this->quantSoldados == 0) {
-			this->autoMove = true;
+			this->estado = aDeriva;
 		}
 	}
 
 }
 void Fragata::moveNavioAuto() {
 
-	if (this->getAutoMove() == 1) {
+	unsigned int direcao;
+	direcao = rand() % 9 + 1;
+	this->moveNavio(direcao);
 
-		unsigned int direcao;
-		direcao = rand() % 9 + 1;
-		this->moveNavio(direcao);
-		this->soldadosBebemAgua();
-		this->combate(); //aqui
+	switch (this->estado) 
+	{
+		case autoMove:
+			this->soldadosBebemAgua();
+			this->combate();
+			break;
+
+		case pirata: 
+			this->combate();
+			break;
+
 	}
 }
 int Fragata::sou() {
@@ -76,9 +84,10 @@ string Fragata::acao(int xaAtacar, int yaAtacar) {
 		this->quantSoldados -= soldadosPerdidos;// este perdeu 20% da sua população
 		navioaAtacar->setNumSoldados(navioaAtacar->getNumSoldados() - (soldadosPerdidos * 2));// o outro perde 2 vezes mais que o outro
 
+
 		if (navioaAtacar->getNumSoldados() <= 0) {
 			//set afundado
-			navioaAtacar->setAfundado(true);
+			navioaAtacar->setEstado(afundado);
 			//passar a metade da carga
 			//-> Fragata não tem carga n passa nada
 			//passa a agua toda menos o execesso
@@ -104,7 +113,7 @@ string Fragata::acao(int xaAtacar, int yaAtacar) {
 
 		if (this->quantSoldados <= 0) {
 			//set afundar 
-			this->setAfundado(true);
+			this->estado = afundado;
 			//passar a metade da carga
 			//-> Fragata não tem carga n passa nada
 			//passa a agua toda menos o execesso
@@ -132,11 +141,6 @@ void Fragata::conquistaPorto(int xPorto,int yPorto) {
 
 
 }
-bool Fragata::souPirata()const {
-	
-	return this->pirata;
-
-}
 string Fragata::acaoPorto() {
 
 	ostringstream os;
@@ -153,7 +157,7 @@ string Fragata::acaoPorto() {
 		os << " O Porto foi conquistado ! " << endl;
 		os << " O Navio " << this->getId() << " ficou com " << this->getNumSoldados() << " soldados" << endl;
 		if (this->quantSoldados <= 0) {
-			this->setAfundado(true);
+			this->estado = afundado;
 			os << " O Navio " << this->getId() << " afundou " << endl;
 		}
 	}
@@ -163,7 +167,7 @@ string Fragata::acaoPorto() {
 		os << " O Porto nao foi conquistado ! " << endl;
 		os << " O Navio " << this->getId() << " ficou com " << this->getNumSoldados() << " soldados" << endl;
 		if (this->quantSoldados <= 0) {
-			this->setAfundado(true);
+			this->estado = afundado;
 			os << " O Navio " << this->getId() << " afundou " << endl;
 		}
 	}
@@ -173,7 +177,7 @@ string Fragata::combate() {
 
 	int xNavio = getX(), yNavio = getY();
 	ostringstream os;
-	if (this->souPirata() == false) {
+	if (this->estado == normal) {
 		if (mundo->verificaCelulaNavioPirata(xNavio + 1, yNavio) == CELULA_NAVIO_PIRATA) {
 			os << acao(xNavio + 1, yNavio);
 		}
@@ -203,7 +207,7 @@ string Fragata::combate() {
 			cout << "Porrada com o Porto Inimigo" << endl;
 		}
 	}
-	else { // se é pirata
+	if(this->estado==pirata) { // se é pirata
 		if (mundo->verificaCelulaNavioPirata(xNavio + 1, yNavio) == CELULA_NAVIO_NORMAL) {
 			os << acao(xNavio + 1, yNavio);
 		}
@@ -248,7 +252,7 @@ string Fragata::TrataNavioTempestade()
 	os << "O navio é do tipo Fragata" << endl;
 
 	if (rand() % 100 + 1 <= PROB_FRAGATA_AFUNDAR_TEMPESTADE)
-		this->afundado = NAVIO_AFUNDADO;
+		this->estado = afundado;
 
 	else {
 

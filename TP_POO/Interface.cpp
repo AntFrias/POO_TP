@@ -60,7 +60,7 @@ void Interface::GeradorEvento()
 						cout << " Vai acontecer uma Calmaria" << endl;
 						
 						mundo.criaEvento(&mundo, EVENTO_CALMARIA);
-					
+						
 					}
 					
 
@@ -68,11 +68,12 @@ void Interface::GeradorEvento()
 				case EVENTO_MOTIM:
 					
 					if ((rand() % 100 + 1) <= this->probMotin) {
-						gotoErro();
-						cout << " Vai acontecer um Motim" << endl;
+						if (jogador.verificaNaviosJogador() == true) {
+							gotoErro();
+							cout << " Vai acontecer um Motim" << endl;
 
-						mundo.criaEvento(&mundo, EVENTO_MOTIM);
-						
+							mundo.criaEvento(&mundo, EVENTO_MOTIM);
+						}
 					}
 					break;
 			}
@@ -122,7 +123,7 @@ void Interface::Prompt() {
 
 		PromptFase2(linha);
 		mundo.retiraNavAfundados(); //mudar para dentro quando for implemento do ciclo do navios
-		mundo.bebemTodosAgua();
+		//mundo.bebemTodosAgua();
 
 		jogador.moveNavioAuto();
 		mundo.moveNavioPirataAuto();
@@ -137,8 +138,8 @@ void Interface::Prompt() {
 				cout << "Existe um evento Calmaria a decorrer..!" << endl;
 			else
 				cout << "Existe um evento Motim a decorrer..!" << endl;
-		}*/
-
+		}
+*/
 		//execu��o de comando pendentes | comportamentos automaticos
 		//combates
 		//eventos
@@ -458,7 +459,7 @@ void Interface::PromptFase2(string linha) {
 		case com_auto:
 			if (buffer >> idNavio && count(linha.begin(), linha.end(), ' ') == 1) {
 				if (jogador.validaIdNavio(idNavio)) 
-					jogador.AlteraAutoMoveNavio(idNavio, 1);
+					jogador.AlteraAutoMoveNavio(idNavio, autoMove);
 				else {
 					gotoErro();
 					cout << "[ Id introduzido: " << idNavio << " invalido  ]" << endl;
@@ -472,7 +473,7 @@ void Interface::PromptFase2(string linha) {
 		case com_stop:
 			if (buffer >> idNavio && count(linha.begin(), linha.end(), ' ') == 1) {
 				if (jogador.validaIdNavio(idNavio) == true)
-					jogador.AlteraAutoMoveNavio(idNavio, 0);
+					jogador.AlteraAutoMoveNavio(idNavio, normal);
 			}
 			else {
 				gotoErro();
@@ -778,7 +779,7 @@ void Interface::mostraNavios() {
 
 		if (i % 2 == 0) {
 			
-			if (auxNavio[i]->souPirata() == true) {
+			if (auxNavio[i]->getEstado() == pirata) {
 				Consola::gotoxy(x, y);
 				Consola::setTextColor(Consola::VERMELHO_CLARO);
 				cout << setfill('0') << setw(2) << auxNavio[i]->getId();
@@ -787,20 +788,29 @@ void Interface::mostraNavios() {
 				Consola::setTextColor(Consola::VERMELHO_CLARO);
 				cout << setfill('0') << setw(2) << auxNavio[i]->getId();
 			}
-			else {
+			if (auxNavio[i]->getEstado() == normal || auxNavio[i]->getEstado() == autoMove || auxNavio[i]->getEstado() == autoMove) {
+					Consola::gotoxy(x, y);
+					Consola::setTextColor(Consola::VERDE_CLARO);
+					cout << setfill('0') << setw(2) << auxNavio[i]->getId();
+
+					Consola::gotoxy(x, y + 1);
+					Consola::setTextColor(Consola::VERDE_CLARO);
+					cout << setfill('0') << setw(2) << auxNavio[i]->getId();
+			}
+			if(auxNavio[i]->getEstado() == aDeriva){
 				Consola::gotoxy(x, y);
-				Consola::setTextColor(Consola::VERDE_CLARO);
+				Consola::setTextColor(Consola::BRANCO);
 				cout << setfill('0') << setw(2) << auxNavio[i]->getId();
 
 				Consola::gotoxy(x, y + 1);
-				Consola::setTextColor(Consola::VERDE_CLARO);
+				Consola::setTextColor(Consola::BRANCO);
 				cout << setfill('0') << setw(2) << auxNavio[i]->getId();
 			}
 		
 		}
 		if (i % 2 != 0) {
 
-			if (auxNavio[i]->souPirata() == true) {
+			if (auxNavio[i]->getEstado() == pirata) {
 				Consola::gotoxy(x, y);
 				Consola::setTextColor(Consola::VERMELHO_CLARO);
 				cout << setfill('0') << setw(2) << auxNavio[i]->getId();
@@ -809,13 +819,22 @@ void Interface::mostraNavios() {
 				Consola::setTextColor(Consola::VERMELHO_CLARO);
 				cout << setfill('0') << setw(2) << auxNavio[i]->getId();
 			}
-			else {
+			if (auxNavio[i]->getEstado() == normal || auxNavio[i]->getEstado() == autoMove || auxNavio[i]->getEstado() == autoMove) {
 				Consola::gotoxy(x, y);
 				Consola::setTextColor(Consola::VERDE_CLARO);
 				cout << setfill('0') << setw(2) << auxNavio[i]->getId();
 
 				Consola::gotoxy(x, y + 1);
 				Consola::setTextColor(Consola::VERDE_CLARO);
+				cout << setfill('0') << setw(2) << auxNavio[i]->getId();
+			}
+			if (auxNavio[i]->getEstado() == aDeriva) {
+				Consola::gotoxy(x, y);
+				Consola::setTextColor(Consola::BRANCO);
+				cout << setfill('0') << setw(2) << auxNavio[i]->getId();
+
+				Consola::gotoxy(x, y + 1);
+				Consola::setTextColor(Consola::BRANCO);
 				cout << setfill('0') << setw(2) << auxNavio[i]->getId();
 			}
 		}

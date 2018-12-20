@@ -45,25 +45,36 @@ bool Jogador::verificaModoAutomaticoNavio(int idNavio) {
 	for (unsigned int i = 0; i < navios.size(); i++) {
 		if (navios[i]->getId() == idNavio) {
 
-			if (navios[i]->getAutoMove() == AUTOMOVE_ON)
+			if (navios[i]->getEstado() == autoMove)
 				return true;
 		}
 		
 	}
 	return false;
 }
+bool Jogador::verificaNaviosJogador() {
+
+	if (navios.size() == 0) {
+		return false;
+	}
+	return true;
+
+}
 void Jogador::moveNavioAuto() {
 
 	for (unsigned int i = 0; i < navios.size(); i++) {
 
-		if (navios[i]->getAutoMove() == 1) {
+		if (navios[i]->getEstado() == autoMove || navios[i]->getEstado() == aDeriva) {
 
 			unsigned int direcao;
 
 			direcao = rand() % 9 + 1;
 
 			this->navios[i]->moveNavio(direcao);
-			this->navios[i]->combate(); //aqui
+			if (navios[i]->getEstado()==autoMove) {
+				this->navios[i]->soldadosBebemAgua();
+				this->navios[i]->combate();
+			}
 		}
 	}
 }
@@ -91,11 +102,11 @@ bool Jogador::validaIdNavio(int idNavio) {
 	return false;
 
 }
-void Jogador::AlteraAutoMoveNavio(int idNavio, int autoMove) {
+void Jogador::AlteraAutoMoveNavio(int idNavio, int estado) {
 
 	for (unsigned int i = 0; i < navios.size(); i++) {
 		if (navios[i]->getId() == idNavio)
-			navios[i]->setAutoMove(autoMove);
+			navios[i]->setEstado(estado);
 	}
 }
 const vector<const Navios*> Jogador::getVetorNaviosJogador() const

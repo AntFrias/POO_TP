@@ -10,9 +10,9 @@ class Veleiro : public Navios
 	int QuantPeixe;
 
 public:
-	Veleiro(Mundo *auxMundo, bool Pirata,bool automove, int coordx, int coordy) : QuantMercadoria(0), QuantPeixe(0), Navios(auxMundo,'V', Pirata, coordx,coordy, 20, 200, automove){};
+	Veleiro(Mundo *auxMundo,int coordx, int coordy,int estado) : QuantMercadoria(0), QuantPeixe(0), Navios(auxMundo,'V',coordx,coordy, 20, 200, estado){};
 	virtual void AbasteceAguaNavio();
-	void moveNavioAuto();
+	virtual void moveNavioAuto();
 	void soldadosBebemAgua();
 	int getMaxAgua();
 	int getAgua();
@@ -32,7 +32,6 @@ public:
 	int FmoveBaixoDireita();
 	int sou();
 	void conquistaPorto(int xPorto, int yPorto);
-	bool souPirata()const;
 	string acaoPorto();
 	string acao(int xaAtacar, int yaAtacar);
 	bool VerificaCargaNavio(int novaCarga);

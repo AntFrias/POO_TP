@@ -10,13 +10,22 @@ void Veleiro::AbasteceAguaNavio()
 }
 void Veleiro::moveNavioAuto() {
 
-	if (this->getAutoMove() == 1) {
 
-		unsigned int direcao;
-		direcao = rand() % 9 + 1;
-		this->moveNavio(direcao);
+	unsigned int direcao;
+	direcao = rand() % 9 + 1;
+	this->moveNavio(direcao);
+
+	switch (this->estado)
+	{
+	case autoMove:
 		this->soldadosBebemAgua();
-		this->combate(); //aqui
+		this->combate();
+		break;
+
+	case pirata:
+		this->combate();
+		break;
+
 	}
 	
 }
@@ -30,7 +39,7 @@ void Veleiro::soldadosBebemAgua() {
 			this->quantSoldados -= 1;
 		}
 		if (this->quantSoldados == 0) {
-			this->autoMove = true;
+			this->estado = aDeriva;
 		}
 	}
 }
@@ -57,11 +66,6 @@ void Veleiro::conquistaPorto(int xPorto, int yPorto) {
 
 
 }
-bool Veleiro::souPirata()const{
-
-	return this->pirata;
-
-}
 string Veleiro::acaoPorto() {
 
 	ostringstream os;
@@ -78,11 +82,11 @@ string Veleiro::acaoPorto() {
 		os << " O Porto foi conquistado ! " << endl;
 		os << " O Navio " << this->getId() << " ficou com " << this->getNumSoldados() << " soldados" << endl;
 		if (this->quantSoldados <= 0) {
-			this->setAfundado(true);
+			this->estado = afundado;
 			os << " O Navio " << this->getId() << " afundou " << endl;
 		}
 		if (this->quantSoldados <= 0)
-			this->setAfundado(true);
+			this->estado = afundado;
 	}
 	else {
 		soldadosPerdidos = (10 * this->getNumSoldados()) / 100;
@@ -90,7 +94,7 @@ string Veleiro::acaoPorto() {
 		os << " O Porto nao foi conquistado ! " << endl;
 		os << " O Navio " << this->getId() << " ficou com " << this->getNumSoldados() << " soldados" << endl;
 		if (this->quantSoldados <= 0) {
-			this->setAfundado(true);
+			this->estado = afundado;
 			os << " O Navio " << this->getId() << " afundou " << endl;
 		}
 	}
@@ -127,7 +131,7 @@ string Veleiro::acao(int xaAtacar, int yaAtacar) {
 
 		if (navioaAtacar->getNumSoldados() <= 0) {
 			//set afundado
-			navioaAtacar->setAfundado(true);
+			navioaAtacar->setEstado(afundado);
 			//passar a metade da carga
 			//passa a agua toda menos o execesso
 			if (this->getAgua() + navioaAtacar->getAgua() > this->getMaxAgua()) {
@@ -151,7 +155,7 @@ string Veleiro::acao(int xaAtacar, int yaAtacar) {
 
 		if (this->quantSoldados <= 0) {
 			//set afundar 
-			this->setAfundado(true);
+			this->estado = afundado;
 			//passar a metade da carga
 			//passa a agua toda menos o execesso
 			if (navioaAtacar->getAgua() + this->getAgua() > navioaAtacar->getMaxAgua()) {
@@ -171,7 +175,7 @@ string Veleiro::combate() {
 
 	int xNavio = getX(), yNavio = getY();
 	ostringstream os;
-	if (this->souPirata() == false) {
+	if (this->estado == normal) {
 		if (mundo->verificaCelulaNavioPirata(xNavio + 1, yNavio) == CELULA_NAVIO_PIRATA) {
 			os << acao(xNavio + 1, yNavio);
 		}
@@ -201,7 +205,7 @@ string Veleiro::combate() {
 			cout << "Porrada com o Porto Inimigo" << endl;
 		}
 	}
-	else { // se é pirata
+	if(this->estado == pirata) { // se é pirata
 		if (mundo->verificaCelulaNavioPirata(xNavio + 1, yNavio) == CELULA_NAVIO_NORMAL) {
 			os << acao(xNavio + 1, yNavio);
 		}
@@ -1167,7 +1171,6 @@ int Veleiro::moveNavio(int direcao) {
 	}
 	return MOVE_INVALIDO;
 }
-
 void Veleiro::setCargaNavio(int quantCarga)
 {
 	if (this->QuantMercadoria + quantCarga <= VELEIRO_QUANT_MAX_CARGA)
@@ -1175,7 +1178,6 @@ void Veleiro::setCargaNavio(int quantCarga)
 	else
 		this->QuantMercadoria = VELEIRO_QUANT_MAX_CARGA;
 }
-
 void Veleiro::RetiraCargaNavio(int quantCarga)
 {
 	if (this->QuantPeixe - (quantCarga / 2) >= 0)
@@ -1186,7 +1188,6 @@ void Veleiro::RetiraCargaNavio(int quantCarga)
 	else
 		this->QuantMercadoria = 0;
 }
-
 string Veleiro::TrataNavioTempestade()
 {
 	ostringstream os;
@@ -1198,10 +1199,10 @@ string Veleiro::TrataNavioTempestade()
 	int probAfundar = rand() % 100 + 1;
 
 	if (probAfundar <= PROB_VELEIRO_AFUNDAR_TEMPESTADE_1 && QuantCarga >= PROB_VELEIRO_PERDER_CARGA)
-		this->afundado = NAVIO_AFUNDADO;
+		this->estado = afundado;
 
 	else if (probAfundar <= PROB_VELEIRO_AFUNDAR_TEMPESTADE_2)  // aqui a probabilidade é diferente pelo facto do 
-		this->afundado = NAVIO_AFUNDADO;    					//navio pedir apenas 20% de prob caso tenha menos que 50%
+		this->estado = afundado;    							//navio pedir apenas 20% de prob caso tenha menos que 50%
 																// de capacidade de carga
 	else
 	{
@@ -1211,8 +1212,6 @@ string Veleiro::TrataNavioTempestade()
 
 	return os.str();
 }
-
-
 bool Veleiro::VerificaCargaNavio(int novaCarga)
 {
 	if (this->QuantMercadoria + novaCarga <= VELEIRO_QUANT_MAX_CARGA)
@@ -1220,7 +1219,6 @@ bool Veleiro::VerificaCargaNavio(int novaCarga)
 	else
 		return false;
 }
-
 Veleiro::~Veleiro()
 {
 }

@@ -4,33 +4,24 @@
 Navios::Navios()
 {
 }
-
-Navios::Navios(Mundo *mundo, char tipo,bool pirata, int x, int y, int quantSoldados, int quantAgua, bool autoMove, bool atracado,bool afundado)
+int Navios::getEstado()const {
+	return this->estado;
+}
+void Navios::setEstado(int estado) {
+	this->estado = estado;
+}
+Navios::Navios(Mundo *mundo, char tipo, int x, int y, int quantSoldados, int quantAgua, int estado)
 {
 	this->mundo = mundo;
 	this->id = this->IncNavio++;
 	this->tipo = tipo;
-	this->pirata = pirata;
 	this->quantAgua = quantAgua;
 	this->quantSoldados = quantSoldados;
-	this->autoMove = autoMove;
-	this->Atracado = atracado;
-	this->afundado = false;
+	this->estado = estado;
 	this->x = x;
 	this->y = y;
 }
-bool Navios::getCalmaria() const
-{
-	return this->Calmaria;
-}
-void Navios::setCalmaria(bool estado)
-{
-	this->Calmaria = estado;
-}
-void Navios::SetMotim(bool estado)
-{
-	this->Motim = estado;
-}
+
 int Navios::randNumber(int nSoldados) {
 
 	if (nSoldados > 0) {
@@ -38,14 +29,7 @@ int Navios::randNumber(int nSoldados) {
 	}
 	return 0;
 }
-void Navios::setAfundado(bool result) {
 
-	this->afundado = result;
-}
-bool Navios::getAfundado() {
-
-	return this->afundado;
-}
 int Navios::getNumSoldados() {
 	return this->quantSoldados;
 }
@@ -82,24 +66,6 @@ void Navios::setY(int y) {
 
 	this->y=y;
 }
-void Navios::setAutoMove(bool move) {
-	this->autoMove = move;
-}
-void Navios::setNavioDeriva()
-{
-	autoMove = true;
-}
-int Navios::getAutoMove() {
-	return this->autoMove;
-}
-bool Navios::getNavioAtracado()
-{
-	return this->Atracado;
-}
-void Navios::setNavioAtracado(bool estado)
-{
-	this->Atracado = estado;
-}
 string Navios::AlteraSoldadosPosEvento(int prob)
 {
 	ostringstream os;
@@ -112,7 +78,7 @@ string Navios::AlteraSoldadosPosEvento(int prob)
 	os << "Total de Soldados que permanecem no navio : " << this->quantSoldados << endl;
 
 	if (quantSoldados == 0 )
-		this->autoMove = true;
+		this->estado = aDeriva;
 
 	return os.str();
 }

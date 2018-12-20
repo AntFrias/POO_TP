@@ -7,15 +7,14 @@ class Fragata : public Navios
 {
 
 public:
-	Fragata(Mundo *mundo, bool pirata,bool automove, int coordx, int coordy) : Navios(mundo, 'F',pirata, coordx, coordy, 50, 500, automove) {};
+	Fragata(Mundo *mundo, int coordx, int coordy, int estado) : Navios(mundo, 'F', coordx, coordy, 50, 500, estado) {};
 	virtual void AbasteceAguaNavio();
 	void soldadosBebemAgua();
-	void moveNavioAuto();
+	virtual void moveNavioAuto();
 	virtual int moveNavio(int direcao);
 	virtual string combate();
 	string acao(int xaAtacar, int yaAtacar);
 	void conquistaPorto(int xPorto,int yPorto);
-	bool souPirata()const;
 	virtual string acaoPorto();
 	virtual void setCargaNavio(int quantCarga)override;
 	virtual void RetiraCargaNavio(int quantCarga);

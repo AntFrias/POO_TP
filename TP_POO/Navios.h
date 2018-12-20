@@ -46,7 +46,18 @@ enum movimentosNavios {
 	moveBaixoDireita
 
 };
+enum estadoNavio {
 
+	normal = 0,
+	pirata,
+	autoMove,
+	atracado,
+	afundado,
+	aDeriva,
+	calmaria,
+	motim
+
+};
 using namespace std;
 
 class Mundo;
@@ -61,12 +72,7 @@ private:
 	
 protected:
 	Mundo *mundo;
-	bool pirata;
-	bool autoMove;
-	bool Atracado;
-	bool afundado;
-	bool Calmaria;
-	bool Motim;
+	int estado;
 	int x, y;
 	int quantSoldados;
 	int quantAgua;
@@ -75,40 +81,33 @@ protected:
 
 public:
 	Navios();
-	Navios(Mundo *mundo, char tipo, bool pirata, int x, int y, int quantSoldados, int quantAgua = 0, bool autoMove = false, bool atracado = true, bool afundado = false);
+	Navios(Mundo *mundo, char tipo, int x, int y, int quantSoldados, int quantAgua = 0, int estado=normal);
 	
 	virtual int moveNavio(int direcao)=0;
 	virtual string combate() = 0;
 	virtual int getMaxAgua() = 0;
 	virtual int getAgua() = 0;
 	virtual void adicionaAgua(int agua) = 0;
-	virtual bool souPirata()const=0;
 	virtual void soldadosBebemAgua() = 0;
 	virtual void setCargaNavio(int quantCarga) = 0;
 	virtual void RetiraCargaNavio(int quantCarga) = 0;
 	virtual string TrataNavioTempestade() = 0;
 	virtual int sou() = 0;
 	virtual void moveNavioAuto()=0;
-	bool getCalmaria()const;
-	void setCalmaria( bool estado);
-	void SetMotim(bool estado);
+
 	int randNumber(int nSoldados);
 	int getNumSoldados();
 	void setNumSoldados(int num);
-	void setAfundado(bool result);
-	bool getAfundado();
+	
 
+	int getEstado()const;
+	void setEstado(int estado);
 
 	char getTipo()const;
 	int getX()const;
 	int getY()const;
 	void setX(int x);
 	void setY(int y);
-	void setAutoMove(bool move);
-	void setNavioDeriva();
-	int getAutoMove();
-	bool getNavioAtracado();
-	void setNavioAtracado(bool estado);
 	string AlteraSoldadosPosEvento(int prob);
 	const int getId()const;
 	const Navios * getNavio() const;	
