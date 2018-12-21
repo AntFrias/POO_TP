@@ -48,7 +48,7 @@ public:
 
 	int moveNavioJogador(int id, int direcao);
 
-	void moveNavioAuto();
+	string moveNavioAuto();
 
 	bool validaIdNavio(int idNavio);
 

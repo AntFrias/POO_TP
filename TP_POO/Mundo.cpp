@@ -37,6 +37,18 @@ int Mundo::portosBemColocado() {
 	return 1;
 }
 
+
+void Mundo::verificaaDeriva() {
+	
+	for (unsigned int i = 0; i < navios.size(); i++) {
+		if (navios[i]->getEstado() == aDeriva) {
+			navios[i]->serConquistadoaDeriva();
+		}
+	}
+
+
+}
+
 void Mundo::mudaPorto(int xPorto,int yPorto,char letra) {
 
 	for (unsigned int i = 0; i < porto.size(); i++) {
@@ -115,6 +127,20 @@ int Mundo::verificaCelulaNavioPirata(int x, int y) {
 
 	return 0;
 }
+int Mundo::verificaCelulaNavioDeriva(int x, int y) {
+
+	for (unsigned int i = 0; i < this->navios.size(); i++) {
+		if (navios[i]->getX() == x && navios[i]->getY() == y) {
+			if (navios[i]->getEstado() == aDeriva) {
+				return true;
+			}
+			else
+				return false;
+		}
+	}
+
+	return 0;
+}
 
 Navios & Mundo::criaNavio(Mundo *mundo,const char portoPrincipal, const char TipoNavio) {
 
@@ -151,9 +177,12 @@ Navios & Mundo::criaNavio(Mundo *mundo,const char portoPrincipal, const char Tip
 
 	return *aux;
 }
-void Mundo::moveNavioPirataAuto() {
+string Mundo::moveNavioPirataAuto() {
+
+	ostringstream os;
 
 	for (unsigned int i = 0; i < navios.size(); i++) {
+		cout << "navio: " << navios[i]->getId() << " soldados: " << navios[i]->getNumSoldados() << " agua " << navios[i]->getAgua() << endl;
 		if (navios[i]->getEstado()== pirata) {
 
 				unsigned int direcao;
@@ -161,10 +190,12 @@ void Mundo::moveNavioPirataAuto() {
 				direcao = rand() % 9 + 1;
 
 				this->navios[i]->moveNavio(direcao);
-				this->navios[i]->combate(); //aqui
+				
+				os<<this->navios[i]->combate(CELULA_NAVIO_NORMAL); //O TIPO DE NAVIO QUE SE QUER ATACAR!
 			
 		}
 	}
+	return os.str();
 }
 void Mundo::criaNavPirata(Mundo *mundo, const char TipoNavio,int x,int y) {
 
