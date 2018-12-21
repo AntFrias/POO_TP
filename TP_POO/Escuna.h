@@ -14,6 +14,9 @@ public:
 	virtual int moveNavio(int direcao)override;
 	virtual void setCargaNavio(int quantCarga)override;
 	virtual void RetiraCargaNavio(int quantCarga);
+	virtual void retiraAgua(int agua);
+	virtual int getMaxSoldados();
+	virtual void retiraSoldados(int soldados);
 	string TrataNavioTempestade();
 	int FmoveEsquerda();
 	int FmoveDireita();
@@ -26,11 +29,13 @@ public:
 	int sou();
 	int getMaxAgua();
 	int getAgua();
-	void adicionaAgua(int agua);
-	virtual void moveNavioAuto();
+	virtual void adicionaAgua(int agua);
+	virtual void daMetade(int x, int y);
+	void serConquistadoaDeriva();
+	virtual string moveNavioAuto();
 	void soldadosBebemAgua();
 	bool VerificaCargaNavio(int novaCarga);
-	virtual string combate();
+	virtual string combate(int quemVouAtacar);
 	~Escuna();
 };
 

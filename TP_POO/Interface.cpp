@@ -123,11 +123,10 @@ void Interface::Prompt() {
 
 		PromptFase2(linha);
 		mundo.retiraNavAfundados(); //mudar para dentro quando for implemento do ciclo do navios
-		//mundo.bebemTodosAgua();
 
-		jogador.moveNavioAuto();
-		mundo.moveNavioPirataAuto();
-
+		cout << jogador.moveNavioAuto();
+		cout << mundo.moveNavioPirataAuto();
+		mundo.verificaaDeriva();
 		mundo.retiraNavAfundados();
 
 		/*if ( mundo.getExistenciaEvento() == EVENTO_OFF)
@@ -442,7 +441,7 @@ void Interface::PromptFase2(string linha) {
 								auxNavio = mundo.getNavio(idNavio);
 								Consola::setTextColor(Consola::BRANCO);
 								Consola::gotoxy(0, 26);
-								cout << auxNavio->combate();
+								cout << auxNavio->combate(CELULA_NAVIO_PIRATA);
 						}
 						else
 							cout << "[ Erro..! AutoMove do Navio : " << idNavio << " esta ativo ..! ]" << endl;
