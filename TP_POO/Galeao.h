@@ -30,7 +30,7 @@ public:
 	int FmoveBaixoDireita();
 	bool VerificaCargaNavio(int novaCarga);
 	int sou();
-	virtual string combate();
+	virtual string combate(int quemVouAtacar);
 	~Galeao();
 };
 #endif // !GALEAO_H

@@ -161,7 +161,7 @@ void Mundo::moveNavioPirataAuto() {
 				direcao = rand() % 9 + 1;
 
 				this->navios[i]->moveNavio(direcao);
-				this->navios[i]->combate(); //aqui
+				this->navios[i]->combate(CELULA_NAVIO_NORMAL); //O TIPO DE NAVIO QUE SE QUER ATACAR!
 			
 		}
 	}

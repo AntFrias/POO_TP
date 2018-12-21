@@ -29,7 +29,7 @@ void Galeao::moveNavioAuto() {
 		this->moveNavio(direcao);
 		if (this->estado == autoMove) {
 			this->soldadosBebemAgua();
-			this->combate(); 
+			this->combate(CELULA_NAVIO_PIRATA);
 		}
 	}
 }
@@ -52,7 +52,7 @@ bool Galeao::VerificaCargaNavio(int novaCarga)
 int Galeao::sou() {
 	return GALEAO;
 }
-string Galeao::combate() {
+string Galeao::combate(int quemVouAtacar) {
 	ostringstream os;
 	return os.str();
 }

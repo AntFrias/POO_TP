@@ -73,7 +73,7 @@ void Jogador::moveNavioAuto() {
 			this->navios[i]->moveNavio(direcao);
 			if (navios[i]->getEstado()==autoMove) {
 				this->navios[i]->soldadosBebemAgua();
-				this->navios[i]->combate();
+				this->navios[i]->combate(CELULA_NAVIO_PIRATA);
 			}
 		}
 	}

@@ -442,7 +442,7 @@ void Interface::PromptFase2(string linha) {
 								auxNavio = mundo.getNavio(idNavio);
 								Consola::setTextColor(Consola::BRANCO);
 								Consola::gotoxy(0, 26);
-								cout << auxNavio->combate();
+								cout << auxNavio->combate(CELULA_NAVIO_PIRATA);
 						}
 						else
 							cout << "[ Erro..! AutoMove do Navio : " << idNavio << " esta ativo ..! ]" << endl;

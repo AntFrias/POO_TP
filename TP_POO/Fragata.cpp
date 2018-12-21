@@ -31,11 +31,11 @@ void Fragata::moveNavioAuto() {
 	{
 		case autoMove:
 			this->soldadosBebemAgua();
-			this->combate();
+			this->combate(CELULA_NAVIO_PIRATA);
 			break;
 
 		case pirata: 
-			this->combate();
+			this->combate(CELULA_NAVIO_NORMAL);
 			break;
 
 	}
@@ -173,70 +173,49 @@ string Fragata::acaoPorto() {
 	}
 	return os.str();
 }
-string Fragata::combate() {
+string Fragata::combate(int quemVouAtacar) {
 
 	int xNavio = getX(), yNavio = getY();
 	ostringstream os;
-	if (this->estado == normal) {
-		if (mundo->verificaCelulaNavioPirata(xNavio + 1, yNavio) == CELULA_NAVIO_PIRATA) {
+
+		if (mundo->verificaCelulaNavioPirata(xNavio + 1, yNavio) == quemVouAtacar) {
 			os << acao(xNavio + 1, yNavio);
 		}
-		if (mundo->verificaCelulaNavioPirata(xNavio - 1, yNavio) == CELULA_NAVIO_PIRATA) {
+		if (mundo->verificaCelulaNavioPirata(xNavio - 1, yNavio) == quemVouAtacar) {
 			os << acao(xNavio - 1, yNavio);
 		}
-		if (mundo->verificaCelulaNavioPirata(xNavio, yNavio - 1) == CELULA_NAVIO_PIRATA) {
+		if (mundo->verificaCelulaNavioPirata(xNavio, yNavio - 1) == quemVouAtacar) {
 			os << acao(xNavio, yNavio - 1);
 		}
-		if (mundo->verificaCelulaNavioPirata(xNavio, yNavio + 1) == CELULA_NAVIO_PIRATA) {
+		if (mundo->verificaCelulaNavioPirata(xNavio, yNavio + 1) == quemVouAtacar) {
 			os << acao(xNavio, yNavio + 1);
 		}
-		if (mundo->verificaCelulaNavioPirata(xNavio + 1, yNavio - 1) == CELULA_NAVIO_PIRATA) {
+		if (mundo->verificaCelulaNavioPirata(xNavio + 1, yNavio - 1) == quemVouAtacar) {
 			os << acao(xNavio + 1, yNavio - 1);
 		}
-		if (mundo->verificaCelulaNavioPirata(xNavio - 1, yNavio - 1) == CELULA_NAVIO_PIRATA) {
+		if (mundo->verificaCelulaNavioPirata(xNavio - 1, yNavio - 1) == quemVouAtacar) {
 			os << acao(xNavio - 1, yNavio - 1);
 		}
-		if (mundo->verificaCelulaNavioPirata(xNavio + 1, yNavio + 1) == CELULA_NAVIO_PIRATA) {
+		if (mundo->verificaCelulaNavioPirata(xNavio + 1, yNavio + 1) == quemVouAtacar) {
 			os << acao(xNavio + 1, yNavio + 1);
 		}
-		if (mundo->verificaCelulaNavioPirata(xNavio - 1, yNavio + 1) == CELULA_NAVIO_PIRATA) {
+		if (mundo->verificaCelulaNavioPirata(xNavio - 1, yNavio + 1) == quemVouAtacar) {
 			os << acao(xNavio - 1, yNavio + 1);
 		}
-		if (mundo->verificaCelulaPorto(xNavio, yNavio) == CELULA_PORTO_INIMIGO) {
-			acaoPorto();
-			cout << "Porrada com o Porto Inimigo" << endl;
+		if (quemVouAtacar == CELULA_NAVIO_PIRATA) {
+			if (mundo->verificaCelulaPorto(xNavio, yNavio) == CELULA_PORTO_INIMIGO) {
+				acaoPorto();
+				cout << "Porrada com o Porto Inimigo" << endl;
+			}
 		}
-	}
-	if(this->estado==pirata) { // se é pirata
-		if (mundo->verificaCelulaNavioPirata(xNavio + 1, yNavio) == CELULA_NAVIO_NORMAL) {
-			os << acao(xNavio + 1, yNavio);
+
+		if (quemVouAtacar == CELULA_NAVIO_NORMAL) {
+			if (mundo->verificaCelulaPorto(xNavio, yNavio) == CELULA_PORTO_AMIGO) {
+				acaoPorto();
+				cout << "Porrada com o Porto Inimigo" << endl;
+			}
 		}
-		if (mundo->verificaCelulaNavioPirata(xNavio - 1, yNavio) == CELULA_NAVIO_NORMAL) {
-			os << acao(xNavio - 1, yNavio);
-		}
-		if (mundo->verificaCelulaNavioPirata(xNavio, yNavio - 1) == CELULA_NAVIO_NORMAL) {
-			os << acao(xNavio, yNavio - 1);
-		}
-		if (mundo->verificaCelulaNavioPirata(xNavio, yNavio + 1) == CELULA_NAVIO_NORMAL) {
-			os << acao(xNavio, yNavio + 1);
-		}
-		if (mundo->verificaCelulaNavioPirata(xNavio + 1, yNavio - 1) == CELULA_NAVIO_NORMAL) {
-			os << acao(xNavio + 1, yNavio - 1);
-		}
-		if (mundo->verificaCelulaNavioPirata(xNavio - 1, yNavio - 1) == CELULA_NAVIO_NORMAL) {
-			os << acao(xNavio - 1, yNavio - 1);
-		}
-		if (mundo->verificaCelulaNavioPirata(xNavio + 1, yNavio + 1) == CELULA_NAVIO_NORMAL) {
-			os << acao(xNavio + 1, yNavio + 1);
-		}
-		if (mundo->verificaCelulaNavioPirata(xNavio - 1, yNavio + 1) == CELULA_NAVIO_NORMAL) {
-			os << acao(xNavio - 1, yNavio + 1);
-		}
-		if (mundo->verificaCelulaPorto(xNavio, yNavio) == CELULA_PORTO_AMIGO) {
-			acaoPorto();
-			cout << "Porrada com o Porto Inimigo" << endl;
-		}
-	}
+
 	return os.str();
 }
 void Fragata::setCargaNavio(int quantCarga)

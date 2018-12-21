@@ -30,7 +30,7 @@ public:
 	virtual void moveNavioAuto();
 	void soldadosBebemAgua();
 	bool VerificaCargaNavio(int novaCarga);
-	virtual string combate();
+	virtual string combate(int quemVouAtacar);
 	~Escuna();
 };
 

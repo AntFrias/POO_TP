@@ -84,7 +84,7 @@ public:
 	Navios(Mundo *mundo, char tipo, int x, int y, int quantSoldados, int quantAgua = 0, int estado=normal);
 	
 	virtual int moveNavio(int direcao)=0;
-	virtual string combate() = 0;
+	virtual string combate(int quemVouAtacar) = 0;
 	virtual int getMaxAgua() = 0;
 	virtual int getAgua() = 0;
 	virtual void adicionaAgua(int agua) = 0;

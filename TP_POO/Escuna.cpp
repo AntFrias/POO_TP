@@ -28,7 +28,7 @@ void Escuna::moveNavioAuto() {
 			
 			if (this->estado == autoMove) {
 				this->soldadosBebemAgua();
-				this->combate(); 
+				this->combate(CELULA_NAVIO_PIRATA);
 			}
 		}
 }
@@ -54,7 +54,7 @@ bool Escuna::VerificaCargaNavio(int novaCarga)
 	else
 		return false;
 }
-string Escuna::combate() {
+string Escuna::combate(int quemVouAtacar) {
 	ostringstream os;
 	return os.str();
 }

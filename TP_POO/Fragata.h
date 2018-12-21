@@ -12,7 +12,7 @@ public:
 	void soldadosBebemAgua();
 	virtual void moveNavioAuto();
 	virtual int moveNavio(int direcao);
-	virtual string combate();
+	virtual string combate(int quemVouAtacar);
 	string acao(int xaAtacar, int yaAtacar);
 	void conquistaPorto(int xPorto,int yPorto);
 	virtual string acaoPorto();
