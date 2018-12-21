@@ -8,7 +8,9 @@ void Veleiro::AbasteceAguaNavio()
 	this->quantAgua = VELEIRO_MAX_AGUA;
 	
 }
-void Veleiro::moveNavioAuto() {
+string Veleiro::moveNavioAuto() {
+
+	ostringstream os;
 
 	unsigned int direcao;
 	direcao = rand() % 9 + 1;
@@ -18,14 +20,15 @@ void Veleiro::moveNavioAuto() {
 	{
 	case autoMove:
 		this->soldadosBebemAgua();
-		this->combate(CELULA_NAVIO_PIRATA);
+		os<<this->combate(CELULA_NAVIO_PIRATA);
 		break;
 
 	case pirata:
-		this->combate(CELULA_NAVIO_NORMAL);
+		os<<this->combate(CELULA_NAVIO_NORMAL);
 		break;
 
 	}
+	return os.str();
 }
 void Veleiro::soldadosBebemAgua() {
 	if (mundo->verificaCelulaMar(this->x, this->y) || (mundo->verificaCelulaPorto(this->x, this->y) != CELULA_PORTO_AMIGO)) {

@@ -60,7 +60,9 @@ bool Jogador::verificaNaviosJogador() {
 	return true;
 
 }
-void Jogador::moveNavioAuto() {
+string Jogador::moveNavioAuto() {
+	
+	ostringstream os;
 
 	for (unsigned int i = 0; i < navios.size(); i++) {
 
@@ -73,10 +75,11 @@ void Jogador::moveNavioAuto() {
 			this->navios[i]->moveNavio(direcao);
 			if (navios[i]->getEstado()==autoMove) {
 				this->navios[i]->soldadosBebemAgua();
-				this->navios[i]->combate(CELULA_NAVIO_PIRATA);
+				os<<this->navios[i]->combate(CELULA_NAVIO_PIRATA);
 			}
 		}
 	}
+	return os.str();
 }
 int Jogador::moveNavioJogador(int id, int direcao) {
 

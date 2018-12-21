@@ -21,7 +21,9 @@ void Fragata::soldadosBebemAgua() {
 	}
 
 }
-void Fragata::moveNavioAuto() {
+string Fragata::moveNavioAuto() {
+
+	ostringstream os;
 
 	unsigned int direcao;
 	direcao = rand() % 9 + 1;
@@ -31,14 +33,15 @@ void Fragata::moveNavioAuto() {
 	{
 		case autoMove:
 			this->soldadosBebemAgua();
-			this->combate(CELULA_NAVIO_PIRATA);
+			os << this->combate(CELULA_NAVIO_PIRATA);
 			break;
 
 		case pirata: 
-			this->combate(CELULA_NAVIO_NORMAL);
+			os<< this->combate(CELULA_NAVIO_NORMAL);
 			break;
 
 	}
+	return os.str();
 }
 int Fragata::sou() {
 

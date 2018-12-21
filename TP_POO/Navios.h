@@ -93,7 +93,7 @@ public:
 	virtual void RetiraCargaNavio(int quantCarga) = 0;
 	virtual string TrataNavioTempestade() = 0;
 	virtual int sou() = 0;
-	virtual void moveNavioAuto()=0;
+	virtual string moveNavioAuto()=0;
 
 	int randNumber(int nSoldados);
 	int getNumSoldados();

@@ -27,7 +27,7 @@ public:
 	int getMaxAgua();
 	int getAgua();
 	void adicionaAgua(int agua);
-	virtual void moveNavioAuto();
+	virtual string moveNavioAuto();
 	void soldadosBebemAgua();
 	bool VerificaCargaNavio(int novaCarga);
 	virtual string combate(int quemVouAtacar);

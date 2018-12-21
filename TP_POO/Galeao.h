@@ -12,7 +12,7 @@ public:
 	Galeao(Mundo *mundo, int coordx, int coordy, int estado) : QuantMercadoria(0), QuantPeixe(0), Navios(mundo, 'G',coordx, coordy, 40, 400, estado){};
 	virtual void AbasteceAguaNavio();
 	void soldadosBebemAgua();
-	virtual void moveNavioAuto();
+	virtual string moveNavioAuto();
 	int getMaxAgua();
 	int getAgua();
 	void adicionaAgua(int agua);

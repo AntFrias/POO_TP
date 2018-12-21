@@ -123,10 +123,9 @@ void Interface::Prompt() {
 
 		PromptFase2(linha);
 		mundo.retiraNavAfundados(); //mudar para dentro quando for implemento do ciclo do navios
-		//mundo.bebemTodosAgua();
 
-		jogador.moveNavioAuto();
-		mundo.moveNavioPirataAuto();
+		cout << jogador.moveNavioAuto();
+		cout << mundo.moveNavioPirataAuto();
 
 		mundo.retiraNavAfundados();
 

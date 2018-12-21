@@ -20,7 +20,9 @@ void Galeao::soldadosBebemAgua() {
 		}
 	}
 }
-void Galeao::moveNavioAuto() {
+string Galeao::moveNavioAuto() {
+
+	ostringstream os;
 
 	if (this->estado == autoMove || this->estado == aDeriva) {
 
@@ -29,9 +31,10 @@ void Galeao::moveNavioAuto() {
 		this->moveNavio(direcao);
 		if (this->estado == autoMove) {
 			this->soldadosBebemAgua();
-			this->combate(CELULA_NAVIO_PIRATA);
+			os<<this->combate(CELULA_NAVIO_PIRATA);
 		}
 	}
+	return os.str();
 }
 int Galeao::getMaxAgua() {
 	return GALEAO_MAX_AGUA;

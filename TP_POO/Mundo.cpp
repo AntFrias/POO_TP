@@ -151,7 +151,9 @@ Navios & Mundo::criaNavio(Mundo *mundo,const char portoPrincipal, const char Tip
 
 	return *aux;
 }
-void Mundo::moveNavioPirataAuto() {
+string Mundo::moveNavioPirataAuto() {
+
+	ostringstream os;
 
 	for (unsigned int i = 0; i < navios.size(); i++) {
 		if (navios[i]->getEstado()== pirata) {
@@ -161,10 +163,11 @@ void Mundo::moveNavioPirataAuto() {
 				direcao = rand() % 9 + 1;
 
 				this->navios[i]->moveNavio(direcao);
-				this->navios[i]->combate(CELULA_NAVIO_NORMAL); //O TIPO DE NAVIO QUE SE QUER ATACAR!
+			os<<this->navios[i]->combate(CELULA_NAVIO_NORMAL); //O TIPO DE NAVIO QUE SE QUER ATACAR!
 			
 		}
 	}
+	return os.str();
 }
 void Mundo::criaNavPirata(Mundo *mundo, const char TipoNavio,int x,int y) {
 

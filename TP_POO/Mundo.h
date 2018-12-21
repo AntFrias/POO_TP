@@ -90,7 +90,7 @@ public:
 	
 	Navios & criaNavio(Mundo *mundo,char PortoPrincipal, char tipoNavio);
 
-	void moveNavioPirataAuto();
+	string moveNavioPirataAuto();
 
 	void criaNavPirata(Mundo *mundo, const char TipoNavio, int x, int y);
 

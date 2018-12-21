@@ -17,8 +17,9 @@ int Escuna::getAgua() {
 void Escuna::adicionaAgua(int agua) {
 	this->quantAgua += agua;
 }
-void Escuna::moveNavioAuto() {
+string Escuna::moveNavioAuto() {
 
+	ostringstream os;
 	
 		if (this->estado == autoMove || this->estado == aDeriva) {
 
@@ -28,9 +29,10 @@ void Escuna::moveNavioAuto() {
 			
 			if (this->estado == autoMove) {
 				this->soldadosBebemAgua();
-				this->combate(CELULA_NAVIO_PIRATA);
+				os<<this->combate(CELULA_NAVIO_PIRATA);
 			}
 		}
+		return os.str();
 }
 void Escuna::soldadosBebemAgua() {
 	
