@@ -36,6 +36,128 @@ string Galeao::moveNavioAuto() {
 	}
 	return os.str();
 }
+void Galeao::retiraAgua(int agua) {
+
+	this->quantAgua -= agua;
+
+}
+void Galeao::retiraSoldados(int soldados) {
+
+	this->quantSoldados -= soldados;
+
+}
+int Galeao::getMaxSoldados() {
+	return GALEAO_MAX_SOLDADOS;
+}
+void Galeao::daMetade(int x, int y) {
+
+	Navios *auxNavio = nullptr;
+	auxNavio = mundo->getNavioXY(x, y);
+	if (auxNavio->getNumSoldados() > 0) {
+		//tira metade ao que da soldados e agua
+		auxNavio->retiraAgua(auxNavio->getAgua() / 2);
+		auxNavio->retiraSoldados(auxNavio->getNumSoldados() / 2);
+		//fico com metade para mim  soldados e agua
+		this->quantAgua = auxNavio->getAgua() / 2;
+		this->quantSoldados = auxNavio->getNumSoldados() / 2;
+	}
+	else
+		this->estado = aDeriva;
+}
+void Galeao::serConquistadoaDeriva() {
+
+	int x = this->x, y = this->y;
+	switch (mundo->verificaCelulaNavioPirata(x + 1, y)) {
+	case CELULA_NAVIO_NORMAL:
+		this->estado = normal;
+		daMetade(x + 1, y);
+		break;
+	case CELULA_NAVIO_PIRATA:
+		this->estado = afundado;
+		break;
+	default:
+		break;
+	}
+	switch (mundo->verificaCelulaNavioPirata(x - 1, y)) {
+	case CELULA_NAVIO_NORMAL:
+		this->estado = normal;
+		daMetade(x - 1, y);
+		break;
+	case CELULA_NAVIO_PIRATA:
+		this->estado = afundado;
+		break;
+	default:
+		break;
+	}
+	switch (mundo->verificaCelulaNavioPirata(x, y - 1)) {
+	case CELULA_NAVIO_NORMAL:
+		this->estado = normal;
+		daMetade(x, y - 1);
+		break;
+	case CELULA_NAVIO_PIRATA:
+		this->estado = afundado;
+		break;
+	default:
+		break;
+	}
+	switch (mundo->verificaCelulaNavioPirata(x, y + 1)) {
+	case CELULA_NAVIO_NORMAL:
+		this->estado = normal;
+		daMetade(x, y + 1);
+		break;
+	case CELULA_NAVIO_PIRATA:
+		this->estado = afundado;
+		break;
+	default:
+		break;
+	}
+	switch (mundo->verificaCelulaNavioPirata(x + 1, y - 1)) {
+	case CELULA_NAVIO_NORMAL:
+		this->estado = normal;
+		daMetade(x + 1, y - 1);
+		break;
+	case CELULA_NAVIO_PIRATA:
+		this->estado = afundado;
+		break;
+	default:
+		break;
+	}
+	switch (mundo->verificaCelulaNavioPirata(x - 1, y - 1)) {
+	case CELULA_NAVIO_NORMAL:
+		this->estado = normal;
+		daMetade(x - 1, y - 1);
+		break;
+	case CELULA_NAVIO_PIRATA:
+		this->estado = afundado;
+		break;
+	default:
+		break;
+	}
+	switch (mundo->verificaCelulaNavioPirata(x + 1, y + 1)) {
+	case CELULA_NAVIO_NORMAL:
+		this->estado = normal;
+		daMetade(x + 1, y + 1);
+		break;
+	case CELULA_NAVIO_PIRATA:
+		this->estado = afundado;
+		break;
+	default:
+		break;
+	}
+	switch (mundo->verificaCelulaNavioPirata(x - 1, y + 1)) {
+	case CELULA_NAVIO_NORMAL:
+		this->estado = normal;
+		daMetade(x - 1, y + 1);
+		break;
+	case CELULA_NAVIO_PIRATA:
+		this->estado = afundado;
+
+		break;
+	default:
+		break;
+	}
+
+}
 int Galeao::getMaxAgua() {
 	return GALEAO_MAX_AGUA;
 }

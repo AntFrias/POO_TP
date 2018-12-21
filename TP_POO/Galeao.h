@@ -13,9 +13,14 @@ public:
 	virtual void AbasteceAguaNavio();
 	void soldadosBebemAgua();
 	virtual string moveNavioAuto();
+	virtual void retiraAgua(int agua);
+	virtual void retiraSoldados(int soldados);
+	virtual int getMaxSoldados();
+	virtual void daMetade(int x, int y);
+	void serConquistadoaDeriva();
 	int getMaxAgua();
 	int getAgua();
-	void adicionaAgua(int agua);
+	virtual void adicionaAgua(int agua);
 	virtual int moveNavio(int direcao)override;
 	virtual void setCargaNavio(int quantCarga);
 	virtual void RetiraCargaNavio(int quantCarga);

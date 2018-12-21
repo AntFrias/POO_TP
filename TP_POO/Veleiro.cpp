@@ -30,6 +30,7 @@ string Veleiro::moveNavioAuto() {
 	}
 	return os.str();
 }
+
 void Veleiro::soldadosBebemAgua() {
 	if (mundo->verificaCelulaMar(this->x, this->y) || (mundo->verificaCelulaPorto(this->x, this->y) != CELULA_PORTO_AMIGO)) {
 		if (this->quantAgua > 0)
@@ -44,6 +45,7 @@ void Veleiro::soldadosBebemAgua() {
 		}
 	}
 }
+
 int Veleiro::getMaxAgua() {
 	return VELEIRO_MAX_AGUA;
 }
@@ -173,31 +175,32 @@ string Veleiro::acao(int xaAtacar, int yaAtacar) {
 	return os.str();
 }
 string Veleiro::combate(int quemVouAtacar) {
+
 	int xNavio = getX(), yNavio = getY();
 	ostringstream os;
 
-	if (mundo->verificaCelulaNavioPirata(xNavio + 1, yNavio) == quemVouAtacar) {
+	if (mundo->verificaCelulaNavioPirata(xNavio + 1, yNavio) == quemVouAtacar && (!mundo->verificaCelulaNavioDeriva(xNavio + 1, yNavio))) {
 		os << acao(xNavio + 1, yNavio);
 	}
-	if (mundo->verificaCelulaNavioPirata(xNavio - 1, yNavio) == quemVouAtacar) {
+	if (mundo->verificaCelulaNavioPirata(xNavio - 1, yNavio) == quemVouAtacar && (!mundo->verificaCelulaNavioDeriva(xNavio - 1, yNavio))) {
 		os << acao(xNavio - 1, yNavio);
 	}
-	if (mundo->verificaCelulaNavioPirata(xNavio, yNavio - 1) == quemVouAtacar) {
+	if (mundo->verificaCelulaNavioPirata(xNavio, yNavio - 1) == quemVouAtacar && (!mundo->verificaCelulaNavioDeriva(xNavio, yNavio - 1))) {
 		os << acao(xNavio, yNavio - 1);
 	}
-	if (mundo->verificaCelulaNavioPirata(xNavio, yNavio + 1) == quemVouAtacar) {
+	if (mundo->verificaCelulaNavioPirata(xNavio, yNavio + 1) == quemVouAtacar && (!mundo->verificaCelulaNavioDeriva(xNavio, yNavio + 1))) {
 		os << acao(xNavio, yNavio + 1);
 	}
-	if (mundo->verificaCelulaNavioPirata(xNavio + 1, yNavio - 1) == quemVouAtacar) {
+	if (mundo->verificaCelulaNavioPirata(xNavio + 1, yNavio - 1) == quemVouAtacar && (!mundo->verificaCelulaNavioDeriva(xNavio + 1, yNavio - 1))) {
 		os << acao(xNavio + 1, yNavio - 1);
 	}
-	if (mundo->verificaCelulaNavioPirata(xNavio - 1, yNavio - 1) == quemVouAtacar) {
+	if (mundo->verificaCelulaNavioPirata(xNavio - 1, yNavio - 1) == quemVouAtacar && (!mundo->verificaCelulaNavioDeriva(xNavio - 1, yNavio - 1))) {
 		os << acao(xNavio - 1, yNavio - 1);
 	}
-	if (mundo->verificaCelulaNavioPirata(xNavio + 1, yNavio + 1) == quemVouAtacar) {
+	if (mundo->verificaCelulaNavioPirata(xNavio + 1, yNavio + 1) == quemVouAtacar && (!mundo->verificaCelulaNavioDeriva(xNavio + 1, yNavio + 1))) {
 		os << acao(xNavio + 1, yNavio + 1);
 	}
-	if (mundo->verificaCelulaNavioPirata(xNavio - 1, yNavio + 1) == quemVouAtacar) {
+	if (mundo->verificaCelulaNavioPirata(xNavio - 1, yNavio + 1) == quemVouAtacar && (!mundo->verificaCelulaNavioDeriva(xNavio - 1, yNavio + 1))) {
 		os << acao(xNavio - 1, yNavio + 1);
 	}
 	if (quemVouAtacar == CELULA_NAVIO_PIRATA) {
@@ -1086,6 +1089,135 @@ int Veleiro::FmoveBaixoDireita() {
 		}
 	}
 	return MOVE_INVALIDO;
+}
+void Veleiro::serConquistadoaDeriva() {
+
+	int x = this->x, y = this->y;
+	switch (mundo->verificaCelulaNavioPirata(x + 1, y)) {
+	case CELULA_NAVIO_NORMAL:
+		this->estado = normal;
+		daMetade(x + 1, y);
+		break;
+	case CELULA_NAVIO_PIRATA:
+		this->estado = pirata;
+		daMetade(x + 1, y);
+		break;
+	default:
+		break;
+	}
+	switch (mundo->verificaCelulaNavioPirata(x - 1, y)) {
+	case CELULA_NAVIO_NORMAL:
+		this->estado = normal;
+		daMetade(x - 1, y);
+		break;
+	case CELULA_NAVIO_PIRATA:
+		this->estado = pirata;
+		daMetade(x - 1, y);
+		break;
+	default:
+		break;
+	}
+	switch (mundo->verificaCelulaNavioPirata(x, y - 1)) {
+	case CELULA_NAVIO_NORMAL:
+		this->estado = normal;
+		daMetade(x, y - 1);
+		break;
+	case CELULA_NAVIO_PIRATA:
+		this->estado = pirata;
+		daMetade(x, y - 1);
+		break;
+	default:
+		break;
+	}
+	switch (mundo->verificaCelulaNavioPirata(x, y + 1)) {
+	case CELULA_NAVIO_NORMAL:
+		this->estado = normal;
+		daMetade(x, y + 1);
+		break;
+	case CELULA_NAVIO_PIRATA:
+		this->estado = pirata;
+		daMetade(x, y + 1);
+		break;
+	default:
+		break;
+	}
+	switch (mundo->verificaCelulaNavioPirata(x + 1, y - 1)) {
+	case CELULA_NAVIO_NORMAL:
+		this->estado = normal;
+		daMetade(x + 1, y - 1);
+		break;
+	case CELULA_NAVIO_PIRATA:
+		this->estado = pirata;
+		daMetade(x + 1, y - 1);
+		break;
+	default:
+		break;
+	}
+	switch (mundo->verificaCelulaNavioPirata(x - 1, y - 1)) {
+	case CELULA_NAVIO_NORMAL:
+		this->estado = normal;
+		daMetade(x - 1, y - 1);
+		break;
+	case CELULA_NAVIO_PIRATA:
+		this->estado = pirata;
+		daMetade(x - 1, y - 1);
+		break;
+	default:
+		break;
+	}
+	switch (mundo->verificaCelulaNavioPirata(x + 1, y + 1)) {
+	case CELULA_NAVIO_NORMAL:
+		this->estado = normal;
+		daMetade(x + 1, y + 1);
+		break;
+	case CELULA_NAVIO_PIRATA:
+		this->estado = pirata;
+		daMetade(x + 1, y + 1);
+		break;
+	default:
+		break;
+	}
+	switch (mundo->verificaCelulaNavioPirata(x - 1, y + 1)) {
+	case CELULA_NAVIO_NORMAL:
+		this->estado = normal;
+		daMetade(x - 1, y + 1);
+		break;
+	case CELULA_NAVIO_PIRATA:
+		this->estado = pirata;
+		daMetade(x - 1, y + 1);
+		break;
+	default:
+		break;
+	}
+
+}
+void Veleiro::retiraAgua(int agua) {
+
+	this->quantAgua -= agua;
+
+}
+void Veleiro::retiraSoldados(int soldados) {
+
+	this->quantSoldados -= soldados;
+
+}
+int Veleiro::getMaxSoldados() {
+	return VELEIRO_MAX_SOLDADOS;
+}
+void Veleiro::daMetade(int x, int y) {
+
+	Navios *auxNavio = nullptr;
+	auxNavio = mundo->getNavioXY(x, y);
+	if (auxNavio->getNumSoldados() > 0) {
+		//fico com metade para mim  soldados e agua
+		this->quantAgua = auxNavio->getAgua() / 2;
+		this->quantSoldados = auxNavio->getNumSoldados() / 2;
+		//tira metade ao que da soldados e agua
+		auxNavio->retiraAgua(auxNavio->getAgua() / 2);
+		auxNavio->retiraSoldados(auxNavio->getNumSoldados() / 2);
+	}
+	else
+		this->estado = aDeriva;
 }
 int Veleiro::moveNavio(int direcao) {
 

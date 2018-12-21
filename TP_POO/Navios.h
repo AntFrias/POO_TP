@@ -32,6 +32,10 @@
 #define ESCUNA_MAX_AGUA 100
 #define FRAGATA_MAX_AGUA 500
 
+#define VELEIRO_MAX_SOLDADOS 20
+#define GALEAO_MAX_SOLDADOS 40
+#define ESCUNA_MAX_SOLDADOS 10
+#define FRAGATA_MAX_SOLDADOS 50
 
 enum movimentosNavios {
 
@@ -86,7 +90,12 @@ public:
 	virtual int moveNavio(int direcao)=0;
 	virtual string combate(int quemVouAtacar) = 0;
 	virtual int getMaxAgua() = 0;
+	virtual void serConquistadoaDeriva() = 0;
+	virtual int getMaxSoldados()=0;
+	virtual void daMetade(int x,int y) = 0;
 	virtual int getAgua() = 0;
+	virtual void retiraAgua(int agua)=0;
+	virtual void retiraSoldados(int soldados)=0;
 	virtual void adicionaAgua(int agua) = 0;
 	virtual void soldadosBebemAgua() = 0;
 	virtual void setCargaNavio(int quantCarga) = 0;

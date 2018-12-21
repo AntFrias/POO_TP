@@ -126,7 +126,7 @@ void Interface::Prompt() {
 
 		cout << jogador.moveNavioAuto();
 		cout << mundo.moveNavioPirataAuto();
-
+		mundo.verificaaDeriva();
 		mundo.retiraNavAfundados();
 
 		/*if ( mundo.getExistenciaEvento() == EVENTO_OFF)

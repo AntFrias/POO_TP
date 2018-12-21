@@ -78,6 +78,8 @@ public:
 
 	int portosBemColocado();
 
+	void verificaaDeriva();
+
 	void mudaPorto(int xPorto, int yPorto, char letra);
 
 	char LastPortoAmigo();
@@ -111,6 +113,8 @@ public:
 	int verificaCelulaNavio(int x, int y);
 
 	int verificaCelulaNavioPirata(int x, int y);
+
+	int verificaCelulaNavioDeriva(int x, int y);
 
 	Navios * getNavio(int id);
 
