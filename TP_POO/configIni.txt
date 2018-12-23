@@ -19,7 +19,7 @@ precocompmercad 2
 precovendmercad 3
 soldadosporto 100
 probevento 30
-probtempestade 30
-probsereias 30
-probcalmaria 20
-probmotin 20
+probtempestade 100
+probsereias 100
+probcalmaria 100
+probmotin 100

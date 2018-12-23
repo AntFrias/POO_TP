@@ -330,27 +330,46 @@ void Mundo::setEventoEmExecucao(Eventos * evento)
 {
 	this->Evento = evento;
 }
-string Mundo::TrataEventoMotim() {
+string Mundo::TrataEventoMotim(int estadoMotim) {
 
 	ostringstream os;
 
-	unsigned int indice;
-	if ( navios.size() > 0) {
-		
-		do {
+	static int indice, estado;
 
-			indice = rand() % navios.size();
+	if (estadoMotim == MOTIM_ESTADO_INICIO_MOTIM)
+		if ( navios.size() > 0) {
+			for (int i = 0; i < navios.size(); i++)
+				if (navios[i]->getEstado() == normal || navios[i]->getEstado() == pirata) {
+					do {
 
-		} while (navios[indice]->getEstado() != normal);
-		
-		os << "O navio com o ID" << navios[indice]->getId() << "foi apanhado por 1 Motim" << endl;
-		
-		os << "O navio Ira tornar-se Pirata Temporariamente" << endl;
-		
-		navios[indice]->setEstado(motim);
-	}
-	else
-		os << "Não Existem Navios para o Motim no Mundo" << endl;
+						indice = rand() % navios.size();
+
+					} while (navios[indice]->getEstado() != normal);
+
+					os << " O navio com o ID" << navios[indice]->getId() << "foi apanhado por 1 Motim" << endl;
+
+					os << " O navio Ira tornar-se Pirata Temporariamente" << endl;
+
+					// so navio for apanhado por 1 motim,  e for pirata fica á deriva
+					if (navios[indice]->getEstado() == pirata) {
+						os << "o NAvio e pirata e vai se tornar á deriva" << endl;
+						estado = navios[indice]->getEstado();
+
+						navios[indice]->setEstado(aDeriva);
+
+					} // se o navio for apanhado por 1 motim e for do jogador fica em modo pirata
+					else if (navios[indice]->getEstado() == normal) {
+						os << "o NAvio e Normal e vai se tornar Pirata" << endl;
+						estado = navios[indice]->getEstado();
+
+						navios[indice]->setEstado(pirata);
+					}
+				}
+		}
+		else
+			os << " Não Existem Navios para o Motim no Mundo" << endl;
+	else 
+		navios[indice]->setEstado(estado);
 
 	return os.str();
 }
@@ -367,19 +386,25 @@ string Mundo::TrataEventoCalmaria(int epiX, int epiY) {
 
 			y = (*it)->getY();
 
-			if (x >= (epiX - RANGE_EVENTO) || x <= (epiX + RANGE_EVENTO) && y >= (epiY - RANGE_EVENTO) || y <= (epiY + RANGE_EVENTO)) {
+			if (x >= (epiX - RANGE_EVENTO) && x <= (epiX + RANGE_EVENTO) && y >= (epiY - RANGE_EVENTO) && y <= (epiY + RANGE_EVENTO)) {
 
-				os << "Foi Encontrado um Navio com o id " << (*it)->getId() << "na posicao " << x << " , " << y << endl;
+				os << " Foi Encontrado um Navio com o id " << (*it)->getId() << " na posicao " << x << " , " << y << endl;
 
-				os << "O navio Vai ser afetado por uma calmaria" << endl;
+				os << " O navio Vai ser afetado por uma calmaria" << endl;
+
+				os << " O estado antigo era " << (*it)->getEstado() << endl;
 
 				(*it)->setEstado(calmaria);
+
+				os << " O estado seguinte passou a ser " << (*it)->getEstado() << endl;
+
+				return os.str();
 
 			}
 			++it;
 		}
 	else
-		os << "Nao existem Navios afetados pela Calmaria No Mundo" << endl;
+		os << " Nao existem Navios afetados pela Calmaria No Mundo" << endl;
 		return os.str();
 }
 string Mundo::TrataEventoSereias(int indice) {
@@ -405,9 +430,9 @@ string Mundo::TrataEventoTempestade(int epiX, int epiY)
 
 		if (x >= (epiX - RANGE_EVENTO) && x <= (epiX + RANGE_EVENTO) && y >= (epiY - RANGE_EVENTO) && y <= (epiY + RANGE_EVENTO)) {
 
-			os << "Foi Encontrado um Navio com o id " << (*it)->getId() << "na posicao " << x << " , " << y << endl;
+			os << " Foi Encontrado um Navio com o id   " << (*it)->getId() << "   na posicao " << x << " , " << y << endl;
 
-			(*it)->TrataNavioTempestade();
+			os << (*it)->TrataNavioTempestade() << endl;
 		}
 		++it;
 	}
@@ -424,47 +449,48 @@ string Mundo::trataEventos(int TipoEvento)
 	{
 	case EVENTO_TEMPESTADE:
 
-		do {
+		os << " Vai ser criada uma TEMPESTADE" << endl;
 
-			epicentroX = rand() % this->dimX + 1;
+		epicentroX = rand() % ((this->dimY -2) - 2)+2;
 			
-			epicentroY = rand() % this->dimY + 1;
-		
-		} while (epicentroX >= 0 + 2 && epicentroX < this->dimX - 3 && epicentroY >= 0 + 2 && epicentroY <= this->dimY - 3);
+		epicentroY = rand() % ((this->dimX - 2) - 2 )+2;
 
-		os << "Vai ser gerada uma tempestade nas coordenadas: " << epicentroX << ", " << epicentroY << endl;
+		os << " Epicentro da Tempestade:  " << epicentroX << " , " << epicentroY << endl;
 		
-		TrataEventoTempestade(epicentroX, epicentroY);
+		os << TrataEventoTempestade(epicentroX, epicentroY);
 
 		this->EstadoEvento = EVENTO_OFF;
 
-		// executa codigo para a tempestade
+		return os.str();
+
 		break;
+
 	case EVENTO_SEREIAS:
 		
 		if (navios.size() > 0) {
 
-			indice = rand() % navios.size();
-			
-			if ( navios[indice]->getNumSoldados() > 0){
-				
-				os << "Navio com o ID : " << navios[indice]->getId() << " vai sofrer ataque de sereia" << endl;
-				
-				os << TrataEventoSereias(indice);
+			os << " Vai ser criado um Ataque de Sereias" << endl;
+			for ( int i = 0; i < navios.size(); i++)
+				if(navios[i]->getEstado() == normal || navios[i]->getEstado() == pirata){
+					do {
+		
+						indice = rand() % navios.size() ;
 
-				return os.str();
+					} while (navios[indice]->getEstado() != normal && navios[indice]->getEstado() != pirata);
 
-			}
-			else {
-
-				os << "O navio com o ID " << navios[indice]->getId() << "nao tem soldados " << endl;
+					if ( navios[indice]->getNumSoldados() > 0){
 				
-				return os.str();
-			
-			}
+						os << " Navio com o ID : " << navios[indice]->getId() << " vai sofrer ataque de sereia" << endl;
+				
+						os << TrataEventoSereias(indice);
+
+						return os.str();
+
+					}
+				}
 		}
 		else
-			os <<"Nao existem navios para efetuar o ataque da sereia" << endl;
+			os <<" Nao existem navios para efetuar o ataque da sereia" << endl;
 
 		this->EstadoEvento = EVENTO_OFF;
 
@@ -474,13 +500,16 @@ string Mundo::trataEventos(int TipoEvento)
 
 	default:
 
-			os << Evento->TrataEvento();
-
-			if (Evento->getTTL() == 0){
+		if (Evento != nullptr)
+			if (Evento->getTTL() == 0) {
 
 				this->EstadoEvento = EVENTO_OFF;
 
 			}
+
+			os << Evento->TrataEvento();
+
+
 		
 			break;
 	}	
@@ -492,10 +521,12 @@ void Mundo::criaEvento(Mundo * mundo, int tipo)
 	switch (tipo)
 	{
 	case EVENTO_CALMARIA:
+
 		this->Evento = new Calmaria(mundo);
 		this->EstadoEvento = EVENTO_ON;
 		trataEventos(EVENTO_CALMARIA);
 		break;
+
 	case EVENTO_MOTIM:
 		this->Evento = new Motim(mundo);
 		this->EstadoEvento = EVENTO_ON;
