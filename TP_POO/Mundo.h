@@ -87,6 +87,7 @@ public:
 	void mudaPorto(int xPorto, int yPorto, char letra);
 
 	char LastPortoAmigo();
+	char LastPortoInimigo();
 
 	int ValidaTipoNavio(const char tipo);
 

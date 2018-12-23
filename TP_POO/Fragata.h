@@ -19,6 +19,8 @@ public:
 	virtual string combate(int quemVouAtacar);
 	string acao(int xaAtacar, int yaAtacar);
 	void conquistaPorto(int xPorto,int yPorto);
+	void conquistaPortoAmigo(int xPorto, int yPorto);
+	string acaoPortoAmigo();
 	virtual string acaoPorto();
 	virtual void setCargaNavio(int quantCarga)override;
 	virtual void RetiraCargaNavio(int quantCarga);

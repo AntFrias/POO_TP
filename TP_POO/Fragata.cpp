@@ -274,6 +274,49 @@ void Fragata::conquistaPorto(int xPorto,int yPorto) {
 
 
 }
+void Fragata::conquistaPortoAmigo(int xPorto, int yPorto) {
+
+	char lastPortoInimigo = 'z';
+
+	// ultimo porto amigo
+	lastPortoInimigo = mundo->LastPortoInimigo();
+	//
+	mundo->mudaPorto(xPorto, yPorto, lastPortoInimigo + 1);
+
+
+}
+string Fragata::acaoPortoAmigo() {
+
+	ostringstream os;
+	int sorteio = 0, soldadosPerdidos = 0;
+
+	sorteio = randNumber(100);
+
+	if (sorteio <= this->getNumSoldados()) {// o navio ganhou e conquista o porto
+		soldadosPerdidos = (10 * this->getNumSoldados()) / 100;
+		this->setNumSoldados(this->getNumSoldados() - soldadosPerdidos);
+
+		//conquista Porto
+		conquistaPortoAmigo(this->x, this->y);
+		os << " O Porto foi conquistado ! " << endl;
+		os << " O Navio " << this->getId() << " ficou com " << this->getNumSoldados() << " soldados" << endl;
+		if (this->quantSoldados <= 0) {
+			this->estado = afundado;
+			os << " O Navio " << this->getId() << " afundou " << endl;
+		}
+	}
+	else {
+		soldadosPerdidos = (10 * this->getNumSoldados()) / 100;
+		this->setNumSoldados(this->getNumSoldados() - soldadosPerdidos);
+		os << " O Porto nao foi conquistado ! " << endl;
+		os << " O Navio " << this->getId() << " ficou com " << this->getNumSoldados() << " soldados" << endl;
+		if (this->quantSoldados <= 0) {
+			this->estado = afundado;
+			os << " O Navio " << this->getId() << " afundou " << endl;
+		}
+	}
+	return os.str();
+}
 string Fragata::acaoPorto() {
 
 	ostringstream os;
@@ -335,16 +378,16 @@ string Fragata::combate(int quemVouAtacar) {
 		if (mundo->verificaCelulaNavioPirata(xNavio - 1, yNavio + 1) == quemVouAtacar && (!mundo->verificaCelulaNavioDeriva(xNavio - 1, yNavio + 1))) {
 			os << acao(xNavio - 1, yNavio + 1);
 		}
-		if (quemVouAtacar == CELULA_NAVIO_PIRATA) {
+		if (quemVouAtacar == CELULA_NAVIO_PIRATA) {//sou normal
 			if (mundo->verificaCelulaPorto(xNavio, yNavio) == CELULA_PORTO_INIMIGO) {
 				acaoPorto();
 				cout << "Porrada com o Porto Inimigo" << endl;
 			}
 		}
 
-		if (quemVouAtacar == CELULA_NAVIO_NORMAL) {
+		if (quemVouAtacar == CELULA_NAVIO_NORMAL) {//sou pirata
 			if (mundo->verificaCelulaPorto(xNavio, yNavio) == CELULA_PORTO_AMIGO) {
-				acaoPorto();
+				acaoPortoAmigo();
 				cout << "Porrada com o Porto Inimigo" << endl;
 			}
 		}
@@ -1254,48 +1297,64 @@ int Fragata::moveNavio(int direcao) {
 
 	case moveEsquerda:
 		if (FmoveEsquerda() == MOVE_VALIDO) {
+			if (this->estado == normal)
+				soldadosBebemAgua();
 			return MOVE_VALIDO;
 		}
 		else
 			break;
 	case moveDireita:
 		if (FmoveDireita() == MOVE_VALIDO) {
+			if (this->estado == normal)
+				soldadosBebemAgua();
 			return MOVE_VALIDO;
 		}
 		else
 			break;
 	case moveCima:
 		if (FmoveCima() == MOVE_VALIDO) {
+			if (this->estado == normal)
+				soldadosBebemAgua();
 			return MOVE_VALIDO;
 		}
 		else
 			break;
 	case moveBaixo:
 		if (FmoveBaixo() == MOVE_VALIDO) {
+			if (this->estado == normal)
+				soldadosBebemAgua();
 			return MOVE_VALIDO;
 		}
 		else
 			break;
 	case moveCimaEsquerda:
 		if (FmoveCimaEsquerda() == MOVE_VALIDO) {
+			if (this->estado == normal)
+				soldadosBebemAgua();
 			return MOVE_VALIDO;
 		}
 		else
 			break;
 	case moveCimaDireita:
 		if (FmoveCimaDireita() == MOVE_VALIDO) {
+			if (this->estado == normal)
+				soldadosBebemAgua();
 			return MOVE_VALIDO;
 		}
 		else
 			break;
 	case moveBaixoEsquerda:
 		if (FmoveBaixoEsquerda() == MOVE_VALIDO) {
+			if (this->estado == normal)
+				soldadosBebemAgua();
 			return MOVE_VALIDO;
 		}
 		else
 			break;
 	case moveBaixoDireita:
 		if (FmoveBaixoDireita() == MOVE_VALIDO) {
+			if (this->estado == normal)
+				soldadosBebemAgua();
 			return MOVE_VALIDO;
 		}
 		else
