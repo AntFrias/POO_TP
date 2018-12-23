@@ -121,7 +121,7 @@ public:
 	void gotoComando();
 	void gotoErro();
 	void gotoPrint();
-	void GeradorEvento();
+	string GeradorEvento();
 	void mostraMapa();
 	int verificaDadosFicheiro(string linha);
 	bool carregaFich(string configfich);

@@ -12,23 +12,20 @@ string Calmaria::TrataEvento()
 
 	if (this->TTL == TTL_CALMARIA) {
 
-		do {
+		epicentroX = rand() % ((mundo->getDimX() - 2) - 2) + 2;
 
-			epicentroX = rand() % dimX + 1;
+		epicentroY = rand() % ((mundo->getDimY() - 2) - 2) + 2;
 
-			epicentroY = rand() % dimY + 1;
-
-		} while (epicentroX >= 0 + 2 && epicentroX < dimX - 3 && epicentroY >= 0 + 2 && epicentroY <= dimY - 3);
-
-		os << "Vai ser gerada uma calmaria nas coordenadas: " << epicentroX << " , " << epicentroY << endl;
+		os << " Vai ser criada uma Calmaria" << endl;
 
 	}
+	os << " Gerou-se uma calmaria nas coordenadas: " << epicentroX << " , " << epicentroY << endl;
 
-		mundo->TrataEventoCalmaria(epicentroX, epicentroY);
+	os << mundo->TrataEventoCalmaria(epicentroX, epicentroY);
 
-		this->TTL = this->TTL - 1;
-
-		os << "Duracao da Calmaria : " << this->TTL << endl;
+	os << "Duracao da Calmaria : " << this->TTL << endl;
+		
+	this->TTL = this->TTL - 1;
 
 	return os.str();
 }

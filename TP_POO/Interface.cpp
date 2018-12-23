@@ -21,63 +21,76 @@ void Interface::gotoComando() {
 	Consola::gotoxy(0, 23);
 }
 void Interface::gotoErro() {
-	Consola::gotoxy(60,23);
+	//Consola::gotoxy(60,23);
+	Consola::gotoxy(0,26);
 }
 void Interface::gotoPrint() {
 	Consola::gotoxy(45, 27);
 }
-void Interface::GeradorEvento()
+string Interface::GeradorEvento()
 {
-		while (mundo.getExistenciaEvento() != true) {
+	ostringstream os;
 
-			switch (rand()%4+1)
+	int op;
+	
+	while (mundo.getExistenciaEvento() != EVENTO_ON) {
+			
+			op = rand() % 4 + 1;
+	
+			switch (op)
 			{
 				case EVENTO_TEMPESTADE:
+					os << "Vai ser Gerada uma Tempestade " << endl;
 					if ((rand() % 100 + 1) <= this->probTempestade) {
-						gotoErro();
-						cout << " Vai criar uma TEMPESTADE" << endl;
-						gotoErro();
-						cout << mundo.trataEventos(EVENTO_TEMPESTADE);
 
-						return;
-					}
+						gotoErro();
+						
+						os << mundo.trataEventos(EVENTO_TEMPESTADE) << endl;
+						}
+						return os.str();
+					
 				break;
 				case EVENTO_SEREIAS:
-					
+					os << "Vai ser Gerado um Ataque de Sereias " << endl;
 					if ((rand() % 100 + 1) <= this->probSereias) {
+
 						gotoErro();
-						cout << "Vai criar uma Ataque de uma Sereia" << endl << endl;
-						gotoErro();
-						cout << mundo.trataEventos(EVENTO_SEREIAS);
 						
-						return;
-					}
+						cout << mundo.trataEventos(EVENTO_SEREIAS) << endl;
+						}
+						return os.str();
+					
+					
 					break;
 				case EVENTO_CALMARIA:
-					
+					os << "Vai ser Gerado um Evento Calmaria " << endl;
 					if ((rand() % 100 + 1) <= this->probCalmaria) {
+					
 						gotoErro();
-						cout << " Vai acontecer uma Calmaria" << endl;
-						
+					
 						mundo.criaEvento(&mundo, EVENTO_CALMARIA);
 						
 					}
-					
-
+					return os.str();
 					break;
 				case EVENTO_MOTIM:
 					
-					if ((rand() % 100 + 1) <= this->probMotin) {
-						if (jogador.verificaNaviosJogador() == true) {
-							gotoErro();
-							cout << " Vai acontecer um Motim" << endl;
+					os << "Vai ser Gerado um Evento Motim " << endl;
 
+					if ((rand() % 100 + 1) <= this->probMotin) {
+						
+						if (jogador.verificaNaviosJogador() == true) {
+							
+							gotoErro();
+							
 							mundo.criaEvento(&mundo, EVENTO_MOTIM);
 						}
 					}
+					return os.str();
 					break;
 			}
 		}
+	return os.str();
 }
 // Metodo Prompt tem como objetivo tratar os comandos introduzidos pelo Jogador	
 void Interface::Prompt() {
@@ -129,8 +142,9 @@ void Interface::Prompt() {
 		mundo.verificaaDeriva();
 		mundo.retiraNavAfundados();
 
-		/*if ( mundo.getExistenciaEvento() == EVENTO_OFF)
-			GeradorEvento();
+		if ( mundo.getExistenciaEvento() == EVENTO_OFF){
+			cout << GeradorEvento();
+		}
 		else {
 			cout << mundo.trataEventos();
 			if (mundo.VerificaTipoEventoEmExecucao() == true)
@@ -138,7 +152,7 @@ void Interface::Prompt() {
 			else
 				cout << "Existe um evento Motim a decorrer..!" << endl;
 		}
-*/
+
 		//execu��o de comando pendentes | comportamentos automaticos
 		//combates
 		//eventos
