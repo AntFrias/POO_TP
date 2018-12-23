@@ -79,6 +79,51 @@ void Interface::GeradorEvento()
 			}
 		}
 }
+int Interface::verificaFimdoJogo() {
+
+	int navJogador = 0, navPirata = 0, nPortosAmigos = 0, nPortosInimigos=0;
+
+	const vector <const Navios *>  auxNavio = mundo.getVetorNavios();
+	const vector <const Navios *>  auxNavioJogador = jogador.getVetorNaviosJogador();
+	const vector <const Porto *>  auxPorto = mundo.getVetorPorto();
+
+	for (unsigned int i = 0; i < auxNavio.size(); i++) {
+		if (auxNavio[i]->getEstado() == normal || auxNavio[i]->getEstado() == aDeriva) 
+			navJogador++;
+		if (auxNavio[i]->getEstado() == pirata)
+			navPirata++;
+	}
+
+	
+	for (unsigned int i = 0; i < auxPorto.size(); i++) {
+		if (auxPorto[i]->getChar() >= 'A' && auxPorto[i]->getChar() <= 'Z') {
+			nPortosAmigos++;
+		}
+		if (auxPorto[i]->getChar() >= 'a' && auxPorto[i]->getChar() <= 'z') {
+			nPortosInimigos++;
+		}	
+	}
+
+	if (navJogador > 0 && nPortosInimigos == 0 && navPirata==0) {
+		Consola::clrscr();
+		Consola::gotoxy(20, 7);
+		Consola::setTextSize(60,60);
+		cout << "Parabens!!! Ganhou o Jogo!!!" << endl;
+		cin.get();
+		return 1;
+	}
+	if (navJogador == 0 && nPortosAmigos == 0 && nPortosInimigos > 0 && navPirata > 0) {
+		Consola::clrscr();
+		Consola::gotoxy(20, 7);
+		Consola::setTextSize(60, 60);
+		cout << "Parabens!!! Perdeu o Jogo!!!" << endl;
+		cin.get();
+		return 1;
+	}
+
+	return 0;
+
+}
 // Metodo Prompt tem como objetivo tratar os comandos introduzidos pelo Jogador	
 void Interface::Prompt() {
 
@@ -122,6 +167,9 @@ void Interface::Prompt() {
 		getline(cin, linha);
 
 		PromptFase2(linha);
+		if (verificaFimdoJogo()==1)return;
+		
+		jogador.setPortoPrincipal(mundo.getPortoPrincipal());
 		mundo.retiraNavAfundados(); //mudar para dentro quando for implemento do ciclo do navios
 
 		cout << jogador.moveNavioAuto();
