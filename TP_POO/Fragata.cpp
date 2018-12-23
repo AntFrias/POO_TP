@@ -404,16 +404,21 @@ string Fragata::TrataNavioTempestade()
 {
 	ostringstream os;
 
-	os << "O navio é do tipo Fragata" << endl;
-
-	if (rand() % 100 + 1 <= PROB_FRAGATA_AFUNDAR_TEMPESTADE)
+	
+	if (this->estado == pirata) {
+		os << "O navio é do tipo Pirata" << endl;
 		this->estado = afundado;
-
+	}
 	else {
+		os << "O navio é do tipo Normal" << endl;
+		if (rand() % 100 + 1 <= PROB_FRAGATA_AFUNDAR_TEMPESTADE)
+			this->estado = afundado;
+		else {
 
-		this->quantSoldados = this->quantSoldados - ((quantSoldados * 15) / 100);
+			this->quantSoldados = this->quantSoldados - ((quantSoldados * 15) / 100);
 		
-		AbasteceAguaNavio();
+			AbasteceAguaNavio();
+		}
 	}
 	return os.str();
 }

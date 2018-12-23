@@ -1316,17 +1316,24 @@ string Veleiro::TrataNavioTempestade()
 
 	int probAfundar = rand() % 100 + 1;
 
-	if (probAfundar <= PROB_VELEIRO_AFUNDAR_TEMPESTADE_1 && QuantCarga >= PROB_VELEIRO_PERDER_CARGA)
+	if (this->estado = pirata) {
+		os << "O navio é do tipo Pirata" << endl;
 		this->estado = afundado;
-
-	else if (probAfundar <= PROB_VELEIRO_AFUNDAR_TEMPESTADE_2)  // aqui a probabilidade é diferente pelo facto do 
-		this->estado = afundado;    							//navio pedir apenas 20% de prob caso tenha menos que 50%
-																// de capacidade de carga
-	else
-	{
-		RetiraCargaNavio( QuantMercadoria / 2 );
 	}
-	AbasteceAguaNavio();
+	else {
+		os << "O navio é do tipo Normal" << endl;
+		if (probAfundar <= PROB_VELEIRO_AFUNDAR_TEMPESTADE_1 && QuantCarga >= PROB_VELEIRO_PERDER_CARGA)
+			this->estado = afundado;
+
+		else if (probAfundar <= PROB_VELEIRO_AFUNDAR_TEMPESTADE_2)  // aqui a probabilidade é diferente pelo facto do 
+			this->estado = afundado;    							//navio pedir apenas 20% de prob caso tenha menos que 50%
+																	// de capacidade de carga
+		else
+		{
+			RetiraCargaNavio(QuantMercadoria / 2);
+		}
+		AbasteceAguaNavio();
+	}
 
 	return os.str();
 }

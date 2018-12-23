@@ -16,9 +16,12 @@ void Motim::setTTL()
 string Motim::TrataEvento()
 {
 	ostringstream os;
+
+	if (this->TTL == 0)
+		os << mundo->TrataEventoMotim(MOTIM_ESTADO_FIM_MOTIM);
 	
 	if (this->TTL == TTL_MOTIM)
-		os << mundo->TrataEventoMotim();
+		os << mundo->TrataEventoMotim(MOTIM_ESTADO_INICIO_MOTIM);
 	
 	this->TTL = this->TTL - 1;
 
