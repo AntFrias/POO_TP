@@ -122,6 +122,7 @@ public:
 	void gotoErro();
 	void gotoPrint();
 	void GeradorEvento();
+	int verificaFimdoJogo();
 	void mostraMapa();
 	int verificaDadosFicheiro(string linha);
 	bool carregaFich(string configfich);
