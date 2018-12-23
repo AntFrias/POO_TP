@@ -1249,48 +1249,64 @@ int Fragata::moveNavio(int direcao) {
 
 	case moveEsquerda:
 		if (FmoveEsquerda() == MOVE_VALIDO) {
+			if (this->estado == normal)
+				soldadosBebemAgua();
 			return MOVE_VALIDO;
 		}
 		else
 			break;
 	case moveDireita:
 		if (FmoveDireita() == MOVE_VALIDO) {
+			if (this->estado == normal)
+				soldadosBebemAgua();
 			return MOVE_VALIDO;
 		}
 		else
 			break;
 	case moveCima:
 		if (FmoveCima() == MOVE_VALIDO) {
+			if (this->estado == normal)
+				soldadosBebemAgua();
 			return MOVE_VALIDO;
 		}
 		else
 			break;
 	case moveBaixo:
 		if (FmoveBaixo() == MOVE_VALIDO) {
+			if (this->estado == normal)
+				soldadosBebemAgua();
 			return MOVE_VALIDO;
 		}
 		else
 			break;
 	case moveCimaEsquerda:
 		if (FmoveCimaEsquerda() == MOVE_VALIDO) {
+			if (this->estado == normal)
+				soldadosBebemAgua();
 			return MOVE_VALIDO;
 		}
 		else
 			break;
 	case moveCimaDireita:
 		if (FmoveCimaDireita() == MOVE_VALIDO) {
+			if (this->estado == normal)
+				soldadosBebemAgua();
 			return MOVE_VALIDO;
 		}
 		else
 			break;
 	case moveBaixoEsquerda:
 		if (FmoveBaixoEsquerda() == MOVE_VALIDO) {
+			if (this->estado == normal)
+				soldadosBebemAgua();
 			return MOVE_VALIDO;
 		}
 		else
 			break;
 	case moveBaixoDireita:
 		if (FmoveBaixoDireita() == MOVE_VALIDO) {
+			if (this->estado == normal)
+				soldadosBebemAgua();
 			return MOVE_VALIDO;
 		}
 		else

@@ -1056,56 +1056,64 @@ int Galeao::moveNavio(int direcao) {
 
 	case moveEsquerda:
 		if (FmoveEsquerda() == MOVE_VALIDO) {
-			this->soldadosBebemAgua();
+			if (this->estado == normal)
+				soldadosBebemAgua();
 			return MOVE_VALIDO;
 		}
 		else
 			break;
 	case moveDireita:
 		if (FmoveDireita() == MOVE_VALIDO) {
-			this->soldadosBebemAgua();
+			if (this->estado == normal)
+				soldadosBebemAgua();
 			return MOVE_VALIDO;
 		}
 		else
 			break;
 	case moveCima:
 		if (FmoveCima() == MOVE_VALIDO) {
-			this->soldadosBebemAgua();
+			if (this->estado == normal)
+				soldadosBebemAgua();
 			return MOVE_VALIDO;
 		}
 		else
 			break;
 	case moveBaixo:
 		if (FmoveBaixo() == MOVE_VALIDO) {
-			this->soldadosBebemAgua();
+			if (this->estado == normal)
+				soldadosBebemAgua();
 			return MOVE_VALIDO;
 		}
 		else
 			break;
 	case moveCimaEsquerda:
 		if (FmoveCimaEsquerda() == MOVE_VALIDO) {
-			this->soldadosBebemAgua();
+			if (this->estado == normal)
+				soldadosBebemAgua();
 			return MOVE_VALIDO;
 		}
 		else
 			break;
 	case moveCimaDireita:
 		if (FmoveCimaDireita() == MOVE_VALIDO) {
-			this->soldadosBebemAgua();
+			if (this->estado == normal)
+				soldadosBebemAgua();
 			return MOVE_VALIDO;
 		}
 		else
 			break;
 	case moveBaixoEsquerda:
 		if (FmoveBaixoEsquerda() == MOVE_VALIDO) {
-			this->soldadosBebemAgua();
+			if (this->estado == normal)
+				soldadosBebemAgua();
 			return MOVE_VALIDO;
 		}
 		else
 			break;
 	case moveBaixoDireita:
 		if (FmoveBaixoDireita() == MOVE_VALIDO) {
-			this->soldadosBebemAgua();
+			if (this->estado == normal)
+				soldadosBebemAgua();
 			return MOVE_VALIDO;
 		}
 		else
