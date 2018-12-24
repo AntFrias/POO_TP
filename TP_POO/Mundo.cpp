@@ -36,7 +36,31 @@ int Mundo::portosBemColocado() {
 	}
 	return 1;
 }
+void Mundo::abasteceNaviosNosPortos() {
 
+
+	for (unsigned int i = 0; i < porto.size(); i++) {
+		for (unsigned int j = 0; j < navios.size();j++) {
+			if ((navios[j]->getEstado() == normal || navios[j]->getEstado() == autoMove) && (navios[j]->getX() == porto[i]->getX()) && (navios[j]->getY() == porto[i]->getY())) {
+				
+				if (navios[j]->sou() == FRAGATA) {
+					navios[j]->AbasteceAguaNavio();
+				}
+				if (navios[j]->sou() == VELEIRO) {
+					navios[j]->AbasteceAguaNavio();
+				}
+				if (navios[j]->sou() == GALEAO) {
+					navios[j]->AbasteceAguaNavio();
+				}
+				if (navios[j]->sou() == ESCUNA) {
+					navios[j]->AbasteceAguaNavio();
+				}
+			}
+		}
+	}
+
+
+}
 
 void Mundo::verificaaDeriva() {
 	

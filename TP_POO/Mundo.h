@@ -82,6 +82,8 @@ public:
 
 	int portosBemColocado();
 
+	void abasteceNaviosNosPortos();
+
 	void verificaaDeriva();
 
 	void mudaPorto(int xPorto, int yPorto, char letra);

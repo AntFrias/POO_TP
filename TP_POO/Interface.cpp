@@ -182,7 +182,7 @@ void Interface::Prompt() {
 		
 		jogador.setPortoPrincipal(mundo.getPortoPrincipal());
 		mundo.retiraNavAfundados(); //mudar para dentro quando for implemento do ciclo do navios
-
+		mundo.abasteceNaviosNosPortos();
 		cout << jogador.moveNavioAuto();
 		cout << mundo.moveNavioPirataAuto();
 		mundo.verificaaDeriva();
