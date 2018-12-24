@@ -10,14 +10,16 @@
 
 #include "Porto.h"
 
-
 #define AUTOMOVE_ON 1
 #define AUTOMOVE_OFF 0
 
 using namespace std;
 
+class Mundo;
+
 class Jogador
 {
+	Mundo *mundo;
 
 	int moedas;
 
@@ -30,9 +32,13 @@ public:
 	
 	Jogador();
 
+	void setMundo(Mundo * mundo);
+
 	void setMoedas(int moedas);
 
 	const int getMoedas() const;
+
+	int vendeNavio(char tipo,int precoSoldado);
 
 	bool validaCompra(int valor);
 

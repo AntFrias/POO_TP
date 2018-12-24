@@ -1,6 +1,13 @@
 #include "Jogador.h"
+#include "Mundo.h"
 
 Jogador::Jogador(){
+}
+
+void Jogador::setMundo(Mundo *mundo){
+
+	this->mundo = mundo;
+
 }
 
 void Jogador::setMoedas(int moedas) {
@@ -14,7 +21,70 @@ const int Jogador::getMoedas()const {
 	return this->moedas;
 	
 }
+int Jogador::vendeNavio(char tipo,int precoSoldado) {
 
+	int dinheiroSoldados = 0;
+
+	switch (tipo)
+	{
+	case 'F':
+
+		for (unsigned int i = 0; i < navios.size(); i++) {
+			if (navios[i]->sou() == FRAGATA && mundo->verificaCelulaPorto(navios[i]->getX(), navios[i]->getY()) == CELULA_PORTO_AMIGO) {
+				dinheiroSoldados = navios[i]->getNumSoldados();
+				//TODO VENDER PEIXE
+				dinheiroSoldados *= precoSoldado;
+				navios[i]->setEstado(afundado);
+				return dinheiroSoldados + 100;//100 é o preço do navio
+			}
+		}
+		
+		//+ o do peixe
+		break;
+	case 'V':
+
+		for (unsigned int i = 0; i < navios.size(); i++) {
+			if (navios[i]->sou() == VELEIRO && mundo->verificaCelulaPorto(navios[i]->getX(), navios[i]->getY()) == CELULA_PORTO_AMIGO) {
+				dinheiroSoldados = navios[i]->getNumSoldados();
+				//TODO VENDER PEIXE
+				dinheiroSoldados *= precoSoldado;
+				navios[i]->setEstado(afundado);
+				return dinheiroSoldados + 100;//100 é o preço do navio
+			}
+		}
+
+		break;
+	case 'G':
+
+		for (unsigned int i = 0; i < navios.size(); i++) {
+			if (navios[i]->sou() == GALEAO && mundo->verificaCelulaPorto(navios[i]->getX(), navios[i]->getY()) == CELULA_PORTO_AMIGO) {
+				dinheiroSoldados = navios[i]->getNumSoldados();
+				//TODO VENDER PEIXE
+				dinheiroSoldados *= precoSoldado;
+				navios[i]->setEstado(afundado);
+				return dinheiroSoldados + 100;//100 é o preço do navio
+			}
+		}
+
+		break;
+	case 'E':
+
+		for (unsigned int i = 0; i < navios.size(); i++) {
+			if (navios[i]->sou() == ESCUNA && mundo->verificaCelulaPorto(navios[i]->getX(), navios[i]->getY()) == CELULA_PORTO_AMIGO) {
+				dinheiroSoldados = navios[i]->getNumSoldados();
+				//TODO VENDER PEIXE
+				dinheiroSoldados *= precoSoldado;
+				navios[i]->setEstado(afundado);
+				return dinheiroSoldados + 100;//100 é o preço do navio
+			}
+		}
+
+		break;
+	default:
+		break;
+	}
+	return 0;
+}
 bool Jogador::validaCompra(int valor) {
 
 	if (this->moedas - valor >= 0) {
