@@ -44,7 +44,6 @@
 
 #define MOTIM_ESTADO_INICIO_MOTIM 1
 #define MOTIM_ESTADO_FIM_MOTIM 2
-#define MOTIM_ESTADO_EM_EXECUCAO 3
 
 #define RANGE_EVENTO 2
 
@@ -154,7 +153,9 @@ public:
 
 	string trataEventos(int TipoEvento = 0);
 
-	void criaEvento(Mundo *mundo, int tipo);
+	string criaEvento(Mundo *mundo, int tipo);
+
+	bool VerificaExistenciaNavios();
 
 	void limpaVetores();
 

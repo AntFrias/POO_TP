@@ -107,6 +107,7 @@ public:
 	int randNumber(int nSoldados);
 	int getNumSoldados();
 	void setNumSoldados(int num);
+
 	
 
 	int getEstado()const;
