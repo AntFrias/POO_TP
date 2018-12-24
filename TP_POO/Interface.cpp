@@ -176,7 +176,7 @@ void Interface::Prompt() {
 		getline(cin, linha);
 
 		PromptFase2(linha);
-		if (verificaFimdoJogo()==1)return;
+		//if (verificaFimdoJogo()==1)return;
 		
 		jogador.setPortoPrincipal(mundo.getPortoPrincipal());
 		mundo.retiraNavAfundados(); //mudar para dentro quando for implemento do ciclo do navios
@@ -193,15 +193,15 @@ void Interface::Prompt() {
 		else {
 			gotoErro();
 			cout << mundo.trataEventos();
-			/*if (mundo.VerificaTipoEventoEmExecucao() == true){
+			if (mundo.VerificaTipoEventoEmExecucao() == true) {
 				gotoErro();
-			cout << "Existe um evento Calmaria a decorrer..!" << endl;
+				cout << "Existe um evento Calmaria a decorrer..!" << endl;
 			}
-			else{
+			else {
 				gotoErro();
 				cout << "Existe um evento Motim a decorrer..!" << endl;
+			}
 		}
-
 		//execu��o de comando pendentes | comportamentos automaticos
 		//combates
 		//eventos
