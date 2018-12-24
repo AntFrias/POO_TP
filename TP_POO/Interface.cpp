@@ -6,7 +6,6 @@ int Navios::IncNavio = 1;
 
 void Interface::start() {
 
-
 	Prompt();
 
 }
@@ -14,8 +13,6 @@ void Interface::start() {
 void Interface::acrescentaMoedas(int moedas) {
 
 	jogador.setMoedas(jogador.getMoedas() + moedas);
-
-
 }
 void Interface::gotoComando() {
 	Consola::gotoxy(0, 23);
@@ -157,7 +154,8 @@ void Interface::Prompt() {
 	*/
 	PromptFase1(linha);
 	//inicializa��o do jogador
-		//moedas
+	jogador.setMundo(&mundo);
+	//moedas
 	jogador.setMoedas(moedas);
 		//atribui��o do porto principal
 	jogador.setPortoPrincipal( mundo.getPortoPrincipal() );
@@ -190,7 +188,7 @@ void Interface::Prompt() {
 		mundo.verificaaDeriva();
 		mundo.retiraNavAfundados();
 
-		if ( mundo.getExistenciaEvento() == EVENTO_OFF){
+	/*	if ( mundo.getExistenciaEvento() == EVENTO_OFF){
 			cout << GeradorEvento();
 		}
 		else {
@@ -199,7 +197,7 @@ void Interface::Prompt() {
 				cout << "Existe um evento Calmaria a decorrer..!" << endl;
 			else
 				cout << "Existe um evento Motim a decorrer..!" << endl;
-		}
+		}*/
 
 		//execu��o de comando pendentes | comportamentos automaticos
 		//combates
@@ -479,7 +477,9 @@ void Interface::PromptFase2(string linha) {
 			break;
 		case com_vendenav:
 			gotoErro();
-			cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
+			if (buffer >> tipo) {
+				acrescentaMoedas(jogador.vendeNavio(tipo, precoSoldado));
+			}
 			break;
 		case com_lista:
 			gotoErro();
@@ -849,7 +849,7 @@ void Interface::mostraNavios() {
 				Consola::setTextColor(Consola::VERMELHO_CLARO);
 				cout << setfill('0') << setw(2) << auxNavio[i]->getId();
 			}
-			if (auxNavio[i]->getEstado() == normal || auxNavio[i]->getEstado() == autoMove || auxNavio[i]->getEstado() == autoMove) {
+			if (auxNavio[i]->getEstado() == normal || auxNavio[i]->getEstado() == autoMove) {
 					Consola::gotoxy(x, y);
 					Consola::setTextColor(Consola::VERDE_CLARO);
 					cout << setfill('0') << setw(2) << auxNavio[i]->getId();
