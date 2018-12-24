@@ -11,6 +11,9 @@
 
 #define EVENTO_CALMARIA 3
 
+#define CALMARIA_ESTADO_INICIO_CALMARIA 1
+#define CALMARIA_ESTADO_FIM_CALMARIA 2
+
 using namespace std;
 
 class Calmaria : public Eventos

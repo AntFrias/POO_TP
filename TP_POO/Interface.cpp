@@ -66,25 +66,23 @@ string Interface::GeradorEvento()
 					os << "Vai ser Gerado um Evento Calmaria " << endl;
 					if ((rand() % 100 + 1) <= this->probCalmaria) {
 					
-						gotoErro();
-					
-						mundo.criaEvento(&mundo, EVENTO_CALMARIA);
+						os << mundo.criaEvento(&mundo, EVENTO_CALMARIA) << endl;
 						
 					}
 					return os.str();
 					break;
 				case EVENTO_MOTIM:
-					
-					os << "Vai ser Gerado um Evento Motim " << endl;
-
+	
 					if ((rand() % 100 + 1) <= this->probMotin) {
-						
-						if (jogador.verificaNaviosJogador() == true) {
-							
-							gotoErro();
-							
-							mundo.criaEvento(&mundo, EVENTO_MOTIM);
+
+						if (mundo.VerificaExistenciaNavios() == true ) {
+
+							os << "Vai ser Gerado um Evento Motim " << endl;
+
+							os << mundo.criaEvento(&mundo, EVENTO_MOTIM) << endl;
 						}
+						else
+							os << "Nao existem navios no Mundo para efetuar o Evento Motim" << endl;
 					}
 					return os.str();
 					break;
@@ -191,14 +189,20 @@ void Interface::Prompt() {
 		mundo.retiraNavAfundados();
 
 		if ( mundo.getExistenciaEvento() == EVENTO_OFF){
+			gotoErro();
 			cout << GeradorEvento();
 		}
 		else {
+			gotoErro();
 			cout << mundo.trataEventos();
-			if (mundo.VerificaTipoEventoEmExecucao() == true)
-				cout << "Existe um evento Calmaria a decorrer..!" << endl;
-			else
+			/*if (mundo.VerificaTipoEventoEmExecucao() == true){
+				gotoErro();
+			cout << "Existe um evento Calmaria a decorrer..!" << endl;
+			}
+			else{
+				gotoErro();
 				cout << "Existe um evento Motim a decorrer..!" << endl;
+			}*/
 		}
 
 		//execu��o de comando pendentes | comportamentos automaticos
@@ -839,7 +843,7 @@ void Interface::mostraNavios() {
 		y *= 2;
 
 		if (i % 2 == 0) {
-			
+
 			if (auxNavio[i]->getEstado() == pirata) {
 				Consola::gotoxy(x, y);
 				Consola::setTextColor(Consola::VERMELHO_CLARO);
@@ -865,6 +869,15 @@ void Interface::mostraNavios() {
 
 				Consola::gotoxy(x, y + 1);
 				Consola::setTextColor(Consola::BRANCO);
+				cout << setfill('0') << setw(2) << auxNavio[i]->getId();
+			}
+			if (auxNavio[i]->getEstado() == calmaria) {
+				Consola::gotoxy(x, y);
+				Consola::setTextColor(Consola::CYAN_CLARO);
+				cout << setfill('0') << setw(2) << auxNavio[i]->getId();
+
+				Consola::gotoxy(x, y + 1);
+				Consola::setTextColor(Consola::CYAN_CLARO);
 				cout << setfill('0') << setw(2) << auxNavio[i]->getId();
 			}
 		
@@ -896,6 +909,15 @@ void Interface::mostraNavios() {
 
 				Consola::gotoxy(x, y + 1);
 				Consola::setTextColor(Consola::BRANCO);
+				cout << setfill('0') << setw(2) << auxNavio[i]->getId();
+			}
+			if (auxNavio[i]->getEstado() == calmaria) {
+				Consola::gotoxy(x, y);
+				Consola::setTextColor(Consola::CYAN_CLARO);
+				cout << setfill('0') << setw(2) << auxNavio[i]->getId();
+
+				Consola::gotoxy(x, y + 1);
+				Consola::setTextColor(Consola::CYAN_CLARO);
 				cout << setfill('0') << setw(2) << auxNavio[i]->getId();
 			}
 		}

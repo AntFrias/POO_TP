@@ -335,41 +335,52 @@ string Mundo::TrataEventoMotim(int estadoMotim) {
 	ostringstream os;
 
 	static int indice, estado;
+	cout << "ESTADO DO MOTIM : " << estadoMotim << endl <<endl;
+	if (estadoMotim == MOTIM_ESTADO_INICIO_MOTIM){
 
-	if (estadoMotim == MOTIM_ESTADO_INICIO_MOTIM)
-		if ( navios.size() > 0) {
-			for (int i = 0; i < navios.size(); i++)
-				if (navios[i]->getEstado() == normal || navios[i]->getEstado() == pirata) {
-					do {
+		if (navios.size() > 0 && this->VerificaExistenciaNavios() == true) {
 
-						indice = rand() % navios.size();
+			do{
+						
+				indice = rand() % navios.size();
 
-					} while (navios[indice]->getEstado() != normal);
+				if (navios[indice]->getEstado() == normal || navios[indice]->getEstado() == pirata || navios[indice]->getEstado() == autoMove)
+					break;
 
-					os << " O navio com o ID" << navios[indice]->getId() << "foi apanhado por 1 Motim" << endl;
+			}while (navios[indice]->getEstado() != normal || navios[indice]->getEstado() != pirata || navios[indice]->getEstado() != autoMove);
+	
+			os << " O navio com o ID" << navios[indice]->getId() << "foi apanhado por 1 Motim" << endl;
 
-					os << " O navio Ira tornar-se Pirata Temporariamente" << endl;
+			os << " O navio Ira tornar-se Pirata Temporariamente" << endl;
+					
+			// so navio for apanhado por 1 motim,  e for pirata fica á deriva
+			if (navios[indice]->getEstado() == pirata) {
+					
+				os << " O NAvio e pirata e vai se tornar Aderiva" << endl;
+				
+				estado = navios[indice]->getEstado();
 
-					// so navio for apanhado por 1 motim,  e for pirata fica á deriva
-					if (navios[indice]->getEstado() == pirata) {
-						os << "o NAvio e pirata e vai se tornar á deriva" << endl;
-						estado = navios[indice]->getEstado();
+				navios[indice]->setEstado(aDeriva);
 
-						navios[indice]->setEstado(aDeriva);
+			} // se o navio for apanhado por 1 motim e for do jogador fica em modo pirata
+			else if (navios[indice]->getEstado() == normal || navios[indice]->getEstado() == autoMove) {
+					
+				os << "o NAvio e Normal e vai se tornar Pirata" << endl;
+				
+				estado = navios[indice]->getEstado();
 
-					} // se o navio for apanhado por 1 motim e for do jogador fica em modo pirata
-					else if (navios[indice]->getEstado() == normal) {
-						os << "o NAvio e Normal e vai se tornar Pirata" << endl;
-						estado = navios[indice]->getEstado();
-
-						navios[indice]->setEstado(pirata);
-					}
-				}
+				navios[indice]->setEstado(pirata);
+			}
+				
 		}
 		else
 			os << " Não Existem Navios para o Motim no Mundo" << endl;
-	else 
+	}
+	else {
+		
 		navios[indice]->setEstado(estado);
+
+	}
 
 	return os.str();
 }
@@ -449,8 +460,6 @@ string Mundo::trataEventos(int TipoEvento)
 	{
 	case EVENTO_TEMPESTADE:
 
-		os << " Vai ser criada uma TEMPESTADE" << endl;
-
 		epicentroX = rand() % ((this->dimY -2) - 2)+2;
 			
 		epicentroY = rand() % ((this->dimX - 2) - 2 )+2;
@@ -469,7 +478,6 @@ string Mundo::trataEventos(int TipoEvento)
 		
 		if (navios.size() > 0) {
 
-			os << " Vai ser criado um Ataque de Sereias" << endl;
 			for ( int i = 0; i < navios.size(); i++)
 				if(navios[i]->getEstado() == normal || navios[i]->getEstado() == pirata){
 					do {
@@ -500,40 +508,54 @@ string Mundo::trataEventos(int TipoEvento)
 
 	default:
 
-		if (Evento != nullptr)
+		if (Evento != nullptr){
+
+			os << Evento->TrataEvento();
+
 			if (Evento->getTTL() == 0) {
 
 				this->EstadoEvento = EVENTO_OFF;
 
 			}
+		}
+			return os.str();
 
-			os << Evento->TrataEvento();
-
-
-		
 			break;
 	}	
 	return os.str();
 }
 // vai criar os eventos que duram mais que 1 turno;
-void Mundo::criaEvento(Mundo * mundo, int tipo)
+string Mundo::criaEvento(Mundo * mundo, int tipo)
 {
+	ostringstream os;
+
 	switch (tipo)
 	{
 	case EVENTO_CALMARIA:
 
 		this->Evento = new Calmaria(mundo);
 		this->EstadoEvento = EVENTO_ON;
-		trataEventos(EVENTO_CALMARIA);
+		os << trataEventos(EVENTO_CALMARIA) << endl;
 		break;
 
 	case EVENTO_MOTIM:
 		this->Evento = new Motim(mundo);
 		this->EstadoEvento = EVENTO_ON;
-		trataEventos(EVENTO_MOTIM);
+		os << trataEventos(EVENTO_MOTIM) << endl;
 		break;
 	}
+	return os.str();
+}
+bool  Mundo::VerificaExistenciaNavios()
+{
+	if (navios.size() > 0)
+		for (auto it = navios.begin(); it != navios.end();){
+			if ((*it)->getEstado() == normal || (*it)->getEstado() == pirata || (*it)->getEstado() == autoMove)
+				return true;
+			++it;
+		}
 
+		return false;
 }
 void Mundo::limpaVetores() {
 
