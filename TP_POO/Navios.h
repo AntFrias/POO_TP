@@ -101,7 +101,7 @@ public:
 	virtual void setCargaNavio(int quantCarga) = 0;
 	virtual void RetiraCargaNavio(int quantCarga) = 0;
 	virtual string TrataNavioTempestade() = 0;
-	virtual int sou() = 0;
+	virtual const int sou() const =0;
 	virtual string moveNavioAuto()=0;
 
 	int randNumber(int nSoldados);

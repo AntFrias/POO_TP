@@ -30,12 +30,14 @@ int Jogador::vendeNavio(char tipo,int precoSoldado) {
 	case 'F':
 
 		for (unsigned int i = 0; i < navios.size(); i++) {
-			if (navios[i]->sou() == FRAGATA && mundo->verificaCelulaPorto(navios[i]->getX(), navios[i]->getY()) == CELULA_PORTO_AMIGO) {
-				dinheiroSoldados = navios[i]->getNumSoldados();
-				//TODO VENDER PEIXE
-				dinheiroSoldados *= precoSoldado;
-				navios[i]->setEstado(afundado);
-				return dinheiroSoldados + 100;//100 é o preço do navio
+			if (navios[i]->getTipo() == 'F' ){
+				if (mundo->verificaCelulaPorto(navios[i]->getX(), navios[i]->getY()) == CELULA_PORTO_AMIGO) {
+					dinheiroSoldados = navios[i]->getNumSoldados();
+					//TODO VENDER PEIXE
+					dinheiroSoldados *= precoSoldado;
+					navios[i]->setEstado(afundado);
+					return dinheiroSoldados + 100;//100 é o preço do navio
+				}
 			}
 		}
 		
@@ -44,12 +46,14 @@ int Jogador::vendeNavio(char tipo,int precoSoldado) {
 	case 'V':
 
 		for (unsigned int i = 0; i < navios.size(); i++) {
-			if (navios[i]->sou() == VELEIRO && mundo->verificaCelulaPorto(navios[i]->getX(), navios[i]->getY()) == CELULA_PORTO_AMIGO) {
-				dinheiroSoldados = navios[i]->getNumSoldados();
-				//TODO VENDER PEIXE
-				dinheiroSoldados *= precoSoldado;
-				navios[i]->setEstado(afundado);
-				return dinheiroSoldados + 100;//100 é o preço do navio
+			if (navios[i]->getTipo() == 'V') {
+				if (mundo->verificaCelulaPorto(navios[i]->getX(), navios[i]->getY()) == CELULA_PORTO_AMIGO) {
+					dinheiroSoldados = navios[i]->getNumSoldados();
+					//TODO VENDER PEIXE
+					dinheiroSoldados *= precoSoldado;
+					navios[i]->setEstado(afundado);
+					return dinheiroSoldados + 100;//100 é o preço do navio
+				}
 			}
 		}
 
@@ -57,12 +61,14 @@ int Jogador::vendeNavio(char tipo,int precoSoldado) {
 	case 'G':
 
 		for (unsigned int i = 0; i < navios.size(); i++) {
-			if (navios[i]->sou() == GALEAO && mundo->verificaCelulaPorto(navios[i]->getX(), navios[i]->getY()) == CELULA_PORTO_AMIGO) {
-				dinheiroSoldados = navios[i]->getNumSoldados();
-				//TODO VENDER PEIXE
-				dinheiroSoldados *= precoSoldado;
-				navios[i]->setEstado(afundado);
-				return dinheiroSoldados + 100;//100 é o preço do navio
+			if (navios[i]->sou() == 'G') {
+				if (mundo->verificaCelulaPorto(navios[i]->getX(), navios[i]->getY()) == CELULA_PORTO_AMIGO) {
+					dinheiroSoldados = navios[i]->getNumSoldados();
+					//TODO VENDER PEIXE
+					dinheiroSoldados *= precoSoldado;
+					navios[i]->setEstado(afundado);
+					return dinheiroSoldados + 100;//100 é o preço do navio
+				}
 			}
 		}
 
@@ -70,12 +76,14 @@ int Jogador::vendeNavio(char tipo,int precoSoldado) {
 	case 'E':
 
 		for (unsigned int i = 0; i < navios.size(); i++) {
-			if (navios[i]->sou() == ESCUNA && mundo->verificaCelulaPorto(navios[i]->getX(), navios[i]->getY()) == CELULA_PORTO_AMIGO) {
-				dinheiroSoldados = navios[i]->getNumSoldados();
-				//TODO VENDER PEIXE
-				dinheiroSoldados *= precoSoldado;
-				navios[i]->setEstado(afundado);
-				return dinheiroSoldados + 100;//100 é o preço do navio
+			if (navios[i]->sou() == 'E') {
+				if (mundo->verificaCelulaPorto(navios[i]->getX(), navios[i]->getY()) == CELULA_PORTO_AMIGO) {
+					dinheiroSoldados = navios[i]->getNumSoldados();
+					//TODO VENDER PEIXE
+					dinheiroSoldados *= precoSoldado;
+					navios[i]->setEstado(afundado);
+					return dinheiroSoldados + 100;//100 é o preço do navio
+				}
 			}
 		}
 
