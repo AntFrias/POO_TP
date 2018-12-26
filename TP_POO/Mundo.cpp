@@ -43,17 +43,19 @@ void Mundo::abasteceNaviosNosPortos() {
 		for (unsigned int j = 0; j < navios.size();j++) {
 			if ((navios[j]->getEstado() == normal || navios[j]->getEstado() == autoMove) && (navios[j]->getX() == porto[i]->getX()) && (navios[j]->getY() == porto[i]->getY())) {
 				
-				if (navios[j]->sou() == FRAGATA) {
-					navios[j]->AbasteceAguaNavio();
-				}
-				if (navios[j]->sou() == VELEIRO) {
-					navios[j]->AbasteceAguaNavio();
-				}
-				if (navios[j]->sou() == GALEAO) {
-					navios[j]->AbasteceAguaNavio();
-				}
-				if (navios[j]->sou() == ESCUNA) {
-					navios[j]->AbasteceAguaNavio();
+				if (porto[i]->verificaPortoAmigo()==true) {
+					if (navios[j]->sou() == FRAGATA) {
+						navios[j]->AbasteceAguaNavio();
+					}
+					if (navios[j]->sou() == VELEIRO) {
+						navios[j]->AbasteceAguaNavio();
+					}
+					if (navios[j]->sou() == GALEAO) {
+						navios[j]->AbasteceAguaNavio();
+					}
+					if (navios[j]->sou() == ESCUNA) {
+						navios[j]->AbasteceAguaNavio();
+					}
 				}
 			}
 		}
@@ -201,16 +203,16 @@ Navios & Mundo::criaNavio(Mundo *mundo,const char portoPrincipal, const char Tip
 	{
 		case VELEIRO:
 			//Navios(Mundo *mundo, char tipo, int x, int y, int quantSoldados, int quantAgua = 0, int estado=normal);
-			aux = new Veleiro(mundo,x, y,normal);
+			aux = new Veleiro(mundo,x, y,autoMove);
 			break;
 		case GALEAO:
-			aux = new Galeao(mundo, x, y, normal);
+			aux = new Galeao(mundo, x, y, autoMove);
 			break;
 		case ESCUNA:
-			aux = new Escuna(mundo, x, y, normal);
+			aux = new Escuna(mundo, x, y, autoMove);
 			break;
 		case FRAGATA:
-			aux = new Fragata(mundo, x, y, normal);
+			aux = new Fragata(mundo, x, y, autoMove);
 			break;
 	}
 	
