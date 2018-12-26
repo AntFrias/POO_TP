@@ -43,17 +43,19 @@ void Mundo::abasteceNaviosNosPortos() {
 		for (unsigned int j = 0; j < navios.size();j++) {
 			if ((navios[j]->getEstado() == normal || navios[j]->getEstado() == autoMove) && (navios[j]->getX() == porto[i]->getX()) && (navios[j]->getY() == porto[i]->getY())) {
 				
-				if (navios[j]->sou() == FRAGATA) {
-					navios[j]->AbasteceAguaNavio();
-				}
-				if (navios[j]->sou() == VELEIRO) {
-					navios[j]->AbasteceAguaNavio();
-				}
-				if (navios[j]->sou() == GALEAO) {
-					navios[j]->AbasteceAguaNavio();
-				}
-				if (navios[j]->sou() == ESCUNA) {
-					navios[j]->AbasteceAguaNavio();
+				if (porto[i]->verificaPortoAmigo()==true) {
+					if (navios[j]->sou() == FRAGATA) {
+						navios[j]->AbasteceAguaNavio();
+					}
+					if (navios[j]->sou() == VELEIRO) {
+						navios[j]->AbasteceAguaNavio();
+					}
+					if (navios[j]->sou() == GALEAO) {
+						navios[j]->AbasteceAguaNavio();
+					}
+					if (navios[j]->sou() == ESCUNA) {
+						navios[j]->AbasteceAguaNavio();
+					}
 				}
 			}
 		}
@@ -284,7 +286,14 @@ void Mundo::criaCelulaPorto(int x, int y,char t)
 	this->porto.push_back(new Porto(x, y, t));
 
 }
+void Mundo::vaiPara(int idNavio,int x,int y) {
 
+
+
+
+
+
+}
 void Mundo::retiraNavAfundados() { // NAO FAÇO IDEIA O QUE FIZ AQUI FRIAS .. SEM QUE TEM HAVER COM A CENA DE APAGAR UMA COISA ENQUANTO ESTAMOS A PERCORRER A MESMA
 
 	for (auto it = navios.begin(); it != navios.end();) {
