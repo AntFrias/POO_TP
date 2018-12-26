@@ -5,7 +5,7 @@ void Escuna::AbasteceAguaNavio()
 {
 	this->quantAgua = ESCUNA_MAX_AGUA;
 }
-int Escuna::sou() {
+const int Escuna::sou()const {
 	return ESCUNA;
 }
 int Escuna::getMaxAgua() {

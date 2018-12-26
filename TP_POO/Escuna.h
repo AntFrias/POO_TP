@@ -26,7 +26,7 @@ public:
 	int FmoveCimaDireita();
 	int FmoveBaixoEsquerda();
 	int FmoveBaixoDireita();
-	int sou();
+	virtual const int sou()const override;
 	int getMaxAgua();
 	int getAgua();
 	virtual void adicionaAgua(int agua);

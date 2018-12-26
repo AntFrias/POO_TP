@@ -55,7 +55,7 @@ int Veleiro::getAgua() {
 void Veleiro::adicionaAgua(int agua) {
 	this->quantAgua += agua;
 }
-int Veleiro::sou() {
+const int Veleiro::sou()const {
 	return VELEIRO;
 }
 void Veleiro::conquistaPorto(int xPorto, int yPorto) {

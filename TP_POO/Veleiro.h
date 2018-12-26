@@ -35,7 +35,7 @@ public:
 	int FmoveBaixoDireita();
 	void serConquistadoaDeriva();
 	void daMetade(int x, int y);
-	int sou();
+	virtual const int sou()const override;
 	void conquistaPorto(int xPorto, int yPorto);
 	string acaoPorto();
 	string acao(int xaAtacar, int yaAtacar);

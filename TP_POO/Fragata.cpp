@@ -169,7 +169,7 @@ string Fragata::moveNavioAuto() {
 	}
 	return os.str();
 }
-int Fragata::sou() {
+const int Fragata::sou()const{
 
 	return FRAGATA;
 
