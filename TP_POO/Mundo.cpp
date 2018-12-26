@@ -442,7 +442,7 @@ string Mundo::TrataEventoCalmaria(int epiX, int epiY, int estado) {
 
 					os << " O estado antigo era " << navios[s]->getEstado() << endl;
 
-					if (navios[s]->getEstado() != calmaria) {
+					if (navios[s]->getEstado() != calmaria && navios[s]->getEstado() != afundado) {
 
 						Calmaria.push_back(navios[s]->getId());
 
