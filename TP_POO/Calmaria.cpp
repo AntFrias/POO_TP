@@ -19,13 +19,17 @@ string Calmaria::TrataEvento()
 		os << " Vai ser criada uma Calmaria" << endl;
 
 	}
+
 	os << " Gerou-se uma calmaria nas coordenadas: " << epicentroX << " , " << epicentroY << endl;
-
-	os << mundo->TrataEventoCalmaria(epicentroX, epicentroY);
-
-	os << "Duracao da Calmaria : " << this->TTL << endl;
-		
+	
+	os << mundo->TrataEventoCalmaria(epicentroX, epicentroY, CALMARIA_ESTADO_EM_EXECUCAO_CALMARIA);
+	
 	this->TTL = this->TTL - 1;
+
+	if (this->TTL == 0)
+		os << mundo->TrataEventoCalmaria(epicentroX, epicentroY, CALMARIA_ESTADO_FIM_CALMARIA);
+
+	os << endl <<endl << "Duracao da Calmaria : " << this->TTL << endl << endl;
 
 	return os.str();
 }
