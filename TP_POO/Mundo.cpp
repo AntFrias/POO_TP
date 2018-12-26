@@ -212,7 +212,7 @@ Navios & Mundo::criaNavio(Mundo *mundo,const char portoPrincipal, const char Tip
 			aux = new Escuna(mundo, x, y, autoMove);
 			break;
 		case FRAGATA:
-			aux = new Fragata(mundo, x, y, autoMove);
+			aux = new Fragata(mundo, x, y, autoMove	);
 			break;
 	}
 	

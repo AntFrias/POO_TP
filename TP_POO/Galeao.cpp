@@ -174,7 +174,7 @@ bool Galeao::VerificaCargaNavio(int novaCarga)
 	else
 		return false;
 }
-int Galeao::sou() {
+const int Galeao::sou()const{
 	return GALEAO;
 }
 string Galeao::combate(int quemVouAtacar) {
