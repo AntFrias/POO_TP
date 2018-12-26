@@ -53,10 +53,10 @@ enum IndiceComandos {
 	com_evpos,
 	com_evnav,
 	com_moedas,
-	com_vaipara,
+	com_loadg,
 	com_comprasold,
 	com_saveg,
-	com_loadg,
+	com_vaipara,
 	com_delg,
 };
 enum IndiceConFiguracoes {
