@@ -60,7 +60,9 @@ string Interface::GeradorEvento()
 					
 					break;
 				case EVENTO_CALMARIA:
+
 					os << "Vai ser Gerado um Evento Calmaria " << endl;
+					
 					if ((rand() % 100 + 1) <= this->probCalmaria) {
 					
 						os << mundo.criaEvento(&mundo, EVENTO_CALMARIA) << endl;

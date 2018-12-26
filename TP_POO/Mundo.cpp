@@ -185,7 +185,7 @@ int Mundo::verificaCelulaNavioDeriva(int x, int y) {
 
 Navios & Mundo::criaNavio(Mundo *mundo,const char portoPrincipal, const char TipoNavio) {
 
-	int x, y;
+	unsigned int x=0, y=0;
 	Navios *aux;
 	for (unsigned int i = 0; i < porto.size(); i++) {
 
@@ -201,16 +201,16 @@ Navios & Mundo::criaNavio(Mundo *mundo,const char portoPrincipal, const char Tip
 	{
 		case VELEIRO:
 			//Navios(Mundo *mundo, char tipo, int x, int y, int quantSoldados, int quantAgua = 0, int estado=normal);
-			aux = new Veleiro(mundo,x, y,normal);
+			aux = new Veleiro(mundo,x, y,autoMove);
 			break;
 		case GALEAO:
-			aux = new Galeao(mundo, x, y, normal);
+			aux = new Galeao(mundo, x, y, autoMove);
 			break;
 		case ESCUNA:
-			aux = new Escuna(mundo, x, y, normal);
+			aux = new Escuna(mundo, x, y, autoMove);
 			break;
 		case FRAGATA:
-			aux = new Fragata(mundo, x, y, normal);
+			aux = new Fragata(mundo, x, y, autoMove);
 			break;
 	}
 	
@@ -408,39 +408,63 @@ string Mundo::TrataEventoMotim(int estadoMotim) {
 
 	return os.str();
 }
-string Mundo::TrataEventoCalmaria(int epiX, int epiY) {
+string Mundo::TrataEventoCalmaria(int epiX, int epiY, int estado) {
 
 	ostringstream os;
 
+	static vector < int> Calmaria;
+	static vector < int > EstadoAntigo;
+
 	int x, y;
 
-	if (navios.size() > 0)
-		for (auto it = navios.begin(); it != navios.end();) {
+	if (estado == CALMARIA_ESTADO_EM_EXECUCAO_CALMARIA) {
+		if (navios.size() > 0)
+			for (unsigned int s = 0; s < navios.size(); s++) {
 
-			x = (*it)->getX();
+				x = navios[s]->getX();
 
-			y = (*it)->getY();
+				y = navios[s]->getY();
 
-			if (x >= (epiX - RANGE_EVENTO) && x <= (epiX + RANGE_EVENTO) && y >= (epiY - RANGE_EVENTO) && y <= (epiY + RANGE_EVENTO)) {
+				if (x >= (epiX - RANGE_EVENTO) && x <= (epiX + RANGE_EVENTO) && y >= (epiY - RANGE_EVENTO) && y <= (epiY + RANGE_EVENTO)) {
 
-				os << " Foi Encontrado um Navio com o id " << (*it)->getId() << " na posicao " << x << " , " << y << endl;
+					os << " Foi Encontrado um Navio com o id " << navios[s]->getId() << " na posicao " << x << " , " << y << endl;
 
-				os << " O navio Vai ser afetado por uma calmaria" << endl;
+					os << " O navio Vai ser afetado por uma calmaria" << endl;
 
-				os << " O estado antigo era " << (*it)->getEstado() << endl;
+					os << " O estado antigo era " << navios[s]->getEstado() << endl;
 
-				(*it)->setEstado(calmaria);
+					if (navios[s]->getEstado() != calmaria) {
 
-				os << " O estado seguinte passou a ser " << (*it)->getEstado() << endl;
+						Calmaria.push_back(navios[s]->getId());
 
-				return os.str();
+						EstadoAntigo.push_back(navios[s]->getEstado());
 
+						navios[s]->setEstado(calmaria);
+					}
+
+				}
+				os << " O estado seguinte passou a ser " << navios[s]->getEstado() << endl;
+				os << "Calmaria size " << Calmaria.size() << endl;
+				os << "EstadoAntigo size " << EstadoAntigo.size() << endl;
+			
+			
 			}
-			++it;
+	}
+	else {
+		if (navios.size() > 0 ){
+			for (unsigned int k = 0; k < Calmaria.size(); k++) {
+				for (unsigned int j = 0; j < navios.size();j++) {
+					if (Calmaria[k] == navios[j]->getId()){
+						navios[j]->setEstado(EstadoAntigo[k]);
+					}
+				}
+			}
+			Calmaria.erase(Calmaria.begin(), Calmaria.end());
+
+			EstadoAntigo.erase(EstadoAntigo.begin(), EstadoAntigo.end());
 		}
-	else
-		os << " Nao existem Navios afetados pela Calmaria No Mundo" << endl;
-		return os.str();
+	}
+	return os.str();
 }
 string Mundo::TrataEventoSereias(int indice) {
 
