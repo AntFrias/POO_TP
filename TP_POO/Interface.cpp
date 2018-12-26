@@ -188,6 +188,22 @@ void Interface::Prompt() {
 		mundo.verificaaDeriva();
 		mundo.retiraNavAfundados();
 
+		if (mundo.getExistenciaEvento() == EVENTO_OFF) {
+			gotoErro();
+			cout << GeradorEvento();
+		}
+		else {
+			gotoErro();
+			cout << mundo.trataEventos();
+			if (mundo.VerificaTipoEventoEmExecucao() == true) {
+				gotoErro();
+				cout << "Existe um evento Calmaria a decorrer..!" << endl;
+			}
+			else {
+				gotoErro();
+				cout << "Existe um evento Motim a decorrer..!" << endl;
+			}
+		}
 		//execu��o de comando pendentes | comportamentos automaticos
 		//combates
 		//eventos
