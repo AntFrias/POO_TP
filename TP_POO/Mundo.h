@@ -45,6 +45,9 @@
 #define MOTIM_ESTADO_INICIO_MOTIM 1
 #define MOTIM_ESTADO_FIM_MOTIM 2
 
+#define CALMARIA_ESTADO_EM_EXECUCAO_CALMARIA 1
+#define CALMARIA_ESTADO_FIM_CALMARIA 2
+
 #define RANGE_EVENTO 2
 
 enum TiposNavios {
@@ -147,7 +150,7 @@ public:
 
 	bool VerificaTipoEventoEmExecucao() { return Evento->VerificaEventoCalmaria(); };
 
-	string TrataEventoCalmaria(int epiX, int epiY);
+	string TrataEventoCalmaria(int epiX, int epiY, int estadoCalmaria);
 
 	string TrataEventoSereias(int indice);
 	
