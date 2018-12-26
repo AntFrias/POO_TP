@@ -24,7 +24,7 @@ const int Jogador::getMoedas()const {
 int Jogador::vendeNavio(char tipo,int precoSoldado) {
 
 	int dinheiroSoldados = 0;
-
+	  //
 	switch (tipo)
 	{
 	case 'F':
