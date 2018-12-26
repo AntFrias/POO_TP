@@ -107,6 +107,8 @@ public:
 
 	void criaCelulaPorto(int x, int y,char t);
 
+	void vaiPara(int idNavio, int x, int y);
+
 	void retiraNavAfundados();
 
 	const vector<const Superficie*> getVetorSuperficie() const;

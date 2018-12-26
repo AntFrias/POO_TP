@@ -186,22 +186,6 @@ void Interface::Prompt() {
 		mundo.verificaaDeriva();
 		mundo.retiraNavAfundados();
 
-		if ( mundo.getExistenciaEvento() == EVENTO_OFF){
-			gotoErro();
-			cout << GeradorEvento();
-		}
-		else {
-			gotoErro();
-			cout << mundo.trataEventos();
-			if (mundo.VerificaTipoEventoEmExecucao() == true) {
-				gotoErro();
-				cout << "Existe um evento Calmaria a decorrer..!" << endl;
-			}
-			else {
-				gotoErro();
-				cout << "Existe um evento Motim a decorrer..!" << endl;
-			}
-		}
 		//execu��o de comando pendentes | comportamentos automaticos
 		//combates
 		//eventos
@@ -574,8 +558,9 @@ void Interface::PromptFase2(string linha) {
 		break;
 	case com_vaipara:
 		//este comando tem overload devido aos parametros vaipara <N> <x> <y> e vai para <N> <P>
-		gotoErro();
-		cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
+		if (buffer >> idNavio && buffer >> x && buffer >> y) {
+			mundo.vaiPara(idNavio, x, y);
+		}
 		break;
 	case com_comprasold:
 		gotoErro();

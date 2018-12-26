@@ -286,7 +286,14 @@ void Mundo::criaCelulaPorto(int x, int y,char t)
 	this->porto.push_back(new Porto(x, y, t));
 
 }
+void Mundo::vaiPara(int idNavio,int x,int y) {
 
+
+
+
+
+
+}
 void Mundo::retiraNavAfundados() { // NAO FAÇO IDEIA O QUE FIZ AQUI FRIAS .. SEM QUE TEM HAVER COM A CENA DE APAGAR UMA COISA ENQUANTO ESTAMOS A PERCORRER A MESMA
 
 	for (auto it = navios.begin(); it != navios.end();) {
