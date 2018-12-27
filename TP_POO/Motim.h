@@ -14,7 +14,7 @@ class Motim : public Eventos
 {
 public:
 	Motim(Mundo *mundo) : Eventos(mundo, EVENTO_MOTIM) {};
-	virtual string TrataEvento(int modoExecucao, int idNavio, int coordX, int coordY);
+	string TrataEvento(int modoExecucao, int idNavio, int coordX, int coordY, int duracao);
 	virtual bool VerificaEventoCalmaria() { return false; };
 	virtual int getTTL() const;
 	virtual void setTTL();

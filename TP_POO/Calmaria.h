@@ -23,7 +23,7 @@ class Calmaria : public Eventos
 {
 public:
 	Calmaria(Mundo *mundo) : Eventos(mundo, EVENTO_CALMARIA) {};
-	virtual string TrataEvento(int modoExecucao, int idNavio, int coordX, int coordY);
+	string TrataEvento(int modoExecucao, int idNavio, int coordX, int coordY, int duracao);
 	virtual bool VerificaEventoCalmaria() { return true; };
 
 	virtual int getTTL() const;

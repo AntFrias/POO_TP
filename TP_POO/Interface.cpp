@@ -31,11 +31,8 @@ string Interface::ExecutaEventos() {
 	ostringstream os;
 
 
-	if (this->InsercaoEvento == INSERCAO_COMANDO) {
-
-		this->InsercaoEvento = INSERCAO_RAND;
-	}
-	else {
+	if (this->InsercaoEvento != INSERCAO_COMANDO)
+	 {
 
 		if (mundo.getExistenciaEvento() == EVENTO_OFF) {
 
@@ -44,25 +41,31 @@ string Interface::ExecutaEventos() {
 			os << GeradorEvento(EVENTO_EXECUCAO_RAND, 0, 0, 0, 0);
 		}
 		else {
-
+			if ( mundo.getExistenciaEvento() == EVENTO_ON){
 			gotoErro();
 
 			os << mundo.trataEventos(EVENTO_EXECUCAO_RAND,0,0,0,0);
-
-			if (mundo.VerificaTipoEventoEmExecucao() == true) {
-
-				gotoErro();
-
-				os << "Existe um evento Calmaria a decorrer..!" << endl;
 			}
 			else {
-
-				gotoErro();
-
-				os << "Existe um evento Motim a decorrer..!" << endl;
+				mundo.setEventoEmExecucao(nullptr);
 			}
+			//if (mundo.VerificaTipoEventoEmExecucao() == true) {
+
+			//	gotoErro();
+
+			//	os << "Existe um evento Calmaria a decorrer..!" << endl;
+			//}
+			//else {
+
+			//	gotoErro();
+
+			//	os << "Existe um evento Motim a decorrer..!" << endl;
+			//}
 		}
 	}
+	else
+		this->InsercaoEvento = INSERCAO_RAND;
+
 	return os.str();
 }
 string Interface::GeradorEvento(int ModoExecucao, int tipoEvento, int idNavio, int coordX, int coordY)
@@ -565,11 +568,13 @@ void Interface::PromptFase2(string linha) {
 				if (ValidaDirecoes(direcao))
 					if (jogador.validaIdNavio(idNavio) == true)
 						if (!jogador.verificaModoAutomaticoNavio(idNavio)) {
-							jogador.moveNavioJogador(idNavio, ValidaDirecoes(direcao));//com sucesso
-								auxNavio = mundo.getNavio(idNavio);
-								Consola::setTextColor(Consola::BRANCO);
-								Consola::gotoxy(0, 26);
-								cout << auxNavio->combate(CELULA_NAVIO_PIRATA);
+							auxNavio = mundo.getNavio(idNavio);
+							if( auxNavio->getEstado() != calmaria && auxNavio->getEstado() != motim){
+								jogador.moveNavioJogador(idNavio, ValidaDirecoes(direcao));//com sucesso
+									Consola::setTextColor(Consola::BRANCO);
+									Consola::gotoxy(0, 26);
+									cout << auxNavio->combate(CELULA_NAVIO_PIRATA);
+							}
 						}
 						else
 							cout << "[ Erro..! AutoMove do Navio : " << idNavio << " esta ativo ..! ]" << endl;

@@ -2,7 +2,7 @@
 #include "Mundo.h"
 
 
-string Calmaria::TrataEvento(int modoExecucao, int idNavio, int coordX, int coordY)
+string Calmaria::TrataEvento(int modoExecucao, int idNavio, int coordX, int coordY, int duracao)
 {
 	ostringstream os;
 
@@ -10,12 +10,14 @@ string Calmaria::TrataEvento(int modoExecucao, int idNavio, int coordX, int coor
 
 	int dimX = mundo->getDimX(), dimY = mundo->getDimY();
 
-	if (this->TTL == TTL_CALMARIA) {
+	if (this->TTL == duracao) {
 
 		if ( modoExecucao != EVENTO_EXECUCAO_COMANDO){
-		epicentroX = rand() % ((mundo->getDimX() - 2) - 2) + 2;
 
-		epicentroY = rand() % ((mundo->getDimY() - 2) - 2) + 2;
+			epicentroX = rand() % ((mundo->getDimX() - 2) - 2) + 2;
+
+			epicentroY = rand() % ((mundo->getDimY() - 2) - 2) + 2;
+		
 		}
 		else {
 
@@ -24,20 +26,25 @@ string Calmaria::TrataEvento(int modoExecucao, int idNavio, int coordX, int coor
 			epicentroY = coordY;
 
 		}
+		
 		os << " Vai ser criada uma Calmaria" << endl;
 
 	}
 
-	os << " Gerou-se uma calmaria nas coordenadas: " << epicentroX << " , " << epicentroY << endl;
-	
-	os << mundo->TrataEventoCalmaria(epicentroX, epicentroY, CALMARIA_ESTADO_EM_EXECUCAO_CALMARIA);
-	
-	this->TTL = this->TTL - 1;
+	os << " Gerou-se uma calmaria nas coordenadas:  [ " << epicentroX << " : " << epicentroY << " ] " <<  endl;
+	if (this->TTL > 0){
+		os << mundo->TrataEventoCalmaria(epicentroX, epicentroY, CALMARIA_ESTADO_EM_EXECUCAO_CALMARIA);
+		
+		this->TTL = this->TTL - 1;
+	}
 
-	if (this->TTL == 0)
+
+	if (this->TTL == 0){
 		os << mundo->TrataEventoCalmaria(epicentroX, epicentroY, CALMARIA_ESTADO_FIM_CALMARIA);
+	
+	}
 
-	os << endl <<endl << "Duracao da Calmaria : " << this->TTL << endl << endl;
+	//os << endl <<endl << "Duracao da Calmaria : " << this->TTL << endl << endl;
 
 	return os.str();
 }
