@@ -59,7 +59,8 @@ enum estadoNavio {
 	afundado,
 	aDeriva,
 	calmaria,
-	motim
+	motim,
+	vaiPara
 
 };
 using namespace std;
@@ -77,7 +78,7 @@ private:
 protected:
 	Mundo *mundo;
 	int estado;
-	int x, y;
+	int x, y, xVaiPara, yVaiPara;
 	int quantSoldados;
 	int quantAgua;
 	bool zonaEvento;
@@ -118,6 +119,10 @@ public:
 	int getY()const;
 	void setX(int x);
 	void setY(int y);
+	int getXvaiPara()const;
+	int getYvaiPara()const;
+	void setXvaiPara(int x);
+	void setYvaiPara(int y);
 	string AlteraSoldadosPosEvento(int prob);
 	const int getId()const;
 	const Navios * getNavio() const;	

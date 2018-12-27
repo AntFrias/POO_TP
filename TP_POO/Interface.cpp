@@ -89,6 +89,36 @@ string Interface::GeradorEvento()
 		}
 	return os.str();
 }
+void Interface::criaPiratasAuto() {
+
+	unsigned int aux = 10,aux2=0;
+	unsigned int x = 0, y = 0;
+
+	//vai criar pirata consoante a sua probabilidade
+	if ((rand() % 100 + 1) <= probPirata) {
+
+		//gerar o x e  o y
+		do {
+
+			x = rand() % mundo.getDimX();
+			y = rand() % mundo.getDimY();
+
+			if (mundo.verificaCelulaMar(x, y) == CELULA_MAR && mundo.verificaCelulaNavio(x, y) != CELULA_NAVIO) {
+				break;
+			}
+			aux--;
+		} while (aux > 0);
+
+		//que tipo de pirata vai criar
+		aux2 = (rand() % 2);
+		if (aux2 == 0)
+			mundo.criaNavPirata(&mundo, 'F', x, y);
+		if (aux2 == 1) 
+			mundo.criaNavPirata(&mundo, 'V', x, y);
+		
+	}
+}
+
 int Interface::verificaFimdoJogo() {
 
 	int navJogador = 0, navPirata = 0, nPortosAmigos = 0, nPortosInimigos=0;
@@ -180,6 +210,8 @@ void Interface::Prompt() {
 		PromptFase2(linha);
 		//if (verificaFimdoJogo()==1)return;
 		
+		criaPiratasAuto();
+		jogador.mandaVaiPara();
 		jogador.setPortoPrincipal(mundo.getPortoPrincipal());
 		mundo.retiraNavAfundados(); //mudar para dentro quando for implemento do ciclo do navios
 		mundo.abasteceNaviosNosPortos();
@@ -441,6 +473,7 @@ void Interface::PromptFase2(string linha) {
 	string acao, direcao;
 	int idNavio,x,y;
 	istringstream buffer(linha);
+	istringstream buffer2(linha);
 	
 	
 	if (buffer >> acao) {
@@ -555,7 +588,7 @@ void Interface::PromptFase2(string linha) {
 					if (mundo.verificaCelulaMar(x, y) == CELULA_MAR && mundo.verificaCelulaNavio(x,y)!= CELULA_NAVIO) {
 						mundo.criaNavPirata(&mundo, tipo, x, y);
 					}
-					}
+				}
 			}
 		}
 		
@@ -576,9 +609,17 @@ void Interface::PromptFase2(string linha) {
 		break;
 	case com_vaipara:
 		//este comando tem overload devido aos parametros vaipara <N> <x> <y> e vai para <N> <P>
-		if (buffer >> idNavio && buffer >> x && buffer >> y) {
-			mundo.vaiPara(idNavio, x, y);
+	
+		if (buffer >> idNavio && buffer >> tipo) {
+		
+			if ((tipo >= 'A' && tipo <= 'Z') || (tipo >= 'a' && tipo <= 'z')) {
+				jogador.setVaiPara(idNavio, tipo);
+			}else
+				if (buffer2 >> acao && buffer2 >> idNavio && buffer2 >> x && buffer2 >> y) {
+					jogador.setVaiPara(idNavio, x, y);
+				}
 		}
+
 		break;
 	case com_comprasold:
 		gotoErro();
@@ -855,7 +896,7 @@ void Interface::mostraNavios() {
 				Consola::setTextColor(Consola::VERMELHO_CLARO);
 				cout << setfill('0') << setw(2) << auxNavio[i]->getId();
 			}
-			if (auxNavio[i]->getEstado() == normal || auxNavio[i]->getEstado() == autoMove) {
+			if (auxNavio[i]->getEstado() == normal || auxNavio[i]->getEstado() == autoMove || auxNavio[i]->getEstado() == vaiPara) {
 					Consola::gotoxy(x, y);
 					Consola::setTextColor(Consola::VERDE_CLARO);
 					cout << setfill('0') << setw(2) << auxNavio[i]->getId();
@@ -895,7 +936,7 @@ void Interface::mostraNavios() {
 				Consola::setTextColor(Consola::VERMELHO_CLARO);
 				cout << setfill('0') << setw(2) << auxNavio[i]->getId();
 			}
-			if (auxNavio[i]->getEstado() == normal || auxNavio[i]->getEstado() == autoMove || auxNavio[i]->getEstado() == autoMove) {
+			if (auxNavio[i]->getEstado() == normal || auxNavio[i]->getEstado() == autoMove || auxNavio[i]->getEstado() == autoMove || auxNavio[i]->getEstado() == vaiPara) {
 				Consola::gotoxy(x, y);
 				Consola::setTextColor(Consola::VERDE_CLARO);
 				cout << setfill('0') << setw(2) << auxNavio[i]->getId();

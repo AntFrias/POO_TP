@@ -110,8 +110,6 @@ public:
 
 	void criaCelulaPorto(int x, int y,char t);
 
-	void vaiPara(int idNavio, int x, int y);
-
 	void retiraNavAfundados();
 
 	const vector<const Superficie*> getVetorSuperficie() const;
@@ -129,6 +127,8 @@ public:
 	int verificaCelulaNavioDeriva(int x, int y);
 
 	Navios * getNavio(int id);
+
+	Porto * getPorto(char tipo);
 
 	Navios * getNavioXY(int x, int y);
 

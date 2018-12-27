@@ -122,6 +122,7 @@ public:
 	void gotoErro();
 	void gotoPrint();
 	string GeradorEvento();
+	void criaPiratasAuto();
 	int verificaFimdoJogo();
 	void mostraMapa();
 	int verificaDadosFicheiro(string linha);
