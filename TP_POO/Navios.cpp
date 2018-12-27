@@ -52,6 +52,26 @@ void Navios::setX(int x) {
 
 	this->x=x;
 }
+void Navios::setY(int y) {
+
+	this->y = y;
+}
+int Navios::getXvaiPara()const {
+
+	return this->xVaiPara;
+}
+int Navios::getYvaiPara()const {
+
+	return this->yVaiPara;
+}
+void Navios::setXvaiPara(int x) {
+
+	this->xVaiPara = x;
+}
+void Navios::setYvaiPara(int y) {
+
+	this->yVaiPara = y;
+}
 const int Navios::getId()const {
 	return this->id;
 }
@@ -61,10 +81,6 @@ const Navios * Navios::getNavio() const
 }
 int Navios::getIncNavio() {
 	return this->IncNavio;
-}
-void Navios::setY(int y) {
-
-	this->y=y;
 }
 string Navios::AlteraSoldadosPosEvento(int prob)
 {
