@@ -24,6 +24,7 @@ string Motim::TrataEvento(int modoExecucao, int idNavio, int coordX, int coordY,
 			os << mundo->TrataEventoMotim(MOTIM_ESTADO_INICIO_MOTIM, modoExecucao, idNavio);
 		}
 		this->TTL = this->TTL - 1;
+
 		if (this->TTL == 0) {
 			os << mundo->TrataEventoMotim(MOTIM_ESTADO_FIM_MOTIM, modoExecucao, idNavio);	
 		}		

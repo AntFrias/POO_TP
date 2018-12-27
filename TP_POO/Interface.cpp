@@ -72,47 +72,63 @@ string Interface::GeradorEvento(int ModoExecucao, int tipoEvento, int idNavio, i
 			switch (op)
 			{
 				case EVENTO_TEMPESTADE:
-				
-					if ((rand() % 100 + 1) <= this->probTempestade) {
+					if (ModoExecucao == EVENTO_EXECUCAO_COMANDO)
+						os << mundo.trataEventos(ModoExecucao, tipoEvento, idNavio, coordX, coordY) << endl;
+					else {
+						if ((rand() % 100 + 1) <= this->probTempestade) {
 
-						os << "Vai ser Gerada uma Tempestade " << endl;
+							os << "Vai ser Gerada uma Tempestade " << endl;
 						
-						gotoErro();
+							gotoErro();
 						
-						os << mundo.trataEventos(ModoExecucao, tipoEvento, idNavio,coordX, coordY) << endl;
+							os << mundo.trataEventos(ModoExecucao, tipoEvento, idNavio,coordX, coordY) << endl;
 					
+						}
 					}
-						return os.str();
+					return os.str();
 					
 				break;
 				case EVENTO_SEREIAS:
-				
-					if ((rand() % 100 + 1) <= this->probSereias) {
+					if (ModoExecucao == EVENTO_EXECUCAO_COMANDO)
+						os << mundo.trataEventos(ModoExecucao, tipoEvento, idNavio, coordX, coordY) << endl;
+					else {
 
-						os << "Vai ser Gerado um Ataque de Sereias " << endl;
+						if ((rand() % 100 + 1) <= this->probSereias) {
 
-						gotoErro();
+							os << " Vai ser Gerado um Ataque de Sereias " << endl;
 
-						cout << mundo.trataEventos(ModoExecucao, tipoEvento, idNavio, coordX, coordY) << endl;
+							gotoErro();
+
+							os << mundo.trataEventos(ModoExecucao, tipoEvento, idNavio, coordX, coordY) << endl;
 						}
-						return os.str();
-					
+					}
+					return os.str();
 					
 					break;
 				case EVENTO_CALMARIA:
+					if (ModoExecucao == EVENTO_EXECUCAO_COMANDO){
 
-					os << "Vai ser Gerado um Evento Calmaria " << endl;
-					
-					if ((rand() % 100 + 1) <= this->probCalmaria) {
-					
 						os << mundo.criaEvento(&mundo, EVENTO_CALMARIA) << endl;
-						
+
 						os << mundo.trataEventos(ModoExecucao, tipoEvento, idNavio, coordX, coordY);
+					
+					} else {
+
+						if ((rand() % 100 + 1) <= this->probCalmaria) {
+
+							os << "Vai ser Gerado um Evento Calmaria " << endl;
+					
+							os << mundo.criaEvento(&mundo, EVENTO_CALMARIA) << endl;
+						
+							os << mundo.trataEventos(ModoExecucao, tipoEvento, idNavio, coordX, coordY);
+						}
 					}
 					return os.str();
+
 					break;
 
 				case EVENTO_MOTIM:
+
 					if (mundo.VerificaExistenciaNavios() == true) {
 
 						if (ModoExecucao != EVENTO_EXECUCAO_COMANDO) {
@@ -649,16 +665,18 @@ void Interface::PromptFase2(string linha) {
 		break;
 	case com_evpos:
 	
-		if (mundo.getExistenciaEvento() == EVENTO_OFF && this->InsercaoEvento == INSERCAO_RAND) {
+		if (mundo.getExistenciaEvento() == EVENTO_OFF) {
 
 			if (buffer >> tipo && buffer >> x && buffer >> y && count(linha.begin(), linha.end(), ' ') == 3) {
 
-				this->InsercaoEvento = true;
+				this->InsercaoEvento = INSERCAO_COMANDO;
 
 				if (tipo == 'T')
 					cout << GeradorEvento(EVENTO_EXECUCAO_COMANDO, EVENTO_TEMPESTADE,0, x, y);
 				else if (tipo == 'C')
 					cout << GeradorEvento(EVENTO_EXECUCAO_COMANDO, EVENTO_CALMARIA,0, x, y);
+
+				
 			}
 		}
 		else
@@ -668,16 +686,18 @@ void Interface::PromptFase2(string linha) {
 
 	case com_evnav:
 	
-		if (mundo.getExistenciaEvento() == EVENTO_OFF && this->InsercaoEvento == INSERCAO_RAND) {
+		if (mundo.getExistenciaEvento() == EVENTO_OFF) {
 
 			if (buffer >> tipo && buffer >> idNavio && count(linha.begin(), linha.end(), ' ') == 2) {
 				
-				this->InsercaoEvento = true;
+				this->InsercaoEvento = INSERCAO_COMANDO;
 
 				if (tipo == 'M')
 					cout << GeradorEvento(EVENTO_EXECUCAO_COMANDO, EVENTO_MOTIM, idNavio, 0, 0);
 				else if (tipo == 'S')
 					cout << GeradorEvento(EVENTO_EXECUCAO_COMANDO, EVENTO_SEREIAS, idNavio, 0, 0);
+
+				
 			}
 		}
 		else
