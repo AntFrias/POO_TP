@@ -464,11 +464,10 @@ string Mundo::TrataEventoCalmaria(int epiX, int epiY, int estado) {
 					}
 
 				}
-				os << " O estado seguinte passou a ser " << navios[s]->getEstado() << endl;
 			}
 		}
 		else
-			os << " Não Existem Navios no Range da Calmaria .. !" << endl;
+			os << " Não Existem Navios no Mundo..!" << endl;
 
 	}
 	else {
@@ -558,8 +557,11 @@ string Mundo::trataEventos(int modoExecucao, int TipoEvento, int idNavio, int co
 		if (navios.size() > 0) {
 
 			for (int i = 0; i < navios.size(); i++) {
+				
 				if (navios[i]->getEstado() == normal || navios[i]->getEstado() == pirata || navios[i]->getEstado() == autoMove) {
+
 					if (modoExecucao != EVENTO_EXECUCAO_COMANDO) {
+					
 						do {
 
 							indice = rand() % navios.size();
@@ -580,20 +582,19 @@ string Mundo::trataEventos(int modoExecucao, int TipoEvento, int idNavio, int co
 					}
 				}
 			}
-			cout << "Indice do navio a ser afetado pelo Ataque da sereia :   " << indice << endl;
+			
 			if (navios[indice]->getNumSoldados() > 0 && navios[indice] != nullptr) {
 
 				os << " Navio com o ID :  " << navios[indice]->getId() << "  vai sofrer ataque de sereia" << endl;
 
 				os << TrataEventoSereias(indice);
 
-			}
-
-			this->EstadoEvento = EVENTO_OFF;
-				
+			}				
 		}
 		else
 			os <<" Nao existem navios para efetuar o ataque da sereia  ...!" << endl;
+
+		this->EstadoEvento = EVENTO_OFF;
 
 		return os.str();
 		
