@@ -34,6 +34,14 @@ public:
 
 	void setMundo(Mundo * mundo);
 
+	Navios * getNavio(int id);
+
+	void mandaVaiPara();
+
+	void setVaiPara(int idNavio, int x, int y);
+
+	void setVaiPara(int idNavio, char tipo);
+
 	void setMoedas(int moedas);
 
 	const int getMoedas() const;

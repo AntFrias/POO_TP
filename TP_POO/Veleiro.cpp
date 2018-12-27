@@ -219,26 +219,25 @@ string Veleiro::combate(int quemVouAtacar) {
 
 	return os.str();
 }
-int Veleiro::FmoveEsquerda() {
+int Veleiro::FmoveEsquerda(int move) {
 	int VerificaPorto = 0;
-	//e ver se a nova pos está dentro de agua!
-	
-	if (x > 0 && (mundo->verificaCelulaMar(this->x - 1, this->y) == CELULA_MAR)) {
 
-		VerificaPorto = mundo->verificaCelulaPorto(this->x - 1, this->y);
+	if (x > 0 && (mundo->verificaCelulaMar(this->x - move, this->y) == CELULA_MAR) && (x - move >= 0)) {
+
+		VerificaPorto = mundo->verificaCelulaPorto(this->x - move, this->y);
 
 		if (VerificaPorto == CELULA_PORTO_AMIGO) {
 
-			this->x = this->x - 1;
+			this->x = this->x - move;
 
 			return MOVE_VALIDO;
 		}
 
 		if (VerificaPorto == CELULA_SEM_PORTO) {
 
-			if (mundo->verificaCelulaNavio(this->x - 1, this->y) != CELULA_NAVIO) {
+			if (mundo->verificaCelulaNavio(this->x - move, this->y) != CELULA_NAVIO) {
 
-				this->x = this->x - 1;
+				this->x = this->x - move;
 
 				return MOVE_VALIDO;
 			}
@@ -249,28 +248,27 @@ int Veleiro::FmoveEsquerda() {
 			}
 		}
 		if (VerificaPorto == CELULA_PORTO_INIMIGO) {
-			this->x = this->x - 1;
-	
+			this->x = this->x - move;
 			return MOVE_VALIDO;
 		}
 	}
 	else {
 
-		if (x == 0 && (mundo->verificaCelulaMar(mundo->getDimX() - 1, this->y) == CELULA_MAR))
+		if (x == 0 && (mundo->verificaCelulaMar(mundo->getDimX() - move, this->y) == CELULA_MAR))
 
-			VerificaPorto = mundo->verificaCelulaPorto(mundo->getDimX() - 1, this->y);
+			VerificaPorto = mundo->verificaCelulaPorto(mundo->getDimX() - move, this->y);
 
 		if (VerificaPorto == CELULA_PORTO_AMIGO) {
 
-			this->x = mundo->getDimX() - 1;
+			this->x = mundo->getDimX() - move;
 
 			return MOVE_VALIDO;
 		}
 		if (VerificaPorto == CELULA_SEM_PORTO) {
 
-			if (mundo->verificaCelulaNavio(mundo->getDimX() - 1, this->y) != CELULA_NAVIO) {
+			if (mundo->verificaCelulaNavio(mundo->getDimX() - move, this->y) != CELULA_NAVIO) {
 
-				this->x = mundo->getDimX() - 1;
+				this->x = mundo->getDimX() - move;
 
 				return MOVE_VALIDO;
 			}
@@ -281,30 +279,30 @@ int Veleiro::FmoveEsquerda() {
 			}
 		}
 		if (VerificaPorto == CELULA_PORTO_INIMIGO) {
-			this->x = mundo->getDimX() - 1;
+			this->x = mundo->getDimX() - move;
 			return MOVE_VALIDO;
 		}
 	}
 	return MOVE_INVALIDO;
 }
-int Veleiro::FmoveDireita() {
+int Veleiro::FmoveDireita(int move) {
 	int VerificaPorto = 0;
 	//e ver se a nova pos está dentro de agua!
-	if (x < mundo->getDimX() - 1 && (mundo->verificaCelulaMar(this->x + 1, this->y) == CELULA_MAR)) {
+	if (x < mundo->getDimX() - 1 && (mundo->verificaCelulaMar(this->x + move, this->y) == CELULA_MAR) && (x + move) <= mundo->getDimX() - 1) {
 
-		VerificaPorto = mundo->verificaCelulaPorto(this->x + 1, this->y);
+		VerificaPorto = mundo->verificaCelulaPorto(this->x + move, this->y);
 
 		if (VerificaPorto == CELULA_PORTO_AMIGO) {
 
-			this->x = this->x + 1;
+			this->x = this->x + move;
 
 			return MOVE_VALIDO;
 		}
 		if (VerificaPorto == CELULA_SEM_PORTO) {
 
-			if (mundo->verificaCelulaNavio(this->x + 1, this->y) != CELULA_NAVIO) {
+			if (mundo->verificaCelulaNavio(this->x + move, this->y) != CELULA_NAVIO) {
 
-				this->x = this->x + 1;
+				this->x = this->x + move;
 
 				return MOVE_VALIDO;
 			}
@@ -315,7 +313,7 @@ int Veleiro::FmoveDireita() {
 			}
 		}
 		if (VerificaPorto == CELULA_PORTO_INIMIGO) {
-			this->x = this->x + 1;
+			this->x = this->x + move;
 			return MOVE_VALIDO;
 		}
 	}
@@ -354,25 +352,25 @@ int Veleiro::FmoveDireita() {
 	}
 	return MOVE_INVALIDO;
 }
-int Veleiro::FmoveCima() {
+int Veleiro::FmoveCima(int move) {
 	int VerificaPorto = 0;
 	//e ver se a nova pos está dentro de agua!
-	if (y > 0 && (mundo->verificaCelulaMar(this->x, this->y - 1) == CELULA_MAR)) {
+	if (y > 0 && (mundo->verificaCelulaMar(this->x, this->y - move) == CELULA_MAR) && (y - move) >= 0) {
 
-		VerificaPorto = mundo->verificaCelulaPorto(this->x, this->y - 1);
+		VerificaPorto = mundo->verificaCelulaPorto(this->x, this->y - move);
 
 		if (VerificaPorto == CELULA_PORTO_AMIGO) {
 
-			this->y = this->y - 1;
+			this->y = this->y - move;
 
 			return MOVE_VALIDO;
 		}
 
 		if (VerificaPorto == CELULA_SEM_PORTO) {
 
-			if (mundo->verificaCelulaNavio(this->x, this->y - 1) != CELULA_NAVIO) {
+			if (mundo->verificaCelulaNavio(this->x, this->y - move) != CELULA_NAVIO) {
 
-				this->y = this->y - 1;
+				this->y = this->y - move;
 
 				return MOVE_VALIDO;
 			}
@@ -384,27 +382,27 @@ int Veleiro::FmoveCima() {
 		}
 
 		if (VerificaPorto == CELULA_PORTO_INIMIGO) {
-			this->y = this->y - 1;
+			this->y = this->y - move;
 			return MOVE_VALIDO;
 		}
 
 	}
 	else {
 
-		if (y == 0 && (mundo->verificaCelulaMar(this->x, mundo->getDimY() - 1) == CELULA_MAR)) {
+		if (y == 0 && (mundo->verificaCelulaMar(this->x, mundo->getDimY() - move) == CELULA_MAR)) {
 
-			VerificaPorto = mundo->verificaCelulaPorto(this->x, mundo->getDimY() - 1);
+			VerificaPorto = mundo->verificaCelulaPorto(this->x, mundo->getDimY() - move);
 
 			if (VerificaPorto == CELULA_PORTO_AMIGO) {
 
-				this->y = mundo->getDimY() - 1;
+				this->y = mundo->getDimY() - move;
 
 				return MOVE_VALIDO;
 			}
 
 			if (VerificaPorto == CELULA_SEM_PORTO) {
 
-				if (mundo->verificaCelulaNavio(this->x, mundo->getDimY() - 1) != CELULA_NAVIO) {
+				if (mundo->verificaCelulaNavio(this->x, mundo->getDimY() - move) != CELULA_NAVIO) {
 
 					this->y = mundo->getDimY() - 1;
 
@@ -417,7 +415,7 @@ int Veleiro::FmoveCima() {
 				}
 			}
 			if (VerificaPorto == CELULA_PORTO_INIMIGO) {
-				this->y = mundo->getDimY() - 1;
+				this->y = mundo->getDimY() - move;
 				return MOVE_VALIDO;
 			}
 		}
@@ -425,25 +423,25 @@ int Veleiro::FmoveCima() {
 
 	return MOVE_INVALIDO;
 }
-int Veleiro::FmoveBaixo() {
+int Veleiro::FmoveBaixo(int move) {
 	int VerificaPorto = 0;
 	//e ver se a nova pos está dentro de agua!
-	if (y < mundo->getDimY() - 1 && (mundo->verificaCelulaMar(this->x, this->y + 1) == CELULA_MAR)) {
+	if (y < mundo->getDimY() - 1 && (mundo->verificaCelulaMar(this->x, this->y + move) == CELULA_MAR) && (y + move) <= mundo->getDimY() - 1) {
 
-		VerificaPorto = mundo->verificaCelulaPorto(this->x, this->y + 1);
+		VerificaPorto = mundo->verificaCelulaPorto(this->x, this->y + move);
 
 		if (VerificaPorto == CELULA_PORTO_AMIGO) {
 
-			this->y = this->y + 1;
+			this->y = this->y + move;
 
 			return MOVE_VALIDO;
 		}
 
 		if (VerificaPorto == CELULA_SEM_PORTO) {
 
-			if (mundo->verificaCelulaNavio(this->x, this->y + 1) != CELULA_NAVIO) {
+			if (mundo->verificaCelulaNavio(this->x, this->y + move) != CELULA_NAVIO) {
 
-				this->y = this->y + 1;
+				this->y = this->y + move;
 
 				return MOVE_VALIDO;
 			}
@@ -453,7 +451,7 @@ int Veleiro::FmoveBaixo() {
 			}
 		}
 		if (VerificaPorto == CELULA_PORTO_INIMIGO) {
-			this->y = this->y + 1;
+			this->y = this->y + move;
 			return MOVE_VALIDO;
 		}
 
@@ -492,7 +490,7 @@ int Veleiro::FmoveBaixo() {
 	}
 	return MOVE_INVALIDO;
 }
-int Veleiro::FmoveCimaEsquerda() {
+int Veleiro::FmoveCimaEsquerda(int move) {
 	int VerificaPorto = 0;
 	//anda normal
 	if ((y > 0 && y <= mundo->getDimY() - 1) && (x > 0 && x <= mundo->getDimX() - 1) && (mundo->verificaCelulaMar(this->x - 1, this->y - 1) == CELULA_MAR)) {
@@ -644,7 +642,7 @@ int Veleiro::FmoveCimaEsquerda() {
 	}
 	return MOVE_INVALIDO;
 }
-int Veleiro::FmoveCimaDireita() {
+int Veleiro::FmoveCimaDireita(int move) {
 	int VerificaPorto = 0;
 	//anda normal
 	if (y > 0 && y <= mundo->getDimY() - 1 && x > 0 && x < mundo->getDimX() - 1 && (mundo->verificaCelulaMar(this->x + 1, this->y - 1) == CELULA_MAR)) {
@@ -795,7 +793,7 @@ int Veleiro::FmoveCimaDireita() {
 	}
 	return MOVE_INVALIDO;
 }
-int Veleiro::FmoveBaixoEsquerda() {
+int Veleiro::FmoveBaixoEsquerda(int move) {
 	int VerificaPorto = 0;
 	//anda normal
 	if ((y >= 0 && y < mundo->getDimY() - 1) && (x > 0 && x <= mundo->getDimX() - 1) && (mundo->verificaCelulaMar(this->x - 1, this->y + 1) == CELULA_MAR)) {
@@ -942,7 +940,7 @@ int Veleiro::FmoveBaixoEsquerda() {
 	}
 	return MOVE_INVALIDO;
 }
-int Veleiro::FmoveBaixoDireita() {
+int Veleiro::FmoveBaixoDireita(int move) {
 	int VerificaPorto = 0;
 	//anda normal
 	if ((y >= 0 && y < mundo->getDimY() - 1) && (x >= 0 && x < mundo->getDimX() - 1) && (mundo->verificaCelulaMar(this->x + 1, this->y + 1) == CELULA_MAR)) {
@@ -1220,10 +1218,18 @@ void Veleiro::daMetade(int x, int y) {
 		this->estado = aDeriva;
 }
 int Veleiro::moveNavio(int direcao) {
-	switch (direcao) {
 
+	unsigned int move = 0;
+	move = rand() % 3;
+
+	if (move == 1)
+		move++;
+	if (move == 0)
+		move++;
+
+	switch (direcao) {
 	case moveEsquerda:
-		if (FmoveEsquerda() == MOVE_VALIDO) {
+		if (FmoveEsquerda(move) == MOVE_VALIDO) {
 			if (this->estado == normal)
 				soldadosBebemAgua();
 			return MOVE_VALIDO;
@@ -1231,7 +1237,7 @@ int Veleiro::moveNavio(int direcao) {
 		else
 			break;
 	case moveDireita:
-		if (FmoveDireita() == MOVE_VALIDO) {
+		if (FmoveDireita(move) == MOVE_VALIDO) {
 			if (this->estado == normal)
 				soldadosBebemAgua();
 			return MOVE_VALIDO;
@@ -1239,7 +1245,7 @@ int Veleiro::moveNavio(int direcao) {
 		else
 			break;
 	case moveCima:
-		if (FmoveCima() == MOVE_VALIDO) {
+		if (FmoveCima(move) == MOVE_VALIDO) {
 			if (this->estado == normal)
 				soldadosBebemAgua();
 			return MOVE_VALIDO;
@@ -1247,7 +1253,7 @@ int Veleiro::moveNavio(int direcao) {
 		else
 			break;
 	case moveBaixo:
-		if (FmoveBaixo() == MOVE_VALIDO) {
+		if (FmoveBaixo(move) == MOVE_VALIDO) {
 			if (this->estado == normal)
 				soldadosBebemAgua();
 			return MOVE_VALIDO;
@@ -1255,7 +1261,7 @@ int Veleiro::moveNavio(int direcao) {
 		else
 			break;
 	case moveCimaEsquerda:
-		if (FmoveCimaEsquerda() == MOVE_VALIDO) {
+		if (FmoveCimaEsquerda(move) == MOVE_VALIDO) {
 			if (this->estado == normal)
 				soldadosBebemAgua();
 			return MOVE_VALIDO;
@@ -1263,7 +1269,7 @@ int Veleiro::moveNavio(int direcao) {
 		else
 			break;
 	case moveCimaDireita:
-		if (FmoveCimaDireita() == MOVE_VALIDO) {
+		if (FmoveCimaDireita(move) == MOVE_VALIDO) {
 			if (this->estado == normal)
 				soldadosBebemAgua();
 			return MOVE_VALIDO;
@@ -1271,7 +1277,7 @@ int Veleiro::moveNavio(int direcao) {
 		else
 			break;
 	case moveBaixoEsquerda:
-		if (FmoveBaixoEsquerda() == MOVE_VALIDO) {
+		if (FmoveBaixoEsquerda(move) == MOVE_VALIDO) {
 			if (this->estado == normal)
 				soldadosBebemAgua();
 			return MOVE_VALIDO;
@@ -1279,7 +1285,7 @@ int Veleiro::moveNavio(int direcao) {
 		else
 			break;
 	case moveBaixoDireita:
-		if (FmoveBaixoDireita() == MOVE_VALIDO) {
+		if (FmoveBaixoDireita(move) == MOVE_VALIDO) {
 			if (this->estado == normal)
 				soldadosBebemAgua();
 			return MOVE_VALIDO;
