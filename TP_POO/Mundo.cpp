@@ -240,7 +240,7 @@ string Mundo::moveNavioPirataAuto() {
 	}
 	return os.str();
 }
-void Mundo::criaNavPirata(Mundo *mundo, const char TipoNavio,int x,int y) {
+Navios * Mundo::criaNavPirata(Mundo *mundo, const char TipoNavio,int x,int y) {
 
 	//pirata
 	Navios *aux=nullptr;
@@ -258,6 +258,7 @@ void Mundo::criaNavPirata(Mundo *mundo, const char TipoNavio,int x,int y) {
 
 	this->navios.push_back(aux);
 
+	return aux;
 }
 const char Mundo::getPortoPrincipal() {
 
@@ -557,22 +558,27 @@ string Mundo::trataEventos(int modoExecucao, int TipoEvento, int idNavio, int co
 		if (navios.size() > 0) {
 
 			for (int i = 0; i < navios.size(); i++) {
-				if (navios[i]->getEstado() == normal || navios[i]->getEstado() == pirata) {
+				if (navios[i]->getEstado() == normal || navios[i]->getEstado() == pirata || navios[i]->getEstado() == autoMove) {
 					if (modoExecucao != EVENTO_EXECUCAO_COMANDO) {
 						do {
 
 							indice = rand() % navios.size();
-						
+							
 
-						} while (navios[indice]->getEstado() != normal && navios[indice]->getEstado() != pirata);
-					}
-					else {
-						if (navios[i]->getId() == idNavio && navios[i] != nullptr)
-							indice = i;
+						} while (navios[indice]->getEstado() != normal && navios[indice]->getEstado() != pirata && navios[indice]->getEstado() != autoMove);
+						
 						break;
 					}
+					else {
+
+						if (navios[i]->getId() == idNavio && navios[i] != nullptr){
+						
+							indice = i;
+						
+							break;
+						}
+					}
 				}
-				
 			}
 			cout << "Indice do navio a ser afetado pelo Ataque da sereia :   " << indice << endl;
 			if (navios[indice]->getNumSoldados() > 0 && navios[indice] != nullptr) {

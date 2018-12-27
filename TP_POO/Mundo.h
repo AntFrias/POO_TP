@@ -107,7 +107,7 @@ public:
 
 	string moveNavioPirataAuto();
 
-	void criaNavPirata(Mundo *mundo, const char TipoNavio, int x, int y);
+	Navios * criaNavPirata(Mundo *mundo, const char TipoNavio, int x, int y);
 
 	void criaSuperficie(int x, int y, char tipo);
 

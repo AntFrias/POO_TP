@@ -49,18 +49,6 @@ string Interface::ExecutaEventos() {
 			else {
 				mundo.setEventoEmExecucao(nullptr);
 			}
-			//if (mundo.VerificaTipoEventoEmExecucao() == true) {
-
-			//	gotoErro();
-
-			//	os << "Existe um evento Calmaria a decorrer..!" << endl;
-			//}
-			//else {
-
-			//	gotoErro();
-
-			//	os << "Existe um evento Motim a decorrer..!" << endl;
-			//}
 		}
 	}
 	else
@@ -182,9 +170,9 @@ void Interface::criaPiratasAuto() {
 		//que tipo de pirata vai criar
 		aux2 = (rand() % 2);
 		if (aux2 == 0)
-			mundo.criaNavPirata(&mundo, 'F', x, y);
+			jogador.addNavioJogador(mundo.criaNavPirata(&mundo, 'F', x, y));
 		if (aux2 == 1) 
-			mundo.criaNavPirata(&mundo, 'V', x, y);
+			jogador.addNavioJogador(mundo.criaNavPirata(&mundo, 'V', x, y));
 		
 	}
 }
@@ -652,7 +640,7 @@ void Interface::PromptFase2(string linha) {
 			if (tipo == 'V' || tipo == 'F') {
 				if (x >= 0 && x < mundo.getDimX() && y >= 0 && y < mundo.getDimY()) {
 					if (mundo.verificaCelulaMar(x, y) == CELULA_MAR && mundo.verificaCelulaNavio(x,y)!= CELULA_NAVIO) {
-						mundo.criaNavPirata(&mundo, tipo, x, y);
+						jogador.addNavioJogador(mundo.criaNavPirata(&mundo, tipo, x, y));
 					}
 				}
 			}
@@ -673,6 +661,8 @@ void Interface::PromptFase2(string linha) {
 					cout << GeradorEvento(EVENTO_EXECUCAO_COMANDO, EVENTO_CALMARIA,0, x, y);
 			}
 		}
+		else
+			cout << "existe um evento a decorrer..." << endl;
 	
 		break;
 
@@ -690,6 +680,8 @@ void Interface::PromptFase2(string linha) {
 					cout << GeradorEvento(EVENTO_EXECUCAO_COMANDO, EVENTO_SEREIAS, idNavio, 0, 0);
 			}
 		}
+		else
+			cout << "existe um evento a decorrer..." << endl;
 		
 		break;
 	case com_moedas:
