@@ -24,7 +24,51 @@ void Interface::gotoErro() {
 void Interface::gotoPrint() {
 	Consola::gotoxy(45, 27);
 }
-string Interface::GeradorEvento()
+
+
+string Interface::ExecutaEventos() {
+
+	ostringstream os;
+
+
+	if (this->InsercaoEvento != INSERCAO_COMANDO)
+	 {
+
+		if (mundo.getExistenciaEvento() == EVENTO_OFF) {
+
+			gotoErro();
+
+			os << GeradorEvento(EVENTO_EXECUCAO_RAND, 0, 0, 0, 0);
+		}
+		else {
+			if ( mundo.getExistenciaEvento() == EVENTO_ON){
+			gotoErro();
+
+			os << mundo.trataEventos(EVENTO_EXECUCAO_RAND,0,0,0,0);
+			}
+			else {
+				mundo.setEventoEmExecucao(nullptr);
+			}
+			//if (mundo.VerificaTipoEventoEmExecucao() == true) {
+
+			//	gotoErro();
+
+			//	os << "Existe um evento Calmaria a decorrer..!" << endl;
+			//}
+			//else {
+
+			//	gotoErro();
+
+			//	os << "Existe um evento Motim a decorrer..!" << endl;
+			//}
+		}
+	}
+	else
+		this->InsercaoEvento = INSERCAO_RAND;
+
+	return os.str();
+}
+string Interface::GeradorEvento(int ModoExecucao, int tipoEvento, int idNavio, int coordX, int coordY)
 {
 	ostringstream os;
 
@@ -32,28 +76,36 @@ string Interface::GeradorEvento()
 	
 	while (mundo.getExistenciaEvento() != EVENTO_ON) {
 			
+		if (ModoExecucao != EVENTO_EXECUCAO_COMANDO)
 			op = rand() % 4 + 1;
+		else
+			op = tipoEvento;
 	
 			switch (op)
 			{
 				case EVENTO_TEMPESTADE:
-					os << "Vai ser Gerada uma Tempestade " << endl;
+				
 					if ((rand() % 100 + 1) <= this->probTempestade) {
 
+						os << "Vai ser Gerada uma Tempestade " << endl;
+						
 						gotoErro();
 						
-						os << mundo.trataEventos(EVENTO_TEMPESTADE) << endl;
-						}
+						os << mundo.trataEventos(ModoExecucao, tipoEvento, idNavio,coordX, coordY) << endl;
+					
+					}
 						return os.str();
 					
 				break;
 				case EVENTO_SEREIAS:
-					os << "Vai ser Gerado um Ataque de Sereias " << endl;
+				
 					if ((rand() % 100 + 1) <= this->probSereias) {
 
+						os << "Vai ser Gerado um Ataque de Sereias " << endl;
+
 						gotoErro();
-						
-						cout << mundo.trataEventos(EVENTO_SEREIAS) << endl;
+
+						cout << mundo.trataEventos(ModoExecucao, tipoEvento, idNavio, coordX, coordY) << endl;
 						}
 						return os.str();
 					
@@ -67,23 +119,41 @@ string Interface::GeradorEvento()
 					
 						os << mundo.criaEvento(&mundo, EVENTO_CALMARIA) << endl;
 						
+						os << mundo.trataEventos(ModoExecucao, tipoEvento, idNavio, coordX, coordY);
 					}
 					return os.str();
 					break;
+
 				case EVENTO_MOTIM:
-	
-					if ((rand() % 100 + 1) <= this->probMotin) {
+					if (mundo.VerificaExistenciaNavios() == true) {
 
-						if (mundo.VerificaExistenciaNavios() == true ) {
+						if (ModoExecucao != EVENTO_EXECUCAO_COMANDO) {
 
-							os << "Vai ser Gerado um Evento Motim " << endl;
+							if ((rand() % 100 + 1) <= this->probMotin) {
 
-							os << mundo.criaEvento(&mundo, EVENTO_MOTIM) << endl;
+									os << "Vai ser Gerado um Evento Motim " << endl;
+
+									os << mundo.criaEvento(&mundo, EVENTO_MOTIM) << endl;
+
+									os << mundo.trataEventos(ModoExecucao, tipoEvento, idNavio, coordX, coordY);
+							
+							}
 						}
-						else
-							os << "Nao existem navios no Mundo para efetuar o Evento Motim" << endl;
+						else {
+
+								os << "Vai ser Gerado um Evento Motim " << endl;
+
+								os << mundo.criaEvento(&mundo, EVENTO_MOTIM) << endl;
+
+								os << mundo.trataEventos(ModoExecucao, tipoEvento, idNavio, coordX, coordY);
+
+							}
 					}
+					else
+						os << "Nao existem navios no Mundo para efetuar o Evento Motim" << endl;
+
 					return os.str();
+
 					break;
 			}
 		}
@@ -220,22 +290,12 @@ void Interface::Prompt() {
 		mundo.verificaaDeriva();
 		mundo.retiraNavAfundados();
 
-		if (mundo.getExistenciaEvento() == EVENTO_OFF) {
-			gotoErro();
-			cout << GeradorEvento();
-		}
-		else {
-			gotoErro();
-			cout << mundo.trataEventos();
-			if (mundo.VerificaTipoEventoEmExecucao() == true) {
-				gotoErro();
-				cout << "Existe um evento Calmaria a decorrer..!" << endl;
-			}
-			else {
-				gotoErro();
-				cout << "Existe um evento Motim a decorrer..!" << endl;
-			}
-		}
+		cout << ExecutaEventos();
+
+		
+
+
+	
 		//execu��o de comando pendentes | comportamentos automaticos
 		//combates
 		//eventos
@@ -255,10 +315,14 @@ void Interface::Prompt() {
 
 
 }
+
+
+
+
 int Interface::FiltaComandos(string acao) {
 
 	vector< string > comandos = {"exec", "prox", "compranav", "vendenav", "lista", "compra", "vende", "move", "auto", "stop", "pirata","evpos","evnav",
-								  "moedas", "evpos", "evnav","pirata","vaipara", "comprasold", "saveg", "loadg", "delg"};
+								  "moedas", "vaipara", "comprasold", "saveg", "loadg", "delg"};
 
 	for (unsigned int i = 0; i < comandos.size(); i++) {
 		if (comandos[i].compare(acao) == 0)
@@ -537,11 +601,13 @@ void Interface::PromptFase2(string linha) {
 				if (ValidaDirecoes(direcao))
 					if (jogador.validaIdNavio(idNavio) == true)
 						if (!jogador.verificaModoAutomaticoNavio(idNavio)) {
-							jogador.moveNavioJogador(idNavio, ValidaDirecoes(direcao));//com sucesso
-								auxNavio = mundo.getNavio(idNavio);
-								Consola::setTextColor(Consola::BRANCO);
-								Consola::gotoxy(0, 26);
-								cout << auxNavio->combate(CELULA_NAVIO_PIRATA);
+							auxNavio = mundo.getNavio(idNavio);
+							if( auxNavio->getEstado() != calmaria && auxNavio->getEstado() != motim){
+								jogador.moveNavioJogador(idNavio, ValidaDirecoes(direcao));//com sucesso
+									Consola::setTextColor(Consola::BRANCO);
+									Consola::gotoxy(0, 26);
+									cout << auxNavio->combate(CELULA_NAVIO_PIRATA);
+							}
 						}
 						else
 							cout << "[ Erro..! AutoMove do Navio : " << idNavio << " esta ativo ..! ]" << endl;
@@ -594,12 +660,37 @@ void Interface::PromptFase2(string linha) {
 		
 		break;
 	case com_evpos:
-		gotoErro();
-		cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
+	
+		if (mundo.getExistenciaEvento() == EVENTO_OFF && this->InsercaoEvento == INSERCAO_RAND) {
+
+			if (buffer >> tipo && buffer >> x && buffer >> y && count(linha.begin(), linha.end(), ' ') == 3) {
+
+				this->InsercaoEvento = true;
+
+				if (tipo == 'T')
+					cout << GeradorEvento(EVENTO_EXECUCAO_COMANDO, EVENTO_TEMPESTADE,0, x, y);
+				else if (tipo == 'C')
+					cout << GeradorEvento(EVENTO_EXECUCAO_COMANDO, EVENTO_CALMARIA,0, x, y);
+			}
+		}
+	
 		break;
+
 	case com_evnav:
-		gotoErro();
-		cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
+	
+		if (mundo.getExistenciaEvento() == EVENTO_OFF && this->InsercaoEvento == INSERCAO_RAND) {
+
+			if (buffer >> tipo && buffer >> idNavio && count(linha.begin(), linha.end(), ' ') == 2) {
+				
+				this->InsercaoEvento = true;
+
+				if (tipo == 'M')
+					cout << GeradorEvento(EVENTO_EXECUCAO_COMANDO, EVENTO_MOTIM, idNavio, 0, 0);
+				else if (tipo == 'S')
+					cout << GeradorEvento(EVENTO_EXECUCAO_COMANDO, EVENTO_SEREIAS, idNavio, 0, 0);
+			}
+		}
+		
 		break;
 	case com_moedas:
 		
@@ -645,6 +736,17 @@ void Interface::PromptFase2(string linha) {
 	}
 }
 }
+
+bool Interface::getInsercaoComandoEvento() const
+{
+	return this->InsercaoEvento;
+}
+
+void Interface::setInsercaoComandoEvento(bool insercao)
+{
+	this->InsercaoEvento = insercao;
+}
+
 void Interface::mostraLegAndConfig() {
 
 	Consola::setTextColor(Consola::BRANCO);

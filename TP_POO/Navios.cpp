@@ -87,10 +87,10 @@ string Navios::AlteraSoldadosPosEvento(int prob)
 	ostringstream os;
 
 	int soldadosPerdidos = (quantSoldados * prob) / 100;
-	os << "Total de Soldados Antes do ataque: " << this->quantSoldados << endl;
+	os << "Total de Soldados Antes do ataque de Sereias : " << this->quantSoldados << endl;
 	quantSoldados = quantSoldados - soldadosPerdidos;
 
-	os << "Quantidade Soldados Perdidos pelo navio" << this->id << ": " << soldadosPerdidos << endl;
+	os << "Quantidade Soldados Perdidos pelo navio apos ataque " << this->id << ": " << soldadosPerdidos << endl;
 	os << "Total de Soldados que permanecem no navio : " << this->quantSoldados << endl;
 
 	if (quantSoldados == 0 )

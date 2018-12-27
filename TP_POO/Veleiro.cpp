@@ -1319,18 +1319,18 @@ string Veleiro::TrataNavioTempestade()
 {
 	ostringstream os;
 
-	os << "O navio é do tipo Veleiro" << endl;
+	os << " O navio e do tipo Veleiro e vai ser apanhado por uma Tempestade" << endl;
 
 	int QuantCarga = ( this->QuantMercadoria * 100 ) / VELEIRO_QUANT_MAX_CARGA;
 
 	int probAfundar = rand() % 100 + 1;
 
 	if (this->estado = pirata) {
-		os << "O navio é do tipo Pirata" << endl;
+		os << " O navio e do tipo Pirata e vai ser afundado pela Tempestade .. !" << endl;
 		this->estado = afundado;
 	}
 	else {
-		os << "O navio é do tipo Normal" << endl;
+		os << " O navio e do tipo Normal e vai ser apanhado por uma Tempestade .. !" << endl;
 		if (probAfundar <= PROB_VELEIRO_AFUNDAR_TEMPESTADE_1 && QuantCarga >= PROB_VELEIRO_PERDER_CARGA)
 			this->estado = afundado;
 
@@ -1339,6 +1339,8 @@ string Veleiro::TrataNavioTempestade()
 																	// de capacidade de carga
 		else
 		{
+			os << " O navio Resistiu a tempestade e vai perder metade da sua Carga ...!" << endl;
+
 			RetiraCargaNavio(QuantMercadoria / 2);
 		}
 		AbasteceAguaNavio();

@@ -406,15 +406,15 @@ string Fragata::TrataNavioTempestade()
 
 	
 	if (this->estado == pirata) {
-		os << "O navio é do tipo Pirata" << endl;
+		os << " O navio e do tipo Pirata e vai ser Afundado devido a ter sido apanhado por uma Tempestade ..!" << endl;
 		this->estado = afundado;
 	}
 	else {
-		os << "O navio é do tipo Normal" << endl;
+		os << " O navio e do tipo Normal e vai ser apanhado por uma Tempestade  ..!" << endl;
 		if (rand() % 100 + 1 <= PROB_FRAGATA_AFUNDAR_TEMPESTADE)
 			this->estado = afundado;
 		else {
-
+			os << " O navio Resistiu a tempestade  e ira perder Soldados..!" << endl;
 			this->quantSoldados = this->quantSoldados - ((quantSoldados * 15) / 100);
 		
 			AbasteceAguaNavio();

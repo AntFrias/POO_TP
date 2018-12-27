@@ -364,33 +364,43 @@ void Mundo::setEventoEmExecucao(Eventos * evento)
 {
 	this->Evento = evento;
 }
-string Mundo::TrataEventoMotim(int estadoMotim) {
+string Mundo::TrataEventoMotim(int estadoMotim, int modoExecucao, int idNavio) {
 
 	ostringstream os;
 
 	static int indice, estado;
-	cout << "ESTADO DO MOTIM : " << estadoMotim << endl <<endl;
+
 	if (estadoMotim == MOTIM_ESTADO_INICIO_MOTIM){
 
 		if (navios.size() > 0 && this->VerificaExistenciaNavios() == true) {
+			
+			if (modoExecucao != EVENTO_EXECUCAO_COMANDO) {
 
-			do{
-						
-				indice = rand() % navios.size();
+				do {
 
-				if (navios[indice]->getEstado() == normal || navios[indice]->getEstado() == pirata || navios[indice]->getEstado() == autoMove)
-					break;
+					indice = rand() % navios.size();
 
-			}while (navios[indice]->getEstado() != normal || navios[indice]->getEstado() != pirata || navios[indice]->getEstado() != autoMove);
+					if (navios[indice]->getEstado() == normal || navios[indice]->getEstado() == pirata || navios[indice]->getEstado() == autoMove)
+						break;
+
+				} while (navios[indice]->getEstado() != normal || navios[indice]->getEstado() != pirata || navios[indice]->getEstado() != autoMove);
+			}
+			else {
+				for (int i = 0; i < navios.size(); i++) {
+					if (navios[i]->getEstado() == normal || navios[i]->getEstado() == pirata || navios[i]->getEstado() == autoMove)
+						if (navios[i]->getId() == idNavio && navios[i] != nullptr){
+							indice = i;
+							break;
+					}
+				}
+			}
 	
 			os << " O navio com o ID" << navios[indice]->getId() << "foi apanhado por 1 Motim" << endl;
-
-			os << " O navio Ira tornar-se Pirata Temporariamente" << endl;
 					
 			// so navio for apanhado por 1 motim,  e for pirata fica á deriva
 			if (navios[indice]->getEstado() == pirata) {
 					
-				os << " O NAvio e pirata e vai se tornar Aderiva" << endl;
+				os << " Os Piratas Foram tomar Banho, o Navio irá ficar á deriva Temporariamente ..!" << endl;
 				
 				estado = navios[indice]->getEstado();
 
@@ -399,7 +409,7 @@ string Mundo::TrataEventoMotim(int estadoMotim) {
 			} // se o navio for apanhado por 1 motim e for do jogador fica em modo pirata
 			else if (navios[indice]->getEstado() == normal || navios[indice]->getEstado() == autoMove) {
 					
-				os << "o NAvio e Normal e vai se tornar Pirata" << endl;
+				os << " O NAvio do Jogador vai se tornar Pirata Temporariamente " << endl;
 				
 				estado = navios[indice]->getEstado();
 
@@ -408,7 +418,7 @@ string Mundo::TrataEventoMotim(int estadoMotim) {
 				
 		}
 		else
-			os << " Não Existem Navios para o Motim no Mundo" << endl;
+			os << " Não Existem Navios para ser realizado o Motim no Mundo" << endl;
 	}
 	else {
 		
@@ -428,7 +438,7 @@ string Mundo::TrataEventoCalmaria(int epiX, int epiY, int estado) {
 	int x, y;
 
 	if (estado == CALMARIA_ESTADO_EM_EXECUCAO_CALMARIA) {
-		if (navios.size() > 0)
+		if (navios.size() > 0) {
 			for (unsigned int s = 0; s < navios.size(); s++) {
 
 				x = navios[s]->getX();
@@ -437,11 +447,11 @@ string Mundo::TrataEventoCalmaria(int epiX, int epiY, int estado) {
 
 				if (x >= (epiX - RANGE_EVENTO) && x <= (epiX + RANGE_EVENTO) && y >= (epiY - RANGE_EVENTO) && y <= (epiY + RANGE_EVENTO)) {
 
-					os << " Foi Encontrado um Navio com o id " << navios[s]->getId() << " na posicao " << x << " , " << y << endl;
+					os << " Foi Encontrado um Navio com o id " << navios[s]->getId() << " na posicao [ " << x << " : " << y << " ] " << endl;
 
-					os << " O navio Vai ser afetado por uma calmaria" << endl;
+					os << " O navio com o Id " << navios[s]->getId() << " : Vai ser afetado por uma calmaria" << endl;
 
-					os << " O estado antigo era " << navios[s]->getEstado() << endl;
+					os << " O estado antigo do Navio com o ID " << navios[s]->getId() << "era : " << navios[s]->getEstado() << "  .. !" << endl;
 
 					if (navios[s]->getEstado() != calmaria && navios[s]->getEstado() != afundado) {
 
@@ -454,17 +464,17 @@ string Mundo::TrataEventoCalmaria(int epiX, int epiY, int estado) {
 
 				}
 				os << " O estado seguinte passou a ser " << navios[s]->getEstado() << endl;
-				os << "Calmaria size " << Calmaria.size() << endl;
-				os << "EstadoAntigo size " << EstadoAntigo.size() << endl;
-			
-			
 			}
+		}
+		else
+			os << " Não Existem Navios no Range da Calmaria .. !" << endl;
+
 	}
 	else {
-		if (navios.size() > 0 ){
+		if (navios.size() > 0  && Calmaria.size() > 0 ){
 			for (unsigned int k = 0; k < Calmaria.size(); k++) {
 				for (unsigned int j = 0; j < navios.size();j++) {
-					if (Calmaria[k] == navios[j]->getId()){
+					if (Calmaria[k] == navios[j]->getId() && navios[j] != nullptr){
 						navios[j]->setEstado(EstadoAntigo[k]);
 					}
 				}
@@ -491,38 +501,48 @@ string Mundo::TrataEventoTempestade(int epiX, int epiY)
 
 	int x, y;
 
-	for (auto it = navios.begin(); it != navios.end();) {
+	for(int i = 0; i < navios.size(); i++ ){
 
-		x = (*it)->getX();
+		x = navios[i]->getX();
 
-		y = (*it)->getY();
+		y = navios[i]->getY();
 
 		if (x >= (epiX - RANGE_EVENTO) && x <= (epiX + RANGE_EVENTO) && y >= (epiY - RANGE_EVENTO) && y <= (epiY + RANGE_EVENTO)) {
 
-			os << " Foi Encontrado um Navio com o id   " << (*it)->getId() << "   na posicao " << x << " , " << y << endl;
+			os << " O Navio com o id   " << navios[i]->getId() << "   na posicao [ " << x << " : " << y << " ] " << endl;
 
-			os << (*it)->TrataNavioTempestade() << endl;
+			os << navios[i]->TrataNavioTempestade() << endl;
 		}
-		++it;
+
 	}
 	return os.str();
 }
 // por defeito o tipo de eventos vai ter valor 0 para entrar no default e executar a acao para eventos que duram mais do que 1 turno
-string Mundo::trataEventos(int TipoEvento)
+string Mundo::trataEventos(int modoExecucao, int TipoEvento, int idNavio, int coordX, int coordY)
 {
 	ostringstream os;
 
-	int epicentroX, epicentroY, indice;
+	int epicentroX, epicentroY, indice = 0;
 
 	switch (TipoEvento)
 	{
 	case EVENTO_TEMPESTADE:
 
-		epicentroX = rand() % ((this->dimY -2) - 2)+2;
-			
-		epicentroY = rand() % ((this->dimX - 2) - 2 )+2;
+		if ( modoExecucao != EVENTO_EXECUCAO_COMANDO){
 
-		os << " Epicentro da Tempestade:  " << epicentroX << " , " << epicentroY << endl;
+			epicentroX = rand() % ((this->dimY -2) - 2)+2;
+			
+			epicentroY = rand() % ((this->dimX - 2) - 2 )+2;
+		
+		}
+		else {
+
+			epicentroX = coordX;
+
+			epicentroY = coordY;
+
+		}
+		os << " <<<<      Epicentro da Tempestade:  [ " << epicentroX << " : " << " ]     >>>>" << epicentroY << endl;
 		
 		os << TrataEventoTempestade(epicentroX, epicentroY);
 
@@ -536,29 +556,38 @@ string Mundo::trataEventos(int TipoEvento)
 		
 		if (navios.size() > 0) {
 
-			for ( int i = 0; i < navios.size(); i++)
-				if(navios[i]->getEstado() == normal || navios[i]->getEstado() == pirata){
-					do {
-		
-						indice = rand() % navios.size() ;
+			for (int i = 0; i < navios.size(); i++) {
+				if (navios[i]->getEstado() == normal || navios[i]->getEstado() == pirata) {
+					if (modoExecucao != EVENTO_EXECUCAO_COMANDO) {
+						do {
 
-					} while (navios[indice]->getEstado() != normal && navios[indice]->getEstado() != pirata);
+							indice = rand() % navios.size();
+						
 
-					if ( navios[indice]->getNumSoldados() > 0){
-				
-						os << " Navio com o ID : " << navios[indice]->getId() << " vai sofrer ataque de sereia" << endl;
-				
-						os << TrataEventoSereias(indice);
-
-						return os.str();
-
+						} while (navios[indice]->getEstado() != normal && navios[indice]->getEstado() != pirata);
+					}
+					else {
+						if (navios[i]->getId() == idNavio && navios[i] != nullptr)
+							indice = i;
+						break;
 					}
 				}
+				
+			}
+			cout << "Indice do navio a ser afetado pelo Ataque da sereia :   " << indice << endl;
+			if (navios[indice]->getNumSoldados() > 0 && navios[indice] != nullptr) {
+
+				os << " Navio com o ID :  " << navios[indice]->getId() << "  vai sofrer ataque de sereia" << endl;
+
+				os << TrataEventoSereias(indice);
+
+			}
+
+			this->EstadoEvento = EVENTO_OFF;
+				
 		}
 		else
-			os <<" Nao existem navios para efetuar o ataque da sereia" << endl;
-
-		this->EstadoEvento = EVENTO_OFF;
+			os <<" Nao existem navios para efetuar o ataque da sereia  ...!" << endl;
 
 		return os.str();
 		
@@ -566,9 +595,12 @@ string Mundo::trataEventos(int TipoEvento)
 
 	default:
 
-		if (Evento != nullptr){
+		if (Evento != nullptr && Evento->getTTL() > 0){
 
-			os << Evento->TrataEvento();
+			if (this->VerificaTipoEventoEmExecucao() == true)
+				os << Evento->TrataEvento(modoExecucao, idNavio, coordX, coordY, TTL_CALMARIA);
+			else
+				os << Evento->TrataEvento(modoExecucao, idNavio, coordX, coordY, TTL_MOTIM);
 
 			if (Evento->getTTL() == 0) {
 
@@ -593,13 +625,11 @@ string Mundo::criaEvento(Mundo * mundo, int tipo)
 
 		this->Evento = new Calmaria(mundo);
 		this->EstadoEvento = EVENTO_ON;
-		os << trataEventos(EVENTO_CALMARIA) << endl;
 		break;
 
 	case EVENTO_MOTIM:
 		this->Evento = new Motim(mundo);
 		this->EstadoEvento = EVENTO_ON;
-		os << trataEventos(EVENTO_MOTIM) << endl;
 		break;
 	}
 	return os.str();
@@ -634,8 +664,6 @@ int Mundo::verificaCelulaPorto(int x, int y) {
 	}
 	return CELULA_SEM_PORTO;
 }
-
-
 
 
 Mundo::~Mundo(){
