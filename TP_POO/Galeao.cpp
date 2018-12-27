@@ -1143,15 +1143,17 @@ string Galeao::TrataNavioTempestade()
 {
 	ostringstream os;
 
-	os << "O Navio � do tipo Galeao" << endl;
+	os << "O Navio e do tipo Galeao e vai ser apanhado por uma Tempestade ..!" << endl;
 
 	int probAfundar = rand() % 100 + 1;
 
 	if (probAfundar <= PROB_GALEAO_AFUNDAR_TEMPESTADE) // aqui a probabilidade � diferente pelo facto do 
 		this->estado = afundado;
-	else
+	else{
+		os << " O Navio Resistiu á tempetade e irá perder Soldados e abastecer-se de agua  ..!" << endl;
 		this->quantSoldados = this->quantSoldados - ((this->quantSoldados * 10) / 100);
-	
+	}
+
 	AbasteceAguaNavio();
 
 	return os.str();

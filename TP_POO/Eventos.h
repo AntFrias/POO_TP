@@ -28,7 +28,7 @@ public:
 
 	Eventos(Mundo *mundo, int TTL);
 	virtual bool VerificaEventoCalmaria() = 0;
-	virtual string TrataEvento() = 0;
+	virtual string TrataEvento(int modoExecucao, int idNavio, int coordX, int coordY, int duracao) = 0;
 	virtual int getTTL()const = 0;
 	~Eventos();
 };

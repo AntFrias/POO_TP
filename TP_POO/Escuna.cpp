@@ -1143,7 +1143,7 @@ string Escuna::TrataNavioTempestade()
 
 	ostringstream os;
 
-	os << "O navio � do tipo Escuna" << endl;
+	os << "O navio e do tipo Escuna e vai ser Afetado pela Tempestade" << endl;
 
 	QuantCargaPerder = rand() % 100 + 1;
 
@@ -1153,6 +1153,7 @@ string Escuna::TrataNavioTempestade()
 		RetiraCargaNavio(QuantCargaPerder);
 		this->quantSoldados = this->quantSoldados - ((this->quantSoldados * 15) / 100);
 		AbasteceAguaNavio();
+		os << " O Navio nao afundou ficando com Maxima capacidade de agua .. !" << endl;
 	}
 	else if (probAfundar <= PROB_ESCUNA_AFUNDAR_TEMPESTADE)
 		this->estado = afundado;
