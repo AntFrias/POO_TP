@@ -429,16 +429,16 @@ int Fragata::FmoveEsquerda(int move) {
 
 		VerificaPorto = mundo->verificaCelulaPorto(this->x - move, this->y);
 
-		if (VerificaPorto == CELULA_PORTO_AMIGO) {
+		if (VerificaPorto == CELULA_PORTO_AMIGO && mundo->verificaCelulaMar(this->x - 1, this->y) == CELULA_MAR) {// alterei aqui
 
 			this->x = this->x - move;
 
 			return MOVE_VALIDO;
 		}
 
-		if (VerificaPorto == CELULA_SEM_PORTO) {
+		if (VerificaPorto == CELULA_SEM_PORTO && mundo->verificaCelulaMar(this->x - 1, this->y) == CELULA_MAR) {
 
-			if (mundo->verificaCelulaNavio(this->x - move, this->y) != CELULA_NAVIO) {
+			if (mundo->verificaCelulaNavio(this->x - move, this->y) != CELULA_NAVIO && mundo->verificaCelulaNavio(this->x - 1, this->y) != CELULA_NAVIO && mundo->verificaCelulaMar(this->x - 1, this->y) == CELULA_MAR) {//alterei aqui
 
 				this->x = this->x - move;
 
@@ -450,40 +450,41 @@ int Fragata::FmoveEsquerda(int move) {
 
 			}
 		}
-		if (VerificaPorto == CELULA_PORTO_INIMIGO) {
+		if (VerificaPorto == CELULA_PORTO_INIMIGO && mundo->verificaCelulaMar(this->x - 1, this->y) == CELULA_MAR) {//alterei aqui
 			this->x = this->x - move;
 			return MOVE_VALIDO;
 		}
 	}
 	else {
 
-		if (x == 0 && (mundo->verificaCelulaMar(mundo->getDimX() - move, this->y) == CELULA_MAR) )
+		if (x == 0 && (mundo->verificaCelulaMar(mundo->getDimX() - move, this->y) == CELULA_MAR)) {
 
 			VerificaPorto = mundo->verificaCelulaPorto(mundo->getDimX() - move, this->y);
 
-		if (VerificaPorto == CELULA_PORTO_AMIGO) {
-
-			this->x = mundo->getDimX() - move;
-
-			return MOVE_VALIDO;
-		}
-		if (VerificaPorto == CELULA_SEM_PORTO) {
-
-			if (mundo->verificaCelulaNavio(mundo->getDimX() - move, this->y) != CELULA_NAVIO) {
+			if (VerificaPorto == CELULA_PORTO_AMIGO && mundo->verificaCelulaMar(this->x - 1, this->y) == CELULA_MAR) {//alterei aqui
 
 				this->x = mundo->getDimX() - move;
 
 				return MOVE_VALIDO;
 			}
-			else {
+			if (VerificaPorto == CELULA_SEM_PORTO && mundo->verificaCelulaMar(this->x - 1, this->y) == CELULA_MAR) {//alterei aqui
 
-				return MOVE_INVALIDO;
+				if (mundo->verificaCelulaNavio(mundo->getDimX() - move, this->y) != CELULA_NAVIO && mundo->verificaCelulaNavio(this->x - 1, this->y) != CELULA_NAVIO && mundo->verificaCelulaMar(this->x - 1, this->y) == CELULA_MAR) {//alterei aqui
 
+					this->x = mundo->getDimX() - move;
+
+					return MOVE_VALIDO;
+				}
+				else {
+
+					return MOVE_INVALIDO;
+
+				}
 			}
-		}
-		if (VerificaPorto == CELULA_PORTO_INIMIGO) {
-			this->x = mundo->getDimX() - move;
-			return MOVE_VALIDO;
+			if (VerificaPorto == CELULA_PORTO_INIMIGO && mundo->verificaCelulaMar(this->x - 1, this->y) == CELULA_MAR) {// alterei aqui
+				this->x = mundo->getDimX() - move;
+				return MOVE_VALIDO;
+			}
 		}
 	}
 	return MOVE_INVALIDO;
@@ -495,15 +496,15 @@ int Fragata::FmoveDireita(int move) {
 
 		VerificaPorto = mundo->verificaCelulaPorto(this->x + move, this->y);
 
-		if (VerificaPorto == CELULA_PORTO_AMIGO) {
+		if (VerificaPorto == CELULA_PORTO_AMIGO && mundo->verificaCelulaMar(this->x+1, this->y) == CELULA_MAR) { //alterei aqui
 
 			this->x = this->x + move;
 
 			return MOVE_VALIDO;
 		}
-		if (VerificaPorto == CELULA_SEM_PORTO) {
+		if (VerificaPorto == CELULA_SEM_PORTO && mundo->verificaCelulaMar(this->x + 1, this->y) == CELULA_MAR) { //alterei aqui
 
-			if (mundo->verificaCelulaNavio(this->x + move, this->y) != CELULA_NAVIO) {
+			if (mundo->verificaCelulaNavio(this->x + move, this->y) != CELULA_NAVIO && mundo->verificaCelulaNavio(this->x + 1, this->y) != CELULA_NAVIO && mundo->verificaCelulaMar(this->x + 1, this->y) == CELULA_MAR) { //alterei aqui
 
 				this->x = this->x + move;
 
@@ -515,7 +516,7 @@ int Fragata::FmoveDireita(int move) {
 
 			}
 		}
-		if (VerificaPorto == CELULA_PORTO_INIMIGO) {
+		if (VerificaPorto == CELULA_PORTO_INIMIGO && mundo->verificaCelulaMar(this->x + 1, this->y) == CELULA_MAR) { //alterei aqui
 			this->x = this->x + move;
 			return MOVE_VALIDO;
 		}
@@ -560,18 +561,19 @@ int Fragata::FmoveCima(int move) {
 	//e ver se a nova pos está dentro de agua!
 	if (y > 0 && (mundo->verificaCelulaMar(this->x, this->y - move) == CELULA_MAR) && (y-move)>=0) {
 
+
 		VerificaPorto = mundo->verificaCelulaPorto(this->x, this->y - move);
 
-		if (VerificaPorto == CELULA_PORTO_AMIGO) {
-
+		if (VerificaPorto == CELULA_PORTO_AMIGO && mundo->verificaCelulaMar(this->x, this->y - 1) == CELULA_MAR) { // alterei aqui
+		
 			this->y = this->y - move;
 
 			return MOVE_VALIDO;
 		}
 
 		if (VerificaPorto == CELULA_SEM_PORTO) {
-
-			if (mundo->verificaCelulaNavio(this->x, this->y - move) != CELULA_NAVIO) {
+			
+			if (mundo->verificaCelulaNavio(this->x, this->y - move) != CELULA_NAVIO && mundo->verificaCelulaNavio(this->x, this->y - 1) != CELULA_NAVIO && mundo->verificaCelulaMar(this->x, this->y - 1) == CELULA_MAR) {//alterei aqui
 
 				this->y = this->y - move;
 
@@ -584,19 +586,20 @@ int Fragata::FmoveCima(int move) {
 			}
 		}
 
-		if (VerificaPorto == CELULA_PORTO_INIMIGO) {
+		if (VerificaPorto == CELULA_PORTO_INIMIGO && mundo->verificaCelulaMar(this->x, this->y - 1) == CELULA_MAR) { //alterei aqui
 			this->y = this->y - move;
 			return MOVE_VALIDO;
 		}
+		
 
 	}
 	else {
 
-		if (y == 0 && (mundo->verificaCelulaMar(this->x, mundo->getDimY() - move) == CELULA_MAR)) {
+		if (y == 0 && (mundo->verificaCelulaMar(this->x, mundo->getDimY() - move) == CELULA_MAR) && mundo->verificaCelulaMar(this->x, this->y - 1) == CELULA_MAR) { //alterei aqui
 
 			VerificaPorto = mundo->verificaCelulaPorto(this->x, mundo->getDimY() - move);
 
-			if (VerificaPorto == CELULA_PORTO_AMIGO) {
+			if (VerificaPorto == CELULA_PORTO_AMIGO && mundo->verificaCelulaMar(this->x, this->y - 1) == CELULA_MAR) { //alterei aqui
 
 				this->y = mundo->getDimY() - move;
 
@@ -605,7 +608,7 @@ int Fragata::FmoveCima(int move) {
 
 			if (VerificaPorto == CELULA_SEM_PORTO) {
 
-				if (mundo->verificaCelulaNavio(this->x, mundo->getDimY() - move) != CELULA_NAVIO) {
+				if (mundo->verificaCelulaNavio(this->x, mundo->getDimY() - move) != CELULA_NAVIO && mundo->verificaCelulaNavio(this->x, mundo->getDimY() - 1) != CELULA_NAVIO && mundo->verificaCelulaMar(this->x, this->y - 1) == CELULA_MAR) { //alterei aqui
 
 					this->y = mundo->getDimY() - 1;
 
@@ -617,7 +620,7 @@ int Fragata::FmoveCima(int move) {
 					return MOVE_INVALIDO;
 				}
 			}
-			if (VerificaPorto == CELULA_PORTO_INIMIGO) {
+			if (VerificaPorto == CELULA_PORTO_INIMIGO && mundo->verificaCelulaMar(this->x, this->y - 1) == CELULA_MAR) {//alterei aqui
 				this->y = mundo->getDimY() - move;
 				return MOVE_VALIDO;
 			}
@@ -633,16 +636,16 @@ int Fragata::FmoveBaixo(int move) {
 
 		VerificaPorto = mundo->verificaCelulaPorto(this->x, this->y + move);
 
-		if (VerificaPorto == CELULA_PORTO_AMIGO) {
+		if (VerificaPorto == CELULA_PORTO_AMIGO && mundo->verificaCelulaMar(this->x, this->y + 1) == CELULA_MAR) {//alterei aqui
 
 			this->y = this->y + move;
 
 			return MOVE_VALIDO;
 		}
 
-		if (VerificaPorto == CELULA_SEM_PORTO) {
+		if (VerificaPorto == CELULA_SEM_PORTO && mundo->verificaCelulaMar(this->x, this->y + 1) == CELULA_MAR) {//alterei aqui
 
-			if (mundo->verificaCelulaNavio(this->x, this->y + move) != CELULA_NAVIO) {
+			if (mundo->verificaCelulaNavio(this->x, this->y + move) != CELULA_NAVIO && mundo->verificaCelulaNavio(this->x, this->y + 1) != CELULA_NAVIO && mundo->verificaCelulaMar(this->x, this->y + 1) == CELULA_MAR) {//alterei aqui
 
 				this->y = this->y + move;
 
@@ -653,7 +656,7 @@ int Fragata::FmoveBaixo(int move) {
 				return MOVE_INVALIDO;
 			}
 		}
-		if (VerificaPorto == CELULA_PORTO_INIMIGO) {
+		if (VerificaPorto == CELULA_PORTO_INIMIGO && mundo->verificaCelulaMar(this->x, this->y + 1) == CELULA_MAR) {//alterei aqui
 			this->y = this->y + move;
 			return MOVE_VALIDO;
 		}
