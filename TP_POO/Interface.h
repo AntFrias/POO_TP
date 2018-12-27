@@ -38,6 +38,13 @@ using namespace std;
 #define EVENTO_CALMARIA 3
 #define EVENTO_MOTIM 4
 
+#define EVENTO_EXECUCAO_COMANDO 1
+#define EVENTO_EXECUCAO_RAND 2
+
+// para diferenciar a insercao de eventos por comandos
+#define INSERCAO_COMANDO true
+#define INSERCAO_RAND false
+
 enum IndiceComandos {
 	com_exec = 1,
 	com_prox,
@@ -53,10 +60,10 @@ enum IndiceComandos {
 	com_evpos,
 	com_evnav,
 	com_moedas,
-	com_loadg,
+	com_vaipara,
 	com_comprasold,
 	com_saveg,
-	com_vaipara,
+	com_loadg,
 	com_delg,
 };
 enum IndiceConFiguracoes {
@@ -101,6 +108,7 @@ class Interface
 
 	int Turno;
 	static int incTurno;
+	bool InsercaoEvento;
 
 public:
 	Interface() : Turno(0) {};
@@ -121,11 +129,14 @@ public:
 	void gotoComando();
 	void gotoErro();
 	void gotoPrint();
-	string GeradorEvento();
+	string ExecutaEventos();
+	string GeradorEvento(int ModoExecucao, int tipoEvento, int idNavio, int coordX, int coordY);
 	int verificaFimdoJogo();
 	void mostraMapa();
 	int verificaDadosFicheiro(string linha);
 	bool carregaFich(string configfich);
+	bool getInsercaoComandoEvento() const;
+	void setInsercaoComandoEvento(bool insercao);
 	
 
 

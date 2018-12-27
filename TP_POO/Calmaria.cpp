@@ -2,7 +2,7 @@
 #include "Mundo.h"
 
 
-string Calmaria::TrataEvento()
+string Calmaria::TrataEvento(int modoExecucao, int idNavio, int coordX, int coordY)
 {
 	ostringstream os;
 
@@ -12,10 +12,18 @@ string Calmaria::TrataEvento()
 
 	if (this->TTL == TTL_CALMARIA) {
 
+		if ( modoExecucao != EVENTO_EXECUCAO_COMANDO){
 		epicentroX = rand() % ((mundo->getDimX() - 2) - 2) + 2;
 
 		epicentroY = rand() % ((mundo->getDimY() - 2) - 2) + 2;
+		}
+		else {
 
+			epicentroX = coordX;
+
+			epicentroY = coordY;
+
+		}
 		os << " Vai ser criada uma Calmaria" << endl;
 
 	}

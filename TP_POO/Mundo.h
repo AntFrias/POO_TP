@@ -20,9 +20,12 @@
 #include "Terra.h"
 #include "Porto.h"
 #include "Navios.h"
-
+// para diferenciar quando um evento esta on ou off
 #define EVENTO_ON true
 #define EVENTO_OFF false
+
+#define EVENTO_EXECUCAO_COMANDO 1
+#define EVENTO_EXECUCAO_RAND 2
 
 #define NAVIO_AFUNDADO true
 
@@ -146,7 +149,7 @@ public:
 
 	void setEventoEmExecucao(Eventos *evento);
 
-	string TrataEventoMotim(int estadoMotim);
+	string TrataEventoMotim(int estadoMotim, int modoExecucao, int idNavio);
 
 	bool VerificaTipoEventoEmExecucao() { return Evento->VerificaEventoCalmaria(); };
 
@@ -156,7 +159,7 @@ public:
 	
 	string TrataEventoTempestade(int x, int y);
 
-	string trataEventos(int TipoEvento = 0);
+	string trataEventos(int modoExecucao, int TipoEvento, int idNavio, int coordX, int coordY);
 
 	string criaEvento(Mundo *mundo, int tipo);
 
@@ -165,6 +168,8 @@ public:
 	void limpaVetores();
 
 	int verificaCelulaPorto(int x, int y);
+
+
 
 	~Mundo();
 };

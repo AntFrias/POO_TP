@@ -14,13 +14,16 @@
 #define CALMARIA_ESTADO_INICIO_CALMARIA 1
 #define CALMARIA_ESTADO_FIM_CALMARIA 2
 
+#define EVENTO_EXECUCAO_COMANDO 1
+#define EVENTO_EXECUCAO_RAND 2
+
 using namespace std;
 
 class Calmaria : public Eventos
 {
 public:
 	Calmaria(Mundo *mundo) : Eventos(mundo, EVENTO_CALMARIA) {};
-	virtual string TrataEvento();
+	virtual string TrataEvento(int modoExecucao, int idNavio, int coordX, int coordY);
 	virtual bool VerificaEventoCalmaria() { return true; };
 
 	virtual int getTTL() const;
