@@ -26,7 +26,7 @@ class Jogador
 	char portoPrincipal;
 
 	vector<Navios*> navios;
-	vector<Porto*> portos;
+	//vector<Porto*> portos;
 
 public:
 	
@@ -35,6 +35,14 @@ public:
 	void setMundo(Mundo * mundo);
 
 	Navios * getNavio(int id);
+
+	Navios * getNavioJogador(int id);
+
+	void mandaVaiPara();
+
+	void setVaiPara(int idNavio, int x, int y);
+
+	void setVaiPara(int idNavio, char tipo);
 
 	void setMoedas(int moedas);
 

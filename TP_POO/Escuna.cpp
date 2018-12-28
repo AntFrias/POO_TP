@@ -170,13 +170,6 @@ void Escuna::soldadosBebemAgua() {
 		}
 	}
 }
-bool Escuna::VerificaCargaNavio(int novaCarga)
-{
-	if (this->QuantMercadoria + novaCarga <= ESCUNA_QUANT_MAX_CARGA)
-		return true;
-	else
-		return false;
-}
 string Escuna::combate(int quemVouAtacar) {
 	ostringstream os;
 
@@ -1138,14 +1131,18 @@ int Escuna::moveNavio(int direcao) {
 	}
 	return MOVE_INVALIDO;
 }
-void Escuna::setCargaNavio(int quantCarga)
+void Escuna::adicionaMercadoriaNavio(int quantCarga)
 {
 	if (this->QuantMercadoria + quantCarga <= ESCUNA_QUANT_MAX_CARGA)
 		this->QuantMercadoria = QuantMercadoria + quantCarga;
 	else
 		this->QuantMercadoria = ESCUNA_QUANT_MAX_CARGA;
 }
-void Escuna::RetiraCargaNavio(int quantCarga)
+void Escuna::setMercadoriaNavio(int Quant)
+{
+	this->QuantMercadoria = Quant;
+}
+void Escuna::RetiraMercadoriaNavio(int quantCarga)
 {
 	if (this->QuantPeixe - (quantCarga / 2) >= 0)
 		this->QuantPeixe = this->QuantPeixe - (quantCarga / 2);
@@ -1168,7 +1165,7 @@ string Escuna::TrataNavioTempestade()
 	probAfundar = rand() % 100 + 1;
 
 	if (probAfundar > PROB_ESCUNA_AFUNDAR_TEMPESTADE && QuantCargaPerder <= PROB_ESCUNA_PERDER_CARGA) {
-		RetiraCargaNavio(QuantCargaPerder);
+		RetiraMercadoriaNavio(QuantCargaPerder);
 		this->quantSoldados = this->quantSoldados - ((this->quantSoldados * 15) / 100);
 		AbasteceAguaNavio();
 		os << " O Navio nao afundou ficando com Maxima capacidade de agua .. !" << endl;
@@ -1178,8 +1175,6 @@ string Escuna::TrataNavioTempestade()
 
 	return os.str();
 }
-
-
 Escuna::~Escuna()
 {
 }

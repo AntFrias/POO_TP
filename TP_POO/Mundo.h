@@ -122,7 +122,7 @@ public:
 
 	void criaSuperficie(int x, int y, char tipo);
 
-	void criaCelulaPorto(int x, int y,char t);
+	void criaCelulaPorto(int x, int y,char t, int nSoldados);
 
 	void retiraNavAfundados();
 
@@ -143,6 +143,8 @@ public:
 	Navios * getNavio(int id);
 
 	Porto * getPorto(char tipo);
+
+	Porto * getPorto(int x, int y);
 
 	Navios * getNavioXY(int x, int y);
 
@@ -181,6 +183,10 @@ public:
 	int verificaCelulaPorto(int x, int y);
 
 
+
+	string GetInformacaoPortos();
+
+	void setQuantidadeSoldadosPortos(int nSoldados);
 
 	~Mundo();
 };
