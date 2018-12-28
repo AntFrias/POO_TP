@@ -130,6 +130,7 @@
     <ClCompile Include="Navios.cpp" />
     <ClCompile Include="Porto.cpp" />
     <ClCompile Include="Superficie.cpp" />
+    <ClCompile Include="Tartaruga.cpp" />
     <ClCompile Include="Terra.cpp" />
     <ClCompile Include="Veleiro.cpp" />
   </ItemGroup>
@@ -148,6 +149,7 @@
     <ClInclude Include="Navios.h" />
     <ClInclude Include="Porto.h" />
     <ClInclude Include="Superficie.h" />
+    <ClInclude Include="Tartaruga.h" />
     <ClInclude Include="Terra.h" />
     <ClInclude Include="Veleiro.h" />
   </ItemGroup>

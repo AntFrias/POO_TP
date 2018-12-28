@@ -66,6 +66,9 @@
     <ClCompile Include="Motim.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Tartaruga.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Mundo.h">
@@ -114,6 +117,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Motim.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Tartaruga.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

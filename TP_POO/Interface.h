@@ -27,7 +27,7 @@ using namespace std;
 #define PRECO_GALEAO 220
 #define PRECO_ESCUNA 150
 #define PRECO_FRAGATA 100
-#define PRECO_SUBMARINO 500
+#define PRECO_TARTARUGA 500
 
 #define COMPRA_COM_SUCESSO 0
 #define COMPRA_SEM_MOEDAS -1
