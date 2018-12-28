@@ -154,9 +154,6 @@ string Tartaruga::moveNavioAuto() {
 		os << this->combate(CELULA_NAVIO_PIRATA);
 		break;
 
-	case pirata:
-		os << this->combate(CELULA_NAVIO_NORMAL);
-		break;
 
 	}
 	return os.str();
@@ -291,7 +288,7 @@ string Tartaruga::acaoPorto() {
 string Tartaruga::combate(int quemVouAtacar) {
 
 	int xNavio = 0 , yNavio = 0;
-	int aux = 5, encontrei = 0;
+	int aux = 10, encontrei = 0;
 	
 	do {
 
