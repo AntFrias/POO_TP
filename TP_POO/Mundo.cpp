@@ -104,7 +104,7 @@ char Mundo::LastPortoAmigo() {
 }
 char Mundo::LastPortoInimigo() {
 
-	char primeiroMaior = 'A';
+	char primeiroMaior = 'a';
 
 	for (unsigned int i = 0; i < porto.size(); i++) {
 
@@ -126,6 +126,8 @@ int Mundo::ValidaTipoNavio(const char tipo) {
 		return VELEIRO;
 	else if (tipo == 'E')
 		return ESCUNA;
+	else if (tipo == 'T')
+		return TARTARUGA;
 	else
 		return GALEAO;
 }
@@ -213,6 +215,9 @@ Navios & Mundo::criaNavio(Mundo *mundo,const char portoPrincipal, const char Tip
 			break;
 		case FRAGATA:
 			aux = new Fragata(mundo, x, y, autoMove	);
+			break;
+		case TARTARUGA:
+			aux = new Tartaruga(mundo, x, y, autoMove);
 			break;
 	}
 	
