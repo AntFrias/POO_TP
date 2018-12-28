@@ -1010,16 +1010,18 @@ void Interface::mostraNavios() {
 
 				Consola::gotoxy(x, y + 1);
 				Consola::setTextColor(Consola::VERMELHO_CLARO);
-				cout << setfill('0') << setw(2) << auxNavio[i]->getId();
+				cout << setfill('0') << setw(2) << auxNavio[i]->getTipo();
 			}
 			if (auxNavio[i]->getEstado() == normal || auxNavio[i]->getEstado() == autoMove || auxNavio[i]->getEstado() == vaiPara) {
-					Consola::gotoxy(x, y);
+					
+				Consola::gotoxy(x, y);
 					Consola::setTextColor(Consola::VERDE_CLARO);
 					cout << setfill('0') << setw(2) << auxNavio[i]->getId();
 
 					Consola::gotoxy(x, y + 1);
 					Consola::setTextColor(Consola::VERDE_CLARO);
-					cout << setfill('0') << setw(2) << auxNavio[i]->getId();
+					cout << setfill('0') << setw(2) << auxNavio[i]->getTipo();
+					
 					if (auxNavio[i]->sou() == TARTARUGA) {
 						Consola::gotoxy(x, y);
 						Consola::setTextColor(Consola::COR_DE_ROSA);
@@ -1027,7 +1029,7 @@ void Interface::mostraNavios() {
 
 						Consola::gotoxy(x, y + 1);
 						Consola::setTextColor(Consola::COR_DE_ROSA);
-						cout << setfill('0') << setw(2) << auxNavio[i]->getId();
+						cout << setfill('0') << setw(2) << auxNavio[i]->getTipo();
 					}
 			}
 			if(auxNavio[i]->getEstado() == aDeriva){
@@ -1037,7 +1039,7 @@ void Interface::mostraNavios() {
 
 				Consola::gotoxy(x, y + 1);
 				Consola::setTextColor(Consola::BRANCO);
-				cout << setfill('0') << setw(2) << auxNavio[i]->getId();
+				cout << setfill('D') << setw(2) << auxNavio[i]->getTipo();
 			}
 			if (auxNavio[i]->getEstado() == calmaria) {
 				Consola::gotoxy(x, y);
@@ -1046,7 +1048,7 @@ void Interface::mostraNavios() {
 
 				Consola::gotoxy(x, y + 1);
 				Consola::setTextColor(Consola::CYAN_CLARO);
-				cout << setfill('0') << setw(2) << auxNavio[i]->getId();
+				cout << setfill('C') << setw(2) << auxNavio[i]->getTipo();
 			}
 		
 		}
@@ -1059,7 +1061,7 @@ void Interface::mostraNavios() {
 
 				Consola::gotoxy(x, y + 1);
 				Consola::setTextColor(Consola::VERMELHO_CLARO);
-				cout << setfill('0') << setw(2) << auxNavio[i]->getId();
+				cout << setfill('0') << setw(2) << auxNavio[i]->getTipo();
 			}
 			if (auxNavio[i]->getEstado() == normal || auxNavio[i]->getEstado() == autoMove || auxNavio[i]->getEstado() == autoMove || auxNavio[i]->getEstado() == vaiPara) {
 				Consola::gotoxy(x, y);
@@ -1068,7 +1070,7 @@ void Interface::mostraNavios() {
 
 				Consola::gotoxy(x, y + 1);
 				Consola::setTextColor(Consola::VERDE_CLARO);
-				cout << setfill('0') << setw(2) << auxNavio[i]->getId();
+				cout << setfill('0') << setw(2) << auxNavio[i]->getTipo();
 				if (auxNavio[i]->sou() == TARTARUGA) {
 					Consola::gotoxy(x, y);
 					Consola::setTextColor(Consola::COR_DE_ROSA);
@@ -1076,7 +1078,7 @@ void Interface::mostraNavios() {
 
 					Consola::gotoxy(x, y + 1);
 					Consola::setTextColor(Consola::COR_DE_ROSA);
-					cout << setfill('0') << setw(2) << auxNavio[i]->getId();
+					cout << setfill('0') << setw(2) << auxNavio[i]->getTipo();
 				}
 			}
 			if (auxNavio[i]->getEstado() == aDeriva) {
@@ -1086,7 +1088,7 @@ void Interface::mostraNavios() {
 
 				Consola::gotoxy(x, y + 1);
 				Consola::setTextColor(Consola::BRANCO);
-				cout << setfill('0') << setw(2) << auxNavio[i]->getId();
+				cout << setfill('D') << setw(2) << auxNavio[i]->getTipo();
 			}
 			if (auxNavio[i]->getEstado() == calmaria) {
 				Consola::gotoxy(x, y);
@@ -1095,7 +1097,7 @@ void Interface::mostraNavios() {
 
 				Consola::gotoxy(x, y + 1);
 				Consola::setTextColor(Consola::CYAN_CLARO);
-				cout << setfill('0') << setw(2) << auxNavio[i]->getId();
+				cout << setfill('C') << setw(2) << auxNavio[i]->getTipo();
 			}
 		}
 

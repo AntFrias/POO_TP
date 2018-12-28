@@ -152,18 +152,8 @@ string Jogador::moveNavioAuto() {
 	ostringstream os;
 
 	for (unsigned int i = 0; i < navios.size(); i++) {
-
-		if (navios[i]->getEstado() == autoMove || navios[i]->getEstado() == aDeriva) {
-
-			unsigned int direcao;
-
-			direcao = rand() % 9 + 1;
-
-			this->navios[i]->moveNavio(direcao);
-			if (navios[i]->getEstado()==autoMove) {
-				this->navios[i]->soldadosBebemAgua();
-				os<<this->navios[i]->combate(CELULA_NAVIO_PIRATA);
-			}
+		if (navios[i]->getEstado()==autoMove || navios[i]->getEstado() == aDeriva) {
+			os << navios[i]->moveNavioAuto();
 		}
 	}
 	return os.str();
