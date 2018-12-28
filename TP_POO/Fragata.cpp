@@ -183,7 +183,6 @@ int Fragata::getMaxSoldados() {
 int Fragata::getAgua() {
 	return this->quantAgua;
 }
-
 void Fragata::adicionaAgua(int agua) {
 	this->quantAgua += agua;
 }
@@ -349,6 +348,24 @@ string Fragata::acaoPorto() {
 	}
 	return os.str();
 }
+int Fragata::getMercadoriaNavio() const
+{
+	return 0;
+}
+void Fragata::setMercadoriaNavio(int quantCarga)
+{
+
+}
+void Fragata::adicionaMercadoriaNavio(int quantCarga)
+{
+}
+void Fragata::RetiraMercadoriaNavio(int quantCarga)
+{
+}
+int Fragata::VerificaMaxMercadoria()const
+{
+	return FRAGATA_QUANT_MAX_CARGA;
+}
 string Fragata::combate(int quemVouAtacar) {
 
 	int xNavio = getX(), yNavio = getY();
@@ -393,12 +410,6 @@ string Fragata::combate(int quemVouAtacar) {
 		}
 
 	return os.str();
-}
-void Fragata::setCargaNavio(int quantCarga)
-{
-}
-void Fragata::RetiraCargaNavio(int quantCarga)
-{
 }
 string Fragata::TrataNavioTempestade()
 {

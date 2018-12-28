@@ -326,11 +326,22 @@ string Tartaruga::combate(int quemVouAtacar) {
 
 	return os.str();
 }
-void Tartaruga::setCargaNavio(int quantCarga)
+int Tartaruga::getMercadoriaNavio() const
+{
+	return 0;
+}
+void Tartaruga::setMercadoriaNavio(int quantCarga)
 {
 }
-void Tartaruga::RetiraCargaNavio(int quantCarga)
+void Tartaruga::adicionaMercadoriaNavio(int quantCarga)
 {
+}
+void Tartaruga::RetiraMercadoriaNavio(int quantCarga)
+{
+}
+int Tartaruga::VerificaMaxMercadoria() const
+{
+	return 0;
 }
 string Tartaruga::TrataNavioTempestade()
 {

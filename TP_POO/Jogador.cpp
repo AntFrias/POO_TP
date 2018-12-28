@@ -30,6 +30,120 @@ Navios * Jogador::getNavio(int id) {
 	return nullptr;
 }
 
+Navios * Jogador::getNavioJogador(int id) {
+
+	for (unsigned int i = 0; i < navios.size(); i++)
+		if (navios[i]->getId() == id && navios[i]->getEstado() == normal || navios[i]->getEstado() == autoMove)
+			return navios[i];
+
+	return nullptr;
+}
+void Jogador::mandaVaiPara() {
+	//cout << "meu x " << navios[i]->getX() << "meu y " << navios[i]->getY() << " xVaiPara " << navios[i]->getXvaiPara()<< " yVaiPara " << navios[i]->getYvaiPara() << endl;
+	for (unsigned int i = 0; i < navios.size(); i++) {
+
+		if (navios[i]->getEstado() == vaiPara) {
+
+			if (navios[i]->getXvaiPara() < navios[i]->getX()) {
+				if (navios[i]->moveNavio(moveEsquerda) == MOVE_VALIDO) {
+					navios[i]->soldadosBebemAgua();
+					cout << navios[i]->combate(CELULA_NAVIO_PIRATA);
+				}
+				else {
+					navios[i]->moveNavio(rand() % 9 + 1);
+					navios[i]->soldadosBebemAgua();
+					cout << navios[i]->combate(CELULA_NAVIO_PIRATA);
+				}
+
+			}
+			else
+				if (navios[i]->getXvaiPara() > navios[i]->getX()) {
+					if (navios[i]->moveNavio(moveDireita) == MOVE_VALIDO) {
+						navios[i]->soldadosBebemAgua();
+						cout << navios[i]->combate(CELULA_NAVIO_PIRATA);
+					}
+					else {
+						navios[i]->moveNavio(rand() % 9 + 1);
+						navios[i]->soldadosBebemAgua();
+						cout << navios[i]->combate(CELULA_NAVIO_PIRATA);
+					}
+				}
+				else
+					if (navios[i]->getYvaiPara() < navios[i]->getY()) {
+						if (navios[i]->moveNavio(moveCima) == MOVE_VALIDO) {
+							navios[i]->soldadosBebemAgua();
+							cout << navios[i]->combate(CELULA_NAVIO_PIRATA);
+						}
+						else {
+							navios[i]->moveNavio(rand() % 9 + 1);
+							navios[i]->soldadosBebemAgua();
+							cout << navios[i]->combate(CELULA_NAVIO_PIRATA);
+						}
+					}
+					else
+						if (navios[i]->getYvaiPara() > navios[i]->getY()) {
+							if (navios[i]->moveNavio(moveBaixo) == MOVE_VALIDO) {
+								navios[i]->soldadosBebemAgua();
+								cout << navios[i]->combate(CELULA_NAVIO_PIRATA);
+							}
+							else {
+								navios[i]->moveNavio(rand() % 9 + 1);
+								navios[i]->soldadosBebemAgua();
+								cout << navios[i]->combate(CELULA_NAVIO_PIRATA);
+							}
+						}
+
+			if ((navios[i]->getX() == navios[i]->getXvaiPara()) && (navios[i]->getY() == navios[i]->getYvaiPara()))
+				navios[i]->setEstado(normal);
+
+		}
+
+
+	}
+
+
+
+
+}
+void Jogador::setVaiPara(int idNavio, int xVaiPara, int yVaiPara) {
+
+	Navios *navioVaiPara = nullptr;
+	navioVaiPara = getNavio(idNavio);
+
+	if (navioVaiPara != nullptr && navioVaiPara->getEstado() != pirata) {
+		if ((xVaiPara >= 0 && xVaiPara < mundo->getDimX()) && (yVaiPara >= 0 && yVaiPara < mundo->getDimY())) {
+
+			navioVaiPara->setXvaiPara(xVaiPara);
+			navioVaiPara->setYvaiPara(yVaiPara);
+			navioVaiPara->setEstado(vaiPara);
+
+		}
+	}
+
+
+}
+void Jogador::setVaiPara(int idNavio, char tipo) {
+
+	Navios *navioVaiPara = nullptr;
+	Porto *portoDestino = nullptr;
+
+	navioVaiPara = getNavio(idNavio);
+	portoDestino = mundo->getPorto(tipo);
+
+	if (navioVaiPara != nullptr && navioVaiPara->getEstado() != pirata) {
+		// vai buscar as coodenadas do porto
+
+		navioVaiPara->setXvaiPara(portoDestino->getX());
+		navioVaiPara->setYvaiPara(portoDestino->getY());
+		navioVaiPara->setEstado(vaiPara);
+
+
+	}
+
+
+}
+
+
 int Jogador::vendeNavio(char tipo,int precoSoldado) {
 
 	int dinheiroSoldados = 0;
@@ -45,7 +159,7 @@ int Jogador::vendeNavio(char tipo,int precoSoldado) {
 					//TODO VENDER PEIXE
 					dinheiroSoldados *= precoSoldado;
 					navios[i]->setEstado(afundado);
-					return dinheiroSoldados + 100;//100 é o preço do navio
+					return dinheiroSoldados + 100;//100 ï¿½ o preï¿½o do navio
 				}
 			}
 		}
@@ -61,7 +175,7 @@ int Jogador::vendeNavio(char tipo,int precoSoldado) {
 					//TODO VENDER PEIXE
 					dinheiroSoldados *= precoSoldado;
 					navios[i]->setEstado(afundado);
-					return dinheiroSoldados + 100;//100 é o preço do navio
+					return dinheiroSoldados + 100;//100 ï¿½ o preï¿½o do navio
 				}
 			}
 		}
@@ -76,7 +190,7 @@ int Jogador::vendeNavio(char tipo,int precoSoldado) {
 					//TODO VENDER PEIXE
 					dinheiroSoldados *= precoSoldado;
 					navios[i]->setEstado(afundado);
-					return dinheiroSoldados + 100;//100 é o preço do navio
+					return dinheiroSoldados + 100;//100 ï¿½ o preï¿½o do navio
 				}
 			}
 		}
@@ -91,7 +205,7 @@ int Jogador::vendeNavio(char tipo,int precoSoldado) {
 					//TODO VENDER PEIXE
 					dinheiroSoldados *= precoSoldado;
 					navios[i]->setEstado(afundado);
-					return dinheiroSoldados + 100;//100 é o preço do navio
+					return dinheiroSoldados + 100;//100 ï¿½ o preï¿½o do navio
 				}
 			}
 		}
