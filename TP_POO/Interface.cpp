@@ -834,13 +834,13 @@ void Interface::PromptFase2(string linha) {
 					if (auxPorto != nullptr) {
 						gotoErro();
 						if ( auxPorto->getNumSoldados() >= nSoldados){
-						/*	cout << "_____________________________________________________________________________" << endl;
+				/*		cout << "_____________________________________________________________________________" << endl;
 							cout << " Quantidade de Soldados no Navio " << auxNavio->getNumSoldados() << endl;
 							cout << " Quantidade de Soldados no Porto " << auxPorto->getNumSoldados() << endl;
-							cout << " Quantidade de moedas do jogador " << jogador.getMoedas() << endl;*/
-
-							if (nSoldados + auxNavio->getNumSoldados() > auxNavio->getMaxSoldados()) {
-								auxPorto->setNumSoldados(auxNavio->getMaxSoldados() - auxNavio->getNumSoldados());
+							cout << " Quantidade de moedas do jogador " << jogador.getMoedas() << endl;
+*/
+							if ((nSoldados + auxNavio->getNumSoldados()) > auxNavio->getMaxSoldados()) {
+								auxPorto->setNumSoldados(auxPorto->getNumSoldados() - (auxNavio->getMaxSoldados() - auxNavio->getNumSoldados()));
 								auxNavio->setNumSoldados(auxNavio->getMaxSoldados());	
 								jogador.setMoedas(jogador.getMoedas() - (this->precoSoldado*(auxNavio->getMaxSoldados() - auxNavio->getNumSoldados())));
 							}
@@ -850,7 +850,7 @@ void Interface::PromptFase2(string linha) {
 								auxNavio->setNumSoldados(auxNavio->getNumSoldados() + nSoldados);
 								jogador.setMoedas(jogador.getMoedas() - (this->precoSoldado * nSoldados));
 							}
-							/*cout << "_____________________________________________________________________________" << endl;
+					/*		cout << "_____________________________________________________________________________" << endl;
 							cout << " Quantidade de Soldados no Navio " << auxNavio->getNumSoldados() << endl;
 							cout << " Quantidade de Soldados no Porto " << auxPorto->getNumSoldados() << endl;
 							cout << " Quantidade de moedas do jogador " << jogador.getMoedas() << endl;*/
