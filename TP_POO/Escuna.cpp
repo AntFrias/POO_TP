@@ -170,7 +170,7 @@ void Escuna::soldadosBebemAgua() {
 		}
 	}
 }
-string Escuna::combate(int quemVouAtacar) {
+string Escuna::combate(int quemVouAtacar) { //vai para o porto quando n tem agua
 	ostringstream os;
 
 	const vector <const Porto *>  auxPorto = mundo->getVetorPorto();
