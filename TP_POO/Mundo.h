@@ -133,6 +133,8 @@ public:
 
 	Porto * getPorto(char tipo);
 
+	Porto * getPorto(int x, int y);
+
 	Navios * getNavioXY(int x, int y);
 
 	void setDimX(int xMax);

@@ -1120,12 +1120,16 @@ int Escuna::moveNavio(int direcao) {
 	}
 	return MOVE_INVALIDO;
 }
-void Escuna::setCargaNavio(int quantCarga)
+void Escuna::AdicionaMercadoriaNavio(int quantCarga)
 {
 	if (this->QuantMercadoria + quantCarga <= ESCUNA_QUANT_MAX_CARGA)
 		this->QuantMercadoria = QuantMercadoria + quantCarga;
 	else
 		this->QuantMercadoria = ESCUNA_QUANT_MAX_CARGA;
+}
+void Escuna::setMercadoriaNavio(int Quant)
+{
+	this->QuantMercadoria = Quant;
 }
 void Escuna::RetiraCargaNavio(int quantCarga)
 {

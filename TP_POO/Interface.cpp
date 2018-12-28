@@ -41,9 +41,9 @@ string Interface::ExecutaEventos() {
 			os << GeradorEvento(EVENTO_EXECUCAO_RAND, 0, 0, 0, 0);
 		}
 		else {
-			if ( mundo.getExistenciaEvento() == EVENTO_ON){
-			gotoErro();
 
+			if ( mundo.getExistenciaEvento() == EVENTO_ON){
+		
 			os << mundo.trataEventos(EVENTO_EXECUCAO_RAND,0,0,0,0);
 			}
 			else {
@@ -539,7 +539,7 @@ void Interface::PromptFase2(string linha) {
 
 	char tipo;
 	string acao, direcao;
-	int idNavio,x,y;
+	int idNavio,x,y, nSoldados, nMercadoria;
 	istringstream buffer(linha);
 	istringstream buffer2(linha);
 	
@@ -593,11 +593,97 @@ void Interface::PromptFase2(string linha) {
 			break;
 		case com_compra:
 			gotoErro();
-			cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
+			if (buffer >> idNavio && buffer >> nMercadoria && count(linha.begin(), linha.end(), ' ') == 2) {
+				if (jogador.validaIdNavio(idNavio)) {
+					Navios *auxNavio = jogador.getNavio(idNavio);
+					if (auxNavio != nullptr) {
+						Porto *auxPorto = mundo.getPorto(auxNavio->getX(), auxNavio->getY());
+						if (auxPorto != nullptr) {
+							if (auxPorto->getMercadoria() - nMercadoria >= 0 && jogador.getMoedas() - (nMercadoria*this->precoCompraMercadoria) >= 0) {
+								/*cout << "quantidade de Mercadoria a Comprar " << nMercadoria << endl;
+								cout << " Quantidade de Mercadoria no Navio" << auxNavio->getCargaNavio() << endl;
+								cout << " Quantidade de Mercadoria no Porto " << auxPorto->getMercadoria() << endl;
+								cout << " Quantidade de moedas do jogador " << jogador.getMoedas() << endl;*/
+								if (nMercadoria + auxNavio->getCargaNavio() <= auxNavio->VerificaMaxCarga()) {
+									auxNavio->AdicionaMercadoriaNavio(nMercadoria);
+									auxPorto->setMercadoria(auxPorto->getMercadoria() - nMercadoria);
+									jogador.setMoedas(jogador.getMoedas() - (nMercadoria*this->precoCompraMercadoria));
+								}
+								else{
+									//cout << " O Navio encontra-se carregado nao tendo capacidade para Comprar mais Mercadoria \n ou" << endl;
+								}
+					/*			cout << "_______________________________________________________________________"<< endl;
+								cout << " Quantidade de Mercadoria no Navio" << auxNavio->getCargaNavio() << endl;
+								cout << " Quantidade de Mercadoria no Porto " << auxPorto->getMercadoria() << endl;
+								cout << " Quantidade de moedas do jogador " << jogador.getMoedas() << endl;*/
+							}
+							else {
+
+								cout << "Quantidade de mercadoria a ComPrar Superior a que o Porto tem para vender " << endl;
+								cout << "ou \n Quantidade de moedas do jogador insuficiente" << endl;
+
+							}
+						}
+						else {
+							gotoErro();
+							cout << " [ Erro..! O Navio Com o Id : " << idNavio << "  nao se encontra em nenhum Porto Amigo" << endl;
+						}
+					}
+				}
+				else {
+					gotoErro();
+					cout << " [ Erro..! O Navio Com o Id : " << idNavio << "  nao existe.. !" << endl;
+				}
+			}
+			else {
+				gotoErro();
+				cout << " [ Erro..! o comando introduzido esta incorrecto... Sitaxe: compra <ID_N> <M>  ]" << endl;
+			}
 			break;
 		case com_vende:
 			gotoErro();
-			cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
+			if (buffer >> idNavio && count(linha.begin(), linha.end(), ' ') == 1) {
+				if (jogador.validaIdNavio(idNavio)) {
+					Navios *auxNavio = jogador.getNavio(idNavio);
+					if (auxNavio != nullptr) {
+						Porto *auxPorto = mundo.getPorto(auxNavio->getX(), auxNavio->getY());
+						if (auxPorto != nullptr) {
+							if (auxNavio->getCargaNavio() > 0) {
+								cout << "_____________________________________________________________________________" << endl;
+								cout << " Quantidade de Mercadoria no Navio " << auxNavio->getCargaNavio() << endl;
+								cout << " Quantidade de Mercadoria no Porto " << auxPorto->getMercadoria() << endl;
+								cout << " Quantidade de moedas do jogador " << jogador.getMoedas() << endl;
+								jogador.setMoedas(jogador.getMoedas() + auxNavio->getCargaNavio() * this->precoVendaMercadoria);
+								auxPorto->setMercadoria(auxPorto->getMercadoria() + auxNavio->getCargaNavio());
+								auxNavio->setCargaNavio(0);
+								cout << "_____________________________________________________________________________" << endl;
+								cout << " Quantidade de Mercadoria no Navio " << auxNavio->getCargaNavio() << endl;
+								cout << " Quantidade de Mercadoria no Porto " << auxPorto->getMercadoria() << endl;
+								cout << "Quantidade de moedas do jogador " << jogador.getMoedas() << endl;
+								
+							}
+							else {
+								gotoErro();
+								cout << "[ Erro .. ! O navio com o Id : " << idNavio << " nao tem Carga para vender" << endl;
+							}
+
+
+						}
+						else {
+							gotoErro();
+							cout << " [ Erro..! O Navio Com o Id : " << idNavio << "  nao se encontra em nenhum Porto Amigo" << endl;
+						}
+					}
+				}
+				else {
+					gotoErro();
+					cout << " [ Erro..! O Navio Com o Id : " << idNavio << "  nao existe.. !" << endl;
+				}
+			}
+			else {
+				gotoErro();
+				cout << " [ Erro..! o comando introduzido esta incorrecto... Sitaxe: compra <ID_N> <M>  ]" << endl;
+			}
 			break;
 		case com_move:
 			if (buffer >> idNavio && buffer >> direcao && count(linha.begin(), linha.end(), ' ') == 2) {
@@ -725,8 +811,46 @@ void Interface::PromptFase2(string linha) {
 
 		break;
 	case com_comprasold:
-		gotoErro();
-		cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
+
+		if (buffer >> idNavio && buffer >> nSoldados && count(linha.begin(), linha.end(), ' ') == 2) {
+			if (jogador.validaIdNavio(idNavio)) {
+				Navios *auxNavio  = jogador.getNavio(idNavio);
+				if (auxNavio != nullptr){
+					Porto *auxPorto = mundo.getPorto(auxNavio->getX(), auxNavio->getY());
+					if (auxPorto != nullptr) {
+						gotoErro();
+						if ( auxPorto->getNumSoldados() >= nSoldados){
+							if (nSoldados + auxNavio->getNumSoldados() > auxNavio->getMaxSoldados()) {
+								auxPorto->setNumSoldados(auxNavio->getMaxSoldados() - auxNavio->getNumSoldados());
+								auxNavio->setNumSoldados(auxNavio->getMaxSoldados());	
+								jogador.setMoedas(jogador.getMoedas() - (this->precoSoldado*(auxNavio->getMaxSoldados() - auxNavio->getNumSoldados())));
+							}
+							else{
+								auxPorto->setNumSoldados(auxPorto->getNumSoldados() - nSoldados);
+								auxNavio->setNumSoldados(auxNavio->getNumSoldados() + nSoldados);
+								jogador.setMoedas(jogador.getMoedas() - (this->precoSoldado * nSoldados));
+							}
+						}
+						else{
+							gotoErro();
+							cout << "quantidade de soldados a Comprar e superior aos Soldados existentes no Porto" << endl;
+						}
+					}
+					else {
+						gotoErro();
+						cout << " [ Erro..! O Navio Com o Id : " << idNavio << "  nao se encontra em nenhum Porto Amigo" << endl;
+					}
+				}
+			}
+			else {
+				gotoErro();
+				cout << " [ Erro..! O Navio Com o Id : " << idNavio << "  nao existe.. !" << endl;
+			}
+		}
+		else {
+			gotoErro();
+			cout << " [ Erro..! o comando introduzido esta incorrecto... Sitaxe: comprasold <ID_N> <S>  ]" << endl;
+		}
 		break;
 	case com_saveg:
 		gotoErro();

@@ -1121,13 +1121,17 @@ int Galeao::moveNavio(int direcao) {
 	}
 	return MOVE_INVALIDO;
 }
-void Galeao::setCargaNavio(int quantCarga)
+void Galeao::AdicionaMercadoriaNavio(int quantCarga)
 {
 	if (this->QuantMercadoria + quantCarga <= GALEAO_QUANT_MAX_CARGA)
 		this->QuantMercadoria = QuantMercadoria + quantCarga;
 	else
 		this->QuantMercadoria = GALEAO_QUANT_MAX_CARGA;
 
+}
+void Galeao::setMercadoriaNavio(int Quant)
+{
+	this->QuantMercadoria = Quant;
 }
 void Galeao::RetiraCargaNavio(int quantCarga)
 {

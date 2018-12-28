@@ -22,8 +22,12 @@ public:
 	virtual void adicionaAgua(int agua);
 	virtual int moveNavio(int direcao);
 	virtual string combate(int quemVouAtacar);
-	virtual void setCargaNavio(int quantCarga)override;
+	virtual void setMercadoriaNavio(int Quant);
+	virtual void AdicionaMercadoriaNavio(int quantCarga)override;
+	virtual int getMercadoriaNavio()const { return this->QuantMercadoria; }
 	virtual void RetiraCargaNavio(int quantCarga);
+	bool VerificaCargaNavio(int novaCarga);
+	virtual int VerificaMaxCarga() { return VELEIRO_QUANT_MAX_CARGA; }
 	string TrataNavioTempestade();
 	int FmoveEsquerda(int move);
 	int FmoveDireita(int move);
@@ -39,7 +43,6 @@ public:
 	void conquistaPorto(int xPorto, int yPorto);
 	string acaoPorto();
 	string acao(int xaAtacar, int yaAtacar);
-	bool VerificaCargaNavio(int novaCarga);
 	~Veleiro();
 };
 #endif // !VELEIRO_H

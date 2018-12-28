@@ -99,12 +99,17 @@ public:
 	virtual void retiraSoldados(int soldados)=0;
 	virtual void adicionaAgua(int agua) = 0;
 	virtual void soldadosBebemAgua() = 0;
-	virtual void setCargaNavio(int quantCarga) = 0;
-	virtual void RetiraCargaNavio(int quantCarga) = 0;
+
+	virtual int getMercadoriaNavio()const = 0;
+	virtual void adicionaMercadoriaNavio(int quantCarga) = 0;
+	virtual void setMercadoriaNavio(int quantCarga) = 0;
+	virtual void RetiraMercadoriaNavio(int quantCarga) = 0;
+
+
+	virtual int VerificaMaxCarga() = 0;
 	virtual string TrataNavioTempestade() = 0;
 	virtual const int sou() const =0;
 	virtual string moveNavioAuto()=0;
-
 	int randNumber(int nSoldados);
 	int getNumSoldados();
 	void setNumSoldados(int num);

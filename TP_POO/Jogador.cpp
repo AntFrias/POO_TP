@@ -29,6 +29,15 @@ Navios * Jogador::getNavio(int id) {
 
 	return nullptr;
 }
+
+Navios * Jogador::getNavioJogador(int id) {
+
+	for (unsigned int i = 0; i < navios.size(); i++)
+		if (navios[i]->getId() == id && navios[i]->getEstado() == normal || navios[i]->getEstado() == autoMove)
+			return navios[i];
+
+	return nullptr;
+}
 void Jogador::mandaVaiPara() {
 	//cout << "meu x " << navios[i]->getX() << "meu y " << navios[i]->getY() << " xVaiPara " << navios[i]->getXvaiPara()<< " yVaiPara " << navios[i]->getYvaiPara() << endl;
 	for (unsigned int i = 0; i < navios.size();i++) {

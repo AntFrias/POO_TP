@@ -394,8 +394,12 @@ string Fragata::combate(int quemVouAtacar) {
 
 	return os.str();
 }
-void Fragata::setCargaNavio(int quantCarga)
+void Fragata::AdicionaMercadoriaNavio(int quantCarga)
 {
+}
+void Fragata::setMercadoriaNavio(int Quant)
+{
+	
 }
 void Fragata::RetiraCargaNavio(int quantCarga)
 {

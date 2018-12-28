@@ -22,8 +22,12 @@ public:
 	int getAgua();
 	virtual void adicionaAgua(int agua);
 	virtual int moveNavio(int direcao)override;
-	virtual void setCargaNavio(int quantCarga);
+	virtual void AdicionaMercadoriaNavio(int quantCarga);  
+	virtual void setMercadoriaNavio(int Quant); // este metodo mete a quantidade total de mercadoria  =  Quant
+	virtual int getMercadoriaNavio()const { return this->QuantMercadoria; }
 	virtual void RetiraCargaNavio(int quantCarga);
+	bool VerificaCargaNavio(int novaCarga);
+	virtual int VerificaMaxCarga() { return GALEAO_QUANT_MAX_CARGA; }
 	string TrataNavioTempestade();
 	int FmoveEsquerda();
 	int FmoveDireita();
@@ -33,7 +37,6 @@ public:
 	int FmoveCimaDireita();
 	int FmoveBaixoEsquerda();
 	int FmoveBaixoDireita();
-	bool VerificaCargaNavio(int novaCarga);
 	virtual const int sou()const override;
 	virtual string combate(int quemVouAtacar);
 	~Galeao();

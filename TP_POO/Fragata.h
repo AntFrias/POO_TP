@@ -22,8 +22,11 @@ public:
 	void conquistaPortoAmigo(int xPorto, int yPorto);
 	string acaoPortoAmigo();
 	virtual string acaoPorto();
-	virtual void setCargaNavio(int quantCarga)override;
+	virtual void AdicionaMercadoriaNavio(int quantCarga);
+	virtual void setMercadoriaNavio(int Quant);
+	virtual int getMercadoriaNavio()const { return 0; }
 	virtual void RetiraCargaNavio(int quantCarga);
+	virtual int VerificaMaxCarga() { return FRAGATA_QUANT_MAX_CARGA; }
 	string TrataNavioTempestade();
 	int FmoveEsquerda(int move);
 	int FmoveDireita(int move);

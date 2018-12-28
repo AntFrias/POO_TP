@@ -219,6 +219,10 @@ string Veleiro::combate(int quemVouAtacar) {
 
 	return os.str();
 }
+void Veleiro::setMercadoriaNavio(int Quant)
+{
+	this->QuantMercadoria = Quant;
+}
 int Veleiro::FmoveEsquerda(int move) {
 	int VerificaPorto = 0;
 
@@ -1298,7 +1302,7 @@ int Veleiro::moveNavio(int direcao) {
 	}
 	return MOVE_INVALIDO;
 }
-void Veleiro::setCargaNavio(int quantCarga)
+void Veleiro::AdicionaMercadoriaNavio(int quantCarga)
 {
 	if (this->QuantMercadoria + quantCarga <= VELEIRO_QUANT_MAX_CARGA)
 		this->QuantMercadoria = QuantMercadoria + quantCarga;

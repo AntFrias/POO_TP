@@ -1,1 +1,18 @@
-﻿
+﻿  Calmaria.cpp
+  Escuna.cpp
+  Eventos.cpp
+  Fragata.cpp
+  Galeao.cpp
+  Interface.cpp
+c:\users\frias\github\poo_tp\tp_poo\interface.cpp(608): error C2039: 'setCargaNavio': is not a member of 'Navios'
+  c:\users\frias\github\poo_tp\tp_poo\navios.h(70): note: see declaration of 'Navios'
+c:\users\frias\github\poo_tp\tp_poo\interface.cpp(658): error C2039: 'setCargaNavio': is not a member of 'Navios'
+  c:\users\frias\github\poo_tp\tp_poo\navios.h(70): note: see declaration of 'Navios'
+  Jogador.cpp
+  Motim.cpp
+  Mundo.cpp
+  Navios.cpp
+  Porto.cpp
+  Veleiro.cpp
+  main.cpp
+  Generating Code...

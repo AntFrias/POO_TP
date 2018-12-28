@@ -283,8 +283,7 @@ void Mundo::criaSuperficie(int x, int y, char tipo) {
 
 void Mundo::criaCelulaPorto(int x, int y,char t)
 {
-
-	this->porto.push_back(new Porto(x, y, t));
+	this->porto.push_back(new Porto(x, y, t, 250, 100));
 
 }
 
@@ -330,6 +329,15 @@ Porto * Mundo::getPorto(char tipo) {
 	for (unsigned int i = 0; i < porto.size(); i++)
 		if (porto[i]->getChar() == tipo)
 			return porto[i];
+
+	return nullptr;
+}
+Porto * Mundo::getPorto(int x, int y) {
+
+	for (unsigned int i = 0; i < porto.size(); i++)
+		if (porto[i]->getX() == x && porto[i]->getY() == y)
+			if (verificaCelulaPorto(x, y) == CELULA_PORTO_AMIGO)
+				return porto[i];
 
 	return nullptr;
 }
