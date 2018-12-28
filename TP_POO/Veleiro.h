@@ -44,6 +44,7 @@ public:
 	void conquistaPorto(int xPorto, int yPorto);
 	string acaoPorto();
 	string acao(int xaAtacar, int yaAtacar);
+	string acaoRoubo(int xEscuna, int yEscuna);
 	~Veleiro();
 };
 #endif // !VELEIRO_H

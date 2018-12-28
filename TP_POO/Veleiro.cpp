@@ -11,6 +11,19 @@ void Veleiro::AbasteceAguaNavio()
 string Veleiro::moveNavioAuto() {
 
 	ostringstream os;
+	
+	if (this->getEstado() == autoMove) {
+		
+		const vector <const Navios *>  auxNavio = mundo->getVetorNavios();
+
+		for (unsigned int i = 0; i < auxNavio.size(); i++) {
+			if (auxNavio[i]->sou() == ESCUNA && (auxNavio[i]->getEstado() == normal || auxNavio[i]->getEstado() == autoMove || auxNavio[i]->getEstado() == vaiPara)) {
+				
+				mundo->setVaiPara(this->getId(), auxNavio[i]->getX(), auxNavio[i]->getY());
+				break;
+			}
+		}
+	}
 
 	unsigned int direcao;
 	direcao = rand() % 9 + 1;
@@ -172,6 +185,23 @@ string Veleiro::acao(int xaAtacar, int yaAtacar) {
 	os << "---------------------------------------------------------------" << endl;
 	return os.str();
 }
+string Veleiro::acaoRoubo(int xEscuna, int yEscuna) {
+
+	ostringstream os;
+
+	Navios *navioaTransferir = nullptr;
+	navioaTransferir = mundo->getNavioXY(xEscuna, yEscuna);
+	os << "---------------TRANSFERENCIA DE PEIXE DA ESCUNA PARA MIM------------------" << endl;
+
+	//TODO FRIAS FAZ AQUI A CENA DA TRANSFERENCIA PFVV
+		//ESTAS NUM GALEAO E JA TENS A ESCUNA PARA IR BUSCAR O PEIXE PARA O GALEAO
+		// E SUBTRAIR O PEIXE A ESCUNA QUE ACABASTE DE BUCAR
+		//OBRIGADO BRO ;-)
+	os << "---------------Fim-TRANSFERENCIA------------------" << endl;
+
+
+	return os.str();
+}
 string Veleiro::combate(int quemVouAtacar) {
 
 	int xNavio = getX(), yNavio = getY();
@@ -212,6 +242,32 @@ string Veleiro::combate(int quemVouAtacar) {
 		if (mundo->verificaCelulaPorto(xNavio, yNavio) == CELULA_PORTO_AMIGO) {
 			acaoPorto();
 			cout << "Porrada com o Porto Inimigo" << endl;
+		}
+	}
+	if (this->getEstado() != pirata && this->getEstado() != afundado && this->getEstado() != calmaria && this->getEstado() != motim) {
+		if (mundo->verificaNavioEscuna(xNavio + 1, yNavio) == 1) {
+			os << acaoRoubo(xNavio + 1, yNavio);
+		}
+		if (mundo->verificaNavioEscuna(xNavio - 1, yNavio) == 1) {
+			os << acaoRoubo(xNavio - 1, yNavio);
+		}
+		if (mundo->verificaNavioEscuna(xNavio, yNavio - 1) == 1) {
+			os << acaoRoubo(xNavio, yNavio - 1);
+		}
+		if (mundo->verificaNavioEscuna(xNavio, yNavio + 1) == 1) {
+			os << acaoRoubo(xNavio, yNavio + 1);
+		}
+		if (mundo->verificaNavioEscuna(xNavio + 1, yNavio - 1) == 1) {
+			os << acaoRoubo(xNavio + 1, yNavio - 1);
+		}
+		if (mundo->verificaNavioEscuna(xNavio - 1, yNavio - 1) == 1) {
+			os << acaoRoubo(xNavio - 1, yNavio - 1);
+		}
+		if (mundo->verificaNavioEscuna(xNavio + 1, yNavio + 1) == 1) {
+			os << acaoRoubo(xNavio + 1, yNavio + 1);
+		}
+		if (mundo->verificaNavioEscuna(xNavio - 1, yNavio + 1) == 1) {
+			os << acaoRoubo(xNavio - 1, yNavio + 1);
 		}
 	}
 
@@ -1280,7 +1336,7 @@ int Veleiro::moveNavio(int direcao) {
 
 	unsigned int move = 0;
 	move = rand() % 3;
-
+	
 	if (move == 1)
 		move++;
 	if (move == 0)

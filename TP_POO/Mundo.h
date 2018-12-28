@@ -12,6 +12,7 @@
 #include "Galeao.h"
 #include "Escuna.h"
 #include "Fragata.h"
+#include "Tartaruga.h"
 
 #include "Calmaria.h"
 #include "Motim.h"
@@ -30,6 +31,7 @@
 #define NAVIO_AFUNDADO true
 
 #define PROB_FRAGATA_AFUNDAR_TEMPESTADE 20
+#define PROB_TARTARUGA_AFUNDAR_TEMPESTADE 20
 #define PROB_ESCUNA_AFUNDAR_TEMPESTADE 35 
 #define PROB_VELEIRO_AFUNDAR_TEMPESTADE_1 35
 #define PROB_VELEIRO_AFUNDAR_TEMPESTADE_2 20
@@ -58,7 +60,8 @@ enum TiposNavios {
 	FRAGATA = 1,
 	ESCUNA,
 	VELEIRO,
-	GALEAO
+	GALEAO,
+	TARTARUGA
 
 };
 
@@ -94,6 +97,14 @@ public:
 	void mudaPorto(int xPorto, int yPorto, char letra);
 
 	char LastPortoAmigo();
+
+	void mandaVaiPara();
+
+	int verificaNavioEscuna(int x, int y);
+
+	void setVaiPara(int idNavio, int xVaiPara, int yVaiPara);
+
+	void setVaiPara(int idNavio, char tipo);
 
 	char LastPortoInimigo();
 

@@ -40,6 +40,7 @@ public:
 	int FmoveBaixoEsquerda();
 	int FmoveBaixoDireita();
 	virtual const int sou()const override;
+	string acao(int xaAtacar, int yaAtacar);
 	virtual string combate(int quemVouAtacar);
 	~Galeao();
 };

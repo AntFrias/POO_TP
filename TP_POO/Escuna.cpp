@@ -172,6 +172,24 @@ void Escuna::soldadosBebemAgua() {
 }
 string Escuna::combate(int quemVouAtacar) {
 	ostringstream os;
+
+	const vector <const Porto *>  auxPorto = mundo->getVetorPorto();
+
+	if (this->getAgua() <= this->getMaxAgua() / 4) {
+
+		for (unsigned int i = 0; i < auxPorto.size(); i++) {
+			if (auxPorto[i]->getChar() >= 'A' && auxPorto[i]->getChar() <= 'Z') {
+				mundo->setVaiPara(this->getId(), auxPorto[i]->getChar());
+				break;
+			}
+			else
+				this->setEstado(autoMove);
+
+		}
+
+	}
+
+
 	return os.str();
 }
 int Escuna::FmoveEsquerda() {

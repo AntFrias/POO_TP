@@ -205,9 +205,9 @@ void Interface::criaPiratasAuto() {
 		//que tipo de pirata vai criar
 		aux2 = (rand() % 2);
 		if (aux2 == 0)
-			jogador.addNavioJogador(mundo.criaNavPirata(&mundo, 'F', x, y));
+			mundo.criaNavPirata(&mundo, 'F', x, y);
 		if (aux2 == 1) 
-			jogador.addNavioJogador(mundo.criaNavPirata(&mundo, 'V', x, y));
+			mundo.criaNavPirata(&mundo, 'V', x, y);
 		
 	}
 }
@@ -301,10 +301,12 @@ void Interface::Prompt() {
 		getline(cin, linha);
 
 		PromptFase2(linha);
-		//if (verificaFimdoJogo()==1)return;
-		
+		if (verificaFimdoJogo() == 1) {
+			Sleep(4000);
+			return;
+		}
 		criaPiratasAuto();
-		jogador.mandaVaiPara();
+		mundo.mandaVaiPara();
 		jogador.setPortoPrincipal(mundo.getPortoPrincipal());
 		mundo.retiraNavAfundados(); //mudar para dentro quando for implemento do ciclo do navios
 		mundo.abasteceNaviosNosPortos();
@@ -514,9 +516,9 @@ int Interface::ValidaCompraJogador(char tipoNavio) {
 		else
 			return -1;
 		break;
-	case 'S':
-		if (jogador.validaCompra(PRECO_SUBMARINO)) {
-			jogador.setMoedas((jogador.getMoedas() - PRECO_SUBMARINO));
+	case 'T':
+		if (jogador.validaCompra(PRECO_TARTARUGA)) {
+			jogador.setMoedas((jogador.getMoedas() - PRECO_TARTARUGA));
 			return 0;
 		}
 		else
@@ -572,7 +574,7 @@ void Interface::PromptFase2(string linha) {
 			break;
 		case com_compranav:
 			buffer >> tipo;
-			if (tipo == 'V' || tipo == 'G' || tipo == 'E' || tipo == 'F' || tipo == 'S' && count(linha.begin(), linha.end(), ' ') == 1) {
+			if (tipo == 'V' || tipo == 'G' || tipo == 'E' || tipo == 'F' || tipo == 'T' || tipo == 'S' && count(linha.begin(), linha.end(), ' ') == 1) {
 
 				if (compraNavio(tipo) == COMPRA_COM_SUCESSO) {
 					gotoPrint();
@@ -756,7 +758,7 @@ void Interface::PromptFase2(string linha) {
 			if (tipo == 'V' || tipo == 'F') {
 				if (x >= 0 && x < mundo.getDimX() && y >= 0 && y < mundo.getDimY()) {
 					if (mundo.verificaCelulaMar(x, y) == CELULA_MAR && mundo.verificaCelulaNavio(x,y)!= CELULA_NAVIO) {
-						jogador.addNavioJogador(mundo.criaNavPirata(&mundo, tipo, x, y));
+						mundo.criaNavPirata(&mundo, tipo, x, y);
 					}
 				}
 			}
@@ -814,10 +816,10 @@ void Interface::PromptFase2(string linha) {
 		if (buffer >> idNavio && buffer >> tipo) {
 		
 			if ((tipo >= 'A' && tipo <= 'Z') || (tipo >= 'a' && tipo <= 'z')) {
-				jogador.setVaiPara(idNavio, tipo);
+				mundo.setVaiPara(idNavio, tipo);
 			}else
 				if (buffer2 >> acao && buffer2 >> idNavio && buffer2 >> x && buffer2 >> y) {
-					jogador.setVaiPara(idNavio, x, y);
+					mundo.setVaiPara(idNavio, x, y);
 				}
 		}
 
@@ -1155,16 +1157,27 @@ void Interface::mostraNavios() {
 
 				Consola::gotoxy(x, y + 1);
 				Consola::setTextColor(Consola::VERMELHO_CLARO);
-				cout << setfill('0') << setw(2) << auxNavio[i]->getId();
+				cout << setfill('0') << setw(2) << auxNavio[i]->getTipo();
 			}
 			if (auxNavio[i]->getEstado() == normal || auxNavio[i]->getEstado() == autoMove || auxNavio[i]->getEstado() == vaiPara) {
-					Consola::gotoxy(x, y);
+					
+				Consola::gotoxy(x, y);
 					Consola::setTextColor(Consola::VERDE_CLARO);
 					cout << setfill('0') << setw(2) << auxNavio[i]->getId();
 
 					Consola::gotoxy(x, y + 1);
 					Consola::setTextColor(Consola::VERDE_CLARO);
-					cout << setfill('0') << setw(2) << auxNavio[i]->getId();
+					cout << setfill('0') << setw(2) << auxNavio[i]->getTipo();
+					
+					if (auxNavio[i]->sou() == TARTARUGA) {
+						Consola::gotoxy(x, y);
+						Consola::setTextColor(Consola::COR_DE_ROSA);
+						cout << setfill('0') << setw(2) << auxNavio[i]->getId();
+
+						Consola::gotoxy(x, y + 1);
+						Consola::setTextColor(Consola::COR_DE_ROSA);
+						cout << setfill('0') << setw(2) << auxNavio[i]->getTipo();
+					}
 			}
 			if(auxNavio[i]->getEstado() == aDeriva){
 				Consola::gotoxy(x, y);
@@ -1173,7 +1186,7 @@ void Interface::mostraNavios() {
 
 				Consola::gotoxy(x, y + 1);
 				Consola::setTextColor(Consola::BRANCO);
-				cout << setfill('0') << setw(2) << auxNavio[i]->getId();
+				cout << setfill('D') << setw(2) << auxNavio[i]->getTipo();
 			}
 			if (auxNavio[i]->getEstado() == calmaria) {
 				Consola::gotoxy(x, y);
@@ -1182,7 +1195,7 @@ void Interface::mostraNavios() {
 
 				Consola::gotoxy(x, y + 1);
 				Consola::setTextColor(Consola::CYAN_CLARO);
-				cout << setfill('0') << setw(2) << auxNavio[i]->getId();
+				cout << setfill('C') << setw(2) << auxNavio[i]->getTipo();
 			}
 		
 		}
@@ -1195,7 +1208,7 @@ void Interface::mostraNavios() {
 
 				Consola::gotoxy(x, y + 1);
 				Consola::setTextColor(Consola::VERMELHO_CLARO);
-				cout << setfill('0') << setw(2) << auxNavio[i]->getId();
+				cout << setfill('0') << setw(2) << auxNavio[i]->getTipo();
 			}
 			if (auxNavio[i]->getEstado() == normal || auxNavio[i]->getEstado() == autoMove || auxNavio[i]->getEstado() == autoMove || auxNavio[i]->getEstado() == vaiPara) {
 				Consola::gotoxy(x, y);
@@ -1204,7 +1217,16 @@ void Interface::mostraNavios() {
 
 				Consola::gotoxy(x, y + 1);
 				Consola::setTextColor(Consola::VERDE_CLARO);
-				cout << setfill('0') << setw(2) << auxNavio[i]->getId();
+				cout << setfill('0') << setw(2) << auxNavio[i]->getTipo();
+				if (auxNavio[i]->sou() == TARTARUGA) {
+					Consola::gotoxy(x, y);
+					Consola::setTextColor(Consola::COR_DE_ROSA);
+					cout << setfill('0') << setw(2) << auxNavio[i]->getId();
+
+					Consola::gotoxy(x, y + 1);
+					Consola::setTextColor(Consola::COR_DE_ROSA);
+					cout << setfill('0') << setw(2) << auxNavio[i]->getTipo();
+				}
 			}
 			if (auxNavio[i]->getEstado() == aDeriva) {
 				Consola::gotoxy(x, y);
@@ -1213,7 +1235,7 @@ void Interface::mostraNavios() {
 
 				Consola::gotoxy(x, y + 1);
 				Consola::setTextColor(Consola::BRANCO);
-				cout << setfill('0') << setw(2) << auxNavio[i]->getId();
+				cout << setfill('D') << setw(2) << auxNavio[i]->getTipo();
 			}
 			if (auxNavio[i]->getEstado() == calmaria) {
 				Consola::gotoxy(x, y);
@@ -1222,7 +1244,7 @@ void Interface::mostraNavios() {
 
 				Consola::gotoxy(x, y + 1);
 				Consola::setTextColor(Consola::CYAN_CLARO);
-				cout << setfill('0') << setw(2) << auxNavio[i]->getId();
+				cout << setfill('C') << setw(2) << auxNavio[i]->getTipo();
 			}
 		}
 
