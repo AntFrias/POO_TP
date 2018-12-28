@@ -165,7 +165,7 @@ void Escuna::soldadosBebemAgua() {
 		if (this->quantSoldados > 0) {
 			this->quantSoldados -= 1;
 		}
-		if (this->quantSoldados == 0){
+		if (this->quantSoldados <= 0){
 			this->estado = aDeriva;
 		}
 	}
