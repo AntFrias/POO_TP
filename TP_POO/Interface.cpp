@@ -287,7 +287,7 @@ void Interface::Prompt() {
 			return;
 		}
 		criaPiratasAuto();
-		jogador.mandaVaiPara();
+		mundo.mandaVaiPara();
 		jogador.setPortoPrincipal(mundo.getPortoPrincipal());
 		mundo.retiraNavAfundados(); //mudar para dentro quando for implemento do ciclo do navios
 		mundo.abasteceNaviosNosPortos();
@@ -718,10 +718,10 @@ void Interface::PromptFase2(string linha) {
 		if (buffer >> idNavio && buffer >> tipo) {
 		
 			if ((tipo >= 'A' && tipo <= 'Z') || (tipo >= 'a' && tipo <= 'z')) {
-				jogador.setVaiPara(idNavio, tipo);
+				mundo.setVaiPara(idNavio, tipo);
 			}else
 				if (buffer2 >> acao && buffer2 >> idNavio && buffer2 >> x && buffer2 >> y) {
-					jogador.setVaiPara(idNavio, x, y);
+					mundo.setVaiPara(idNavio, x, y);
 				}
 		}
 

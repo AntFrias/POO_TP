@@ -102,6 +102,126 @@ char Mundo::LastPortoAmigo() {
 	return primeiroMaior;
 	
 }
+void Mundo::mandaVaiPara() {
+	//cout << "meu x " << navios[i]->getX() << "meu y " << navios[i]->getY() << " xVaiPara " << navios[i]->getXvaiPara()<< " yVaiPara " << navios[i]->getYvaiPara() << endl;
+	for (unsigned int i = 0; i < navios.size(); i++) {
+
+		if (navios[i]->getEstado() == vaiPara) {
+
+			if (navios[i]->getXvaiPara() < navios[i]->getX()) {
+				if (navios[i]->moveNavio(moveEsquerda) == MOVE_VALIDO) {
+					navios[i]->soldadosBebemAgua();
+					cout << navios[i]->combate(CELULA_NAVIO_PIRATA);
+				}
+				else {
+					navios[i]->moveNavio(rand() % 9 + 1);
+					navios[i]->soldadosBebemAgua();
+					cout << navios[i]->combate(CELULA_NAVIO_PIRATA);
+				}
+
+			}
+			else
+				if (navios[i]->getXvaiPara() > navios[i]->getX()) {
+					if (navios[i]->moveNavio(moveDireita) == MOVE_VALIDO) {
+						navios[i]->soldadosBebemAgua();
+						cout << navios[i]->combate(CELULA_NAVIO_PIRATA);
+					}
+					else {
+						navios[i]->moveNavio(rand() % 9 + 1);
+						navios[i]->soldadosBebemAgua();
+						cout << navios[i]->combate(CELULA_NAVIO_PIRATA);
+					}
+				}
+				else
+					if (navios[i]->getYvaiPara() < navios[i]->getY()) {
+						if (navios[i]->moveNavio(moveCima) == MOVE_VALIDO) {
+							navios[i]->soldadosBebemAgua();
+							cout << navios[i]->combate(CELULA_NAVIO_PIRATA);
+						}
+						else {
+							navios[i]->moveNavio(rand() % 9 + 1);
+							navios[i]->soldadosBebemAgua();
+							cout << navios[i]->combate(CELULA_NAVIO_PIRATA);
+						}
+					}
+					else
+						if (navios[i]->getYvaiPara() > navios[i]->getY()) {
+							if (navios[i]->moveNavio(moveBaixo) == MOVE_VALIDO) {
+								navios[i]->soldadosBebemAgua();
+								cout << navios[i]->combate(CELULA_NAVIO_PIRATA);
+							}
+							else {
+								navios[i]->moveNavio(rand() % 9 + 1);
+								navios[i]->soldadosBebemAgua();
+								cout << navios[i]->combate(CELULA_NAVIO_PIRATA);
+							}
+						}
+
+			if ((navios[i]->getX() == navios[i]->getXvaiPara()) && (navios[i]->getY() == navios[i]->getYvaiPara()))
+				navios[i]->setEstado(normal);
+
+		}
+
+
+	}
+
+
+
+
+}
+int Mundo::verificaNavioEscuna(int x,int y) {
+
+	for (unsigned int i = 0; i < navios.size(); i++) {
+		
+		if (navios[i]->getX() == x && navios[i]->getY()==y) {
+			if (navios[i]->sou() == ESCUNA && (navios[i]->getEstado() == normal || navios[i]->getEstado() == vaiPara || navios[i]->getEstado() == autoMove)) {
+				return 1;
+			}
+		}
+	}
+	return 0;
+}
+
+
+void Mundo::setVaiPara(int idNavio, int xVaiPara, int yVaiPara) {
+
+	Navios *navioVaiPara = nullptr;
+	navioVaiPara = getNavio(idNavio);
+
+	if (navioVaiPara != nullptr && navioVaiPara->getEstado() != pirata) {
+		if ((xVaiPara >= 0 && xVaiPara < getDimX()) && (yVaiPara >= 0 && yVaiPara < getDimY())) {
+
+			navioVaiPara->setXvaiPara(xVaiPara);
+			navioVaiPara->setYvaiPara(yVaiPara);
+			navioVaiPara->setEstado(vaiPara);
+
+		}
+	}
+
+
+}
+void Mundo::setVaiPara(int idNavio, char tipo) {
+
+	Navios *navioVaiPara = nullptr;
+	Porto *portoDestino = nullptr;
+
+	navioVaiPara = getNavio(idNavio);
+	portoDestino = getPorto(tipo);
+
+	cout << "entrei aqui\n";
+	if (navioVaiPara != nullptr && navioVaiPara->getEstado() != pirata) {
+		// vai buscar as coodenadas do porto
+
+		navioVaiPara->setXvaiPara(portoDestino->getX());
+		navioVaiPara->setYvaiPara(portoDestino->getY());
+		navioVaiPara->setEstado(vaiPara);
+
+
+	}
+
+
+}
+
 char Mundo::LastPortoInimigo() {
 
 	char primeiroMaior = 'a';

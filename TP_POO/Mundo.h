@@ -98,6 +98,14 @@ public:
 
 	char LastPortoAmigo();
 
+	void mandaVaiPara();
+
+	int verificaNavioEscuna(int x, int y);
+
+	void setVaiPara(int idNavio, int xVaiPara, int yVaiPara);
+
+	void setVaiPara(int idNavio, char tipo);
+
 	char LastPortoInimigo();
 
 	int ValidaTipoNavio(const char tipo);
