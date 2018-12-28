@@ -211,6 +211,35 @@ void Interface::criaPiratasAuto() {
 		
 	}
 }
+void Interface::criaNaviosJogador() {
+
+	unsigned int aux = 10, aux2 = 0;
+	unsigned int x = 0, y = 0;
+
+	//vai criar pirata consoante a sua probabilidade
+	if ((rand() % 100 + 1) <= 60) {
+
+		//gerar o x e  o y
+		do {
+
+			x = rand() % mundo.getDimX();
+			y = rand() % mundo.getDimY();
+
+			if (mundo.verificaCelulaMar(x, y) == CELULA_MAR && mundo.verificaCelulaNavio(x, y) != CELULA_NAVIO) {
+				break;
+			}
+			aux--;
+		} while (aux > 0);
+
+		//que tipo de pirata vai criar
+		aux2 = (rand() % 2);
+		if (aux2 == 0)
+			jogador.addNavioJogador(&mundo.criaNavio(&mundo, jogador.getPortoPrincipal(), 'F'));
+		if (aux2 == 1)
+			jogador.addNavioJogador(&mundo.criaNavio(&mundo, jogador.getPortoPrincipal(), 'V'));
+
+	}
+}
 
 int Interface::verificaFimdoJogo() {
 
@@ -306,6 +335,7 @@ void Interface::Prompt() {
 			return;
 		}
 		mundo.retiraNavAfundados();
+		//criaNaviosJogador(); //apagar isto daqui
 		criaPiratasAuto();
 		mundo.mandaVaiPara();
 		jogador.setPortoPrincipal(mundo.getPortoPrincipal());

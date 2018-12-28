@@ -166,14 +166,15 @@ string Galeao::acao(int xEscuna, int yEscuna) {
 
 	Navios *navioaTransferir = nullptr;
 	navioaTransferir = mundo->getNavioXY(xEscuna, yEscuna);
-	os << "---------------TRANSFERENCIA DE PEIXE DA ESCUNA PARA MIM------------------" << endl;
+	if (navioaTransferir != nullptr) {
+		os << "---------------TRANSFERENCIA DE PEIXE DA ESCUNA PARA MIM------------------" << endl;
 
-	//TODO FRIAS FAZ AQUI A CENA DA TRANSFERENCIA PFVV
-		//ESTAS NUM GALEAO E JA TENS A ESCUNA PARA IR BUSCAR O PEIXE PARA O GALEAO
-		// E SUBTRAIR O PEIXE A ESCUNA QUE ACABASTE DE BUCAR
-		//OBRIGADO BRO ;-)
-	os << "---------------Fim-TRANSFERENCIA------------------" << endl;
-
+		//TODO FRIAS FAZ AQUI A CENA DA TRANSFERENCIA PFVV
+			//ESTAS NUM GALEAO E JA TENS A ESCUNA PARA IR BUSCAR O PEIXE PARA O GALEAO
+			// E SUBTRAIR O PEIXE A ESCUNA QUE ACABASTE DE BUCAR
+			//OBRIGADO BRO ;-)
+		os << "---------------Fim-TRANSFERENCIA------------------" << endl;
+	}
 	
 	return os.str();
 }
