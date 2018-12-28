@@ -185,7 +185,7 @@ string Tartaruga::acao(int xaAtacar, int yaAtacar) {
 	navioaAtacar = mundo->getNavioXY(xaAtacar, yaAtacar);
 	os << "---------------Combate------------------" << endl;
 	
-	os << "O navio com o ID: " << this->getId() << " mandou um petardo que o acertou no " << navioaAtacar->getId() << "e vai afundar"<<endl;
+	os << "O navio com o ID: " << this->getId() << " mandou um petardo que o acertou no " << navioaAtacar->getId() << " e vai afundar"<<endl;
 	navioaAtacar->setEstado(afundado);
 
 	os << "---------------Fim-Combate------------------" << endl;
@@ -193,9 +193,13 @@ string Tartaruga::acao(int xaAtacar, int yaAtacar) {
 	//num ataque destes os soldados ficaram com muita sede
 	soldadosBebemAgua();
 	soldadosBebemAgua();
-	if (this->getAgua() <= 0 && this->getNumSoldados() <= 0) {
+
+	if (this->getAgua() <= 0) 
+		this->setNumSoldados(this->getNumSoldados()-1);
+
+	if (this->getAgua() <= 0 && this->getNumSoldados() <= 0) 
 		this->setEstado(afundado);
-	}
+	
 
 	return os.str();
 }
