@@ -29,6 +29,7 @@ public:
 	void MudaTipoPorto(char letra);
 	const char getChar() const;
 	Porto & getPorto();
+	string getInfoPorto();
 	~Porto();
 };
 

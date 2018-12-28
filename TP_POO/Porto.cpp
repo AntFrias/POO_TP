@@ -59,7 +59,21 @@ Porto & Porto::getPorto()
 {
 	return *this;
 }
+string Porto::getInfoPorto() {
 
+	ostringstream os;
+	
+	os << "_________________________________________________________________" << endl;
+	if (this->TipoPorto >= 'A' && this->TipoPorto <= 'Z')
+		os << " Relacao de Amizade : Porto Amigo { " << this->TipoPorto << " } "<< endl;
+	else
+		os << " Relacao de Amizade : Porto Inimigo { " << this->TipoPorto << " } " << endl;
+	os << " Quantidade de Soldados : " << this->numSoldados << endl;
+	os << " Quantidade de Mercadoria : " << this->Mercadoria << endl;
+	os << "_________________________________________________________________" << endl;
+
+	return os.str();
+}
 
 Porto::~Porto()
 {

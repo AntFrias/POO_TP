@@ -167,13 +167,6 @@ int Galeao::getAgua() {
 void Galeao::adicionaAgua(int agua) {
 	this->quantAgua += agua;
 }
-bool Galeao::VerificaCargaNavio(int novaCarga)
-{
-	if (this->QuantMercadoria + novaCarga <= GALEAO_QUANT_MAX_CARGA)
-		return true;
-	else
-		return false;
-}
 const int Galeao::sou()const{
 	return GALEAO;
 }
@@ -1121,7 +1114,7 @@ int Galeao::moveNavio(int direcao) {
 	}
 	return MOVE_INVALIDO;
 }
-void Galeao::AdicionaMercadoriaNavio(int quantCarga)
+void Galeao::adicionaMercadoriaNavio(int quantCarga)
 {
 	if (this->QuantMercadoria + quantCarga <= GALEAO_QUANT_MAX_CARGA)
 		this->QuantMercadoria = QuantMercadoria + quantCarga;
@@ -1133,7 +1126,7 @@ void Galeao::setMercadoriaNavio(int Quant)
 {
 	this->QuantMercadoria = Quant;
 }
-void Galeao::RetiraCargaNavio(int quantCarga)
+void Galeao::RetiraMercadoriaNavio(int quantCarga)
 {
 	if (this->QuantPeixe - (quantCarga / 2) >= 0)
 		this->QuantPeixe = this->QuantPeixe - (quantCarga / 2);

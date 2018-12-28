@@ -111,7 +111,7 @@ public:
 
 	void criaSuperficie(int x, int y, char tipo);
 
-	void criaCelulaPorto(int x, int y,char t);
+	void criaCelulaPorto(int x, int y,char t, int nSoldados);
 
 	void retiraNavAfundados();
 
@@ -172,6 +172,10 @@ public:
 	int verificaCelulaPorto(int x, int y);
 
 
+
+	string GetInformacaoPortos();
+
+	void setQuantidadeSoldadosPortos(int nSoldados);
 
 	~Mundo();
 };

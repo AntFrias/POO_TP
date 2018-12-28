@@ -22,12 +22,13 @@ public:
 	virtual void adicionaAgua(int agua);
 	virtual int moveNavio(int direcao);
 	virtual string combate(int quemVouAtacar);
-	virtual void setMercadoriaNavio(int Quant);
-	virtual void AdicionaMercadoriaNavio(int quantCarga)override;
-	virtual int getMercadoriaNavio()const { return this->QuantMercadoria; }
-	virtual void RetiraCargaNavio(int quantCarga);
-	bool VerificaCargaNavio(int novaCarga);
-	virtual int VerificaMaxCarga() { return VELEIRO_QUANT_MAX_CARGA; }
+
+	virtual int getMercadoriaNavio()const;
+	virtual void setMercadoriaNavio(int quantCarga);
+	virtual void adicionaMercadoriaNavio(int quantCarga);
+	virtual void RetiraMercadoriaNavio(int quantCarga);
+	virtual int VerificaMaxMercadoria()const { return VELEIRO_QUANT_MAX_CARGA; };
+
 	string TrataNavioTempestade();
 	int FmoveEsquerda(int move);
 	int FmoveDireita(int move);

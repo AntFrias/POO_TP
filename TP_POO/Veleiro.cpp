@@ -30,7 +30,6 @@ string Veleiro::moveNavioAuto() {
 	}
 	return os.str();
 }
-
 void Veleiro::soldadosBebemAgua() {
 	if (mundo->verificaCelulaMar(this->x, this->y) || (mundo->verificaCelulaPorto(this->x, this->y) != CELULA_PORTO_AMIGO)) {
 		if (this->quantAgua > 0)
@@ -45,7 +44,6 @@ void Veleiro::soldadosBebemAgua() {
 		}
 	}
 }
-
 int Veleiro::getMaxAgua() {
 	return VELEIRO_MAX_AGUA;
 }
@@ -219,9 +217,63 @@ string Veleiro::combate(int quemVouAtacar) {
 
 	return os.str();
 }
+int Veleiro::getMercadoriaNavio() const
+{
+	return this->QuantMercadoria;
+}
 void Veleiro::setMercadoriaNavio(int Quant)
 {
 	this->QuantMercadoria = Quant;
+}
+void Veleiro::adicionaMercadoriaNavio(int quantCarga)
+{
+	if (this->QuantMercadoria + quantCarga <= VELEIRO_QUANT_MAX_CARGA)
+		this->QuantMercadoria = QuantMercadoria + quantCarga;
+	else
+		this->QuantMercadoria = VELEIRO_QUANT_MAX_CARGA;
+}
+void Veleiro::RetiraMercadoriaNavio(int quantCarga)
+{
+	if (this->QuantPeixe - (quantCarga / 2) >= 0)
+		this->QuantPeixe = this->QuantPeixe - (quantCarga / 2);
+
+	if (this->QuantMercadoria - quantCarga >= 0)
+		this->QuantMercadoria = QuantMercadoria - quantCarga;
+	else
+		this->QuantMercadoria = 0;
+}
+string Veleiro::TrataNavioTempestade()
+{
+	ostringstream os;
+
+	os << " O navio e do tipo Veleiro e vai ser apanhado por uma Tempestade" << endl;
+
+	int QuantCarga = (this->QuantMercadoria * 100) / VELEIRO_QUANT_MAX_CARGA;
+
+	int probAfundar = rand() % 100 + 1;
+
+	if (this->estado = pirata) {
+		os << " O navio e do tipo Pirata e vai ser afundado pela Tempestade .. !" << endl;
+		this->estado = afundado;
+	}
+	else {
+		os << " O navio e do tipo Normal e vai ser apanhado por uma Tempestade .. !" << endl;
+		if (probAfundar <= PROB_VELEIRO_AFUNDAR_TEMPESTADE_1 && QuantCarga >= PROB_VELEIRO_PERDER_CARGA)
+			this->estado = afundado;
+
+		else if (probAfundar <= PROB_VELEIRO_AFUNDAR_TEMPESTADE_2)  // aqui a probabilidade é diferente pelo facto do 
+			this->estado = afundado;    							//navio pedir apenas 20% de prob caso tenha menos que 50%
+																	// de capacidade de carga
+		else
+		{
+			os << " O navio Resistiu a tempestade e vai perder metade da sua Carga ...!" << endl;
+
+			RetiraMercadoriaNavio(QuantMercadoria / 2);
+		}
+		AbasteceAguaNavio();
+	}
+
+	return os.str();
 }
 int Veleiro::FmoveEsquerda(int move) {
 	int VerificaPorto = 0;
@@ -1301,63 +1353,6 @@ int Veleiro::moveNavio(int direcao) {
 			break;
 	}
 	return MOVE_INVALIDO;
-}
-void Veleiro::AdicionaMercadoriaNavio(int quantCarga)
-{
-	if (this->QuantMercadoria + quantCarga <= VELEIRO_QUANT_MAX_CARGA)
-		this->QuantMercadoria = QuantMercadoria + quantCarga;
-	else
-		this->QuantMercadoria = VELEIRO_QUANT_MAX_CARGA;
-}
-void Veleiro::RetiraCargaNavio(int quantCarga)
-{
-	if (this->QuantPeixe - (quantCarga / 2) >= 0)
-		this->QuantPeixe = this->QuantPeixe - (quantCarga / 2);
-
-	if (this->QuantMercadoria - quantCarga >= 0)
-		this->QuantMercadoria = QuantMercadoria - quantCarga;
-	else
-		this->QuantMercadoria = 0;
-}
-string Veleiro::TrataNavioTempestade()
-{
-	ostringstream os;
-
-	os << " O navio e do tipo Veleiro e vai ser apanhado por uma Tempestade" << endl;
-
-	int QuantCarga = ( this->QuantMercadoria * 100 ) / VELEIRO_QUANT_MAX_CARGA;
-
-	int probAfundar = rand() % 100 + 1;
-
-	if (this->estado = pirata) {
-		os << " O navio e do tipo Pirata e vai ser afundado pela Tempestade .. !" << endl;
-		this->estado = afundado;
-	}
-	else {
-		os << " O navio e do tipo Normal e vai ser apanhado por uma Tempestade .. !" << endl;
-		if (probAfundar <= PROB_VELEIRO_AFUNDAR_TEMPESTADE_1 && QuantCarga >= PROB_VELEIRO_PERDER_CARGA)
-			this->estado = afundado;
-
-		else if (probAfundar <= PROB_VELEIRO_AFUNDAR_TEMPESTADE_2)  // aqui a probabilidade é diferente pelo facto do 
-			this->estado = afundado;    							//navio pedir apenas 20% de prob caso tenha menos que 50%
-																	// de capacidade de carga
-		else
-		{
-			os << " O navio Resistiu a tempestade e vai perder metade da sua Carga ...!" << endl;
-
-			RetiraCargaNavio(QuantMercadoria / 2);
-		}
-		AbasteceAguaNavio();
-	}
-
-	return os.str();
-}
-bool Veleiro::VerificaCargaNavio(int novaCarga)
-{
-	if (this->QuantMercadoria + novaCarga <= VELEIRO_QUANT_MAX_CARGA)
-		return true;
-	else
-		return false;
 }
 Veleiro::~Veleiro()
 {

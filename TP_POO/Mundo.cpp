@@ -281,10 +281,9 @@ void Mundo::criaSuperficie(int x, int y, char tipo) {
 		superficie.push_back(new Mar(x, y));
 }
 
-void Mundo::criaCelulaPorto(int x, int y,char t)
+void Mundo::criaCelulaPorto(int x, int y,char t, int nSoldados)
 {
-	this->porto.push_back(new Porto(x, y, t, 250, 100));
-
+	this->porto.push_back(new Porto(x, y, t, nSoldados, 50));
 }
 
 void Mundo::retiraNavAfundados() { // NAO FAÇO IDEIA O QUE FIZ AQUI FRIAS .. SEM QUE TEM HAVER COM A CENA DE APAGAR UMA COISA ENQUANTO ESTAMOS A PERCORRER A MESMA
@@ -680,7 +679,27 @@ int Mundo::verificaCelulaPorto(int x, int y) {
 	return CELULA_SEM_PORTO;
 }
 
+string Mundo::GetInformacaoPortos() {
 
+	ostringstream os;
+
+	for (unsigned int i = 0; i < this->porto.size(); i++) {
+
+		os << this->porto[i]->getInfoPorto();
+
+	}
+
+	return os.str();
+
+}
+
+void Mundo::setQuantidadeSoldadosPortos(int nSoldados) {
+
+	for (int i = 0; i < this->porto.size(); i++) {
+
+		this->porto[i]->setNumSoldados(nSoldados);
+	}
+}
 Mundo::~Mundo(){
 
 	for (Superficie *superficie : superficie)
