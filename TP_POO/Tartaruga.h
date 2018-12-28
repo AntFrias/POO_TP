@@ -21,8 +21,14 @@ public:
 	void conquistaPortoAmigo(int xPorto, int yPorto);
 	string acaoPortoAmigo();
 	virtual string acaoPorto();
-	virtual void setCargaNavio(int quantCarga)override;
-	virtual void RetiraCargaNavio(int quantCarga);
+
+
+	virtual int getMercadoriaNavio()const;
+	virtual void setMercadoriaNavio(int quantCarga);
+	virtual void adicionaMercadoriaNavio(int quantCarga);
+	virtual void RetiraMercadoriaNavio(int quantCarga);
+	virtual int VerificaMaxMercadoria()const;
+	
 	string TrataNavioTempestade();
 	int FmoveEsquerda(int move);
 	int FmoveDireita(int move);
