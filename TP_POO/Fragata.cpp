@@ -151,6 +151,29 @@ string Fragata::moveNavioAuto() {
 
 	ostringstream os;
 
+
+	
+	if (this->getEstado() == autoMove) {
+		const vector <const Navios *>  auxNavio = mundo->getVetorNavios();
+
+		for (unsigned int i = 0; i < auxNavio.size(); i++) {//ver se ha algum navio inimigo e deslocarme para o atacar
+
+			if (auxNavio[i]->getEstado() == pirata) {
+				mundo->setVaiPara(this->getId(),auxNavio[i]->getX(), auxNavio[i]->getY());
+				break;
+			}
+
+		}//percorri os navios todos e nao há nenhum pirata
+
+		for (unsigned int i = 0; i < auxNavio.size(); i++) {//vou ficar perto de uma escuna ou galeao
+			if (auxNavio[i]->sou() == ESCUNA || auxNavio[i]->sou() == GALEAO) {
+				mundo->setVaiPara(this->getId(), auxNavio[i]->getX(), auxNavio[i]->getY());
+				break;
+			}
+		}//senao ouver pirata nem escuna ou galeao para proteger anda aleatoriamente
+
+	}
+
 	unsigned int direcao;
 	direcao = rand() % 9 + 1;
 	this->moveNavio(direcao);
