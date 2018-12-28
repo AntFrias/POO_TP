@@ -35,6 +35,7 @@ public:
 	int FmoveBaixoDireita();
 	bool VerificaCargaNavio(int novaCarga);
 	virtual const int sou()const override;
+	string acao(int xaAtacar, int yaAtacar);
 	virtual string combate(int quemVouAtacar);
 	~Galeao();
 };

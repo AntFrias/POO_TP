@@ -24,16 +24,6 @@ string Galeao::moveNavioAuto() {
 
 	ostringstream os;
 
-	if (this->estado == autoMove || this->estado == aDeriva) {
-
-		unsigned int direcao;
-		direcao = rand() % 9 + 1;
-		this->moveNavio(direcao);
-		if (this->estado == autoMove) {
-			this->soldadosBebemAgua();
-			os<<this->combate(CELULA_NAVIO_PIRATA);
-		}
-	}
 	return os.str();
 }
 void Galeao::retiraAgua(int agua) {
@@ -177,8 +167,55 @@ bool Galeao::VerificaCargaNavio(int novaCarga)
 const int Galeao::sou()const{
 	return GALEAO;
 }
-string Galeao::combate(int quemVouAtacar) {
+string Galeao::acao(int xEscuna, int yEscuna) {
+
 	ostringstream os;
+
+	Navios *navioaTransferir = nullptr;
+	navioaTransferir = mundo->getNavioXY(xEscuna, yEscuna);
+	os << "---------------TRANSFERENCIA DE PEIXE DA ESCUNA PARA MIM------------------" << endl;
+
+	//TODO FRIAS FAZ AQUI A CENA DA TRANSFERENCIA PFVV
+		//ESTAS NUM GALEAO E JA TENS A ESCUNA PARA IR BUSCAR O PEIXE PARA O GALEAO
+		// E SUBTRAIR O PEIXE A ESCUNA QUE ACABASTE DE BUCAR
+		//OBRIGADO BRO ;-)
+	os << "---------------Fim-TRANSFERENCIA------------------" << endl;
+
+	
+	return os.str();
+}
+string Galeao::combate(int quemVouAtacar) {//ve escuna à volta
+	ostringstream os;
+
+	int xNavio = getX();
+	int yNavio = getY();
+
+	if (mundo->verificaNavioEscuna(xNavio + 1, yNavio) == 1) {
+		os << acao(xNavio + 1, yNavio);
+	}
+	if (mundo->verificaNavioEscuna(xNavio - 1, yNavio) == 1) {
+		os << acao(xNavio - 1, yNavio);
+	}
+	if (mundo->verificaNavioEscuna(xNavio, yNavio - 1) == 1) {
+		os << acao(xNavio, yNavio - 1);
+	}
+	if (mundo->verificaNavioEscuna(xNavio, yNavio + 1) == 1) {
+		os << acao(xNavio, yNavio + 1);
+	}
+	if (mundo->verificaNavioEscuna(xNavio + 1, yNavio - 1) == 1) {
+		os << acao(xNavio + 1, yNavio - 1);
+	}
+	if (mundo->verificaNavioEscuna(xNavio - 1, yNavio - 1) == 1) {
+		os << acao(xNavio - 1, yNavio - 1);
+	}
+	if (mundo->verificaNavioEscuna(xNavio + 1, yNavio + 1) == 1) {
+		os << acao(xNavio + 1, yNavio + 1);
+	}
+	if (mundo->verificaNavioEscuna(xNavio - 1, yNavio + 1) == 1) {
+		os << acao(xNavio - 1, yNavio + 1);
+	}
+
+
 	return os.str();
 }
 int Galeao::FmoveEsquerda() {
