@@ -714,7 +714,9 @@ string Mundo::trataEventos(int modoExecucao, int TipoEvento, int idNavio, int co
 
 				os << TrataEventoSereias(indice);
 
-			}				
+			}
+
+			return os.str();
 		}
 		else
 			os <<" Nao existem navios para efetuar o ataque da sereia  ...!" << endl;
