@@ -636,8 +636,13 @@ void Interface::Prompt() {
 		os.str("");
 		Consola::gotoxy(0, 0);
 		this->Turno = this->incTurno++;
-		cout << "Turno : " << this->Turno;
-		cout << "_______________________________________________________________________________________" << endl;
+		/*cout << "Turno : " << this->Turno;
+		cout << "_______________________________________________________________________________________" << endl;*/
+
+		for (unsigned int i = 0; i < vectorComandos.size(); i++) {
+			if (vectorComandos[i] == "sair")
+				proxComando = i;
+		}
 
 	} while (vectorComandos[proxComando]!="sair");
 
