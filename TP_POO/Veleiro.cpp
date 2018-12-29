@@ -236,14 +236,14 @@ string Veleiro::combate(int quemVouAtacar) {
 	if (quemVouAtacar == CELULA_NAVIO_PIRATA) {
 		if (mundo->verificaCelulaPorto(xNavio, yNavio) == CELULA_PORTO_INIMIGO) {
 			acaoPorto();
-			cout << "Porrada com o Porto Inimigo" << endl;
+			os << "Porrada com o Porto Inimigo" << endl;
 		}
 	}
 
 	if (quemVouAtacar == CELULA_NAVIO_NORMAL) {
 		if (mundo->verificaCelulaPorto(xNavio, yNavio) == CELULA_PORTO_AMIGO) {
 			acaoPorto();
-			cout << "Porrada com o Porto Inimigo" << endl;
+			os<< "Porrada com o Porto Inimigo" << endl;
 		}
 	}
 	if (this->getEstado() != pirata && this->getEstado() != afundado && this->getEstado() != calmaria && this->getEstado() != motim) {

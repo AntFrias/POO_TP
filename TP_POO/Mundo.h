@@ -116,6 +116,8 @@ public:
 	
 	Navios & criaNavio(Mundo *mundo,char PortoPrincipal, char tipoNavio);
 
+	string mostraStatusNavio();
+
 	string moveNavioPirataAuto();
 
 	Navios * criaNavPirata(Mundo *mundo, const char TipoNavio, int x, int y);
