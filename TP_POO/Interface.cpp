@@ -34,12 +34,12 @@ string Interface::mostraInformacaoPortos() {
 
 	os << "_________________________________________________________________" << endl;
 	os << "_________________________________________________________________" << endl << endl;
-	os << "			<<<<	Precario :	>>>>" << endl;
-	os << "			Preco  do Navio : " << this->precoNavio << endl;
-	os << "			Preco  do Soldado : " << this->precoSoldado << endl;
-	os << "			Preco  da Venda de Peixe : " << this->precoVendePeixe << endl;
-	os << "			Preco  da Compra de Mercadoria : " << this->precoCompraMercadoria << endl;
-	os << "			Preco  da Venda de Mercadoria : " << this->precoVendaMercadoria << endl <<endl;
+	os << "<<<<	Precario :	>>>>" << endl;
+	os << "Preco  do Navio : " << this->precoNavio << endl;
+	os << "Preco  do Soldado : " << this->precoSoldado << endl;
+	os << "Preco  da Venda de Peixe : " << this->precoVendePeixe << endl;
+	os << "Preco  da Compra de Mercadoria : " << this->precoCompraMercadoria << endl;
+	os << "Preco  da Venda de Mercadoria : " << this->precoVendaMercadoria << endl <<endl;
 	os << "_________________________________________________________________" << endl << endl;
 
 	return os.str();
@@ -463,6 +463,7 @@ vector <string> Interface::leComandos() {
 	do {
 
 		getline(cin, aux);
+
 
 		if (verificaLeComandos(aux) == true) {//se o comando introduzido na sequencia for correto
 			vetordComandos.push_back(aux);

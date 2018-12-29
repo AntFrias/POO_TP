@@ -347,11 +347,11 @@ Navios & Mundo::criaNavio(Mundo *mundo,const char portoPrincipal, const char Tip
 string Mundo::mostraStatusNavio() {
 
 	ostringstream os;
-
+	os << "___________________Status-Navios___________________\n";
 	for (unsigned int i = 0; i < navios.size(); i++) {
-		os << "navio: " << navios[i]->getId() << " soldados: " << navios[i]->getNumSoldados() << " agua " << navios[i]->getAgua() << endl;
+		os << "Navio: " << navios[i]->getId() << " Tipo: "<< navios[i]->getEstado() <<" soldados: " << navios[i]->getNumSoldados() << " agua " << navios[i]->getAgua() << endl;
 	}
-	
+	os << "___________________________________________________\n";
 
 	return os.str();
 
@@ -421,7 +421,9 @@ string Mundo::retiraNavAfundados() {
 	for (auto it = navios.begin(); it != navios.end();) {
 
 		if ((*it)->getEstado() == afundado) {
-			os << "morreu navio: " << (*it)->getId()<<endl;
+			os << "________________Afundou_____________________\n";
+			os << "Navio: " << (*it)->getId()<<endl;
+			os << "____________________________________________\n";
 			delete *it;
 			it = navios.erase(it);
 		}
