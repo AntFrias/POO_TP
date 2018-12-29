@@ -139,7 +139,7 @@ void Tartaruga::serConquistadoaDeriva() {
 	}
 
 }
-string Tartaruga::moveNavioAuto() {
+string Tartaruga::moveNavioAuto(int turnoAtual) {
 
 	ostringstream os;
 
@@ -348,6 +348,16 @@ void Tartaruga::RetiraMercadoriaNavio(int quantCarga)
 int Tartaruga::VerificaMaxMercadoria() const
 {
 	return 0;
+}
+int Tartaruga::getQuantidadePeixe() const
+{
+	return 0;
+}
+void Tartaruga::setQuantidadePeixe(int quantpeixe)
+{
+}
+void Tartaruga::AdicionaQuantidadePeixe(int quantpeixe)
+{
 }
 string Tartaruga::TrataNavioTempestade()
 {
@@ -1243,7 +1253,7 @@ int Tartaruga::FmoveBaixoDireita(int move) {
 	}
 	return MOVE_INVALIDO;
 }
-int Tartaruga::moveNavio(int direcao) {
+int Tartaruga::moveNavio(int direcao, int turnoJogo) {
 
 	unsigned int move = 0;
 	move = rand() % 3;

@@ -20,7 +20,7 @@ void Galeao::soldadosBebemAgua() {
 		}
 	}
 }
-string Galeao::moveNavioAuto() {
+string Galeao::moveNavioAuto(int turnoAtual) {
 
 	ostringstream os;
 
@@ -166,16 +166,27 @@ string Galeao::acao(int xEscuna, int yEscuna) {
 
 	Navios *navioaTransferir = nullptr;
 	navioaTransferir = mundo->getNavioXY(xEscuna, yEscuna);
-	if (navioaTransferir != nullptr) {
-		os << "---------------TRANSFERENCIA DE PEIXE DA ESCUNA PARA MIM------------------" << endl;
+	os << "---------------TRANSFERENCIA DE PEIXE DA ESCUNA PARA Galeao------------------" << endl;
+	if (this->QuantMercadoria + navioaTransferir->getQuantidadePeixe() <= GALEAO_QUANT_MAX_CARGA) {
 
-		//TODO FRIAS FAZ AQUI A CENA DA TRANSFERENCIA PFVV
-			//ESTAS NUM GALEAO E JA TENS A ESCUNA PARA IR BUSCAR O PEIXE PARA O GALEAO
-			// E SUBTRAIR O PEIXE A ESCUNA QUE ACABASTE DE BUCAR
-			//OBRIGADO BRO ;-)
-		os << "---------------Fim-TRANSFERENCIA------------------" << endl;
+		os << "quantidade de Mercadoria do Galeao antes da transferencia: " << this->QuantMercadoria <<endl;
+		os << "Quantidade de Peixe da Escuna antes da transferencia " << navioaTransferir->getQuantidadePeixe() << endl;
+
+		this->QuantPeixe = this->QuantPeixe + navioaTransferir->getQuantidadePeixe();
+
+		this->QuantMercadoria = QuantMercadoria + navioaTransferir->getQuantidadePeixe();
+
+		navioaTransferir->setMercadoriaNavio(navioaTransferir->getMercadoriaNavio() - navioaTransferir->getQuantidadePeixe());
+
+		navioaTransferir->setQuantidadePeixe(0);
+
+		os << "quantidade de Mercadoria do Galeao Depois da transferencia: " << this->QuantMercadoria << endl;
+		os << "Quantidade de Peixe da Escuna Depois da transferencia " << navioaTransferir->getQuantidadePeixe() << endl;
+
 	}
 	
+	os << "---------------Fim-TRANSFERENCIA------------------" << endl;
+
 	return os.str();
 }
 string Galeao::combate(int quemVouAtacar) {//ve escuna à volta
@@ -1081,7 +1092,7 @@ int Galeao::FmoveBaixoDireita() {
 	}
 	return MOVE_INVALIDO;
 }
-int Galeao::moveNavio(int direcao) {
+int Galeao::moveNavio(int direcao, int turnoJogo) {
 
 	switch (direcao) {
 
@@ -1173,6 +1184,19 @@ void Galeao::RetiraMercadoriaNavio(int quantCarga)
 		this->QuantMercadoria = QuantMercadoria - quantCarga;
 	else
 		this->QuantMercadoria = 0;
+}
+int Galeao::getQuantidadePeixe() const
+{
+	return this->QuantPeixe;
+}
+void Galeao::setQuantidadePeixe(int quantpeixe)
+{
+	this->QuantPeixe = quantpeixe;
+}
+void Galeao::AdicionaQuantidadePeixe(int quantpeixe)
+{
+	if (this->QuantPeixe + quantpeixe <= GALEAO_QUANT_MAX_CARGA)
+		this->QuantPeixe = this->QuantPeixe - quantpeixe;
 }
 string Galeao::TrataNavioTempestade()
 {

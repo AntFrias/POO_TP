@@ -48,6 +48,8 @@ public:
 
 	const int getMoedas() const;
 
+	void adicionaMoedas(int moedas);
+
 	int vendeNavio(char tipo,int precoSoldado);
 
 	bool validaCompra(int valor);
@@ -62,9 +64,9 @@ public:
 
 	bool verificaNaviosJogador();
 
-	int moveNavioJogador(int id, int direcao);
+	int moveNavioJogador(int id, int direcao, int turnoJogo);
 
-	string moveNavioAuto();
+	string moveNavioAuto(int turnoAtual);
 
 	bool validaIdNavio(int idNavio);
 

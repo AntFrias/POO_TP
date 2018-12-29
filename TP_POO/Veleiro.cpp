@@ -8,7 +8,7 @@ void Veleiro::AbasteceAguaNavio()
 	this->quantAgua = VELEIRO_MAX_AGUA;
 	
 }
-string Veleiro::moveNavioAuto() {
+string Veleiro::moveNavioAuto(int turnoAtual) {
 
 	ostringstream os;
 	
@@ -63,6 +63,10 @@ int Veleiro::getMaxAgua() {
 int Veleiro::getAgua() {
 	return this->quantAgua;
 }
+void Veleiro::setAgua(int agua)
+{
+	this->quantAgua = agua;
+}
 void Veleiro::adicionaAgua(int agua) {
 	this->quantAgua += agua;
 }
@@ -114,6 +118,36 @@ string Veleiro::acaoPorto() {
 	}
 	return os.str();
 }
+
+string Veleiro::acaoRoubo(int xEscuna, int yEscuna) {
+
+	ostringstream os;
+
+	Navios *navioaTransferir = nullptr;
+	navioaTransferir = mundo->getNavioXY(xEscuna, yEscuna);
+	os << "---------------TRANSFERENCIA DE PEIXE DA ESCUNA PARA Veleiro------------------" << endl;
+
+	if (this->QuantMercadoria + navioaTransferir->getQuantidadePeixe() <= VELEIRO_QUANT_MAX_CARGA) {
+
+		os << "quantidade de Mercadoria do Veleiro antes da transferencia: " << this->QuantMercadoria << endl;
+		os << "Quantidade de Peixe da Escuna antes da transferencia " << navioaTransferir->getQuantidadePeixe() << endl;
+
+		this->QuantPeixe = this->QuantPeixe + navioaTransferir->getQuantidadePeixe();
+
+		this->QuantMercadoria = QuantMercadoria + navioaTransferir->getQuantidadePeixe();
+
+		navioaTransferir->setMercadoriaNavio(navioaTransferir->getMercadoriaNavio() - navioaTransferir->getQuantidadePeixe());
+
+		navioaTransferir->setQuantidadePeixe(0);
+
+		os << "quantidade de Mercadoria do Veleiro Depois da transferencia: " << this->QuantMercadoria << endl;
+		os << "Quantidade de Peixe da Escuna Depois da transferencia " << navioaTransferir->getQuantidadePeixe() << endl;
+
+		os << "---------------Fim-TRANSFERENCIA------------------" << endl;
+
+	}
+	return os.str();
+}
 string Veleiro::acao(int xaAtacar, int yaAtacar) {
 
 	ostringstream os;
@@ -141,67 +175,63 @@ string Veleiro::acao(int xaAtacar, int yaAtacar) {
 				soldadosPerdidos = 1;
 			os << "O Navio " << this->getId() << " ganhou esta investida, ira perder " << soldadosPerdidos << " soldados." << endl;
 			os << "O Navio " << navioaAtacar->getId() << " perdeu esta investida, ira perder " << soldadosPerdidos * 2 << " soldados." << endl;
-			this->quantSoldados -= soldadosPerdidos;// este perdeu 20% da sua população
+			this->quantSoldados -= soldadosPerdidos;// este perdeu 20% da sua populaï¿½ï¿½o
 			navioaAtacar->setNumSoldados(navioaAtacar->getNumSoldados() - (soldadosPerdidos * 2));// o outro perde 2 vezes mais que o outro
 
 			if (navioaAtacar->getNumSoldados() <= 0) {
 				//set afundado
 				navioaAtacar->setEstado(afundado);
 				//passar a metade da carga
+				if (this->QuantMercadoria + (navioaAtacar->getMercadoriaNavio() / 2) <= this->VerificaMaxMercadoria()) {
+					this->QuantMercadoria = this->QuantMercadoria + (navioaAtacar->getMercadoriaNavio() / 2);
+					navioaAtacar->setMercadoriaNavio(navioaAtacar->getMercadoriaNavio() / 2);
+				}
+				else {
+					navioaAtacar->setMercadoriaNavio(navioaAtacar->getMercadoriaNavio() - (this->VerificaMaxMercadoria() - this->QuantMercadoria));
+					this->QuantMercadoria = this->QuantMercadoria + (this->VerificaMaxMercadoria() - this->QuantMercadoria);
+				}
 				//passa a agua toda menos o execesso
 				if (this->getAgua() + navioaAtacar->getAgua() > this->getMaxAgua()) {
 					this->adicionaAgua(this->getMaxAgua() - this->getAgua());
 				}
-				else
-					this->adicionaAgua(navioaAtacar->getAgua());
+				os << "O Navio " << this->getId() << " ficou com  " << this->quantSoldados << "soldados." << endl;
+				os << "O Navio " << navioaAtacar->getId() << " ficou com " << navioaAtacar->getNumSoldados() << "soldados." << endl;
 			}
-			os << "O Navio " << this->getId() << " ficou com  " << this->quantSoldados << "soldados." << endl;
-			os << "O Navio " << navioaAtacar->getId() << " ficou com " << navioaAtacar->getNumSoldados() << "soldados." << endl;
-		}
-		else { //o atacado ganhou 
+			else { //o atacado ganhou 
 
-			soldadosPerdidos = (20 * navioaAtacar->getNumSoldados()) / 100;
-			if (soldadosPerdidos == 0)
-				soldadosPerdidos = 1;
-			os << "O Navio " << this->getId() << " perdeu esta investida, ira perder " << soldadosPerdidos * 2 << "soldados." << endl;
-			os << "O Navio " << navioaAtacar->getId() << " ganhour esta investida, ira perder " << soldadosPerdidos << "soldados." << endl;
-			navioaAtacar->setNumSoldados(navioaAtacar->getNumSoldados() - soldadosPerdidos);// o atacado perde 20% da sua população
-			this->quantSoldados -= soldadosPerdidos * 2; //este perde 2 vezes mais que o outro
+				soldadosPerdidos = (20 * navioaAtacar->getNumSoldados()) / 100;
+				if (soldadosPerdidos == 0)
+					soldadosPerdidos = 1;
+				os << "O Navio " << this->getId() << " perdeu esta investida, ira perder " << soldadosPerdidos * 2 << "soldados." << endl;
+				os << "O Navio " << navioaAtacar->getId() << " ganhour esta investida, ira perder " << soldadosPerdidos << "soldados." << endl;
+				navioaAtacar->setNumSoldados(navioaAtacar->getNumSoldados() - soldadosPerdidos);// o atacado perde 20% da sua populaï¿½ï¿½o
+				this->quantSoldados -= soldadosPerdidos * 2; //este perde 2 vezes mais que o outro
 
-			if (this->quantSoldados <= 0) {
-				//set afundar 
-				this->estado = afundado;
-				//passar a metade da carga
-				//passa a agua toda menos o execesso
-				if (navioaAtacar->getAgua() + this->getAgua() > navioaAtacar->getMaxAgua()) {
-					navioaAtacar->adicionaAgua(navioaAtacar->getMaxAgua() - navioaAtacar->getAgua());
+				if (this->quantSoldados <= 0) {
+					//set afundar 
+					this->estado = afundado;
+					//passar a metade da carga
+					if (navioaAtacar->getMercadoriaNavio() + (this->QuantMercadoria / 2) <= navioaAtacar->VerificaMaxMercadoria()) {
+						navioaAtacar->adicionaMercadoriaNavio((this->QuantMercadoria / 2));
+						this->QuantMercadoria = this->QuantMercadoria / 2;
+					}
+					else {
+
+						this->QuantMercadoria = this->QuantMercadoria - (navioaAtacar->VerificaMaxMercadoria() - navioaAtacar->getMercadoriaNavio());
+						navioaAtacar->setMercadoriaNavio(navioaAtacar->getMercadoriaNavio() + (navioaAtacar->VerificaMaxMercadoria() - navioaAtacar->getMercadoriaNavio()));
+
+					}
+					//passa a agua toda menos o execesso
+					if (navioaAtacar->getAgua() + this->getAgua() > navioaAtacar->getMaxAgua()) {
+						navioaAtacar->adicionaAgua(navioaAtacar->getMaxAgua() - navioaAtacar->getAgua());
+					}
+					os << "O Navio " << this->getId() << " ficou com  " << this->quantSoldados << " soldados." << endl;
+					os << "O Navio " << navioaAtacar->getId() << " ficou com " << navioaAtacar->getNumSoldados() << " soldados." << endl;
 				}
-				else
-					navioaAtacar->adicionaAgua(this->getAgua());
-
+				os << "---------------------------------------------------------------" << endl;
 			}
-			os << "O Navio " << this->getId() << " ficou com  " << this->quantSoldados << " soldados." << endl;
-			os << "O Navio " << navioaAtacar->getId() << " ficou com " << navioaAtacar->getNumSoldados() << " soldados." << endl;
 		}
-		os << "---------------------------------------------------------------" << endl;
 	}
-	return os.str();
-}
-string Veleiro::acaoRoubo(int xEscuna, int yEscuna) {
-
-	ostringstream os;
-
-	Navios *navioaTransferir = nullptr;
-	navioaTransferir = mundo->getNavioXY(xEscuna, yEscuna);
-	os << "---------------TRANSFERENCIA DE PEIXE DA ESCUNA PARA MIM------------------" << endl;
-
-	//TODO FRIAS FAZ AQUI A CENA DA TRANSFERENCIA PFVV
-		//ESTAS NUM GALEAO E JA TENS A ESCUNA PARA IR BUSCAR O PEIXE PARA O GALEAO
-		// E SUBTRAIR O PEIXE A ESCUNA QUE ACABASTE DE BUCAR
-		//OBRIGADO BRO ;-)
-	os << "---------------Fim-TRANSFERENCIA------------------" << endl;
-
-
 	return os.str();
 }
 string Veleiro::combate(int quemVouAtacar) {
@@ -300,6 +330,19 @@ void Veleiro::RetiraMercadoriaNavio(int quantCarga)
 	else
 		this->QuantMercadoria = 0;
 }
+int Veleiro::getQuantidadePeixe() const
+{
+	return this->QuantPeixe;
+}
+void Veleiro::setQuantidadePeixe(int quantpeixe)
+{
+	this->QuantPeixe = quantpeixe;
+}
+void Veleiro::AdicionaQuantidadePeixe(int quantpeixe)
+{
+	if (this->QuantPeixe + quantpeixe <= VELEIRO_QUANT_MAX_CARGA)
+		this->QuantPeixe = this->QuantPeixe + quantpeixe;
+}
 string Veleiro::TrataNavioTempestade()
 {
 	ostringstream os;
@@ -319,7 +362,7 @@ string Veleiro::TrataNavioTempestade()
 		if (probAfundar <= PROB_VELEIRO_AFUNDAR_TEMPESTADE_1 && QuantCarga >= PROB_VELEIRO_PERDER_CARGA)
 			this->estado = afundado;
 
-		else if (probAfundar <= PROB_VELEIRO_AFUNDAR_TEMPESTADE_2)  // aqui a probabilidade é diferente pelo facto do 
+		else if (probAfundar <= PROB_VELEIRO_AFUNDAR_TEMPESTADE_2)  // aqui a probabilidade ï¿½ diferente pelo facto do 
 			this->estado = afundado;    							//navio pedir apenas 20% de prob caso tenha menos que 50%
 																	// de capacidade de carga
 		else
@@ -402,7 +445,7 @@ int Veleiro::FmoveEsquerda(int move) {
 }
 int Veleiro::FmoveDireita(int move) {
 	int VerificaPorto = 0;
-	//e ver se a nova pos está dentro de agua!
+	//e ver se a nova pos estï¿½ dentro de agua!
 	if (x < mundo->getDimX() - 1 && (mundo->verificaCelulaMar(this->x + move, this->y) == CELULA_MAR) && (x + move) <= mundo->getDimX() - 1) {
 
 		VerificaPorto = mundo->verificaCelulaPorto(this->x + move, this->y);
@@ -469,7 +512,7 @@ int Veleiro::FmoveDireita(int move) {
 }
 int Veleiro::FmoveCima(int move) {
 	int VerificaPorto = 0;
-	//e ver se a nova pos está dentro de agua!
+	//e ver se a nova pos estï¿½ dentro de agua!
 	if (y > 0 && (mundo->verificaCelulaMar(this->x, this->y - move) == CELULA_MAR) && (y - move) >= 0) {
 
 
@@ -542,7 +585,7 @@ int Veleiro::FmoveCima(int move) {
 }
 int Veleiro::FmoveBaixo(int move) {
 	int VerificaPorto = 0;
-	//e ver se a nova pos está dentro de agua!
+	//e ver se a nova pos estï¿½ dentro de agua!
 	if (y < mundo->getDimY() - 1 && (mundo->verificaCelulaMar(this->x, this->y + move) == CELULA_MAR) && (y + move) <= mundo->getDimY() - 1) {
 
 		VerificaPorto = mundo->verificaCelulaPorto(this->x, this->y + move);
@@ -683,7 +726,7 @@ int Veleiro::FmoveCimaEsquerda(int move) {
 		}
 
 	}
-	////encostado à esquerda
+	////encostado ï¿½ esquerda
 	if ((x == 0 && (y > 0 && y <= mundo->getDimY() - 1)) && (mundo->verificaCelulaMar(mundo->getDimX() - 1, this->y - 1) == CELULA_MAR)) {
 
 		VerificaPorto = mundo->verificaCelulaPorto(mundo->getDimX() - 1, this->y - 1);
@@ -835,7 +878,7 @@ int Veleiro::FmoveCimaDireita(int move) {
 		}
 
 	}
-	//encostado à direita
+	//encostado ï¿½ direita
 	if ((x == mundo->getDimX() - 1 && y > 0 && y <= mundo->getDimY() - 1) && (mundo->verificaCelulaMar(0, this->y - 1) == CELULA_MAR)) {
 
 		VerificaPorto = mundo->verificaCelulaPorto(0, this->y - 1);
@@ -985,7 +1028,7 @@ int Veleiro::FmoveBaixoEsquerda(int move) {
 		}
 
 	}
-	//////encostado à esquerda
+	//////encostado ï¿½ esquerda
 	if ((x == 0) && (y >= 0 && y < mundo->getDimY() - 1) && (mundo->verificaCelulaMar(mundo->getDimX() - 1, this->y + 1) == CELULA_MAR)) {
 
 		VerificaPorto = mundo->verificaCelulaPorto(mundo->getDimX() - 1, this->y + 1);
@@ -1131,7 +1174,7 @@ int Veleiro::FmoveBaixoDireita(int move) {
 		}
 
 	}
-	////////encostado à direita
+	////////encostado ï¿½ direita
 	if ((x == mundo->getDimX() - 1) && (y >= 0 && y < mundo->getDimY() - 1) && (mundo->verificaCelulaMar(0, this->y + 1) == CELULA_MAR)) {
 
 		VerificaPorto = mundo->verificaCelulaPorto(0, this->y + 1);
@@ -1334,7 +1377,7 @@ void Veleiro::daMetade(int x, int y) {
 	else
 		this->estado = aDeriva;
 }
-int Veleiro::moveNavio(int direcao) {
+int Veleiro::moveNavio(int direcao, int turnoJogo) {
 
 	unsigned int move = 0;
 	move = rand() % 3;

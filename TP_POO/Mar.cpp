@@ -1,6 +1,6 @@
 #include "Mar.h"
 
-
+using namespace std;
 
 char Mar::getTipo() const
 {
@@ -24,16 +24,25 @@ bool Mar::VerificaCelulaTerra()const {
 }
 void Mar::VerificaRegenacaoPeixe(int TurnoAtual)
 {
-	if (this->CardumePeixe == false && TurnoAtual - this->TurnoPesca == TEMPO_REGENERACAO_PEIXE)
+	if (this->celulaPeixe == true && TurnoAtual - this->TurnoPesca == TEMPO_REGENERACAO_PEIXE){
+		this->TurnoPesca = 0;
 		this->CardumePeixe = true;
+	}
+
 }
 
-bool Mar::VerificaCardumePeixe()
+bool Mar::VerificaCardumePeixe()const
 {
-	if (this->CardumePeixe == true)
+	if (this->CardumePeixe == true){
 		return true;
+	}
 	else
 		return false;
+}
+
+bool Mar::VerificaCelulaPeixe()const
+{
+	return this->celulaPeixe;
 }
 
 Mar::~Mar()

@@ -147,7 +147,7 @@ void Fragata::serConquistadoaDeriva() {
 	}
 
 }
-string Fragata::moveNavioAuto() {
+string Fragata::moveNavioAuto(int turnoAtual) {
 
 	ostringstream os;
 
@@ -163,7 +163,7 @@ string Fragata::moveNavioAuto() {
 				break;
 			}
 
-		}//percorri os navios todos e nao há nenhum pirata
+		}//percorri os navios todos e nao hï¿½ nenhum pirata
 
 		for (unsigned int i = 0; i < auxNavio.size(); i++) {//vou ficar perto de uma escuna ou galeao
 			if (auxNavio[i]->sou() == ESCUNA || auxNavio[i]->sou() == GALEAO) {
@@ -237,7 +237,7 @@ string Fragata::acao(int xaAtacar, int yaAtacar) {
 				soldadosPerdidos = 1;
 			os << "O Navio " << this->getId() << " ganhou esta investida, ira perder " << soldadosPerdidos << " soldados." << endl;
 			os << "O Navio " << navioaAtacar->getId() << " perdeu esta investida, ira perder " << soldadosPerdidos * 2 << " soldados." << endl;
-			this->quantSoldados -= soldadosPerdidos;// este perdeu 20% da sua população
+			this->quantSoldados -= soldadosPerdidos;// este perdeu 20% da sua populaï¿½ï¿½o
 			navioaAtacar->setNumSoldados(navioaAtacar->getNumSoldados() - (soldadosPerdidos * 2));// o outro perde 2 vezes mais que o outro
 
 
@@ -245,7 +245,7 @@ string Fragata::acao(int xaAtacar, int yaAtacar) {
 				//set afundado
 				navioaAtacar->setEstado(afundado);
 				//passar a metade da carga
-				//-> Fragata não tem carga n passa nada
+				//-> Fragata nï¿½o tem carga n passa nada
 				//passa a agua toda menos o execesso
 				if (this->getAgua() + navioaAtacar->getAgua() > this->getMaxAgua()) {
 					this->adicionaAgua(this->getMaxAgua() - this->getAgua());
@@ -264,14 +264,14 @@ string Fragata::acao(int xaAtacar, int yaAtacar) {
 				soldadosPerdidos = 1;
 			os << "O Navio " << this->getId() << " perdeu esta investida, ira perder " << soldadosPerdidos * 2 << " soldados." << endl;
 			os << "O Navio " << navioaAtacar->getId() << " ganhour esta investida, ira perder " << soldadosPerdidos << " soldados." << endl;
-			navioaAtacar->setNumSoldados(navioaAtacar->getNumSoldados() - soldadosPerdidos);// o atacado perde 20% da sua população
+			navioaAtacar->setNumSoldados(navioaAtacar->getNumSoldados() - soldadosPerdidos);// o atacado perde 20% da sua populaï¿½ï¿½o
 			this->quantSoldados -= soldadosPerdidos * 2; //este perde 2 vezes mais que o outro
 
 			if (this->quantSoldados <= 0) {
 				//set afundar 
 				this->estado = afundado;
 				//passar a metade da carga
-				//-> Fragata não tem carga n passa nada
+				//-> Fragata nï¿½o tem carga n passa nada
 				//passa a agua toda menos o execesso
 				if (navioaAtacar->getAgua() + this->getAgua() > navioaAtacar->getMaxAgua()) {
 					navioaAtacar->adicionaAgua(navioaAtacar->getMaxAgua() - navioaAtacar->getAgua());
@@ -390,6 +390,16 @@ void Fragata::RetiraMercadoriaNavio(int quantCarga)
 int Fragata::VerificaMaxMercadoria()const
 {
 	return FRAGATA_QUANT_MAX_CARGA;
+}
+int Fragata::getQuantidadePeixe() const
+{
+	return 0;
+}
+void Fragata::setQuantidadePeixe(int quantpeixe)
+{
+}
+void Fragata::AdicionaQuantidadePeixe(int quantpeixe)
+{
 }
 string Fragata::combate(int quemVouAtacar) {
 
@@ -527,7 +537,7 @@ int Fragata::FmoveEsquerda(int move) {
 }
 int Fragata::FmoveDireita(int move) {
 	int VerificaPorto = 0;
-	//e ver se a nova pos está dentro de agua!
+	//e ver se a nova pos estï¿½ dentro de agua!
 	if (x < mundo->getDimX() - 1 && (mundo->verificaCelulaMar(this->x + move, this->y) == CELULA_MAR)&& (x+move) <= mundo->getDimX()-1 ) {
 
 		VerificaPorto = mundo->verificaCelulaPorto(this->x + move, this->y);
@@ -594,7 +604,7 @@ int Fragata::FmoveDireita(int move) {
 }
 int Fragata::FmoveCima(int move) {
 	int VerificaPorto = 0;
-	//e ver se a nova pos está dentro de agua!
+	//e ver se a nova pos estï¿½ dentro de agua!
 	if (y > 0 && (mundo->verificaCelulaMar(this->x, this->y - move) == CELULA_MAR) && (y-move)>=0) {
 
 
@@ -667,7 +677,7 @@ int Fragata::FmoveCima(int move) {
 }
 int Fragata::FmoveBaixo(int move) {
 	int VerificaPorto = 0;
-	//e ver se a nova pos está dentro de agua!
+	//e ver se a nova pos estï¿½ dentro de agua!
 	if (y < mundo->getDimY() - 1 && (mundo->verificaCelulaMar(this->x, this->y + move) == CELULA_MAR) && (y+move)<=mundo->getDimY()-1) {
 
 		VerificaPorto = mundo->verificaCelulaPorto(this->x, this->y + move);
@@ -808,7 +818,7 @@ int Fragata::FmoveCimaEsquerda(int move) {
 		}
 
 	}
-	////encostado à esquerda
+	////encostado ï¿½ esquerda
 	if ((x == 0 && (y > 0 && y <= mundo->getDimY() - 1)) && (mundo->verificaCelulaMar(mundo->getDimX() - 1, this->y - 1) == CELULA_MAR)) {
 
 		VerificaPorto = mundo->verificaCelulaPorto(mundo->getDimX() - 1, this->y - 1);
@@ -960,7 +970,7 @@ int Fragata::FmoveCimaDireita(int move) {
 		}
 
 	}
-	//encostado à direita
+	//encostado ï¿½ direita
 	if ((x == mundo->getDimX() - 1 && y > 0 && y <= mundo->getDimY() - 1) && (mundo->verificaCelulaMar(0, this->y - 1) == CELULA_MAR)) {
 
 		VerificaPorto = mundo->verificaCelulaPorto(0, this->y - 1);
@@ -1110,7 +1120,7 @@ int Fragata::FmoveBaixoEsquerda(int move) {
 		}
 
 	}
-	//////encostado à esquerda
+	//////encostado ï¿½ esquerda
 	if ((x == 0) && (y >= 0 && y < mundo->getDimY() - 1) && (mundo->verificaCelulaMar(mundo->getDimX() - 1, this->y + 1) == CELULA_MAR)) {
 
 		VerificaPorto = mundo->verificaCelulaPorto(mundo->getDimX() - 1, this->y + 1);
@@ -1256,7 +1266,7 @@ int Fragata::FmoveBaixoDireita(int move) {
 		}
 
 	}
-	////////encostado à direita
+	////////encostado ï¿½ direita
 	if ((x == mundo->getDimX() - 1) && (y >= 0 && y < mundo->getDimY() - 1) && (mundo->verificaCelulaMar(0, this->y + 1) == CELULA_MAR)) {
 
 		VerificaPorto = mundo->verificaCelulaPorto(0, this->y + 1);
@@ -1330,7 +1340,7 @@ int Fragata::FmoveBaixoDireita(int move) {
 	}
 	return MOVE_INVALIDO;
 }
-int Fragata::moveNavio(int direcao) {
+int Fragata::moveNavio(int direcao, int turnoJogo) {
 		
 	unsigned int move = 0;
 	move = rand() % 3;
