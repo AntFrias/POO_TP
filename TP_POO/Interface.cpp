@@ -55,7 +55,7 @@ string Interface::ExecutaEventos() {
 
 		if (mundo.getExistenciaEvento() == EVENTO_OFF) {
 
-			gotoErro();
+			//gotoErro();
 
 			os << GeradorEvento(EVENTO_EXECUCAO_RAND, 0, 0, 0, 0);
 		}
@@ -98,7 +98,7 @@ string Interface::GeradorEvento(int ModoExecucao, int tipoEvento, int idNavio, i
 
 							os << "Vai ser Gerada uma Tempestade " << endl;
 						
-							gotoErro();
+							//gotoErro();
 						
 							os << mundo.trataEventos(ModoExecucao, tipoEvento, idNavio,coordX, coordY) << endl;
 					
@@ -116,7 +116,7 @@ string Interface::GeradorEvento(int ModoExecucao, int tipoEvento, int idNavio, i
 
 							os << " Vai ser Gerado um Ataque de Sereias " << endl;
 
-							gotoErro();
+							//gotoErro();
 
 							os << mundo.trataEventos(ModoExecucao, tipoEvento, idNavio, coordX, coordY) << endl;
 						}
@@ -286,13 +286,211 @@ int Interface::verificaFimdoJogo() {
 	return 0;
 
 }
+
+bool Interface::verificaLeComandos(string aux) {
+		
+	istringstream buffer(aux);
+	istringstream buffer2(aux);
+
+	string acao;
+	char tipo;
+	int idNavio;
+	int nMercadoria;
+	char direcao;
+	int x, y;
+	int nSoldados;
+
+	if (buffer >> acao) {
+		switch (FiltaComandos(acao)) {
+		case com_exec:
+			return true;
+			break;
+			//############################################################################################################################################
+		case com_prox:
+			return true;
+			break;
+			//############################################################################################################################################
+		case com_compranav:
+			buffer >> tipo;
+			if (tipo == 'V' || tipo == 'G' || tipo == 'E' || tipo == 'F' || tipo == 'T' || tipo == 'S' && count(aux.begin(), aux.end(), ' ') == 1) {
+				return true;
+			}
+			else
+				return false;
+			break;
+			//############################################################################################################################################
+		case com_vendenav:
+			if (buffer >> tipo) {
+				return true;
+			}
+			else
+				return false;
+			break;
+			//############################################################################################################################################
+		case com_lista:
+			return true;
+			break;
+			//############################################################################################################################################
+		case com_compra:
+			if (buffer >> idNavio && buffer >> nMercadoria && count(aux.begin(), aux.end(), ' ') == 2) {
+				return true;
+			}
+			else
+				return false;
+				break;
+				//############################################################################################################################################
+		case com_vende:
+			if (buffer >> idNavio && count(aux.begin(), aux.end(), ' ') == 1) {
+				return true;
+			}
+			else
+				return false;
+			break;
+			//############################################################################################################################################
+		case com_move:
+			if (buffer >> idNavio && buffer >> direcao && count(aux.begin(), aux.end(), ' ') == 2) {
+				return true;
+			}
+			else
+				return false;
+			break;
+			//############################################################################################################################################
+		case com_auto:
+			if (buffer >> idNavio && count(aux.begin(), aux.end(), ' ') == 1) {
+				return true;
+			}
+			else
+				return false;
+			break;
+			//############################################################################################################################################
+		case com_stop:
+			if (buffer >> idNavio && count(aux.begin(), aux.end(), ' ') == 1) {
+				return true;
+			}
+			else
+				return false;
+			break;
+			//############################################################################################################################################
+		case com_pirata:
+			if (buffer >> tipo && buffer >> x && buffer >> y && count(aux.begin(), aux.end(), ' ') == 3) {
+				if (tipo == 'V' || tipo == 'F') {
+					return true;
+				}
+				return false;
+			}
+			break;
+			//############################################################################################################################################
+		case com_evpos:
+			if (buffer >> tipo && buffer >> x && buffer >> y && count(aux.begin(), aux.end(), ' ') == 3) {
+				return true;
+			}
+			else
+				return false;
+			break;
+			//############################################################################################################################################
+		case com_evnav:
+			if (buffer >> tipo && buffer >> idNavio && count(aux.begin(), aux.end(), ' ') == 2) {
+				return true;
+			}
+			else
+				return false;
+			break;
+			//############################################################################################################################################
+		case com_moedas:
+			if (buffer >> idNavio) {
+				return true;
+			}
+			else
+				return false;
+			break;
+			//############################################################################################################################################
+		case com_vaipara:
+			//este comando tem overload devido aos parametros vaipara <N> <x> <y> e vai para <N> <P>
+
+			if (buffer >> idNavio && buffer >> tipo) {
+
+				if ((tipo >= 'A' && tipo <= 'Z') || (tipo >= 'a' && tipo <= 'z')) {
+					return true;
+				}
+				else
+					if (buffer2 >> acao && buffer2 >> idNavio && buffer2 >> x && buffer2 >> y) {
+						return true;
+					}
+					else
+						return false;
+			}
+			else
+				return false;
+			break;
+			//############################################################################################################################################
+		case com_comprasold:
+			if (buffer >> idNavio && buffer >> nSoldados && count(aux.begin(), aux.end(), ' ') == 2) {
+				return true;
+			}
+			else
+				return false;
+			break;
+			//############################################################################################################################################
+		case com_saveg:
+			return true;
+			break;
+			//############################################################################################################################################
+		case com_loadg:
+			return true;
+			break;
+			//############################################################################################################################################
+		case com_delg:
+			return true;
+			break;
+			//############################################################################################################################################
+		case com_sair:
+				return true;
+		}
+	}
+	return false;
+}
+vector <string> Interface::leComandos() {
+
+
+	vector <string> vetordComandos;
+
+	string aux;
+
+	do {
+
+		getline(cin, aux);
+
+		if (verificaLeComandos(aux) == true) {//se o comando introduzido na sequencia for correto
+
+			vetordComandos.push_back(aux);
+		}
+		else {
+			/*gotoErro();
+			cout << "comando: " << aux << " incorreto" << endl;*/
+		}
+	} while (aux != "prox");
+
+	return vetordComandos;
+}
+string Interface::mostraStatusNavio() {
+
+	ostringstream os;
+
+	os << mundo.mostraStatusNavio();
+
+	return os.str();
+
+}
+
 // Metodo Prompt tem como objetivo tratar os comandos introduzidos pelo Jogador	
 void Interface::Prompt() {
 
 	string linha, acao, configFile;
+	int proxComando = 0;
+	ostringstream os;
 
 	Consola::VERDE;
-
+	vector <string> vectorComandos;
 	gotoComando();
 	cout << "Comando: config ";
 
@@ -305,6 +503,10 @@ void Interface::Prompt() {
 	______________________________________________________________________________________
 	*/
 	PromptFase1(linha);
+	Consola::clrscr();
+	mostraMapa();
+
+
 	//inicializa��o do jogador
 	jogador.setMundo(&mundo);
 	//moedas
@@ -320,49 +522,61 @@ void Interface::Prompt() {
 					iniciar a fase 2: Trata comandos do jogador
 	______________________________________________________________________________________
 	*/
+	
+	
 	do {
+		/////////////////////////////////////////////////////////////////////
 
-		Consola::VERDE;
+		proxComando = 0;
+		vectorComandos.erase(vectorComandos.begin(), vectorComandos.end());
 
 		gotoComando();
-		cout << "Comando: ";
+		cout << "Comando: "<<endl;
+		vectorComandos = leComandos();
+		
+		Consola::clrscr();
+		do {
+			os << PromptFase2(vectorComandos[proxComando]);
+			if (vectorComandos[proxComando] != "prox") {
+				proxComando++;
+			}
+		} while (vectorComandos[proxComando] != "prox");
 
-		getline(cin, linha);
+		////////////////////////////////////////////////////////////////////
 
-		PromptFase2(linha);
 		if (verificaFimdoJogo() == 1) {
 			Sleep(4000);
 			return;
 		}
+
 		mundo.retiraNavAfundados();
 		//criaNaviosJogador(); //apagar isto daqui
 		criaPiratasAuto();
 		mundo.mandaVaiPara();
 		jogador.setPortoPrincipal(mundo.getPortoPrincipal());
 		mundo.abasteceNaviosNosPortos();
-		cout << jogador.moveNavioAuto();
-		cout << mundo.moveNavioPirataAuto();
+		os << jogador.moveNavioAuto();
+		os << mundo.moveNavioPirataAuto();
 		mundo.verificaaDeriva();
 		mundo.retiraNavAfundados();
-
-		cout << ExecutaEventos();
-
-		//execu��o de comando pendentes | comportamentos automaticos
-		//combates
-		//eventos
-		//piratas
-
-		mostraMapa();
-	
-		Consola::getch();
+		os << ExecutaEventos();
+		os << mostraStatusNavio();
 
 		Consola::clrscr();
-
 		mostraMapa();
-
+		Consola::gotoxy(0,50);
+		cout << os.str();
+		
+		os.str("");
+		Consola::gotoxy(0, 0);
 		this->Turno = this->incTurno++;
 
-	} while (linha != "sair");
+		for (unsigned int i = 0; i < vectorComandos.size(); i++) {
+			if (vectorComandos[i] == "sair")
+				proxComando = i;
+		}
+
+	} while (vectorComandos[proxComando]!="sair");
 
 
 }
@@ -373,7 +587,7 @@ void Interface::Prompt() {
 int Interface::FiltaComandos(string acao) {
 
 	vector< string > comandos = {"exec", "prox", "compranav", "vendenav", "lista", "compra", "vende", "move", "auto", "stop", "pirata","evpos","evnav",
-								  "moedas", "vaipara", "comprasold", "saveg", "loadg", "delg"};
+								  "moedas", "vaipara", "comprasold", "saveg", "loadg", "delg","sair"};
 
 	for (unsigned int i = 0; i < comandos.size(); i++) {
 		if (comandos[i].compare(acao) == 0)
@@ -583,64 +797,53 @@ int Interface::ValidaDirecoes(string direcao) {
 		}
 	return naoMove;
 }
-void Interface::PromptFase2(string linha) {
+string Interface::PromptFase2(string linha) {
 
 	char tipo;
 	string acao, direcao;
 	int idNavio,x,y, nSoldados, nMercadoria;
 	istringstream buffer(linha);
 	istringstream buffer2(linha);
-	
+	ostringstream os;
 	
 	if (buffer >> acao) {
 		switch (FiltaComandos(acao)) {
 		case com_exec:
-			gotoErro();
-			cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
+			os << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
 			break;
 		case com_prox:
-			gotoErro();
-			cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
+			os << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
 			break;
 		case com_compranav:
 			buffer >> tipo;
 			if (tipo == 'V' || tipo == 'G' || tipo == 'E' || tipo == 'F' || tipo == 'T' || tipo == 'S' && count(linha.begin(), linha.end(), ' ') == 1) {
 
 				if (compraNavio(tipo) == COMPRA_COM_SUCESSO) {
-					gotoPrint();
-					cout << "Compra efetuada com sucesso!" << endl;
+					os << "Compra efetuada com sucesso!" << endl;
 				}
 				else if (compraNavio(tipo) == COMPRA_SEM_MOEDAS) {
-					gotoErro();
-					cout << "Compra n�o efetuada <-> Jogador Sem Moedas" << endl;
+					os << "Compra n�o efetuada <-> Jogador Sem Moedas" << endl;
 				}
 				else if ((compraNavio(tipo) == TIPO_NAVIO_INVALIDO)) {
-					gotoErro();
-					cout << "Compra nao efetuada <-> N�o existe porto principal" << endl;
+					os << "Compra nao efetuada <-> N�o existe porto principal" << endl;
 				}
 			}
 			else {
-				gotoErro();
-				cout << " [ Sintaxe " << acao << " Invalida..! Sintaxe :" << acao << " <N> ]" << endl;
-				gotoPrint();
-				cout << "Saldo atual do Jogador: " << jogador.getMoedas() << endl;
+				os << " [ Sintaxe " << acao << " Invalida..! Sintaxe :" << acao << " <N> ]" << endl;
 			}
-			gotoPrint();
-			cout << "Saldo atual do Jogador: " << jogador.getMoedas() << endl;
-			//mostraNaviosJogador();
+			
+			os << "Saldo atual do Jogador: " << jogador.getMoedas() << endl;
 			break;
 		case com_vendenav:
-			gotoErro();
 			if (buffer >> tipo) {
 				acrescentaMoedas(jogador.vendeNavio(tipo, precoSoldado));
 			}
 			break;
 		case com_lista:
-			gotoErro();
-			cout << mostraInformacaoPortos();
+			
+			os << mostraInformacaoPortos();
 			break;
 		case com_compra:
-			gotoErro();
 			if (buffer >> idNavio && buffer >> nMercadoria && count(linha.begin(), linha.end(), ' ') == 2) {
 				if (jogador.validaIdNavio(idNavio)) {
 					Navios *auxNavio = jogador.getNavio(idNavio);
@@ -659,7 +862,7 @@ void Interface::PromptFase2(string linha) {
 									jogador.setMoedas(jogador.getMoedas() - (nMercadoria*this->precoCompraMercadoria));
 								}
 								else{
-									cout << " O Navio encontra-se carregado nao tendo capacidade para Comprar mais Mercadoria \n ou" << endl;
+									os << " O Navio encontra-se carregado nao tendo capacidade para Comprar mais Mercadoria \n ou" << endl;
 								}
 								/*cout << "_______________________________________________________________________"<< endl;
 								cout << " Quantidade de Mercadoria no Navio" << auxNavio->getMercadoriaNavio() << endl;
@@ -667,30 +870,25 @@ void Interface::PromptFase2(string linha) {
 								cout << " Quantidade de moedas do jogador " << jogador.getMoedas() << endl;*/
 							}
 							else {
-
-								cout << "Quantidade de mercadoria a ComPrar Superior a que o Porto tem para vender " << endl;
-								cout << "ou \n Quantidade de moedas do jogador insuficiente" << endl;
+								os << "Quantidade de mercadoria a ComPrar Superior a que o Porto tem para vender " << endl;
+								os << "ou \n Quantidade de moedas do jogador insuficiente" << endl;
 
 							}
 						}
 						else {
-							gotoErro();
-							cout << " [ Erro..! O Navio Com o Id : " << idNavio << "  nao se encontra em nenhum Porto Amigo" << endl;
+							os << " [ Erro..! O Navio Com o Id : " << idNavio << "  nao se encontra em nenhum Porto Amigo" << endl;
 						}
 					}
 				}
 				else {
-					gotoErro();
-					cout << " [ Erro..! O Navio Com o Id : " << idNavio << "  nao existe.. !" << endl;
+					os << " [ Erro..! O Navio Com o Id : " << idNavio << "  nao existe.. !" << endl;
 				}
 			}
 			else {
-				gotoErro();
-				cout << " [ Erro..! o comando introduzido esta incorrecto... Sitaxe: compra <ID_N> <M>  ]" << endl;
+				os << " [ Erro..! o comando introduzido esta incorrecto... Sitaxe: compra <ID_N> <M>  ]" << endl;
 			}
 			break;
 		case com_vende:
-			gotoErro();
 			if (buffer >> idNavio && count(linha.begin(), linha.end(), ' ') == 1) {
 				if (jogador.validaIdNavio(idNavio)) {
 					Navios *auxNavio = jogador.getNavio(idNavio);
@@ -711,24 +909,20 @@ void Interface::PromptFase2(string linha) {
 								cout << "Quantidade de moedas do jogador " << jogador.getMoedas() << endl;*/	
 							}
 							else {
-								gotoErro();
-								cout << "[ Erro .. ! O navio com o Id : " << idNavio << " nao tem Carga para vender" << endl;
+								os << "[ Erro .. ! O navio com o Id : " << idNavio << " nao tem Carga para vender" << endl;
 							}
 						}
 						else {
-							gotoErro();
-							cout << " [ Erro..! O Navio Com o Id : " << idNavio << "  nao se encontra em nenhum Porto Amigo" << endl;
+							os << " [ Erro..! O Navio Com o Id : " << idNavio << "  nao se encontra em nenhum Porto Amigo" << endl;
 						}
 					}
 				}
 				else {
-					gotoErro();
-					cout << " [ Erro..! O Navio Com o Id : " << idNavio << "  nao existe.. !" << endl;
+					os << " [ Erro..! O Navio Com o Id : " << idNavio << "  nao existe.. !" << endl;
 				}
 			}
 			else {
-				gotoErro();
-				cout << " [ Erro..! o comando introduzido esta incorrecto... Sitaxe: compra <ID_N> <M>  ]" << endl;
+				os << " [ Erro..! o comando introduzido esta incorrecto... Sitaxe: compra <ID_N> <M>  ]" << endl;
 			}
 			break;
 		case com_move:
@@ -740,21 +934,18 @@ void Interface::PromptFase2(string linha) {
 							auxNavio = mundo.getNavio(idNavio);
 							if( auxNavio->getEstado() != calmaria && auxNavio->getEstado() != motim){
 								jogador.moveNavioJogador(idNavio, ValidaDirecoes(direcao));//com sucesso
-									Consola::setTextColor(Consola::BRANCO);
-									Consola::gotoxy(0, 26);
-									cout << auxNavio->combate(CELULA_NAVIO_PIRATA);
+									os << auxNavio->combate(CELULA_NAVIO_PIRATA);
 							}
 						}
 						else
-							cout << "[ Erro..! AutoMove do Navio : " << idNavio << " esta ativo ..! ]" << endl;
+							os << "[ Erro..! AutoMove do Navio : " << idNavio << " esta ativo ..! ]" << endl;
 					else
-						cout << "[ Erro..! Id : " << idNavio << " de Navio Invalido ..! ]" << endl;
+						os << "[ Erro..! Id : " << idNavio << " de Navio Invalido ..! ]" << endl;
 				else 
-					cout << "[ Erro..! Direcao : " << direcao << " de Navio Invalido ..! ]" << endl;
+					os << "[ Erro..! Direcao : " << direcao << " de Navio Invalido ..! ]" << endl;
 			}
 			else {
-				gotoErro();
-				cout << " [ Sintaxe " << acao << "Invalida..! Use" << acao << "<N> <X> || nota: X = C,B,D,E,CE,CD,BE,BD ]" << endl;
+				os << " [ Sintaxe " << acao << "Invalida..! Use" << acao << "<N> <X> || nota: X = C,B,D,E,CE,CD,BE,BD ]" << endl;
 			}
 			break;
 		case com_auto:
@@ -762,13 +953,11 @@ void Interface::PromptFase2(string linha) {
 				if (jogador.validaIdNavio(idNavio)) 
 					jogador.AlteraAutoMoveNavio(idNavio, autoMove);
 				else {
-					gotoErro();
-					cout << "[ Id introduzido: " << idNavio << " invalido  ]" << endl;
+					os << "[ Id introduzido: " << idNavio << " invalido  ]" << endl;
 				}
 			}
 			else {
-				gotoErro();
-				cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
+				os << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
 			}
 			break;
 		case com_stop:
@@ -777,8 +966,7 @@ void Interface::PromptFase2(string linha) {
 					jogador.AlteraAutoMoveNavio(idNavio, normal);
 			}
 			else {
-				gotoErro();
-				cout << " [ Erro..! o comando introduzido est� incorrecto... Sitaxe: stop <ID_N>  ]" << endl;
+				os << " [ Erro..! o comando introduzido est� incorrecto... Sitaxe: stop <ID_N>  ]" << endl;
 			}
 		
 	break;
@@ -804,15 +992,15 @@ void Interface::PromptFase2(string linha) {
 				this->InsercaoEvento = INSERCAO_COMANDO;
 
 				if (tipo == 'T')
-					cout << GeradorEvento(EVENTO_EXECUCAO_COMANDO, EVENTO_TEMPESTADE,0, x, y);
+					os << GeradorEvento(EVENTO_EXECUCAO_COMANDO, EVENTO_TEMPESTADE,0, x, y);
 				else if (tipo == 'C')
-					cout << GeradorEvento(EVENTO_EXECUCAO_COMANDO, EVENTO_CALMARIA,0, x, y);
+					os << GeradorEvento(EVENTO_EXECUCAO_COMANDO, EVENTO_CALMARIA,0, x, y);
 
 				
 			}
 		}
 		else
-			cout << "existe um evento a decorrer..." << endl;
+			os << "existe um evento a decorrer..." << endl;
 	
 		break;
 
@@ -825,13 +1013,13 @@ void Interface::PromptFase2(string linha) {
 				this->InsercaoEvento = INSERCAO_COMANDO;
 
 				if (tipo == 'M')
-					cout << GeradorEvento(EVENTO_EXECUCAO_COMANDO, EVENTO_MOTIM, idNavio, 0, 0);
+					os << GeradorEvento(EVENTO_EXECUCAO_COMANDO, EVENTO_MOTIM, idNavio, 0, 0);
 				else if (tipo == 'S')
-					cout << GeradorEvento(EVENTO_EXECUCAO_COMANDO, EVENTO_SEREIAS, idNavio, 0, 0);
+					os << GeradorEvento(EVENTO_EXECUCAO_COMANDO, EVENTO_SEREIAS, idNavio, 0, 0);
 			}
 		}
 		else
-			cout << "existe um evento a decorrer..." << endl;
+			os << "existe um evento a decorrer..." << endl;
 		
 		break;
 	case com_moedas:
@@ -862,7 +1050,6 @@ void Interface::PromptFase2(string linha) {
 				if (auxNavio != nullptr){
 					Porto *auxPorto = mundo.getPorto(auxNavio->getX(), auxNavio->getY());
 					if (auxPorto != nullptr) {
-						gotoErro();
 						if ( auxPorto->getNumSoldados() >= nSoldados){
 						/*	cout << "_____________________________________________________________________________" << endl;
 							cout << " Quantidade de Soldados no Navio " << auxNavio->getNumSoldados() << endl;
@@ -887,45 +1074,38 @@ void Interface::PromptFase2(string linha) {
 						}
 
 						else{
-							gotoErro();
-							cout << "quantidade de soldados a Comprar e superior aos Soldados existentes no Porto" << endl;
+							os<< "quantidade de soldados a Comprar e superior aos Soldados existentes no Porto" << endl;
 						}
 					}
 					else {
-						gotoErro();
-						cout << " [ Erro..! O Navio Com o Id : " << idNavio << "  nao se encontra em nenhum Porto Amigo" << endl;
+						os << " [ Erro..! O Navio Com o Id : " << idNavio << "  nao se encontra em nenhum Porto Amigo" << endl;
 					}
 				}
 			}
 			else {
-				gotoErro();
-				cout << " [ Erro..! O Navio Com o Id : " << idNavio << "  nao existe.. !" << endl;
+				os << " [ Erro..! O Navio Com o Id : " << idNavio << "  nao existe.. !" << endl;
 			}
 		}
 		else {
-			gotoErro();
-			cout << " [ Erro..! o comando introduzido esta incorrecto... Sitaxe: comprasold <ID_N> <S>  ]" << endl;
+			os << " [ Erro..! o comando introduzido esta incorrecto... Sitaxe: comprasold <ID_N> <S>  ]" << endl;
 		}
 		break;
 	case com_saveg:
-		gotoErro();
-		cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
+		os << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
 		break;
 	case com_loadg:
-		gotoErro();
-		cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
+		os << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
 		break;
 	case com_delg:
-		gotoErro();
-		cout << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
+		os << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
 		break;
 	default:
 		if (acao != "sair") {
-			gotoErro();
-			cout << " [ ERRO..! Comando Incorreto..!  ]" << endl;
+			os << " [ ERRO..! Comando Incorreto..!  ]" << endl;
 		}
 	}
 }
+return os.str();
 }
 
 bool Interface::getInsercaoComandoEvento() const

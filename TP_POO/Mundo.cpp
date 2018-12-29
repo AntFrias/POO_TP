@@ -344,12 +344,24 @@ Navios & Mundo::criaNavio(Mundo *mundo,const char portoPrincipal, const char Tip
 
 	return *aux;
 }
+string Mundo::mostraStatusNavio() {
+
+	ostringstream os;
+
+	for (unsigned int i = 0; i < navios.size(); i++) {
+		os << "navio: " << navios[i]->getId() << " soldados: " << navios[i]->getNumSoldados() << " agua " << navios[i]->getAgua() << endl;
+	}
+	
+
+	return os.str();
+
+}
 string Mundo::moveNavioPirataAuto() {
 
 	ostringstream os;
 
 	for (unsigned int i = 0; i < navios.size(); i++) {
-		cout << "navio: " << navios[i]->getId() << " soldados: " << navios[i]->getNumSoldados() << " agua " << navios[i]->getAgua() << endl;
+		
 		if (navios[i]->getEstado()== pirata) {
 
 			os << navios[i]->moveNavioAuto();
@@ -409,7 +421,7 @@ void Mundo::retiraNavAfundados() { // NAO FAÇO IDEIA O QUE FIZ AQUI FRIAS .. SEM
 	for (auto it = navios.begin(); it != navios.end();) {
 
 		if ((*it)->getEstado() == afundado) {
-			cout << "morreu navio: " << (*it)->getId()<<endl;
+			//cout << "morreu navio: " << (*it)->getId()<<endl;
 			delete *it;
 			it = navios.erase(it);
 		}

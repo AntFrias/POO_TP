@@ -65,6 +65,7 @@ enum IndiceComandos {
 	com_saveg,
 	com_loadg,
 	com_delg,
+	com_sair
 };
 enum IndiceConFiguracoes {
 
@@ -114,7 +115,7 @@ public:
 	Interface() : Turno(0) {};
 	int FiltaComandos(string acao);
 	void PromptFase1(string linha);
-	void PromptFase2(string linha);
+	string PromptFase2(string linha);
 	int ValidaCompraJogador(char tipoNavio);
 	int compraNavio(char tipo);
 	int ValidaDirecoes(string direcao);
@@ -135,6 +136,9 @@ public:
 	string ExecutaEventos();
 	string GeradorEvento(int ModoExecucao, int tipoEvento, int idNavio, int coordX, int coordY);
 	int verificaFimdoJogo();
+	bool verificaLeComandos(string aux);
+	vector<string> leComandos();
+	string mostraStatusNavio();
 	void mostraMapa();
 	int verificaDadosFicheiro(string linha);
 	bool carregaFich(string configfich);

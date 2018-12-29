@@ -319,14 +319,14 @@ string Tartaruga::combate(int quemVouAtacar) {
 	if (quemVouAtacar == CELULA_NAVIO_PIRATA) {//sou normal
 		if (mundo->verificaCelulaPorto(xNavio, yNavio) == CELULA_PORTO_INIMIGO) {
 			acaoPorto();
-			cout << "Porrada com o Porto Inimigo" << endl;
+			os << "Porrada com o Porto Inimigo" << endl;
 		}
 	}
 
 	if (quemVouAtacar == CELULA_NAVIO_NORMAL) {//sou pirata
 		if (mundo->verificaCelulaPorto(xNavio, yNavio) == CELULA_PORTO_AMIGO) {
 			acaoPortoAmigo();
-			cout << "Porrada com o Porto Inimigo" << endl;
+			os << "Porrada com o Porto Inimigo" << endl;
 		}
 	}
 
