@@ -152,7 +152,7 @@ string Veleiro::acao(int xaAtacar, int yaAtacar) {
 			navioaAtacar->setEstado(afundado);
 			//passar a metade da carga
 			if (this->QuantMercadoria + (navioaAtacar->getMercadoriaNavio() / 2) <= this->VerificaMaxMercadoria()) {
-				this->QuantMercadoria = this->QuantMercadoria + (navioaAtacar->getMercadoriaNavio / 2);
+				this->QuantMercadoria = this->QuantMercadoria + (navioaAtacar->getMercadoriaNavio() / 2);
 				navioaAtacar->setMercadoriaNavio(navioaAtacar->getMercadoriaNavio() / 2);
 			}
 			else {
