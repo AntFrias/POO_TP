@@ -9,8 +9,8 @@ precocompmercad 2
 precovendmercad 3
 soldadosporto 100
 probevento 10
-probtempestade 10
-probsereias 10
+probtempestade 100
+probsereias 100
 probcalmaria 10
 probmotin 10
 probpeixe 10

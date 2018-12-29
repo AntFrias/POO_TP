@@ -98,9 +98,9 @@ string Interface::GeradorEvento(int ModoExecucao, int tipoEvento, int idNavio, i
 
 							os << "Vai ser Gerada uma Tempestade " << endl;
 						
-							gotoErro();
 						
-							os << mundo.trataEventos(ModoExecucao, tipoEvento, idNavio,coordX, coordY) << endl;
+						
+							os << mundo.trataEventos(ModoExecucao, EVENTO_TEMPESTADE, idNavio,coordX, coordY) << endl;
 					
 						}
 					}
@@ -116,9 +116,7 @@ string Interface::GeradorEvento(int ModoExecucao, int tipoEvento, int idNavio, i
 
 							os << " Vai ser Gerado um Ataque de Sereias " << endl;
 
-							gotoErro();
-
-							os << mundo.trataEventos(ModoExecucao, tipoEvento, idNavio, coordX, coordY) << endl;
+							os << mundo.trataEventos(ModoExecucao, EVENTO_SEREIAS, idNavio, coordX, coordY) << endl;
 						}
 					}
 					return os.str();

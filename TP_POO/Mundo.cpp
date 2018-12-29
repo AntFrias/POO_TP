@@ -677,15 +677,19 @@ string Mundo::TrataEventoTempestade(int epiX, int epiY)
 {
 	ostringstream os;
 
-	int x, y;
+	int x = 0, y = 0;
 
 	for(int i = 0; i < navios.size(); i++ ){
+
+		if ( navios[i] != nullptr){
 
 		x = navios[i]->getX();
 
 		y = navios[i]->getY();
 
-		if (x >= (epiX - RANGE_EVENTO) && x <= (epiX + RANGE_EVENTO) && y >= (epiY - RANGE_EVENTO) && y <= (epiY + RANGE_EVENTO)) {
+		}
+
+		if (x >= (epiX - RANGE_EVENTO) && x <= (epiX + RANGE_EVENTO) && y >= (epiY - RANGE_EVENTO) && y <= (epiY + RANGE_EVENTO) && navios[i] != nullptr) {
 
 			os << " O Navio com o id   " << navios[i]->getId() << "   na posicao [ " << x << " : " << y << " ] " << endl;
 
@@ -698,6 +702,7 @@ string Mundo::TrataEventoTempestade(int epiX, int epiY)
 // por defeito o tipo de eventos vai ter valor 0 para entrar no default e executar a acao para eventos que duram mais do que 1 turno
 string Mundo::trataEventos(int modoExecucao, int TipoEvento, int idNavio, int coordX, int coordY)
 {
+
 	ostringstream os;
 
 	int epicentroX, epicentroY, indice = 0;
@@ -731,7 +736,7 @@ string Mundo::trataEventos(int modoExecucao, int TipoEvento, int idNavio, int co
 		break;
 
 	case EVENTO_SEREIAS:
-		
+	
 		if (navios.size() > 0) {
 
 			for (int i = 0; i < navios.size(); i++) {
@@ -740,12 +745,13 @@ string Mundo::trataEventos(int modoExecucao, int TipoEvento, int idNavio, int co
 
 					if (modoExecucao != EVENTO_EXECUCAO_COMANDO) {
 					
+						
 						do {
 
 							indice = rand() % navios.size();
-							os << "Navio para ataque de sereia que tem o id:  " << navios[indice]->getId();
+							
 
-						} while (navios[indice]->getEstado() != normal && navios[indice]->getEstado() != pirata && navios[indice]->getEstado() != autoMove);
+						} while (navios[indice]->getEstado() != normal && navios[indice]->getEstado() != pirata && navios[indice]->getEstado() != autoMove && navios[indice] != nullptr);
 						
 						break;
 					}
