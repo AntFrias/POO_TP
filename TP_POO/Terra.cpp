@@ -5,6 +5,16 @@ char Terra::getTipo() const
 {
 	return this->tipo;
 }
+void Terra::PescaCardumeMar(int turnoPescaria)
+{
+}
+void Terra::VerificaRegenacaoPeixe(int TurnoAtual)
+{
+}
+bool Terra::VerificaCardumePeixe()const
+{
+	return false;
+}
 bool Terra::VerificaCelulaMar()const{
 
 	return false;

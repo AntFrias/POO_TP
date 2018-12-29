@@ -98,9 +98,9 @@ string Interface::GeradorEvento(int ModoExecucao, int tipoEvento, int idNavio, i
 
 							os << "Vai ser Gerada uma Tempestade " << endl;
 						
-							//gotoErro();
 						
-							os << mundo.trataEventos(ModoExecucao, tipoEvento, idNavio,coordX, coordY) << endl;
+						
+							os << mundo.trataEventos(ModoExecucao, EVENTO_TEMPESTADE, idNavio,coordX, coordY) << endl;
 					
 						}
 					}
@@ -116,9 +116,7 @@ string Interface::GeradorEvento(int ModoExecucao, int tipoEvento, int idNavio, i
 
 							os << " Vai ser Gerado um Ataque de Sereias " << endl;
 
-							//gotoErro();
-
-							os << mundo.trataEventos(ModoExecucao, tipoEvento, idNavio, coordX, coordY) << endl;
+							os << mundo.trataEventos(ModoExecucao, EVENTO_SEREIAS, idNavio, coordX, coordY) << endl;
 						}
 					}
 					return os.str();
@@ -621,16 +619,15 @@ void Interface::Prompt() {
 		mundo.retiraNavAfundados();
 		//criaNaviosJogador(); //apagar isto daqui
 		criaPiratasAuto();
-		mundo.mandaVaiPara();
+		cout << mundo.mandaVaiPara(this->precoVendaMercadoria, this->precoVendePeixe);
 		jogador.setPortoPrincipal(mundo.getPortoPrincipal());
 		mundo.abasteceNaviosNosPortos();
-		os << jogador.moveNavioAuto();
-		os << mundo.moveNavioPirataAuto();
+		cout << jogador.moveNavioAuto(this->Turno);
+		cout << mundo.moveNavioPirataAuto(this->Turno);
 		mundo.verificaaDeriva();
-		os << mundo.retiraNavAfundados();
-		os << ExecutaEventos();
-		os << mostraStatusNavio();
-
+		mundo.VerificaRegeneracaoPeixeMar(this->Turno);
+		jogador.adicionaMoedas(mundo.EsvaziaBancoJogador());
+		cout << ExecutaEventos();
 		Consola::clrscr();
 		mostraMapa();
 		Consola::gotoxy(0,50);
@@ -639,11 +636,8 @@ void Interface::Prompt() {
 		os.str("");
 		Consola::gotoxy(0, 0);
 		this->Turno = this->incTurno++;
-
-		for (unsigned int i = 0; i < vectorComandos.size(); i++) {
-			if (vectorComandos[i] == "sair")
-				proxComando = i;
-		}
+		cout << "Turno : " << this->Turno;
+		cout << "_______________________________________________________________________________________" << endl;
 
 	} while (vectorComandos[proxComando]!="sair");
 
@@ -689,7 +683,7 @@ void Interface::PromptFase1(string linha) {
 		gotoErro();
 		cout << " [ Erro ao carregar ficheiro ] Ficheiro por default carregado com Sucesso.. !" << endl;
 	}
-	mundo.setQuantidadeSoldadosPortos(this->soldadosPorto);
+	//mundo.setQuantidadeSoldadosPortos(this->soldadosPorto);
 }
 int Interface::verificaDadosFicheiro(string linha) {
 
@@ -769,6 +763,8 @@ bool Interface::carregaFich(string configFile) {
 					break;
 				case probmotin:
 					this->probMotin = inteiro;
+				case probpeixe:
+					this->probPeixe = inteiro;
 					break;
 			}
 		}
@@ -777,7 +773,7 @@ bool Interface::carregaFich(string configFile) {
 			for (int i = 0; i < mundo.getDimX(); i++) {
 				if (linha[i] == '.') {
 
-					this->mundo.criaSuperficie(i, contaColunas, linha[i]);
+					this->mundo.criaSuperficie(i, contaColunas, linha[i], this->probPeixe);
 				}
 				if (linha[i] == '+') {
 
@@ -1000,10 +996,10 @@ string Interface::PromptFase2(string linha) {
 						if (!jogador.verificaModoAutomaticoNavio(idNavio)) {
 							auxNavio = mundo.getNavio(idNavio);
 							if( auxNavio->getEstado() != calmaria && auxNavio->getEstado() != motim){
-								jogador.moveNavioJogador(idNavio, ValidaDirecoes(direcao));//com sucesso
+								jogador.moveNavioJogador(idNavio, ValidaDirecoes(direcao), this->Turno);//com sucesso
 									os << auxNavio->combate(CELULA_NAVIO_PIRATA);
 							}
-						}
+						} 
 						else
 							os << "[ Erro..! AutoMove do Navio : " << idNavio << " esta ativo ..! ]" << endl;
 					else
@@ -1118,13 +1114,13 @@ string Interface::PromptFase2(string linha) {
 					Porto *auxPorto = mundo.getPorto(auxNavio->getX(), auxNavio->getY());
 					if (auxPorto != nullptr) {
 						if ( auxPorto->getNumSoldados() >= nSoldados){
-						/*	cout << "_____________________________________________________________________________" << endl;
+				/*		cout << "_____________________________________________________________________________" << endl;
 							cout << " Quantidade de Soldados no Navio " << auxNavio->getNumSoldados() << endl;
 							cout << " Quantidade de Soldados no Porto " << auxPorto->getNumSoldados() << endl;
-							cout << " Quantidade de moedas do jogador " << jogador.getMoedas() << endl;*/
-
-							if (nSoldados + auxNavio->getNumSoldados() > auxNavio->getMaxSoldados()) {
-								auxPorto->setNumSoldados(auxNavio->getMaxSoldados() - auxNavio->getNumSoldados());
+							cout << " Quantidade de moedas do jogador " << jogador.getMoedas() << endl;
+*/
+							if ((nSoldados + auxNavio->getNumSoldados()) > auxNavio->getMaxSoldados()) {
+								auxPorto->setNumSoldados(auxPorto->getNumSoldados() - (auxNavio->getMaxSoldados() - auxNavio->getNumSoldados()));
 								auxNavio->setNumSoldados(auxNavio->getMaxSoldados());	
 								jogador.setMoedas(jogador.getMoedas() - (this->precoSoldado*(auxNavio->getMaxSoldados() - auxNavio->getNumSoldados())));
 							}
@@ -1134,7 +1130,7 @@ string Interface::PromptFase2(string linha) {
 								auxNavio->setNumSoldados(auxNavio->getNumSoldados() + nSoldados);
 								jogador.setMoedas(jogador.getMoedas() - (this->precoSoldado * nSoldados));
 							}
-							/*cout << "_____________________________________________________________________________" << endl;
+					/*		cout << "_____________________________________________________________________________" << endl;
 							cout << " Quantidade de Soldados no Navio " << auxNavio->getNumSoldados() << endl;
 							cout << " Quantidade de Soldados no Porto " << auxPorto->getNumSoldados() << endl;
 							cout << " Quantidade de moedas do jogador " << jogador.getMoedas() << endl;*/
@@ -1234,6 +1230,8 @@ void Interface::mostraLegAndConfig() {
 	cout << "Probabilidade Calmaria " << this->probCalmaria;
 	Consola::gotoxy(87, 15);
 	cout << "Probabilidade Motin " << this->probMotin;
+	Consola::gotoxy(87, 16);
+	cout << "Probabilidade Peixe " << this->probPeixe;
 
 }
 void Interface::mostraSuperficie() {
@@ -1264,7 +1262,12 @@ void Interface::mostraSuperficie() {
 
 				Consola::gotoxy(x + 1, y + 1);
 				Consola::setTextColor(Consola::AZUL);
-				cout << char(254);
+				if (auxSuperficie[i]->VerificaCardumePeixe() == PEIXE_ON) {
+					Consola::setTextColor(Consola::CINZENTO);
+					cout << char(190);
+					}
+				else
+					cout << char(254);
 			}
 			if (i % 2 != 0) {
 				Consola::gotoxy(x, y);
@@ -1281,7 +1284,13 @@ void Interface::mostraSuperficie() {
 
 				Consola::gotoxy(x + 1, y + 1);
 				Consola::setTextColor(Consola::AZUL_CLARO);
-				cout << char(254);
+				if (auxSuperficie[i]->VerificaCardumePeixe() == PEIXE_ON) {
+	
+					Consola::setTextColor(Consola::CINZENTO);
+					cout << char(190);
+				}
+				else
+					cout << char(254);
 			}
 
 		}

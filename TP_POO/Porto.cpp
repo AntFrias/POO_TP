@@ -1,12 +1,13 @@
 #include "Porto.h"
 
-Porto::Porto(int x, int y, char tipoPorto, int nSoldados, int tMercadoria)
+Porto::Porto(int x, int y, char tipoPorto, int nSoldados, int tMercadoria, int bancojogador)
 {
 	this->TipoPorto = tipoPorto;
 	this->x = x;
 	this->y = y;
 	this->numSoldados = nSoldados;
 	this->Mercadoria = tMercadoria;
+	this->bancoJogador = bancojogador;
 	
 }
 bool Porto::verificaPortoAmigo() {
@@ -31,6 +32,18 @@ void Porto::setNumSoldados(int nSoldados)
 int Porto::getNumSoldados() const
 {
 	return this->numSoldados;
+}
+void Porto::setBancoJogador(int valor)
+{
+	this->bancoJogador = valor;
+}
+void Porto::adicionaBancoJogador(int valor)
+{
+	this->bancoJogador = this->bancoJogador + valor;
+}
+int Porto::getBancoJogador() const
+{
+	return this->bancoJogador;
 }
 const int Porto::getX() const {
 
