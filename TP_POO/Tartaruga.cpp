@@ -183,24 +183,26 @@ string Tartaruga::acao(int xaAtacar, int yaAtacar) {
 
 	Navios *navioaAtacar = nullptr;
 	navioaAtacar = mundo->getNavioXY(xaAtacar, yaAtacar);
-	os << "---------------Combate------------------" << endl;
-	
-	os << "O navio com o ID: " << this->getId() << " mandou um petardo que o acertou no " << navioaAtacar->getId() << " e vai afundar"<<endl;
-	navioaAtacar->setEstado(afundado);
 
-	os << "---------------Fim-Combate------------------" << endl;
+	if (navioaAtacar != nullptr) {
+		os << "---------------Combate------------------" << endl;
 
-	//num ataque destes os soldados ficaram com muita sede
-	soldadosBebemAgua();
-	soldadosBebemAgua();
+		os << "O navio com o ID: " << this->getId() << " mandou um petardo que o acertou no " << navioaAtacar->getId() << " e vai afundar" << endl;
+		navioaAtacar->setEstado(afundado);
 
-	if (this->getAgua() <= 0) 
-		this->setNumSoldados(this->getNumSoldados()-1);
+		os << "---------------Fim-Combate------------------" << endl;
 
-	if (this->getAgua() <= 0 && this->getNumSoldados() <= 0) 
-		this->setEstado(afundado);
-	
+		//num ataque destes os soldados ficaram com muita sede
+		soldadosBebemAgua();
+		soldadosBebemAgua();
 
+		if (this->getAgua() <= 0)
+			this->setNumSoldados(this->getNumSoldados() - 1);
+
+		if (this->getAgua() <= 0 && this->getNumSoldados() <= 0)
+			this->setEstado(afundado);
+
+	}
 	return os.str();
 }
 void Tartaruga::conquistaPorto(int xPorto, int yPorto) {
@@ -317,14 +319,14 @@ string Tartaruga::combate(int quemVouAtacar) {
 	if (quemVouAtacar == CELULA_NAVIO_PIRATA) {//sou normal
 		if (mundo->verificaCelulaPorto(xNavio, yNavio) == CELULA_PORTO_INIMIGO) {
 			acaoPorto();
-			cout << "Porrada com o Porto Inimigo" << endl;
+			os << "Porrada com o Porto Inimigo" << endl;
 		}
 	}
 
 	if (quemVouAtacar == CELULA_NAVIO_NORMAL) {//sou pirata
 		if (mundo->verificaCelulaPorto(xNavio, yNavio) == CELULA_PORTO_AMIGO) {
 			acaoPortoAmigo();
-			cout << "Porrada com o Porto Inimigo" << endl;
+			os << "Porrada com o Porto Inimigo" << endl;
 		}
 	}
 

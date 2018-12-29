@@ -119,6 +119,8 @@ public:
 	
 	Navios & criaNavio(Mundo *mundo,char PortoPrincipal, char tipoNavio);
 
+	string mostraStatusNavio();
+
 	string moveNavioPirataAuto(int turnoAtual);
 
 	Navios * criaNavPirata(Mundo *mundo, const char TipoNavio, int x, int y);
@@ -127,7 +129,7 @@ public:
 
 	void criaCelulaPorto(int x, int y,char t, int nSoldados);
 
-	void retiraNavAfundados();
+	string retiraNavAfundados();
 
 	const vector<const Superficie*> getVetorSuperficie() const;
 

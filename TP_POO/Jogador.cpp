@@ -270,6 +270,7 @@ string Jogador::moveNavioAuto( int turnoAtual) {
 	ostringstream os;
 
 	for (unsigned int i = 0; i < navios.size(); i++) {
+
 		if (navios[i]->getEstado()==autoMove || navios[i]->getEstado() == aDeriva) {
 			os << navios[i]->moveNavioAuto(turnoAtual);
 		}

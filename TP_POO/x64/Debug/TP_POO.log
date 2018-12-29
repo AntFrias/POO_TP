@@ -1,1 +1,20 @@
-﻿
+﻿  Calmaria.cpp
+  Consola.cpp
+  Escuna.cpp
+  Eventos.cpp
+  Fragata.cpp
+  Galeao.cpp
+  Interface.cpp
+  Jogador.cpp
+  main.cpp
+  Mar.cpp
+  Motim.cpp
+  Mundo.cpp
+  Navios.cpp
+  Porto.cpp
+  Superficie.cpp
+  Tartaruga.cpp
+  Terra.cpp
+  Veleiro.cpp
+  Generating Code...
+  TP_POO.vcxproj -> C:\Users\jpsd\Source\Repos\POO_TP\x64\Debug\TP_POO.exe

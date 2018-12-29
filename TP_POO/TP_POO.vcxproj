@@ -154,6 +154,7 @@
     <ClInclude Include="Veleiro.h" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="comandos.txt" />
     <Text Include="configIni.txt" />
     <Text Include="dados.txt" />
   </ItemGroup>

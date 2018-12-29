@@ -124,28 +124,29 @@ string Veleiro::acao(int xaAtacar, int yaAtacar) {
 
 	Navios *navioaAtacar = nullptr;
 	navioaAtacar = mundo->getNavioXY(xaAtacar, yaAtacar);
-	int randThis = 0, randNavioaAtacar = 0, soldadosPerdidos = 0;
-	os << "----------------------------Combate----------------------------" << endl;
-	os << "O " << this->getId() << "moveu-se e encontrou o: " << navioaAtacar->getId() << endl;
+	if (navioaAtacar != nullptr) {
+		int randThis = 0, randNavioaAtacar = 0, soldadosPerdidos = 0;
+		os << "----------------------------Combate----------------------------" << endl;
+		os << "O " << this->getId() << "moveu-se e encontrou o: " << navioaAtacar->getId() << endl;
 
-	randThis = randNumber(this->quantSoldados);
-	randNavioaAtacar = randNumber(navioaAtacar->getNumSoldados());
+		randThis = randNumber(this->quantSoldados);
+		randNavioaAtacar = randNumber(navioaAtacar->getNumSoldados());
 
-	os << "O " << this->getId() << "ficou com o nr sorteado: " << randThis << "e tem neste momento " << this->quantSoldados << "soldados" << endl;
-	os << "O " << navioaAtacar->getId() << "ficou com o nr sorteado: " << randNavioaAtacar << "e tem neste momento" << navioaAtacar->getNumSoldados() << "soldados" << endl;
+		os << "O " << this->getId() << "ficou com o nr sorteado: " << randThis << "e tem neste momento " << this->quantSoldados << "soldados" << endl;
+		os << "O " << navioaAtacar->getId() << "ficou com o nr sorteado: " << randNavioaAtacar << "e tem neste momento" << navioaAtacar->getNumSoldados() << "soldados" << endl;
 
 
-	if (randThis == randNavioaAtacar) //se houver empate
-		randThis += 1; //o navio que ataca vai ganhar porque viu primeiro ;-)
+		if (randThis == randNavioaAtacar) //se houver empate
+			randThis += 1; //o navio que ataca vai ganhar porque viu primeiro ;-)
 
-	if (randThis > randNavioaAtacar) { // este ganhou
-		soldadosPerdidos = (20 * this->quantSoldados) / 100;
-		if (soldadosPerdidos == 0)
-			soldadosPerdidos = 1;
-		os << "O Navio " << this->getId() << " ganhou esta investida, ira perder " << soldadosPerdidos << " soldados." << endl;
-		os << "O Navio " << navioaAtacar->getId() << " perdeu esta investida, ira perder " << soldadosPerdidos * 2 << " soldados." << endl;
-		this->quantSoldados -= soldadosPerdidos;// este perdeu 20% da sua população
-		navioaAtacar->setNumSoldados(navioaAtacar->getNumSoldados() - (soldadosPerdidos * 2));// o outro perde 2 vezes mais que o outro
+		if (randThis > randNavioaAtacar) { // este ganhou
+			soldadosPerdidos = (20 * this->quantSoldados) / 100;
+			if (soldadosPerdidos == 0)
+				soldadosPerdidos = 1;
+			os << "O Navio " << this->getId() << " ganhou esta investida, ira perder " << soldadosPerdidos << " soldados." << endl;
+			os << "O Navio " << navioaAtacar->getId() << " perdeu esta investida, ira perder " << soldadosPerdidos * 2 << " soldados." << endl;
+			this->quantSoldados -= soldadosPerdidos;// este perdeu 20% da sua populaï¿½ï¿½o
+			navioaAtacar->setNumSoldados(navioaAtacar->getNumSoldados() - (soldadosPerdidos * 2));// o outro perde 2 vezes mais que o outro
 
 		if (navioaAtacar->getNumSoldados() <= 0) {
 			//set afundado
@@ -163,21 +164,18 @@ string Veleiro::acao(int xaAtacar, int yaAtacar) {
 			if (this->getAgua() + navioaAtacar->getAgua() > this->getMaxAgua()) {
 				this->adicionaAgua(this->getMaxAgua() - this->getAgua());
 			}
-			else
-				this->adicionaAgua(navioaAtacar->getAgua());
+			os << "O Navio " << this->getId() << " ficou com  " << this->quantSoldados << "soldados." << endl;
+			os << "O Navio " << navioaAtacar->getId() << " ficou com " << navioaAtacar->getNumSoldados() << "soldados." << endl;
 		}
-		os << "O Navio " << this->getId() << " ficou com  " << this->quantSoldados << "soldados." << endl;
-		os << "O Navio " << navioaAtacar->getId() << " ficou com " << navioaAtacar->getNumSoldados() << "soldados." << endl;
-	}
-	else { //o atacado ganhou 
+		else { //o atacado ganhou 
 
-		soldadosPerdidos = (20 * navioaAtacar->getNumSoldados()) / 100;
-		if (soldadosPerdidos == 0)
-			soldadosPerdidos = 1;
-		os << "O Navio " << this->getId() << " perdeu esta investida, ira perder " << soldadosPerdidos * 2 << "soldados." << endl;
-		os << "O Navio " << navioaAtacar->getId() << " ganhour esta investida, ira perder " << soldadosPerdidos << "soldados." << endl;
-		navioaAtacar->setNumSoldados(navioaAtacar->getNumSoldados() - soldadosPerdidos);// o atacado perde 20% da sua população
-		this->quantSoldados -= soldadosPerdidos * 2; //este perde 2 vezes mais que o outro
+			soldadosPerdidos = (20 * navioaAtacar->getNumSoldados()) / 100;
+			if (soldadosPerdidos == 0)
+				soldadosPerdidos = 1;
+			os << "O Navio " << this->getId() << " perdeu esta investida, ira perder " << soldadosPerdidos * 2 << "soldados." << endl;
+			os << "O Navio " << navioaAtacar->getId() << " ganhour esta investida, ira perder " << soldadosPerdidos << "soldados." << endl;
+			navioaAtacar->setNumSoldados(navioaAtacar->getNumSoldados() - soldadosPerdidos);// o atacado perde 20% da sua populaï¿½ï¿½o
+			this->quantSoldados -= soldadosPerdidos * 2; //este perde 2 vezes mais que o outro
 
 		if (this->quantSoldados <= 0) {
 			//set afundar 
@@ -197,14 +195,11 @@ string Veleiro::acao(int xaAtacar, int yaAtacar) {
 			if (navioaAtacar->getAgua() + this->getAgua() > navioaAtacar->getMaxAgua()) {
 				navioaAtacar->adicionaAgua(navioaAtacar->getMaxAgua() - navioaAtacar->getAgua());
 			}
-			else
-				navioaAtacar->adicionaAgua(this->getAgua());
-
+			os << "O Navio " << this->getId() << " ficou com  " << this->quantSoldados << " soldados." << endl;
+			os << "O Navio " << navioaAtacar->getId() << " ficou com " << navioaAtacar->getNumSoldados() << " soldados." << endl;
 		}
-		os << "O Navio " << this->getId() << " ficou com  " << this->quantSoldados << " soldados." << endl;
-		os << "O Navio " << navioaAtacar->getId() << " ficou com " << navioaAtacar->getNumSoldados() << " soldados." << endl;
+		os << "---------------------------------------------------------------" << endl;
 	}
-	os << "---------------------------------------------------------------" << endl;
 	return os.str();
 }
 string Veleiro::acaoRoubo(int xEscuna, int yEscuna) {
@@ -268,14 +263,14 @@ string Veleiro::combate(int quemVouAtacar) {
 	if (quemVouAtacar == CELULA_NAVIO_PIRATA) {
 		if (mundo->verificaCelulaPorto(xNavio, yNavio) == CELULA_PORTO_INIMIGO) {
 			acaoPorto();
-			cout << "Porrada com o Porto Inimigo" << endl;
+			os << "Porrada com o Porto Inimigo" << endl;
 		}
 	}
 
 	if (quemVouAtacar == CELULA_NAVIO_NORMAL) {
 		if (mundo->verificaCelulaPorto(xNavio, yNavio) == CELULA_PORTO_AMIGO) {
 			acaoPorto();
-			cout << "Porrada com o Porto Inimigo" << endl;
+			os<< "Porrada com o Porto Inimigo" << endl;
 		}
 	}
 	if (this->getEstado() != pirata && this->getEstado() != afundado && this->getEstado() != calmaria && this->getEstado() != motim) {
@@ -364,7 +359,7 @@ string Veleiro::TrataNavioTempestade()
 		if (probAfundar <= PROB_VELEIRO_AFUNDAR_TEMPESTADE_1 && QuantCarga >= PROB_VELEIRO_PERDER_CARGA)
 			this->estado = afundado;
 
-		else if (probAfundar <= PROB_VELEIRO_AFUNDAR_TEMPESTADE_2)  // aqui a probabilidade é diferente pelo facto do 
+		else if (probAfundar <= PROB_VELEIRO_AFUNDAR_TEMPESTADE_2)  // aqui a probabilidade ï¿½ diferente pelo facto do 
 			this->estado = afundado;    							//navio pedir apenas 20% de prob caso tenha menos que 50%
 																	// de capacidade de carga
 		else
@@ -447,7 +442,7 @@ int Veleiro::FmoveEsquerda(int move) {
 }
 int Veleiro::FmoveDireita(int move) {
 	int VerificaPorto = 0;
-	//e ver se a nova pos está dentro de agua!
+	//e ver se a nova pos estï¿½ dentro de agua!
 	if (x < mundo->getDimX() - 1 && (mundo->verificaCelulaMar(this->x + move, this->y) == CELULA_MAR) && (x + move) <= mundo->getDimX() - 1) {
 
 		VerificaPorto = mundo->verificaCelulaPorto(this->x + move, this->y);
@@ -514,7 +509,7 @@ int Veleiro::FmoveDireita(int move) {
 }
 int Veleiro::FmoveCima(int move) {
 	int VerificaPorto = 0;
-	//e ver se a nova pos está dentro de agua!
+	//e ver se a nova pos estï¿½ dentro de agua!
 	if (y > 0 && (mundo->verificaCelulaMar(this->x, this->y - move) == CELULA_MAR) && (y - move) >= 0) {
 
 
@@ -587,7 +582,7 @@ int Veleiro::FmoveCima(int move) {
 }
 int Veleiro::FmoveBaixo(int move) {
 	int VerificaPorto = 0;
-	//e ver se a nova pos está dentro de agua!
+	//e ver se a nova pos estï¿½ dentro de agua!
 	if (y < mundo->getDimY() - 1 && (mundo->verificaCelulaMar(this->x, this->y + move) == CELULA_MAR) && (y + move) <= mundo->getDimY() - 1) {
 
 		VerificaPorto = mundo->verificaCelulaPorto(this->x, this->y + move);
@@ -728,7 +723,7 @@ int Veleiro::FmoveCimaEsquerda(int move) {
 		}
 
 	}
-	////encostado à esquerda
+	////encostado ï¿½ esquerda
 	if ((x == 0 && (y > 0 && y <= mundo->getDimY() - 1)) && (mundo->verificaCelulaMar(mundo->getDimX() - 1, this->y - 1) == CELULA_MAR)) {
 
 		VerificaPorto = mundo->verificaCelulaPorto(mundo->getDimX() - 1, this->y - 1);
@@ -880,7 +875,7 @@ int Veleiro::FmoveCimaDireita(int move) {
 		}
 
 	}
-	//encostado à direita
+	//encostado ï¿½ direita
 	if ((x == mundo->getDimX() - 1 && y > 0 && y <= mundo->getDimY() - 1) && (mundo->verificaCelulaMar(0, this->y - 1) == CELULA_MAR)) {
 
 		VerificaPorto = mundo->verificaCelulaPorto(0, this->y - 1);
@@ -1030,7 +1025,7 @@ int Veleiro::FmoveBaixoEsquerda(int move) {
 		}
 
 	}
-	//////encostado à esquerda
+	//////encostado ï¿½ esquerda
 	if ((x == 0) && (y >= 0 && y < mundo->getDimY() - 1) && (mundo->verificaCelulaMar(mundo->getDimX() - 1, this->y + 1) == CELULA_MAR)) {
 
 		VerificaPorto = mundo->verificaCelulaPorto(mundo->getDimX() - 1, this->y + 1);
@@ -1176,7 +1171,7 @@ int Veleiro::FmoveBaixoDireita(int move) {
 		}
 
 	}
-	////////encostado à direita
+	////////encostado ï¿½ direita
 	if ((x == mundo->getDimX() - 1) && (y >= 0 && y < mundo->getDimY() - 1) && (mundo->verificaCelulaMar(0, this->y + 1) == CELULA_MAR)) {
 
 		VerificaPorto = mundo->verificaCelulaPorto(0, this->y + 1);

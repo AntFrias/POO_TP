@@ -381,12 +381,24 @@ Navios & Mundo::criaNavio(Mundo *mundo,const char portoPrincipal, const char Tip
 
 	return *aux;
 }
+string Mundo::mostraStatusNavio() {
+
+	ostringstream os;
+	os << "___________________Status-Navios___________________\n";
+	for (unsigned int i = 0; i < navios.size(); i++) {
+		os << "Navio: " << navios[i]->getId() << " Tipo: "<< navios[i]->getEstado() <<" soldados: " << navios[i]->getNumSoldados() << " agua " << navios[i]->getAgua() << endl;
+	}
+	os << "___________________________________________________\n";
+
+	return os.str();
+
+}
 string Mundo::moveNavioPirataAuto(int turnoAtual) {
 
 	ostringstream os;
 
 	for (unsigned int i = 0; i < navios.size(); i++) {
-		cout << "navio: " << navios[i]->getId() << " soldados: " << navios[i]->getNumSoldados() << " agua " << navios[i]->getAgua() << endl;
+		
 		if (navios[i]->getEstado()== pirata) {
 
 			os << navios[i]->moveNavioAuto(turnoAtual);
@@ -449,18 +461,21 @@ void Mundo::criaCelulaPorto(int x, int y,char t, int nSoldados)
 	this->porto.push_back(new Porto(x, y, t, nSoldados, 50));
 }
 
-void Mundo::retiraNavAfundados() { // NAO FAÇO IDEIA O QUE FIZ AQUI FRIAS .. SEM QUE TEM HAVER COM A CENA DE APAGAR UMA COISA ENQUANTO ESTAMOS A PERCORRER A MESMA
-
+string Mundo::retiraNavAfundados() {
+	ostringstream os;
 	for (auto it = navios.begin(); it != navios.end();) {
 
 		if ((*it)->getEstado() == afundado) {
-			cout << "morreu navio: " << (*it)->getId()<<endl;
+			os << "________________Afundou_____________________\n";
+			os << "Navio: " << (*it)->getId()<<endl;
+			os << "____________________________________________\n";
 			delete *it;
 			it = navios.erase(it);
 		}
 		else
 			++it;
 	}
+	return os.str();
 }
 
 
@@ -576,10 +591,10 @@ string Mundo::TrataEventoMotim(int estadoMotim, int modoExecucao, int idNavio) {
 	
 			os << " O navio com o ID" << navios[indice]->getId() << "foi apanhado por 1 Motim" << endl;
 					
-			// so navio for apanhado por 1 motim,  e for pirata fica á deriva
+			// so navio for apanhado por 1 motim,  e for pirata fica ï¿½ deriva
 			if (navios[indice]->getEstado() == pirata) {
 					
-				os << " Os Piratas Foram tomar Banho, o Navio irá ficar á deriva Temporariamente ..!" << endl;
+				os << " Os Piratas Foram tomar Banho, o Navio irï¿½ ficar ï¿½ deriva Temporariamente ..!" << endl;
 				
 				estado = navios[indice]->getEstado();
 
@@ -597,7 +612,7 @@ string Mundo::TrataEventoMotim(int estadoMotim, int modoExecucao, int idNavio) {
 				
 		}
 		else
-			os << " Não Existem Navios para ser realizado o Motim no Mundo" << endl;
+			os << " Nï¿½o Existem Navios para ser realizado o Motim no Mundo" << endl;
 	}
 	else {
 		
@@ -645,7 +660,7 @@ string Mundo::TrataEventoCalmaria(int epiX, int epiY, int estado) {
 			}
 		}
 		else
-			os << " Não Existem Navios no Mundo..!" << endl;
+			os << " Nï¿½o Existem Navios no Mundo..!" << endl;
 
 	}
 	else {
