@@ -147,7 +147,7 @@ void Fragata::serConquistadoaDeriva() {
 	}
 
 }
-string Fragata::moveNavioAuto() {
+string Fragata::moveNavioAuto(int turnoAtual) {
 
 	ostringstream os;
 
@@ -245,6 +245,7 @@ string Fragata::acao(int xaAtacar, int yaAtacar) {
 			navioaAtacar->setEstado(afundado);
 			//passar a metade da carga
 			//-> Fragata não tem carga n passa nada
+			/*_____________________________________________________________________________________________________________________________*/
 			//passa a agua toda menos o execesso
 			if (this->getAgua() + navioaAtacar->getAgua() > this->getMaxAgua()) {
 				this->adicionaAgua(this->getMaxAgua() - this->getAgua());
@@ -270,6 +271,7 @@ string Fragata::acao(int xaAtacar, int yaAtacar) {
 			//set afundar 
 			this->estado = afundado;
 			//passar a metade da carga
+			/*___________________________________________________________________________________________________________________________________*/
 			//-> Fragata não tem carga n passa nada
 			//passa a agua toda menos o execesso
 			if (navioaAtacar->getAgua() + this->getAgua() > navioaAtacar->getMaxAgua()) {
@@ -388,6 +390,16 @@ void Fragata::RetiraMercadoriaNavio(int quantCarga)
 int Fragata::VerificaMaxMercadoria()const
 {
 	return FRAGATA_QUANT_MAX_CARGA;
+}
+int Fragata::getQuantidadePeixe() const
+{
+	return 0;
+}
+void Fragata::setQuantidadePeixe(int quantpeixe)
+{
+}
+void Fragata::AdicionaQuantidadePeixe(int quantpeixe)
+{
 }
 string Fragata::combate(int quemVouAtacar) {
 
@@ -1328,7 +1340,7 @@ int Fragata::FmoveBaixoDireita(int move) {
 	}
 	return MOVE_INVALIDO;
 }
-int Fragata::moveNavio(int direcao) {
+int Fragata::moveNavio(int direcao, int turnoJogo) {
 		
 	unsigned int move = 0;
 	move = rand() % 3;

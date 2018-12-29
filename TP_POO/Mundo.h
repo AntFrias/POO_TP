@@ -55,6 +55,9 @@
 
 #define RANGE_EVENTO 2
 
+#define PEIXE_ON true
+#define PEIXE_OFF false
+
 enum TiposNavios {
 
 	FRAGATA = 1,
@@ -98,7 +101,7 @@ public:
 
 	char LastPortoAmigo();
 
-	void mandaVaiPara();
+	string mandaVaiPara(int precoVendaMercadoria, int precoVendaPeixe);
 
 	int verificaNavioEscuna(int x, int y);
 
@@ -116,11 +119,11 @@ public:
 	
 	Navios & criaNavio(Mundo *mundo,char PortoPrincipal, char tipoNavio);
 
-	string moveNavioPirataAuto();
+	string moveNavioPirataAuto(int turnoAtual);
 
 	Navios * criaNavPirata(Mundo *mundo, const char TipoNavio, int x, int y);
 
-	void criaSuperficie(int x, int y, char tipo);
+	void criaSuperficie(int x, int y, char tipo, int probPeixe = 0);
 
 	void criaCelulaPorto(int x, int y,char t, int nSoldados);
 
@@ -147,6 +150,8 @@ public:
 	Porto * getPorto(int x, int y);
 
 	Navios * getNavioXY(int x, int y);
+
+	Porto * getPortoAmigo();
 
 	void setDimX(int xMax);
 
@@ -187,6 +192,14 @@ public:
 	string GetInformacaoPortos();
 
 	void setQuantidadeSoldadosPortos(int nSoldados);
+
+	Superficie * VerificaExistenciaPeixe(int x, int y);
+
+	void VerificaRegeneracaoPeixeMar(int turnoActual);
+
+	int VerificaCelulaCardumePeixe( int x, int y);
+
+	int EsvaziaBancoJogador();
 
 	~Mundo();
 };

@@ -138,15 +138,20 @@ void Escuna::serConquistadoaDeriva() {
 	}
 
 }
-string Escuna::moveNavioAuto() {
+string Escuna::moveNavioAuto(int turnoAtual) {
 
 	ostringstream os;
 	
 		if (this->estado == autoMove || this->estado == aDeriva) {
 
 			unsigned int direcao;
-			direcao = rand() % 9 + 1;
-			this->moveNavio(direcao);
+
+			direcao = mundo->VerificaCelulaCardumePeixe(this->x, this->y);
+
+			if ( direcao == 0)
+				direcao = rand() % 9 + 1;
+
+			this->moveNavio(direcao, turnoAtual);
 			
 			if (this->estado == autoMove) {
 				this->soldadosBebemAgua();
@@ -192,7 +197,25 @@ string Escuna::combate(int quemVouAtacar) {
 
 	return os.str();
 }
-int Escuna::FmoveEsquerda() {
+int Escuna::FmoveEsquerda(int turnoJogo) {
+
+
+	// Aqui vai verificar se vai existir peixe na celula 
+	Superficie *auxMar = mundo->VerificaExistenciaPeixe(this->x - 1, this->y);
+	
+	if (this->estado == autoMove || this->estado == normal) {
+		
+		if (auxMar != nullptr  && this->QuantMercadoria + 1 <= ESCUNA_QUANT_MAX_CARGA) {
+
+			this->QuantPeixe = this->QuantPeixe + PEIXE_PESCADO;
+
+			this->QuantMercadoria = this->QuantMercadoria + PEIXE_PESCADO;
+
+			auxMar->PescaCardumeMar(turnoJogo);
+			cout << "Turno em que o peixe foi pescado " << auxMar->getTurno() << endl;
+
+		}
+	}
 	int VerificaPorto = 0;
 	//e ver se a nova pos est� dentro de agua!
 	if (x > 0 && (mundo->verificaCelulaMar(this->x - 1, this->y) == CELULA_MAR)) {
@@ -227,6 +250,23 @@ int Escuna::FmoveEsquerda() {
 	}
 	else {
 
+		// Aqui vai verificar se vai existir peixe na celula 
+		Superficie *auxMar = mundo->VerificaExistenciaPeixe(mundo->getDimX() - 1, this->y);
+		
+		if (this->estado == autoMove || this->estado == normal) {
+			
+			if (auxMar != nullptr &&  this->QuantMercadoria + 1 <= ESCUNA_QUANT_MAX_CARGA) {
+
+				this->QuantPeixe = this->QuantPeixe + PEIXE_PESCADO;
+
+				this->QuantMercadoria = this->QuantMercadoria + PEIXE_PESCADO;
+
+				auxMar->PescaCardumeMar(turnoJogo);
+				cout << "Turno em que o peixe foi pescado " << auxMar->getTurno() << endl;
+
+			}
+		}
+
 		if (x == 0 && (mundo->verificaCelulaMar(mundo->getDimX() - 1, this->y) == CELULA_MAR))
 
 			VerificaPorto = mundo->verificaCelulaPorto(mundo->getDimX() - 1, this->y);
@@ -258,10 +298,30 @@ int Escuna::FmoveEsquerda() {
 	}
 	return MOVE_INVALIDO;
 }
-int Escuna::FmoveDireita() {
+int Escuna::FmoveDireita(int turnoJogo) {
+
+			// Aqui vai verificar se vai existir peixe na celula 
+		Superficie *auxMar = mundo->VerificaExistenciaPeixe(this->x + 1, this->y);
+		
+		if (this->estado == autoMove || this->estado == normal) {
+			
+			if (auxMar != nullptr && this->QuantMercadoria + 1 <= ESCUNA_QUANT_MAX_CARGA) {
+
+				this->QuantPeixe = this->QuantPeixe + PEIXE_PESCADO;
+
+				this->QuantMercadoria = this->QuantMercadoria + PEIXE_PESCADO;
+
+				auxMar->PescaCardumeMar(turnoJogo);
+
+				cout << "Turno em que o peixe foi pescado " << auxMar->getTurno() << endl;
+
+			}
+		}
 	int VerificaPorto = 0;
 	//e ver se a nova pos est� dentro de agua!
 	if (x < mundo->getDimX() - 1 && (mundo->verificaCelulaMar(this->x + 1, this->y) == CELULA_MAR)) {
+
+
 
 		VerificaPorto = mundo->verificaCelulaPorto(this->x + 1, this->y);
 
@@ -291,6 +351,23 @@ int Escuna::FmoveDireita() {
 		}
 	}
 	else {
+		// Aqui vai verificar se vai existir peixe na celula 
+		Superficie *auxMar = mundo->VerificaExistenciaPeixe(0, this->y);
+		
+		if (this->estado == autoMove || this->estado == normal) {
+			
+			if (auxMar != nullptr && this->QuantMercadoria + 1 <= ESCUNA_QUANT_MAX_CARGA) {
+
+				this->QuantPeixe = this->QuantPeixe + PEIXE_PESCADO;
+
+				this->QuantMercadoria = this->QuantMercadoria + PEIXE_PESCADO;
+
+				auxMar->PescaCardumeMar(turnoJogo);
+
+				cout << "Turno em que o peixe foi pescado " << auxMar->getTurno() << endl;
+
+			}
+		}
 		if (x == mundo->getDimX() - 1 && (mundo->verificaCelulaMar(0, this->y) == CELULA_MAR)) {
 
 			VerificaPorto = mundo->verificaCelulaPorto(0, this->y);
@@ -322,10 +399,29 @@ int Escuna::FmoveDireita() {
 				return MOVE_VALIDO;
 			}
 		}
+		
 	}
 	return MOVE_INVALIDO;
 }
-int Escuna::FmoveCima() {
+int Escuna::FmoveCima(int turnoJogo) {
+
+	// Aqui vai verificar se vai existir peixe na celula 
+	Superficie *auxMar = mundo->VerificaExistenciaPeixe(this->x, this->y - 1);
+	
+	if (this->estado == autoMove || this->estado == normal) {
+		
+		if (auxMar != nullptr && this->QuantMercadoria + 1 <= ESCUNA_QUANT_MAX_CARGA) {
+
+			this->QuantPeixe = this->QuantPeixe + PEIXE_PESCADO;
+
+			this->QuantMercadoria = this->QuantMercadoria + PEIXE_PESCADO;
+
+			auxMar->PescaCardumeMar(turnoJogo);
+
+			cout << "Turno em que o peixe foi pescado " << auxMar->getTurno() << endl;
+
+		}
+	}
 	int VerificaPorto = 0;
 	//e ver se a nova pos est� dentro de agua!
 	if (y > 0 && (mundo->verificaCelulaMar(this->x, this->y - 1) == CELULA_MAR)) {
@@ -362,6 +458,25 @@ int Escuna::FmoveCima() {
 	}
 	else {
 
+		// Aqui vai verificar se vai existir peixe na celula 
+		Superficie *auxMar = mundo->VerificaExistenciaPeixe(this->x, mundo->getDimY() - 1);
+		
+		if (this->estado == autoMove || this->estado == normal) {
+			
+			if (auxMar != nullptr && this->QuantMercadoria + 1 <= ESCUNA_QUANT_MAX_CARGA) {
+
+				this->QuantPeixe = this->QuantPeixe + PEIXE_PESCADO;
+
+				this->QuantMercadoria = this->QuantMercadoria + PEIXE_PESCADO;
+
+				auxMar->PescaCardumeMar(turnoJogo);
+
+				cout << "Turno em que o peixe foi pescado " << auxMar->getTurno() << endl;
+
+
+			}
+		}
+
 		if (y == 0 && (mundo->verificaCelulaMar(this->x, mundo->getDimY() - 1) == CELULA_MAR)) {
 
 			VerificaPorto = mundo->verificaCelulaPorto(this->x, mundo->getDimY() - 1);
@@ -392,11 +507,29 @@ int Escuna::FmoveCima() {
 				return MOVE_VALIDO;
 			}
 		}
+		
 	}
 
 	return MOVE_INVALIDO;
 }
-int Escuna::FmoveBaixo() {
+int Escuna::FmoveBaixo(int turnoJogo) {
+
+	// Aqui vai verificar se vai existir peixe na celula 
+	Superficie *auxMar = mundo->VerificaExistenciaPeixe(this->x, this->y + 1);
+	if (this->estado == autoMove || this->estado == normal) {
+		
+		if (auxMar != nullptr && this->QuantMercadoria + 1 <= ESCUNA_QUANT_MAX_CARGA) {
+
+			this->QuantPeixe = this->QuantPeixe + PEIXE_PESCADO;
+
+			this->QuantMercadoria = this->QuantMercadoria + PEIXE_PESCADO;
+
+			auxMar->PescaCardumeMar(turnoJogo);
+
+			cout << "Turno em que o peixe foi pescado " << auxMar->getTurno() << endl;
+
+		}
+	}
 	int VerificaPorto = 0;
 	//e ver se a nova pos est� dentro de agua!
 	if (y < mundo->getDimY() - 1 && (mundo->verificaCelulaMar(this->x, this->y + 1) == CELULA_MAR)) {
@@ -427,9 +560,26 @@ int Escuna::FmoveBaixo() {
 			this->y = this->y + 1;
 			return MOVE_VALIDO;
 		}
-
+		
 	}
 	else {
+
+		// Aqui vai verificar se vai existir peixe na celula 
+		Superficie *auxMar = mundo->VerificaExistenciaPeixe(this->x, 0);
+		if (this->estado == autoMove || this->estado == normal) {
+		
+			if (auxMar != nullptr && this->QuantMercadoria + 1 <= ESCUNA_QUANT_MAX_CARGA) {
+
+				this->QuantPeixe = this->QuantPeixe + PEIXE_PESCADO;
+
+				this->QuantMercadoria = this->QuantMercadoria + PEIXE_PESCADO;
+
+				auxMar->PescaCardumeMar(turnoJogo);
+
+				cout << "Turno em que o peixe foi pescado " << auxMar->getTurno() << endl;
+
+			}
+		}
 
 		if (y == mundo->getDimY() - 1 && (mundo->verificaCelulaMar(this->x, 0) == CELULA_MAR)) {
 
@@ -460,13 +610,35 @@ int Escuna::FmoveBaixo() {
 				return MOVE_VALIDO;
 			}
 		}
+		
 	}
 	return MOVE_INVALIDO;
 }
-int Escuna::FmoveCimaEsquerda() {
+int Escuna::FmoveCimaEsquerda(int turnoJogo) {
+
+	
 	int VerificaPorto = 0;
 	//anda normal
 	if ((y > 0 && y <= mundo->getDimY() - 1) && (x > 0 && x <= mundo->getDimX() - 1) && (mundo->verificaCelulaMar(this->x - 1, this->y - 1) == CELULA_MAR)) {
+
+		// Aqui vai verificar se vai existir peixe na celula 
+		Superficie *auxMar = mundo->VerificaExistenciaPeixe(this->x - 1, this->y - 1);
+
+		if ( this->estado == autoMove || this->estado == normal) {
+
+			if (auxMar != nullptr && this->QuantMercadoria + 1 <= ESCUNA_QUANT_MAX_CARGA) {
+
+				this->QuantPeixe = this->QuantPeixe + PEIXE_PESCADO;
+
+				this->QuantMercadoria = this->QuantMercadoria + PEIXE_PESCADO;
+
+				auxMar->PescaCardumeMar(turnoJogo);
+
+				cout << "Turno em que o peixe foi pescado " << auxMar->getTurno() << endl;
+
+			}
+		}
+
 
 		VerificaPorto = mundo->verificaCelulaPorto(this->x - 1, this->y - 1);
 
@@ -500,10 +672,27 @@ int Escuna::FmoveCimaEsquerda() {
 			this->x = this->x - 1;
 			return MOVE_VALIDO;
 		}
-
 	}
-	////encostado a cima
+
 	if ((y == 0 && (x > 0 && x <= mundo->getDimX() - 1)) && (mundo->verificaCelulaMar(this->x - 1, mundo->getDimY() - 1) == CELULA_MAR)) {
+
+		////encostado a cima
+		Superficie *auxMar = mundo->VerificaExistenciaPeixe(this->x - 1, mundo->getDimY() - 1);
+
+		if (this->estado == autoMove || this->estado == normal) {
+
+			if (auxMar != nullptr &&  this->QuantMercadoria + 1 <= ESCUNA_QUANT_MAX_CARGA) {
+
+				this->QuantPeixe = this->QuantPeixe + PEIXE_PESCADO;
+
+				this->QuantMercadoria = this->QuantMercadoria + PEIXE_PESCADO;
+
+				auxMar->PescaCardumeMar(turnoJogo);
+
+				cout << "Turno em que o peixe foi pescado " << auxMar->getTurno() << endl;
+
+			}
+		}
 
 		VerificaPorto = mundo->verificaCelulaPorto(this->x - 1, mundo->getDimY() - 1);
 
@@ -538,9 +727,26 @@ int Escuna::FmoveCimaEsquerda() {
 			return MOVE_VALIDO;
 		}
 
+		
 	}
 	////encostado � esquerda
 	if ((x == 0 && (y > 0 && y <= mundo->getDimY() - 1)) && (mundo->verificaCelulaMar(mundo->getDimX() - 1, this->y - 1) == CELULA_MAR)) {
+
+		// verifica peixe
+		Superficie *auxMar = mundo->VerificaExistenciaPeixe(mundo->getDimX() - 1, this->y - 1);
+
+		if (this->estado == autoMove || this->estado == normal) {
+
+			if (auxMar != nullptr &&  this->QuantMercadoria + 1 <= ESCUNA_QUANT_MAX_CARGA) {
+
+				this->QuantPeixe = this->QuantPeixe + PEIXE_PESCADO;
+
+				this->QuantMercadoria = this->QuantMercadoria + PEIXE_PESCADO;
+
+				auxMar->PescaCardumeMar(turnoJogo);
+
+			}
+		}
 
 		VerificaPorto = mundo->verificaCelulaPorto(mundo->getDimX() - 1, this->y - 1);
 
@@ -574,10 +780,26 @@ int Escuna::FmoveCimaEsquerda() {
 			this->y = this->y - 1;
 			return MOVE_VALIDO;
 		}
-
+		
 	}
 	//canto superior esquerdo
 	if ((y == 0 && x == 0) && (mundo->verificaCelulaMar(mundo->getDimX() - 1, mundo->getDimY() - 1) == CELULA_MAR)) {
+
+		// verifica peixe
+		Superficie *auxMar = mundo->VerificaExistenciaPeixe(mundo->getDimX() - 1, mundo->getDimY() - 1);
+
+		if (this->estado == autoMove || this->estado == normal) {
+
+			if (auxMar != nullptr &&  this->QuantMercadoria + 1 <= ESCUNA_QUANT_MAX_CARGA) {
+
+				this->QuantPeixe = this->QuantPeixe + PEIXE_PESCADO;
+
+				this->QuantMercadoria = this->QuantMercadoria + PEIXE_PESCADO;
+
+				auxMar->PescaCardumeMar(turnoJogo);
+
+			}
+		}
 
 		VerificaPorto = mundo->verificaCelulaPorto(mundo->getDimX() - 1, mundo->getDimY() - 1);
 
@@ -611,14 +833,30 @@ int Escuna::FmoveCimaEsquerda() {
 			this->y = mundo->getDimY() - 1;
 			return MOVE_VALIDO;
 		}
-
+		
 	}
 	return MOVE_INVALIDO;
 }
-int Escuna::FmoveCimaDireita() {
+int Escuna::FmoveCimaDireita(int turnoJogo) {
 	int VerificaPorto = 0;
 	//anda normal
 	if (y > 0 && y <= mundo->getDimY() - 1 && x > 0 && x < mundo->getDimX() - 1 && (mundo->verificaCelulaMar(this->x + 1, this->y - 1) == CELULA_MAR)) {
+
+		// verifica peixe
+		Superficie *auxMar = mundo->VerificaExistenciaPeixe(this->x + 1, this->y - 1);
+
+		if ( this->estado == autoMove || this->estado == normal) {
+
+			if (auxMar != nullptr && this->QuantMercadoria + 1 <= ESCUNA_QUANT_MAX_CARGA) {
+
+				this->QuantPeixe = this->QuantPeixe + PEIXE_PESCADO;
+
+				this->QuantMercadoria = this->QuantMercadoria + PEIXE_PESCADO;
+
+				auxMar->PescaCardumeMar(turnoJogo);
+
+			}
+		}
 
 		VerificaPorto = mundo->verificaCelulaPorto(this->x + 1, this->y - 1);
 
@@ -652,10 +890,25 @@ int Escuna::FmoveCimaDireita() {
 			this->x = this->x + 1;
 			return MOVE_VALIDO;
 		}
-
 	}
 	//encostado a cima
 	if ((y == 0 && (x >= 0 && x < mundo->getDimX() - 1)) && (mundo->verificaCelulaMar(this->x + 1, mundo->getDimY() - 1) == CELULA_MAR)) {
+
+		// verifica peixe
+		Superficie *auxMar = mundo->VerificaExistenciaPeixe(this->x + 1, mundo->getDimY() - 1);
+
+		if (this->estado == autoMove || this->estado == normal) {
+
+			if (auxMar != nullptr && this->QuantMercadoria + 1 <= ESCUNA_QUANT_MAX_CARGA) {
+
+				this->QuantPeixe = this->QuantPeixe + PEIXE_PESCADO;
+
+				this->QuantMercadoria = this->QuantMercadoria + PEIXE_PESCADO;
+
+				auxMar->PescaCardumeMar(turnoJogo);
+
+			}
+		}
 
 		VerificaPorto = mundo->verificaCelulaPorto(this->x + 1, mundo->getDimY() - 1);
 
@@ -689,10 +942,25 @@ int Escuna::FmoveCimaDireita() {
 			this->y = mundo->getDimY() - 1;
 			return MOVE_VALIDO;
 		}
-
+		
 	}
 	//encostado � direita
 	if ((x == mundo->getDimX() - 1 && y > 0 && y <= mundo->getDimY() - 1) && (mundo->verificaCelulaMar(0, this->y - 1) == CELULA_MAR)) {
+
+		// verifica peixe
+		Superficie *auxMar = mundo->VerificaExistenciaPeixe(0, this->y - 1);
+
+		if (this->estado == autoMove || this->estado == normal) {
+
+			if (auxMar != nullptr &&  this->QuantMercadoria + 1 <= ESCUNA_QUANT_MAX_CARGA) {
+
+				this->QuantPeixe = this->QuantPeixe + PEIXE_PESCADO;
+
+				this->QuantMercadoria = this->QuantMercadoria + PEIXE_PESCADO;
+
+				auxMar->PescaCardumeMar(turnoJogo);
+			}
+		}
 
 		VerificaPorto = mundo->verificaCelulaPorto(0, this->y - 1);
 
@@ -726,10 +994,26 @@ int Escuna::FmoveCimaDireita() {
 			this->y = this->y - 1;
 			return MOVE_VALIDO;
 		}
-
+		
 	}
 	//canto superior direito
 	if (y == 0 && x == mundo->getDimX() - 1 && (mundo->verificaCelulaMar(0, mundo->getDimY() - 1) == CELULA_MAR)) {
+
+		// verifica peixe
+		Superficie *auxMar = mundo->VerificaExistenciaPeixe(0, mundo->getDimY() - 1);
+
+		if (this->estado == autoMove || this->estado == normal) {
+
+			if (auxMar != nullptr &&  this->QuantMercadoria + 1 <= ESCUNA_QUANT_MAX_CARGA) {
+
+				this->QuantPeixe = this->QuantPeixe + PEIXE_PESCADO;
+
+				this->QuantMercadoria = this->QuantMercadoria + PEIXE_PESCADO;
+
+				auxMar->PescaCardumeMar(turnoJogo);
+
+			}
+		}
 
 		VerificaPorto = mundo->verificaCelulaPorto(0, mundo->getDimY() - 1);
 
@@ -763,13 +1047,29 @@ int Escuna::FmoveCimaDireita() {
 			this->y = mundo->getDimY() - 1;
 			return MOVE_VALIDO;
 		}
+		
 	}
 	return MOVE_INVALIDO;
 }
-int Escuna::FmoveBaixoEsquerda() {
+int Escuna::FmoveBaixoEsquerda(int turnoJogo) {
 	int VerificaPorto = 0;
 	//anda normal
 	if ((y >= 0 && y < mundo->getDimY() - 1) && (x > 0 && x <= mundo->getDimX() - 1) && (mundo->verificaCelulaMar(this->x - 1, this->y + 1) == CELULA_MAR)) {
+
+		Superficie *auxMar = mundo->VerificaExistenciaPeixe(this->x - 1, this->y + 1);
+
+		if (this->estado == autoMove || this->estado == normal) {
+
+			if (auxMar != nullptr &&  this->QuantMercadoria + 1 <= ESCUNA_QUANT_MAX_CARGA) {
+
+				this->QuantPeixe = this->QuantPeixe + PEIXE_PESCADO;
+
+				this->QuantMercadoria = this->QuantMercadoria + PEIXE_PESCADO;
+
+				auxMar->PescaCardumeMar(turnoJogo);
+
+			}
+		}
 
 		VerificaPorto = mundo->verificaCelulaPorto(this->x - 1, this->y + 1);
 
@@ -803,9 +1103,27 @@ int Escuna::FmoveBaixoEsquerda() {
 			this->x = this->x - 1;
 			return MOVE_VALIDO;
 		}
+		// verifica peixe
+	
 	}
 	//////encostado a baixo
 	if ((y == mundo->getDimY() - 1) && (x > 0 && x <= mundo->getDimX() - 1) && (mundo->verificaCelulaMar(this->x - 1, 0) == CELULA_MAR)) {
+
+		// verifica peixe
+		Superficie *auxMar = mundo->VerificaExistenciaPeixe(this->x - 1, 0);
+
+		if (this->estado == autoMove || this->estado == normal) {
+
+			if (auxMar != nullptr && this->QuantMercadoria + 1 <= ESCUNA_QUANT_MAX_CARGA) {
+
+				this->QuantPeixe = this->QuantPeixe + PEIXE_PESCADO;
+
+				this->QuantMercadoria = this->QuantMercadoria + PEIXE_PESCADO;
+
+				auxMar->PescaCardumeMar(turnoJogo);
+
+			}
+		}
 
 		VerificaPorto = mundo->verificaCelulaPorto(this->x - 1, 0);
 
@@ -839,10 +1157,27 @@ int Escuna::FmoveBaixoEsquerda() {
 			this->y = 0;
 			return MOVE_VALIDO;
 		}
+		
 
 	}
 	//////encostado � esquerda
 	if ((x == 0) && (y >= 0 && y < mundo->getDimY() - 1) && (mundo->verificaCelulaMar(mundo->getDimX() - 1, this->y + 1) == CELULA_MAR)) {
+
+		// verifica peixe
+		Superficie *auxMar = mundo->VerificaExistenciaPeixe(mundo->getDimX() - 1, this->y + 1);
+
+		if (this->estado == autoMove || this->estado == normal) {
+
+			if (auxMar != nullptr &&  this->QuantMercadoria + 1 <= ESCUNA_QUANT_MAX_CARGA) {
+
+				this->QuantPeixe = this->QuantPeixe + PEIXE_PESCADO;
+
+				this->QuantMercadoria = this->QuantMercadoria + PEIXE_PESCADO;
+
+				auxMar->PescaCardumeMar(turnoJogo);
+
+			}
+		}
 
 		VerificaPorto = mundo->verificaCelulaPorto(mundo->getDimX() - 1, this->y + 1);
 
@@ -874,9 +1209,26 @@ int Escuna::FmoveBaixoEsquerda() {
 			this->y = this->y + 1;
 			return MOVE_VALIDO;
 		}
+		
 	}
 	//canto inferior esquerdo
 	if ((y == mundo->getDimY() - 1 && x == 0) && (mundo->verificaCelulaMar(mundo->getDimX() - 1, 0) == CELULA_MAR)) {
+
+		// verifica peixe
+		Superficie *auxMar = mundo->VerificaExistenciaPeixe(mundo->getDimX() - 1, 0);
+
+		if (this->estado == autoMove || this->estado == normal) {
+
+			if (auxMar != nullptr && this->QuantMercadoria + 1 <= ESCUNA_QUANT_MAX_CARGA) {
+
+				this->QuantPeixe = this->QuantPeixe + PEIXE_PESCADO;
+
+				this->QuantMercadoria = this->QuantMercadoria + PEIXE_PESCADO;
+
+				auxMar->PescaCardumeMar(turnoJogo);
+
+			}
+		}
 
 		VerificaPorto = mundo->verificaCelulaPorto(mundo->getDimX() - 1, 0);
 
@@ -910,13 +1262,30 @@ int Escuna::FmoveBaixoEsquerda() {
 			this->y = 0;
 			return MOVE_VALIDO;
 		}
+		
 	}
 	return MOVE_INVALIDO;
 }
-int Escuna::FmoveBaixoDireita() {
+int Escuna::FmoveBaixoDireita(int turnoJogo) {
 	int VerificaPorto = 0;
 	//anda normal
 	if ((y >= 0 && y < mundo->getDimY() - 1) && (x >= 0 && x < mundo->getDimX() - 1) && (mundo->verificaCelulaMar(this->x + 1, this->y + 1) == CELULA_MAR)) {
+
+		// verifica peixe
+		Superficie *auxMar = mundo->VerificaExistenciaPeixe(this->x + 1, this->y + 1);
+
+		if (this->estado == autoMove || this->estado == normal) {
+
+			if (auxMar != nullptr && this->QuantMercadoria + 1 <= ESCUNA_QUANT_MAX_CARGA) {
+
+				this->QuantPeixe = this->QuantPeixe + PEIXE_PESCADO;
+
+				this->QuantMercadoria = this->QuantMercadoria + PEIXE_PESCADO;
+
+				auxMar->PescaCardumeMar(turnoJogo);
+
+			}
+		}
 
 		VerificaPorto = mundo->verificaCelulaPorto(this->x + 1, this->y + 1);
 
@@ -949,9 +1318,26 @@ int Escuna::FmoveBaixoDireita() {
 			this->x = this->x + 1;
 			return MOVE_VALIDO;
 		}
+		
 	}
 	////////encostado a baixo
 	if ((y == mundo->getDimY() - 1) && (x >= 0 && x < mundo->getDimX() - 1) && (mundo->verificaCelulaMar(this->x + 1, 0) == CELULA_MAR)) {
+
+		// verifica peixe
+		Superficie *auxMar = mundo->VerificaExistenciaPeixe(this->x + 1, 0);
+
+		if (this->estado == autoMove || this->estado == normal) {
+
+			if (auxMar != nullptr && this->QuantMercadoria + 1 <= ESCUNA_QUANT_MAX_CARGA) {
+
+				this->QuantPeixe = this->QuantPeixe + PEIXE_PESCADO;
+
+				this->QuantMercadoria = this->QuantMercadoria + PEIXE_PESCADO;
+
+				auxMar->PescaCardumeMar(turnoJogo);
+
+			}
+		}
 
 		VerificaPorto = mundo->verificaCelulaPorto(this->x + 1, 0);
 
@@ -985,10 +1371,26 @@ int Escuna::FmoveBaixoDireita() {
 			this->y = 0;
 			return MOVE_VALIDO;
 		}
-
+		
 	}
 	////////encostado � direita
 	if ((x == mundo->getDimX() - 1) && (y >= 0 && y < mundo->getDimY() - 1) && (mundo->verificaCelulaMar(0, this->y + 1) == CELULA_MAR)) {
+
+		// verifica peixe
+		Superficie *auxMar = mundo->VerificaExistenciaPeixe(0, this->y + 1);
+
+		if (this->estado == autoMove || this->estado == normal) {
+
+			if (auxMar != nullptr && this->QuantMercadoria + 1 <= ESCUNA_QUANT_MAX_CARGA) {
+
+				this->QuantPeixe = this->QuantPeixe + PEIXE_PESCADO;
+
+				this->QuantMercadoria = this->QuantMercadoria + PEIXE_PESCADO;
+
+				auxMar->PescaCardumeMar(turnoJogo);
+
+			}
+		}
 
 		VerificaPorto = mundo->verificaCelulaPorto(0, this->y + 1);
 
@@ -1022,9 +1424,26 @@ int Escuna::FmoveBaixoDireita() {
 			this->y = this->y + 1;
 			return MOVE_VALIDO;
 		}
+		
 	}
 	////canto inferior esquerdo
 	if ((y == mundo->getDimY() - 1 && x == mundo->getDimX() - 1) && (mundo->verificaCelulaMar(0, 0) == CELULA_MAR)) {
+
+		// verifica peixe
+		Superficie *auxMar = mundo->VerificaExistenciaPeixe(0, 0);
+
+		if (this->estado == autoMove || this->estado == normal) {
+
+			if (auxMar != nullptr && this->QuantMercadoria + 1 <= ESCUNA_QUANT_MAX_CARGA) {
+
+				this->QuantPeixe = this->QuantPeixe + PEIXE_PESCADO;
+
+				this->QuantMercadoria = this->QuantMercadoria + PEIXE_PESCADO;
+
+				auxMar->PescaCardumeMar(turnoJogo);
+
+			}
+		}
 
 		VerificaPorto = mundo->verificaCelulaPorto(0, 0);
 
@@ -1058,14 +1477,27 @@ int Escuna::FmoveBaixoDireita() {
 			this->y = 0;
 			return MOVE_VALIDO;
 		}
+		
 	}
 	return MOVE_INVALIDO;
 }
-int Escuna::moveNavio(int direcao) {
+int Escuna::moveNavio(int direcao, int turnoJogo) {
+
+	if (this->quantSoldados == 0)
+		this->estado = aDeriva;
+
+	if (this->QuantMercadoria == ESCUNA_QUANT_MAX_CARGA){
+
+			Porto *aux=mundo->getPortoAmigo();
+
+			if (aux != nullptr) 
+				mundo->setVaiPara(this->getId(), aux->getX(), aux->getY());
+		}
+
 	switch (direcao) {
 
 	case moveEsquerda:
-		if (FmoveEsquerda() == MOVE_VALIDO) {
+		if (FmoveEsquerda(turnoJogo) == MOVE_VALIDO) {
 			if (this->estado == normal)
 				soldadosBebemAgua();
 			return MOVE_VALIDO;
@@ -1073,7 +1505,7 @@ int Escuna::moveNavio(int direcao) {
 		else
 			break;
 	case moveDireita:
-		if (FmoveDireita() == MOVE_VALIDO) {
+		if (FmoveDireita(turnoJogo) == MOVE_VALIDO) {
 			if (this->estado == normal)
 				soldadosBebemAgua();
 			return MOVE_VALIDO;
@@ -1081,7 +1513,7 @@ int Escuna::moveNavio(int direcao) {
 		else
 			break;
 	case moveCima:
-		if (FmoveCima() == MOVE_VALIDO) {
+		if (FmoveCima(turnoJogo) == MOVE_VALIDO) {
 			if (this->estado == normal)
 				soldadosBebemAgua();
 			return MOVE_VALIDO;
@@ -1089,7 +1521,7 @@ int Escuna::moveNavio(int direcao) {
 		else
 			break;
 	case moveBaixo:
-		if (FmoveBaixo() == MOVE_VALIDO) {
+		if (FmoveBaixo(turnoJogo) == MOVE_VALIDO) {
 			if (this->estado == normal)
 				soldadosBebemAgua();
 			return MOVE_VALIDO;
@@ -1097,7 +1529,7 @@ int Escuna::moveNavio(int direcao) {
 		else
 			break;
 	case moveCimaEsquerda:
-		if (FmoveCimaEsquerda() == MOVE_VALIDO) {
+		if (FmoveCimaEsquerda(turnoJogo) == MOVE_VALIDO) {
 			if (this->estado == normal)
 				soldadosBebemAgua();
 			return MOVE_VALIDO;
@@ -1105,7 +1537,7 @@ int Escuna::moveNavio(int direcao) {
 		else
 			break;
 	case moveCimaDireita:
-		if (FmoveCimaDireita() == MOVE_VALIDO) {
+		if (FmoveCimaDireita(turnoJogo) == MOVE_VALIDO) {
 			if (this->estado == normal)
 				soldadosBebemAgua();
 			return MOVE_VALIDO;
@@ -1113,7 +1545,7 @@ int Escuna::moveNavio(int direcao) {
 		else
 			break;
 	case moveBaixoEsquerda:
-		if (FmoveBaixoEsquerda() == MOVE_VALIDO) {
+		if (FmoveBaixoEsquerda(turnoJogo) == MOVE_VALIDO) {
 			if (this->estado == normal)
 				soldadosBebemAgua();
 			return MOVE_VALIDO;
@@ -1121,7 +1553,7 @@ int Escuna::moveNavio(int direcao) {
 		else
 			break;
 	case moveBaixoDireita:
-		if (FmoveBaixoDireita() == MOVE_VALIDO) {
+		if (FmoveBaixoDireita(turnoJogo) == MOVE_VALIDO) {
 			if (this->estado == normal)
 				soldadosBebemAgua();
 			return MOVE_VALIDO;
@@ -1151,6 +1583,15 @@ void Escuna::RetiraMercadoriaNavio(int quantCarga)
 		this->QuantMercadoria = QuantMercadoria - quantCarga;
 	else
 		this->QuantMercadoria = 0;
+}
+void Escuna::setQuantidadePeixe(int quantpeixe)
+{
+	this->QuantPeixe = quantpeixe;
+}
+void Escuna::AdicionaQuantidadePeixe(int quantpeixe)
+{
+	if (this->QuantPeixe + quantpeixe <= ESCUNA_QUANT_MAX_CARGA)
+		this->QuantPeixe = this->QuantPeixe + quantpeixe;
 }
 string Escuna::TrataNavioTempestade()
 {

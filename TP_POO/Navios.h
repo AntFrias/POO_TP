@@ -22,9 +22,9 @@
 #define DESLOCAMENTO_NAVIO_BASE 0
 #define DESLOCAMENTO_NAVIO_RAPIDO 1
 
-#define VELEIRO_QUANT_MAX_CARGA 40000
-#define GALEAO_QUANT_MAX_CARGA 70000
-#define ESCUNA_QUANT_MAX_CARGA 20000
+#define VELEIRO_QUANT_MAX_CARGA 40
+#define GALEAO_QUANT_MAX_CARGA 70
+#define ESCUNA_QUANT_MAX_CARGA 20
 #define FRAGATA_QUANT_MAX_CARGA 0
 #define TARTARUGA_QUANT_MAX_CARGA 0
 
@@ -91,7 +91,7 @@ public:
 	Navios();
 	Navios(Mundo *mundo, char tipo, int x, int y, int quantSoldados, int quantAgua = 0, int estado=normal);
 	
-	virtual int moveNavio(int direcao)=0;
+	virtual int moveNavio(int direcao, int turnoJogo = 0)=0;
 	virtual string combate(int quemVouAtacar) = 0;
 	virtual int getMaxAgua() = 0;
 	virtual void serConquistadoaDeriva() = 0;
@@ -109,10 +109,13 @@ public:
 	virtual void RetiraMercadoriaNavio(int quantCarga) = 0;
 	virtual int VerificaMaxMercadoria()const = 0;
 
+	virtual int getQuantidadePeixe()const = 0;
+	virtual void setQuantidadePeixe(int quantpeixe) = 0;
+	virtual void AdicionaQuantidadePeixe(int quantpeixe) = 0;
 
 	virtual string TrataNavioTempestade() = 0;
 	virtual const int sou() const =0;
-	virtual string moveNavioAuto()=0;
+	virtual string moveNavioAuto(int turnoAtual)=0;
 	int randNumber(int nSoldados);
 	int getNumSoldados();
 	void setNumSoldados(int num);

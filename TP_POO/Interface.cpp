@@ -307,14 +307,16 @@ void Interface::Prompt() {
 		}
 		mundo.retiraNavAfundados();
 		criaPiratasAuto();
-		mundo.mandaVaiPara();
+		cout << mundo.mandaVaiPara(this->precoVendaMercadoria, this->precoVendePeixe);
 		jogador.setPortoPrincipal(mundo.getPortoPrincipal());
 		mundo.abasteceNaviosNosPortos();
-		cout << jogador.moveNavioAuto();
-		cout << mundo.moveNavioPirataAuto();
+		cout << jogador.moveNavioAuto(this->Turno);
+		cout << mundo.moveNavioPirataAuto(this->Turno);
 		mundo.verificaaDeriva();
 		mundo.retiraNavAfundados();
-
+		mundo.VerificaRegeneracaoPeixeMar(this->Turno);
+		jogador.adicionaMoedas(mundo.EsvaziaBancoJogador());
+		
 		cout << ExecutaEventos();
 
 		//execu��o de comando pendentes | comportamentos automaticos
@@ -331,7 +333,9 @@ void Interface::Prompt() {
 		mostraMapa();
 
 		this->Turno = this->incTurno++;
-
+		gotoErro();
+		cout << "_______________________________________________________________________________________" << endl;
+		cout << "Turno : " << this->Turno;
 	} while (linha != "sair");
 
 
@@ -376,7 +380,7 @@ void Interface::PromptFase1(string linha) {
 		gotoErro();
 		cout << " [ Erro ao carregar ficheiro ] Ficheiro por default carregado com Sucesso.. !" << endl;
 	}
-	mundo.setQuantidadeSoldadosPortos(this->soldadosPorto);
+	//mundo.setQuantidadeSoldadosPortos(this->soldadosPorto);
 }
 int Interface::verificaDadosFicheiro(string linha) {
 
@@ -456,6 +460,8 @@ bool Interface::carregaFich(string configFile) {
 					break;
 				case probmotin:
 					this->probMotin = inteiro;
+				case probpeixe:
+					this->probPeixe = inteiro;
 					break;
 			}
 		}
@@ -464,7 +470,7 @@ bool Interface::carregaFich(string configFile) {
 			for (int i = 0; i < mundo.getDimX(); i++) {
 				if (linha[i] == '.') {
 
-					this->mundo.criaSuperficie(i, contaColunas, linha[i]);
+					this->mundo.criaSuperficie(i, contaColunas, linha[i], this->probPeixe);
 				}
 				if (linha[i] == '+') {
 
@@ -582,11 +588,11 @@ void Interface::PromptFase2(string linha) {
 				}
 				else if (compraNavio(tipo) == COMPRA_SEM_MOEDAS) {
 					gotoErro();
-					cout << "Compra n�o efetuada <-> Jogador Sem Moedas" << endl;
+					cout << "Compra nao efetuada <-> Jogador Sem Moedas" << endl;
 				}
 				else if ((compraNavio(tipo) == TIPO_NAVIO_INVALIDO)) {
 					gotoErro();
-					cout << "Compra nao efetuada <-> N�o existe porto principal" << endl;
+					cout << "Compra nao efetuada <-> Nao existe porto principal" << endl;
 				}
 			}
 			else {
@@ -709,12 +715,12 @@ void Interface::PromptFase2(string linha) {
 						if (!jogador.verificaModoAutomaticoNavio(idNavio)) {
 							auxNavio = mundo.getNavio(idNavio);
 							if( auxNavio->getEstado() != calmaria && auxNavio->getEstado() != motim){
-								jogador.moveNavioJogador(idNavio, ValidaDirecoes(direcao));//com sucesso
+								jogador.moveNavioJogador(idNavio, ValidaDirecoes(direcao), this->Turno);//com sucesso
 									Consola::setTextColor(Consola::BRANCO);
 									Consola::gotoxy(0, 26);
 									cout << auxNavio->combate(CELULA_NAVIO_PIRATA);
 							}
-						}
+						} 
 						else
 							cout << "[ Erro..! AutoMove do Navio : " << idNavio << " esta ativo ..! ]" << endl;
 					else
@@ -957,6 +963,8 @@ void Interface::mostraLegAndConfig() {
 	cout << "Probabilidade Calmaria " << this->probCalmaria;
 	Consola::gotoxy(87, 15);
 	cout << "Probabilidade Motin " << this->probMotin;
+	Consola::gotoxy(87, 16);
+	cout << "Probabilidade Peixe " << this->probPeixe;
 
 }
 void Interface::mostraSuperficie() {
@@ -987,7 +995,12 @@ void Interface::mostraSuperficie() {
 
 				Consola::gotoxy(x + 1, y + 1);
 				Consola::setTextColor(Consola::AZUL);
-				cout << char(254);
+				if (auxSuperficie[i]->VerificaCardumePeixe() == PEIXE_ON) {
+					Consola::setTextColor(Consola::CINZENTO);
+					cout << char(190);
+					}
+				else
+					cout << char(254);
 			}
 			if (i % 2 != 0) {
 				Consola::gotoxy(x, y);
@@ -1004,7 +1017,13 @@ void Interface::mostraSuperficie() {
 
 				Consola::gotoxy(x + 1, y + 1);
 				Consola::setTextColor(Consola::AZUL_CLARO);
-				cout << char(254);
+				if (auxSuperficie[i]->VerificaCardumePeixe() == PEIXE_ON) {
+	
+					Consola::setTextColor(Consola::CINZENTO);
+					cout << char(190);
+				}
+				else
+					cout << char(254);
 			}
 
 		}

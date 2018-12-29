@@ -21,6 +21,10 @@ const int Jogador::getMoedas()const {
 	return this->moedas;
 	
 }
+void Jogador::adicionaMoedas(int moedas)
+{
+	this->moedas = this->moedas + moedas;
+}
 Navios * Jogador::getNavio(int id) {
 
 	for (unsigned int i = 0; i < navios.size(); i++)
@@ -261,24 +265,24 @@ bool Jogador::verificaNaviosJogador() {
 	return true;
 
 }
-string Jogador::moveNavioAuto() {
+string Jogador::moveNavioAuto( int turnoAtual) {
 	
 	ostringstream os;
 
 	for (unsigned int i = 0; i < navios.size(); i++) {
 		if (navios[i]->getEstado()==autoMove || navios[i]->getEstado() == aDeriva) {
-			os << navios[i]->moveNavioAuto();
+			os << navios[i]->moveNavioAuto(turnoAtual);
 		}
 	}
 	return os.str();
 }
-int Jogador::moveNavioJogador(int id, int direcao) {
+int Jogador::moveNavioJogador(int id, int direcao, int turnoJogo) {
 
 	signed int ValidaMove = MOVE_INVALIDO;
 
 	for (unsigned int i = 0; i < navios.size(); i++) {
 		if (navios[i]->getId() == id)
-			ValidaMove = navios[i]->moveNavio(direcao);
+			ValidaMove = navios[i]->moveNavio(direcao, turnoJogo);
 		
 	}
 	return ValidaMove;

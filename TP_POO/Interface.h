@@ -83,7 +83,8 @@ enum IndiceConFiguracoes {
 	probtempestade,
 	probsereias,
 	probcalmaria,
-	probmotin
+	probmotin,
+	probpeixe
 };
 
 class Interface
@@ -105,6 +106,7 @@ class Interface
 	int probSereias;
 	int probCalmaria;
 	int probMotin;
+	int probPeixe;
 
 	int Turno;
 	static int incTurno;

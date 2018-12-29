@@ -102,8 +102,11 @@ char Mundo::LastPortoAmigo() {
 	return primeiroMaior;
 	
 }
-void Mundo::mandaVaiPara() {
+string Mundo::mandaVaiPara(int precoVendaMercadoria, int precoVendaPeixe) {
 	//cout << "meu x " << navios[i]->getX() << "meu y " << navios[i]->getY() << " xVaiPara " << navios[i]->getXvaiPara()<< " yVaiPara " << navios[i]->getYvaiPara() << endl;
+
+	ostringstream os;
+
 	for (unsigned int i = 0; i < navios.size(); i++) {
 
 		if (navios[i]->getEstado() == vaiPara) {
@@ -157,14 +160,48 @@ void Mundo::mandaVaiPara() {
 							}
 						}
 
-			if ((navios[i]->getX() == navios[i]->getXvaiPara()) && (navios[i]->getY() == navios[i]->getYvaiPara()))
+			if ((navios[i]->getX() == navios[i]->getXvaiPara()) && (navios[i]->getY() == navios[i]->getYvaiPara())){
+
+				if (navios[i]->sou() == ESCUNA) {
+
+					Porto *aux = getPorto(navios[i]->getX(), navios[i]->getY());
+
+					os << "____________________________________________________________________________________________________________" << endl;
+
+					os << " Saldo do banco de dados Antes de receber Pagamento da escuna : " << aux->getBancoJogador() << endl;
+					 
+					os << " Mercadoria do banco de dados Antes de receber Mercadoria da escuna : " << aux->getMercadoria() << endl; 
+
+					os << " Quantidade de Mercadoria trazia pela Escuna : " << navios[i]->getMercadoriaNavio() << endl;
+
+					aux->adicionaBancoJogador(aux->getBancoJogador() + (navios[i]->getQuantidadePeixe()*precoVendaPeixe)+((navios[i]->getMercadoriaNavio() - navios[i]->getQuantidadePeixe()) * precoVendaMercadoria));
+
+					aux->setMercadoria(aux->getMercadoria() + navios[i]->getMercadoriaNavio());
+
+					navios[i]->setMercadoriaNavio(0);
+
+					navios[i]->setQuantidadePeixe(0);
+
+					os << "						<<<<<	>>>>>					 " << endl << endl;
+
+					os << " Saldo do banco de dados Depois de receber Pagamento da escuna : " << aux->getBancoJogador() << endl;
+
+					os << " Mercadoria do banco de dados depois de receber Mercadoria da escuna : " << aux->getMercadoria() << endl;
+
+					os << " Quantidade de Mercadoria Apos deposito no Porto: " << navios[i]->getMercadoriaNavio() << endl;
+
+					os << "____________________________________________________________________________________________________________" << endl;
+
+				}
 				navios[i]->setEstado(autoMove);
+
+			}
 
 		}
 
 
 	}
-
+	return os.str();
 }
 int Mundo::verificaNavioEscuna(int x,int y) {
 
@@ -344,7 +381,7 @@ Navios & Mundo::criaNavio(Mundo *mundo,const char portoPrincipal, const char Tip
 
 	return *aux;
 }
-string Mundo::moveNavioPirataAuto() {
+string Mundo::moveNavioPirataAuto(int turnoAtual) {
 
 	ostringstream os;
 
@@ -352,7 +389,7 @@ string Mundo::moveNavioPirataAuto() {
 		cout << "navio: " << navios[i]->getId() << " soldados: " << navios[i]->getNumSoldados() << " agua " << navios[i]->getAgua() << endl;
 		if (navios[i]->getEstado()== pirata) {
 
-			os << navios[i]->moveNavioAuto();
+			os << navios[i]->moveNavioAuto(turnoAtual);
 			
 		}
 	}
@@ -391,12 +428,20 @@ const char Mundo::getPortoPrincipal() {
 	return '-';
 
 }
-void Mundo::criaSuperficie(int x, int y, char tipo) {
+void Mundo::criaSuperficie(int x, int y, char tipo, int probPeixe) {
 
-	if (tipo == '+')
+	if (tipo == '+') {
 		superficie.push_back(new Terra(x, y));
-	else
-		superficie.push_back(new Mar(x, y));
+	}
+	else{
+		if ((rand() % 100 + 1) <= probPeixe) {
+			superficie.push_back(new Mar(x, y, '.', PEIXE_ON, 0, true));
+
+		}
+		else {
+			superficie.push_back(new Mar(x, y,'.', PEIXE_OFF, 0, false));
+		}
+	}
 }
 
 void Mundo::criaCelulaPorto(int x, int y,char t, int nSoldados)
@@ -464,6 +509,14 @@ Navios * Mundo::getNavioXY(int x,int y) {
 		if (navios[i]->getX() == x && navios[i]->getY() == y)
 			return navios[i];
 
+	return nullptr;
+}
+Porto * Mundo::getPortoAmigo()
+{
+	for (int i = 0; i < porto.size(); i++) {
+		if (porto[i]->verificaPortoAmigo() == true)
+			return porto[i];
+	}
 	return nullptr;
 }
 void Mundo::setDimX(int xMax) {
@@ -690,7 +743,7 @@ string Mundo::trataEventos(int modoExecucao, int TipoEvento, int idNavio, int co
 						do {
 
 							indice = rand() % navios.size();
-							
+							os << "Navio para ataque de sereia que tem o id:  " << navios[indice]->getId();
 
 						} while (navios[indice]->getEstado() != normal && navios[indice]->getEstado() != pirata && navios[indice]->getEstado() != autoMove);
 						
@@ -738,14 +791,14 @@ string Mundo::trataEventos(int modoExecucao, int TipoEvento, int idNavio, int co
 
 			if (Evento->getTTL() == 0) {
 
-				this->EstadoEvento = EVENTO_OFF;
+this->EstadoEvento = EVENTO_OFF;
 
 			}
 		}
-			return os.str();
+		return os.str();
 
-			break;
-	}	
+		break;
+	}
 	return os.str();
 }
 // vai criar os eventos que duram mais que 1 turno;
@@ -771,13 +824,13 @@ string Mundo::criaEvento(Mundo * mundo, int tipo)
 bool  Mundo::VerificaExistenciaNavios()
 {
 	if (navios.size() > 0)
-		for (auto it = navios.begin(); it != navios.end();){
+		for (auto it = navios.begin(); it != navios.end();) {
 			if ((*it)->getEstado() == normal || (*it)->getEstado() == pirata || (*it)->getEstado() == autoMove)
 				return true;
 			++it;
 		}
 
-		return false;
+	return false;
 }
 void Mundo::limpaVetores() {
 
@@ -787,7 +840,7 @@ void Mundo::limpaVetores() {
 
 }
 int Mundo::verificaCelulaPorto(int x, int y) {
-	
+
 	for (unsigned int i = 0; i < this->porto.size(); i++) {
 		if (porto[i]->getX() == x && porto[i]->getY() == y) {
 			if (porto[i]->verificaPortoAmigo() == true)
@@ -819,6 +872,61 @@ void Mundo::setQuantidadeSoldadosPortos(int nSoldados) {
 
 		this->porto[i]->setNumSoldados(nSoldados);
 	}
+}
+// vai retornar a Celula do Mundo se existir Cardume de peixe
+Superficie * Mundo::VerificaExistenciaPeixe(int x, int y) {
+
+	for (int i = 0; i < this->superficie.size(); i++)
+		if (this->superficie[i]->getX() == x && this->superficie[i]->getY() == y && this->superficie[i]->VerificaCardumePeixe() == PEIXE_ON)
+			return this->superficie[i];
+
+
+	return nullptr;
+}
+void Mundo::VerificaRegeneracaoPeixeMar(int turnoActual)
+{
+	for (int i = 0; i < this->superficie.size(); i++) {
+		if (superficie[i]->VerificaCelulaPeixe() == true ){
+		superficie[i]->VerificaRegenacaoPeixe(turnoActual);
+		}
+		
+	}
+}
+int Mundo::VerificaCelulaCardumePeixe(int x, int y)
+{	
+	Superficie *aux = nullptr;
+	
+	if (VerificaExistenciaPeixe(x, y - 1) != nullptr || VerificaExistenciaPeixe(x, y - 2) != nullptr) // verifica peixe 2 celulas para cima
+		return moveCima;
+	else if (VerificaExistenciaPeixe(x + 1, y - 1) != nullptr || VerificaExistenciaPeixe(x + 2, y - 1) != nullptr || VerificaExistenciaPeixe(x + 1, y - 2) != nullptr || VerificaExistenciaPeixe(x + 2, y - 2) != nullptr || VerificaExistenciaPeixe(x + 2, y - 1) != nullptr) // verifica peixe 2 celulas para baixo
+		return moveCimaDireita;
+	else if (VerificaExistenciaPeixe(x - 1, y - 1) != nullptr || VerificaExistenciaPeixe(x - 2, y - 1) != nullptr || VerificaExistenciaPeixe(x - 1, y - 2) != nullptr || VerificaExistenciaPeixe(x - 2, y - 2) != nullptr) // verifica peixe 2 celulas para baixo
+		return moveCimaEsquerda;
+	else if (VerificaExistenciaPeixe(x, y + 1) != nullptr || VerificaExistenciaPeixe(x, y + 2) != nullptr) // verifica peixe 2 celulas para baixo
+		return moveBaixo;
+	else if (VerificaExistenciaPeixe(x + 1, y + 1) != nullptr || VerificaExistenciaPeixe(x + 1, y + 2) != nullptr || VerificaExistenciaPeixe(x + 2, y + 1) != nullptr || VerificaExistenciaPeixe(x + 2, y + 2) != nullptr)
+		return moveBaixoDireita;
+	else if (VerificaExistenciaPeixe(x - 1, y + 1) != nullptr || VerificaExistenciaPeixe(x - 1, y + 2) != nullptr || VerificaExistenciaPeixe(x - 2, y + 1) != nullptr || VerificaExistenciaPeixe(x - 2, y + 2) != nullptr)
+		return moveBaixoEsquerda;
+	else if (VerificaExistenciaPeixe(x + 1, y) != nullptr || VerificaExistenciaPeixe(x + 2, y) != nullptr) // verifica peixe 2 celulas para baixo
+		return moveDireita;
+	else if (VerificaExistenciaPeixe(x - 1, y) != nullptr || VerificaExistenciaPeixe(x - 2, y) != nullptr) // verifica peixe 2 celulas para baixo
+		return moveEsquerda;
+
+	return 0;
+}
+
+int Mundo::EsvaziaBancoJogador() {
+
+	int total=0;
+
+	for (int i = 0; i < porto.size(); i++) {
+		if (porto[i]->getChar() >= 'A' && porto[i]->getChar() <= 'Z') {
+			total += porto[i]->getBancoJogador();
+			porto[i]->setBancoJogador(0);
+		}
+	}
+	return total;
 }
 Mundo::~Mundo(){
 

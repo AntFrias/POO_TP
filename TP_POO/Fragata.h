@@ -14,8 +14,8 @@ public:
 	virtual void retiraSoldados(int soldados);
 	virtual void daMetade(int x,int y);
 	virtual void serConquistadoaDeriva();
-	virtual string moveNavioAuto();
-	virtual int moveNavio(int direcao);
+	virtual string moveNavioAuto(int turnoAtual);
+	virtual int moveNavio(int direcao, int turnoJogo = 0);
 	virtual string combate(int quemVouAtacar);
 	string acao(int xaAtacar, int yaAtacar);
 	void conquistaPorto(int xPorto,int yPorto);
@@ -28,6 +28,10 @@ public:
 	virtual void adicionaMercadoriaNavio(int quantCarga);
 	virtual void RetiraMercadoriaNavio(int quantCarga);
 	virtual int VerificaMaxMercadoria()const;
+
+	virtual int getQuantidadePeixe()const;
+	virtual void setQuantidadePeixe(int quantpeixe);
+	virtual void AdicionaQuantidadePeixe(int quantpeixe);
 	
 	string TrataNavioTempestade();
 	int FmoveEsquerda(int move);

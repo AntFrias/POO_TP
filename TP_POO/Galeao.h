@@ -12,7 +12,7 @@ public:
 	Galeao(Mundo *mundo, int coordx, int coordy, int estado) : QuantMercadoria(0), QuantPeixe(0), Navios(mundo, 'G',coordx, coordy, 40, 400, estado){};
 	virtual void AbasteceAguaNavio();
 	void soldadosBebemAgua();
-	virtual string moveNavioAuto();
+	virtual string moveNavioAuto(int turnoAtual);
 	virtual void retiraAgua(int agua);
 	virtual void retiraSoldados(int soldados);
 	virtual int getMaxSoldados();
@@ -21,7 +21,7 @@ public:
 	int getMaxAgua();
 	int getAgua();
 	virtual void adicionaAgua(int agua);
-	virtual int moveNavio(int direcao)override;
+	virtual int moveNavio(int direcao, int turnoJogo = 0)override;
 	
 
 	virtual int getMercadoriaNavio()const { return this->QuantMercadoria; }
@@ -29,6 +29,10 @@ public:
 	virtual void adicionaMercadoriaNavio(int quantCarga);
 	virtual void RetiraMercadoriaNavio(int quantCarga);
 	virtual int VerificaMaxMercadoria()const { return GALEAO_QUANT_MAX_CARGA; }
+
+	virtual int getQuantidadePeixe()const;
+	virtual void setQuantidadePeixe(int quantpeixe);
+	virtual void AdicionaQuantidadePeixe(int quantpeixe);
 
 	string TrataNavioTempestade();
 	int FmoveEsquerda();
