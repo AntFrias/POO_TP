@@ -49,8 +49,8 @@ public:
 	virtual const int sou()const override;
 	void conquistaPorto(int xPorto, int yPorto);
 	string acaoPorto();
-	string acao(int xaAtacar, int yaAtacar);
 	string acaoRoubo(int xEscuna, int yEscuna);
+	string acao(int xaAtacar, int yaAtacar);
 	~Veleiro();
 };
 #endif // !VELEIRO_H
