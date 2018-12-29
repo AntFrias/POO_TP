@@ -416,18 +416,19 @@ void Mundo::criaCelulaPorto(int x, int y,char t, int nSoldados)
 	this->porto.push_back(new Porto(x, y, t, nSoldados, 50));
 }
 
-void Mundo::retiraNavAfundados() { // NAO FAÇO IDEIA O QUE FIZ AQUI FRIAS .. SEM QUE TEM HAVER COM A CENA DE APAGAR UMA COISA ENQUANTO ESTAMOS A PERCORRER A MESMA
-
+string Mundo::retiraNavAfundados() {
+	ostringstream os;
 	for (auto it = navios.begin(); it != navios.end();) {
 
 		if ((*it)->getEstado() == afundado) {
-			//cout << "morreu navio: " << (*it)->getId()<<endl;
+			os << "morreu navio: " << (*it)->getId()<<endl;
 			delete *it;
 			it = navios.erase(it);
 		}
 		else
 			++it;
 	}
+	return os.str();
 }
 
 
