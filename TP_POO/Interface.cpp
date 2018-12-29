@@ -558,7 +558,7 @@ void Interface::Prompt() {
 		os << jogador.moveNavioAuto();
 		os << mundo.moveNavioPirataAuto();
 		mundo.verificaaDeriva();
-		mundo.retiraNavAfundados();
+		os << mundo.retiraNavAfundados();
 		os << ExecutaEventos();
 		os << mostraStatusNavio();
 
@@ -809,10 +809,8 @@ string Interface::PromptFase2(string linha) {
 	if (buffer >> acao) {
 		switch (FiltaComandos(acao)) {
 		case com_exec:
-			os << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
 			break;
 		case com_prox:
-			os << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
 			break;
 		case com_compranav:
 			buffer >> tipo;
