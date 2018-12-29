@@ -136,10 +136,9 @@ public:
 	string ExecutaEventos();
 	string GeradorEvento(int ModoExecucao, int tipoEvento, int idNavio, int coordX, int coordY);
 	int verificaFimdoJogo();
-	string leFich(string nomeFich);
+	vector<string> leFich(string nomeFich);
 	bool verificaLeComandos(string aux);
 	vector<string> leComandos();
-	int verificaExec(vector<string> comandExec);
 	string mostraStatusNavio();
 	void mostraMapa();
 	int verificaDadosFicheiro(string linha);

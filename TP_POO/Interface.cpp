@@ -307,7 +307,7 @@ bool Interface::verificaLeComandos(string aux) {
 		switch (FiltaComandos(acao)) {
 		case com_exec:
 			//verifica se o ficheiro existe
-			return true;
+			true;
 			break;
 			//############################################################################################################################################
 		case com_prox:
@@ -474,59 +474,25 @@ vector <string> Interface::leComandos() {
 		}
 	} while (aux != "prox");
 
-
 	return vetordComandos;
 }
-int Interface::verificaExec(vector <string> comandExec) {
-
-	
-	string palavra;
-	
-	for (unsigned int i = 0; i < comandExec.size(); i++) {
-
-		istringstream comando(comandExec[i]);
-		comando >> palavra;
-		if (palavra == "exec") {
-			return i;
-		}
-	}
-	return -1;
-}
-string Interface::leFich(string nomeFich) {
-
-	ostringstream os;
+vector <string> Interface::leFich(string nomeFich) {
 
 	vector <string> vetordComandos;
 	fstream fp;
 	string linha;
 
+	fp.open(nomeFich);
 
-	if (!fp.is_open()) {
+	while (getline(fp, linha)) {
 
-		fp.open(nomeFich);
-
-		while (getline(fp, linha)) {
-
-			if (verificaLeComandos(linha) == true) {
-				vetordComandos.push_back(linha);
-			}
+		if (verificaLeComandos(linha) == true) {
+			vetordComandos.push_back(linha);
 		}
 
-		fp.close();
-			os << "________OUTPUT_DOS_COMANDOS_DO_FICHEIRO____________ " << endl;
-		for (unsigned int i = 0; i < vetordComandos.size(); i++) {
-
-			os << PromptFase2(vetordComandos[i]);
-
-		}
-		os << "_______________________________________________________ " << endl;
 	}
-	else{
-
-		os << "________NAO_FOI_POSSIVEL_ABRIR_O_____________ " << endl;
-	}
-
-	return os.str();
+	fp.close();
+	return vetordComandos;
 }
 string Interface::mostraStatusNavio() {
 
@@ -589,22 +555,9 @@ void Interface::Prompt() {
 		gotoComando();
 		cout << "Comando: "<<endl;
 		vectorComandos = leComandos();
-		
-		
-		
-		int indiceExec = verificaExec(vectorComandos);
-		 
 
 		Consola::clrscr();
-
 		do {
-
-			if (indiceExec >= 0) {
-				
-				os << leFich( vectorComandos[indiceExec].substr(vectorComandos[indiceExec].find_first_of(' ') + 1, vectorComandos[indiceExec].size()) );
-				indiceExec = -1;
-			}
-
 			os << PromptFase2(vectorComandos[proxComando]);
 			if (vectorComandos[proxComando] != "prox") {
 				proxComando++;
