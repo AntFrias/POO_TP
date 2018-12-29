@@ -293,17 +293,21 @@ bool Interface::verificaLeComandos(string aux) {
 	istringstream buffer2(aux);
 
 	string acao;
+	string nomeFich;
+	string linha;
 	char tipo;
 	int idNavio;
 	int nMercadoria;
 	char direcao;
 	int x, y;
 	int nSoldados;
+	
 
 	if (buffer >> acao) {
 		switch (FiltaComandos(acao)) {
 		case com_exec:
-			return true;
+			//verifica se o ficheiro existe
+			true;
 			break;
 			//############################################################################################################################################
 		case com_prox:
@@ -461,7 +465,6 @@ vector <string> Interface::leComandos() {
 		getline(cin, aux);
 
 		if (verificaLeComandos(aux) == true) {//se o comando introduzido na sequencia for correto
-
 			vetordComandos.push_back(aux);
 		}
 		else {
@@ -470,6 +473,24 @@ vector <string> Interface::leComandos() {
 		}
 	} while (aux != "prox");
 
+	return vetordComandos;
+}
+vector <string> Interface::leFich(string nomeFich) {
+
+	vector <string> vetordComandos;
+	fstream fp;
+	string linha;
+
+	fp.open(nomeFich);
+
+	while (getline(fp, linha)) {
+
+		if (verificaLeComandos(linha) == true) {
+			vetordComandos.push_back(linha);
+		}
+
+	}
+	fp.close();
 	return vetordComandos;
 }
 string Interface::mostraStatusNavio() {
@@ -533,7 +554,7 @@ void Interface::Prompt() {
 		gotoComando();
 		cout << "Comando: "<<endl;
 		vectorComandos = leComandos();
-		
+
 		Consola::clrscr();
 		do {
 			os << PromptFase2(vectorComandos[proxComando]);
