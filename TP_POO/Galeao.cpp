@@ -1205,7 +1205,8 @@ void Galeao::AdicionaQuantidadePeixe(int quantpeixe)
 }
 void Galeao::setPonteiroSaveMundo(Mundo * mundo)
 {
-	this->mundo = mundo;
+
+		this->mundo = mundo;
 }
 string Galeao::TrataNavioTempestade()
 {

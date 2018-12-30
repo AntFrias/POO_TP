@@ -698,7 +698,7 @@ void Interface::PromptFase1(string linha) {
 int Interface::verificaDadosFicheiro(string linha) {
 
 	vector < string > dadosEntrada = { "linhas", "colunas" , "moedas" , "probpirata", "preconavio", "precosoldado", "precovendpeixe",  "precocompmercad" ,
-										"precovendmercad", "soldadosporto", "probevento" , "probtempestade" , "probsereias" , "probcalmaria", "probmotin" };
+										"precovendmercad", "soldadosporto", "probevento" , "probtempestade" , "probsereias" , "probcalmaria", "probmotin","probpeixe" };
 
 	for (unsigned int i = 0; i < dadosEntrada.size(); i++) 
 		if (linha.compare(dadosEntrada[i]) == 0)
@@ -773,6 +773,7 @@ bool Interface::carregaFich(string configFile) {
 					break;
 				case probmotin:
 					this->probMotin = inteiro;
+					break;
 				case probpeixe:
 					this->probPeixe = inteiro;
 					break;
@@ -1198,9 +1199,9 @@ string Interface::GuardaEstadojogo()
 {
 	ostringstream os;
 
-	this->SaveJogador = this->jogador;
-
 	this->SaveMundo = this->mundo;
+
+	this->SaveJogador = this->jogador;
 
 	this->saveTurno = this->Turno;
 
@@ -1215,11 +1216,13 @@ string Interface::CarregarEstadoJogoGuardado()
 
 	this->mundo.EliminaMundoGuardado();
 
+	this->jogador.EliminaJogadorGuardado();
+
 	this->mundo = this->SaveMundo;
 
 	this->jogador = this->SaveJogador;
 
-	this->mundo.setPonteiroSaveMundo(&mundo);
+	//this->mundo.setPonteiroSaveMundo(&this->mundo);
 
 	this->Turno = this->saveTurno;
 
@@ -1231,11 +1234,15 @@ string Interface::CarregarEstadoJogoGuardado()
 string Interface::EliminaEstadoJogoGuardado()
 {
 	ostringstream os;
-	
-	// aqui vai ficar o comando para limpar a string
 
-	SaveMundo.EliminaMundoGuardado();
-	SaveJogador.EliminaJogadorGuardado();
+	Mundo aux;
+
+	///aqui vai ficar o comando para limpar a string
+	this->SaveMundo.EliminaMundoGuardado();
+	
+	this->SaveJogador.EliminaJogadorGuardado();
+	
+
 
 	os << " O jogo Guardado foi Apagado " << endl;
 

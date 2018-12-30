@@ -357,7 +357,7 @@ void Veleiro::AdicionaQuantidadePeixe(int quantpeixe)
 }
 void Veleiro::setPonteiroSaveMundo(Mundo * mundo)
 {
-	this->mundo = mundo;
+		this->mundo = mundo;
 }
 string Veleiro::TrataNavioTempestade()
 {

@@ -1599,7 +1599,8 @@ void Escuna::AdicionaQuantidadePeixe(int quantpeixe)
 }
 void Escuna::setPonteiroSaveMundo(Mundo * mundo)
 {
-	this->mundo = mundo;
+	
+		this->mundo = mundo;
 }
 string Escuna::TrataNavioTempestade()
 {

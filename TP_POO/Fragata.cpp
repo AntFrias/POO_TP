@@ -411,7 +411,8 @@ void Fragata::AdicionaQuantidadePeixe(int quantpeixe)
 }
 void Fragata::setPonteiroSaveMundo(Mundo * mundo)
 {
-	this->mundo = mundo;
+
+		this->mundo = mundo;
 }
 string Fragata::combate(int quemVouAtacar) {
 

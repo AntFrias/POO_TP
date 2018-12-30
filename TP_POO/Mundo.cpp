@@ -6,20 +6,28 @@ using namespace std;
 void Mundo::EliminaMundoGuardado()
 {
 
-	for (int i = 0; i < porto.size(); i++) {
-		if (porto[i] != nullptr)
-			delete porto[i];
-		
-	}
-	for (int i = 0; i < navios.size(); i++) {
-		if (navios[i] != nullptr)
-			delete navios[i];
+	for (auto it = navios.begin(); it != navios.end();) {
+
+		delete *it;
+
+			++it;
 	}
 
-	for (int i = 0; i < superficie.size(); i++) {
-		if (superficie[i] != nullptr)
-			delete superficie[i];
+	for (auto it = superficie.begin(); it != superficie.end();) {
+
+		delete *it;
+
+		++it;
 	}
+
+	for (auto it = porto.begin(); it != porto.end();) {
+
+		delete *it;
+
+		++it;
+	}
+
+	//delete Evento; // aqui rebenta o load game sucessivamente
 
 	porto.clear();
 	navios.clear();
@@ -445,7 +453,39 @@ string Mundo::mostraStatusNavio() {
 	ostringstream os;
 	os << "___________________Status-Navios___________________\n";
 	for (unsigned int i = 0; i < navios.size(); i++) {
-		os << "Navio: " << navios[i]->getId() << " Tipo: "<< navios[i]->getEstado() <<" soldados: " << navios[i]->getNumSoldados() << " agua " << navios[i]->getAgua() << endl;
+		os << "Navio: " << navios[i]->getId();
+		if (navios[i]->getEstado() == normal)
+			os << " Tipo: Normal ";
+		else
+			if (navios[i]->getEstado() == pirata)
+				os << " Tipo: Pirata ";
+			else
+				if (navios[i]->getEstado() == autoMove)
+					os << " Tipo: Auto Move ";
+				else
+					if (navios[i]->getEstado() == atracado)
+						os << " Tipo: Atracado ";
+					else
+						if (navios[i]->getEstado() == afundado)
+							os << " Tipo: Afundado ";
+						else
+							if (navios[i]->getEstado() == aDeriva)
+								os << " Tipo a Deriva ";
+							else
+								if (navios[i]->getEstado() == calmaria)
+									os << " Tipo Calmaria ";
+								else
+									if (navios[i]->getEstado() == motim)
+										os << " Tipo Motim ";
+									else
+										if (navios[i]->getEstado() == vaiPara)
+											os << " Tipo GPS (vaiPara) ";
+
+
+
+
+
+		os << " soldados: " << navios[i]->getNumSoldados() << " agua " << navios[i]->getAgua() << endl;
 	}
 	os << "___________________________________________________\n";
 

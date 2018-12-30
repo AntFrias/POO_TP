@@ -5,12 +5,10 @@ Jogador::Jogador(){
 }
 void Jogador::EliminaJogadorGuardado()
 {
-	for (int i = 0; i < navios.size(); i++)
-		if(navios[i] != nullptr)
-			delete navios[i];
-
+	
 	navios.clear();
 }
+
 
 Jogador & Jogador::operator=(const Jogador & aux)
 {
@@ -22,15 +20,28 @@ Jogador & Jogador::operator=(const Jogador & aux)
 	
 	for (int i = 0; i < aux.navios.size(); i++) {
 
-		if (aux.navios[i] != nullptr)
-			this->navios.push_back(aux.navios[i]->Duplica());
+
+
+		if (aux.navios[i] != nullptr){
+
+			Navios *temp = aux.navios[i]->Duplica();
+
+			this->navios.push_back(temp);
+
+		}
 	}
 		
 
 	return *this;
 
 }
-
+void Jogador::setPonteiroSaveMundo(Mundo * mundo)
+{
+	for (int i = 0; i < navios.size(); i++) {
+		if (navios[i] != nullptr)
+			navios[i]->setPonteiroSaveMundo(mundo);
+	}
+}
 void Jogador::setMundo(Mundo *mundo){
 
 	this->mundo = mundo;
