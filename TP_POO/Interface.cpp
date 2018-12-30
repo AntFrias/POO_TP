@@ -580,6 +580,7 @@ void Interface::Prompt() {
 	
 	do {
 		/////////////////////////////////////////////////////////////////////
+		this->Turno = ++this->incTurno;
 
 		proxComando = 0;
 		vectorComandos.erase(vectorComandos.begin(), vectorComandos.end());
@@ -593,7 +594,7 @@ void Interface::Prompt() {
 		int indiceExec = verificaExec(vectorComandos);
 		 
 
-		Consola::clrscr();
+		Consola::clrscr(); //comentei aqui
 
 		do {
 
@@ -616,33 +617,33 @@ void Interface::Prompt() {
 			return;
 		}
 
-		mundo.retiraNavAfundados();
+		
 		//criaNaviosJogador(); //apagar isto daqui
 		criaPiratasAuto();
-		cout << mundo.mandaVaiPara(this->precoVendaMercadoria, this->precoVendePeixe);
+		os << mundo.mandaVaiPara(this->precoVendaMercadoria, this->precoVendePeixe);
 		jogador.setPortoPrincipal(mundo.getPortoPrincipal());
 		mundo.abasteceNaviosNosPortos();
-		cout << jogador.moveNavioAuto(this->Turno);
-		cout << mundo.moveNavioPirataAuto(this->Turno);
+		os << jogador.moveNavioAuto(this->Turno);
+		os << mundo.moveNavioPirataAuto(this->Turno);
 		mundo.verificaaDeriva();
 		mundo.VerificaRegeneracaoPeixeMar(this->Turno);
 		jogador.adicionaMoedas(mundo.EsvaziaBancoJogador());
-		cout << ExecutaEventos();
-		Consola::clrscr();
+		os << ExecutaEventos();
+		os << mundo.retiraNavAfundados();
+		Consola::clrscr(); //comentei aqui
 		mostraMapa();
 		Consola::gotoxy(0,50);
 		cout << os.str();
 		
 		os.str("");
 		Consola::gotoxy(0, 0);
-		this->Turno = this->incTurno++;
-		/*cout << "Turno : " << this->Turno;
-		cout << "_______________________________________________________________________________________" << endl;*/
 
 		for (unsigned int i = 0; i < vectorComandos.size(); i++) {
 			if (vectorComandos[i] == "sair")
 				proxComando = i;
 		}
+
+		
 
 	} while (vectorComandos[proxComando]!="sair");
 
@@ -1237,8 +1238,13 @@ void Interface::mostraLegAndConfig() {
 	cout << "Probabilidade Motin " << this->probMotin;
 	Consola::gotoxy(87, 16);
 	cout << "Probabilidade Peixe " << this->probPeixe;
-
-}
+	Consola::gotoxy(87, 17);
+	cout << "___________________" << endl;
+	Consola::gotoxy(87, 18);
+	cout << "Turno: " << this->Turno;
+	Consola::gotoxy(87, 19);
+	cout << "___________________" << endl;
+}	
 void Interface::mostraSuperficie() {
 
 	const vector <const Superficie *>  auxSuperficie = mundo.getVetorSuperficie();
