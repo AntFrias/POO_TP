@@ -2,6 +2,27 @@
 
 using namespace std;
 
+
+Mar::Mar()
+{
+
+}
+
+Mar::Mar(const Mar & aux)
+{
+	this->CardumePeixe = aux.CardumePeixe;
+	this->celulaPeixe = aux.celulaPeixe;
+	this->tipo = aux.tipo;
+	this->TurnoPesca = aux.TurnoPesca;
+	this->x = aux.x;
+	this->y = aux.y;
+}
+
+Mar * Mar::Duplica() const
+{
+	return new Mar(*this);
+}
+
 char Mar::getTipo() const
 {
 	return this->tipo;

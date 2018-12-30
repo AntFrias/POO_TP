@@ -16,7 +16,13 @@ class Porto {
 	int bancoJogador;
 
 public:
+	Porto();
 	Porto(int x, int y, char tipoPorto, int nSoldados, int tMercadoria, int bancojogador = 0);
+	/*Porto(const Porto &aux);*/
+	Porto & operator=(const Porto & aux);
+
+	virtual Porto * Duplica()const;
+
 	bool verificaPortoAmigo();
 	void setMercadoria(int tMercadoria);
 	int getMercadoria()const;

@@ -1,6 +1,11 @@
 #include "Galeao.h"
 #include "Mundo.h"
 
+Navios * Galeao::Duplica() const
+{
+	return new Galeao(*this);
+}
+
 void Galeao::AbasteceAguaNavio()
 {
 	this->quantAgua = GALEAO_MAX_AGUA;
@@ -1197,6 +1202,10 @@ void Galeao::AdicionaQuantidadePeixe(int quantpeixe)
 {
 	if (this->QuantPeixe + quantpeixe <= GALEAO_QUANT_MAX_CARGA)
 		this->QuantPeixe = this->QuantPeixe - quantpeixe;
+}
+void Galeao::setPonteiroSaveMundo(Mundo * mundo)
+{
+	this->mundo = mundo;
 }
 string Galeao::TrataNavioTempestade()
 {

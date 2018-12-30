@@ -22,6 +22,7 @@ Navios::Navios(Mundo *mundo, char tipo, int x, int y, int quantSoldados, int qua
 	this->y = y;
 }
 
+
 int Navios::randNumber(int nSoldados) {
 
 	if (nSoldados > 0) {

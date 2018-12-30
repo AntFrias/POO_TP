@@ -14,8 +14,10 @@ class Mar : public Superficie {
 	bool celulaPeixe;
 
 public:
-
+	Mar();
+	Mar(const Mar & aux);
 	Mar(int x, int y, char auxtipo, bool peixe, int turnoDefault, bool celulapeixe = false ) : tipo(auxtipo), CardumePeixe(peixe),TurnoPesca(turnoDefault), celulaPeixe(celulapeixe), Superficie(x, y) {}
+	virtual Mar * Duplica()const;
 	virtual char getTipo()const;
 	virtual int getTurno()const { return this->TurnoPesca; };
 	virtual bool VerificaCelulaMar()const;

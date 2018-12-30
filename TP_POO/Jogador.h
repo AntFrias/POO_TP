@@ -32,6 +32,10 @@ public:
 	
 	Jogador();
 
+	void EliminaJogadorGuardado();
+
+	Jogador & operator=(const Jogador& aux);
+
 	void setMundo(Mundo * mundo);
 
 	Navios * getNavio(int id);

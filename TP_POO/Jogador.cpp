@@ -3,6 +3,33 @@
 
 Jogador::Jogador(){
 }
+void Jogador::EliminaJogadorGuardado()
+{
+	for (int i = 0; i < navios.size(); i++)
+		if(navios[i] != nullptr)
+			delete navios[i];
+
+	navios.clear();
+}
+
+Jogador & Jogador::operator=(const Jogador & aux)
+{
+	if (this == &aux)
+		return *this;
+
+	this->moedas = aux.moedas;
+	this->portoPrincipal = aux.portoPrincipal;
+	
+	for (int i = 0; i < aux.navios.size(); i++) {
+
+		if (aux.navios[i] != nullptr)
+			this->navios.push_back(aux.navios[i]->Duplica());
+	}
+		
+
+	return *this;
+
+}
 
 void Jogador::setMundo(Mundo *mundo){
 

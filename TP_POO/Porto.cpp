@@ -1,5 +1,10 @@
 #include "Porto.h"
 
+Porto::Porto()
+{
+
+
+}
 Porto::Porto(int x, int y, char tipoPorto, int nSoldados, int tMercadoria, int bancojogador)
 {
 	this->TipoPorto = tipoPorto;
@@ -9,6 +14,34 @@ Porto::Porto(int x, int y, char tipoPorto, int nSoldados, int tMercadoria, int b
 	this->Mercadoria = tMercadoria;
 	this->bancoJogador = bancojogador;
 	
+}
+//Porto::Porto(const Porto &aux) {
+//	this->TipoPorto = aux.TipoPorto;
+//	this->x = aux.x;
+//	this->y = aux.y;
+//	this->numSoldados = aux.numSoldados;
+//	this->Mercadoria = aux.Mercadoria;
+//	this->bancoJogador = aux.bancoJogador;
+//	
+//}
+Porto & Porto::operator=(const Porto &aux) {
+
+	if (this == &aux)
+		return *this;
+
+	this->TipoPorto = aux.TipoPorto;
+	this->x = aux.x;
+	this->y = aux.y;
+	this->numSoldados = aux.numSoldados;
+	this->Mercadoria = aux.Mercadoria;
+	this->bancoJogador = aux.bancoJogador;
+
+	return *this;
+
+}
+Porto * Porto::Duplica() const
+{
+	return new Porto(*this);
 }
 bool Porto::verificaPortoAmigo() {
 

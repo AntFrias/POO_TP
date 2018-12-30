@@ -91,8 +91,10 @@ enum IndiceConFiguracoes {
 class Interface
 {
 	Mundo mundo;
-
+	Mundo SaveMundo;
 	Jogador jogador;
+	Jogador SaveJogador;
+	int saveTurno;
 
 	int moedas;
 	int probPirata;
@@ -114,7 +116,7 @@ class Interface
 	bool InsercaoEvento;
 
 public:
-	Interface() : Turno(0) {};
+	Interface() : Turno(0), saveTurno(0) {};
 	int FiltaComandos(string acao);
 	void PromptFase1(string linha);
 	string PromptFase2(string linha);
@@ -148,6 +150,10 @@ public:
 	bool carregaFich(string configfich);
 	bool getInsercaoComandoEvento() const;
 	void setInsercaoComandoEvento(bool insercao);
+
+	string GuardaEstadojogo();
+	string CarregarEstadoJogoGuardado();
+	string EliminaEstadoJogoGuardado();
 	
 
 

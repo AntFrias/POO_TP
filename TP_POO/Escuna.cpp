@@ -1,6 +1,11 @@
 #include "Escuna.h"
 #include "Mundo.h"
 
+Navios * Escuna::Duplica() const
+{
+	return new Escuna(*this);
+}
+
 void Escuna::AbasteceAguaNavio()
 {
 	this->quantAgua = ESCUNA_MAX_AGUA;
@@ -212,7 +217,6 @@ int Escuna::FmoveEsquerda(int turnoJogo) {
 			this->QuantMercadoria = this->QuantMercadoria + PEIXE_PESCADO;
 
 			auxMar->PescaCardumeMar(turnoJogo);
-			cout << "Turno em que o peixe foi pescado " << auxMar->getTurno() << endl;
 
 		}
 	}
@@ -262,7 +266,7 @@ int Escuna::FmoveEsquerda(int turnoJogo) {
 				this->QuantMercadoria = this->QuantMercadoria + PEIXE_PESCADO;
 
 				auxMar->PescaCardumeMar(turnoJogo);
-				cout << "Turno em que o peixe foi pescado " << auxMar->getTurno() << endl;
+				
 
 			}
 		}
@@ -313,7 +317,7 @@ int Escuna::FmoveDireita(int turnoJogo) {
 
 				auxMar->PescaCardumeMar(turnoJogo);
 
-				cout << "Turno em que o peixe foi pescado " << auxMar->getTurno() << endl;
+				
 
 			}
 		}
@@ -364,7 +368,7 @@ int Escuna::FmoveDireita(int turnoJogo) {
 
 				auxMar->PescaCardumeMar(turnoJogo);
 
-				cout << "Turno em que o peixe foi pescado " << auxMar->getTurno() << endl;
+				
 
 			}
 		}
@@ -418,7 +422,7 @@ int Escuna::FmoveCima(int turnoJogo) {
 
 			auxMar->PescaCardumeMar(turnoJogo);
 
-			cout << "Turno em que o peixe foi pescado " << auxMar->getTurno() << endl;
+			
 
 		}
 	}
@@ -471,7 +475,7 @@ int Escuna::FmoveCima(int turnoJogo) {
 
 				auxMar->PescaCardumeMar(turnoJogo);
 
-				cout << "Turno em que o peixe foi pescado " << auxMar->getTurno() << endl;
+				
 
 
 			}
@@ -526,7 +530,7 @@ int Escuna::FmoveBaixo(int turnoJogo) {
 
 			auxMar->PescaCardumeMar(turnoJogo);
 
-			cout << "Turno em que o peixe foi pescado " << auxMar->getTurno() << endl;
+			
 
 		}
 	}
@@ -576,7 +580,7 @@ int Escuna::FmoveBaixo(int turnoJogo) {
 
 				auxMar->PescaCardumeMar(turnoJogo);
 
-				cout << "Turno em que o peixe foi pescado " << auxMar->getTurno() << endl;
+				
 
 			}
 		}
@@ -634,7 +638,7 @@ int Escuna::FmoveCimaEsquerda(int turnoJogo) {
 
 				auxMar->PescaCardumeMar(turnoJogo);
 
-				cout << "Turno em que o peixe foi pescado " << auxMar->getTurno() << endl;
+				
 
 			}
 		}
@@ -689,7 +693,7 @@ int Escuna::FmoveCimaEsquerda(int turnoJogo) {
 
 				auxMar->PescaCardumeMar(turnoJogo);
 
-				cout << "Turno em que o peixe foi pescado " << auxMar->getTurno() << endl;
+				
 
 			}
 		}
@@ -1592,6 +1596,10 @@ void Escuna::AdicionaQuantidadePeixe(int quantpeixe)
 {
 	if (this->QuantPeixe + quantpeixe <= ESCUNA_QUANT_MAX_CARGA)
 		this->QuantPeixe = this->QuantPeixe + quantpeixe;
+}
+void Escuna::setPonteiroSaveMundo(Mundo * mundo)
+{
+	this->mundo = mundo;
 }
 string Escuna::TrataNavioTempestade()
 {

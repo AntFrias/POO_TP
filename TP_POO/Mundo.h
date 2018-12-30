@@ -91,6 +91,12 @@ public:
 
 	Mundo(){};
 
+	void EliminaMundoGuardado();
+
+	Mundo & operator=(const Mundo &aux);
+
+	void setPonteiroSaveMundo(Mundo *mundo);
+
 	int portosBemColocado();
 
 	void abasteceNaviosNosPortos();
