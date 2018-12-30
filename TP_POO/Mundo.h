@@ -91,6 +91,8 @@ public:
 
 	Mundo(){};
 
+	Mundo & operator=(const Mundo &aux);
+
 	int portosBemColocado();
 
 	void abasteceNaviosNosPortos();

@@ -32,6 +32,8 @@ public:
 	
 	Jogador();
 
+	Jogador & operator=(const Jogador& aux);
+
 	void setMundo(Mundo * mundo);
 
 	Navios * getNavio(int id);

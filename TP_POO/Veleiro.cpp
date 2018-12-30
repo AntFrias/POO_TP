@@ -3,6 +3,11 @@
 
 
 
+Navios * Veleiro::Duplica() const
+{
+	return new Veleiro(*this);
+}
+
 void Veleiro::AbasteceAguaNavio()
 {
 	this->quantAgua = VELEIRO_MAX_AGUA;

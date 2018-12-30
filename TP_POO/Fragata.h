@@ -8,6 +8,10 @@ class Fragata : public Navios
 
 public:
 	Fragata(Mundo *mundo, int coordx, int coordy, int estado) : Navios(mundo, 'F', coordx, coordy, 50, 500, estado) {};
+
+	virtual Navios * Duplica()const;
+
+
 	virtual void AbasteceAguaNavio();
 	void soldadosBebemAgua();
 	virtual void retiraAgua(int agua);

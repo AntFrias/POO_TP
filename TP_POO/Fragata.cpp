@@ -1,6 +1,11 @@
 #include "Fragata.h"
 #include "Mundo.h"
 
+Navios * Fragata::Duplica() const
+{
+	return new Fragata(*this);
+}
+
 void Fragata::AbasteceAguaNavio()
 {
 	this->quantAgua = FRAGATA_MAX_AGUA;

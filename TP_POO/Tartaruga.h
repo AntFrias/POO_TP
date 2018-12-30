@@ -8,6 +8,9 @@ class Tartaruga : public Navios
 
 public:
 	Tartaruga(Mundo *mundo, int coordx, int coordy, int estado) : Navios(mundo, 'T', coordx, coordy, 80, 1000, estado) {};
+
+	virtual Navios * Duplica()const;
+
 	virtual void AbasteceAguaNavio();
 	void soldadosBebemAgua();
 	virtual void retiraAgua(int agua);

@@ -12,6 +12,10 @@ class Veleiro : public Navios
 
 public:
 	Veleiro(Mundo *auxMundo,int coordx, int coordy,int estado) : QuantMercadoria(0), QuantPeixe(0), Navios(auxMundo,'V',coordx,coordy, 20, 200, estado){};
+
+	virtual Navios * Duplica()const;
+
+
 	virtual void AbasteceAguaNavio();
 	virtual string moveNavioAuto(int turnoAtual);
 	void soldadosBebemAgua();

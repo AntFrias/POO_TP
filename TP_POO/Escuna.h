@@ -12,7 +12,11 @@ class Escuna : public Navios
 
 public:
 	Escuna(Mundo *mundo, int coordx, int coordy, int estado) : QuantMercadoria(0), QuantPeixe(0), Navios(mundo,'E',coordx, coordy, 10, 100, estado) {};
+	
+	virtual Navios * Duplica()const;
+	
 	virtual void AbasteceAguaNavio();
+
 	virtual int moveNavio(int direcao, int turnoJogo = 0)override;
 
 

@@ -620,6 +620,7 @@ void Interface::Prompt() {
 		
 		//criaNaviosJogador(); //apagar isto daqui
 		criaPiratasAuto();
+
 		os << mundo.mandaVaiPara(this->precoVendaMercadoria, this->precoVendePeixe);
 		jogador.setPortoPrincipal(mundo.getPortoPrincipal());
 		mundo.abasteceNaviosNosPortos();
@@ -1185,6 +1186,31 @@ bool Interface::getInsercaoComandoEvento() const
 void Interface::setInsercaoComandoEvento(bool insercao)
 {
 	this->InsercaoEvento = insercao;
+}
+
+string Interface::GuardaEstadojogo()
+{
+	ostringstream os;
+
+	this->SaveJogador = this->jogador;
+
+	this->SaveMundo = this->mundo;
+
+	return os.str();
+}
+
+string Interface::CarregarEstadoJogoGuardado()
+{
+	ostringstream os;
+
+	return os.str();
+}
+
+string Interface::EliminaEstadoJogoGuardado()
+{
+	ostringstream os;
+
+	return os.str();
 }
 
 void Interface::mostraLegAndConfig() {

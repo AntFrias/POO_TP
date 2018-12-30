@@ -4,6 +4,21 @@
 Jogador::Jogador(){
 }
 
+Jogador & Jogador::operator=(const Jogador & aux)
+{
+	if (this == &aux)
+		return *this;
+
+	this->moedas = aux.moedas;
+	this->portoPrincipal = aux.portoPrincipal;
+	
+	for (int i = 0; i < aux.navios.size(); i++)
+		this->navios.push_back(aux.navios[i]->Duplica());
+
+	return *this;
+
+}
+
 void Jogador::setMundo(Mundo *mundo){
 
 	this->mundo = mundo;

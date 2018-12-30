@@ -1,6 +1,20 @@
 #include "Terra.h"
 
 
+Terra::Terra()
+{
+}
+Terra::Terra(const Terra &aux) {
+
+	this->tipo = aux.tipo;
+	this->x = aux.x;
+	this->y = aux.y;
+
+}
+Terra * Terra::Duplica() const
+{
+	return new Terra(*this);
+}
 char Terra::getTipo() const
 {
 	return this->tipo;

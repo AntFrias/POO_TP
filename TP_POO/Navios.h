@@ -91,6 +91,8 @@ public:
 	Navios();
 	Navios(Mundo *mundo, char tipo, int x, int y, int quantSoldados, int quantAgua = 0, int estado=normal);
 	
+	virtual Navios * Duplica()const = 0;
+	
 	virtual int moveNavio(int direcao, int turnoJogo = 0)=0;
 	virtual string combate(int quemVouAtacar) = 0;
 	virtual int getMaxAgua() = 0;

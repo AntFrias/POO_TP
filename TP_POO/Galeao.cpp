@@ -1,6 +1,11 @@
 #include "Galeao.h"
 #include "Mundo.h"
 
+Navios * Galeao::Duplica() const
+{
+	return new Galeao(*this);
+}
+
 void Galeao::AbasteceAguaNavio()
 {
 	this->quantAgua = GALEAO_MAX_AGUA;
