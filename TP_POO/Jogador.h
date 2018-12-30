@@ -32,6 +32,12 @@ public:
 	
 	Jogador();
 
+	void InterligaNaviosJogadorToMundo();
+
+	void setPonteiroSaveMundo(Mundo * mundo);
+
+	void EliminaJogadorGuardado();
+
 	Jogador & operator=(const Jogador& aux);
 
 	void setMundo(Mundo * mundo);

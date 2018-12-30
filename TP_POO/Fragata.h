@@ -36,6 +36,8 @@ public:
 	virtual int getQuantidadePeixe()const;
 	virtual void setQuantidadePeixe(int quantpeixe);
 	virtual void AdicionaQuantidadePeixe(int quantpeixe);
+
+	virtual void setPonteiroSaveMundo(Mundo *mundo);
 	
 	string TrataNavioTempestade();
 	int FmoveEsquerda(int move);

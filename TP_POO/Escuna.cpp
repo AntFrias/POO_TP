@@ -1597,6 +1597,10 @@ void Escuna::AdicionaQuantidadePeixe(int quantpeixe)
 	if (this->QuantPeixe + quantpeixe <= ESCUNA_QUANT_MAX_CARGA)
 		this->QuantPeixe = this->QuantPeixe + quantpeixe;
 }
+void Escuna::setPonteiroSaveMundo(Mundo * mundo)
+{
+	this->mundo = mundo;
+}
 string Escuna::TrataNavioTempestade()
 {
 	int QuantCargaPerder, probAfundar;

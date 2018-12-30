@@ -2,7 +2,48 @@
 #include "Jogador.h"
 
 using namespace std;
+void Mundo::setPonteiroSaveMundo(Mundo *mundo) {
+	for (int i = 0; i < navios.size(); i++) {
+		if (navios[i] != nullptr)
+			navios[i]->setPonteiroSaveMundo(mundo);
+	}
 
+}
+void Mundo::setPonteiroEventosNull()
+{
+	this->Evento = nullptr;
+}
+void Mundo::InterligaNaviosPosLoad(Navios * aux)
+{
+
+	for (int i = 0; i < navios.size(); i++) {
+		if (navios[i] == aux)
+			navios[i] = aux;
+	}
+}
+void Mundo::EliminaMundoGuardado()
+{
+
+	for (int i = 0; i < porto.size(); i++) {
+		if (porto[i] != nullptr)
+			delete porto[i];
+		
+	}
+	for (int i = 0; i < navios.size(); i++) {
+		if (navios[i] != nullptr)
+			delete navios[i];
+	}
+
+	for (int i = 0; i < superficie.size(); i++) {
+		if (superficie[i] != nullptr)
+			delete superficie[i];
+	}
+
+	porto.clear();
+	navios.clear();
+	superficie.clear();
+
+}
 Mundo & Mundo::operator=(const Mundo & aux)
 {
 	if (this == &aux)
@@ -13,18 +54,18 @@ Mundo & Mundo::operator=(const Mundo & aux)
 	this->EstadoEvento = aux.EstadoEvento;
 	
 	for (int i = 0; i < aux.porto.size(); i++) {
-
-		this->porto.push_back(aux.porto[i]->Duplica());
+		if (aux.porto[i] != nullptr)
+			this->porto.push_back(aux.porto[i]->Duplica());
 	}
 
 	for (int i = 0; i < aux.navios.size(); i++) {
-
-		this->navios.push_back(aux.navios[i]->Duplica());
+		if (aux.navios[i] != nullptr)
+			this->navios.push_back(aux.navios[i]->Duplica());
 	}
 
 	for (int i = 0; i < aux.superficie.size(); i++) {
-
-		this->superficie.push_back(aux.superficie[i]->Duplica());
+		if (aux.superficie[i] != nullptr)
+			this->superficie.push_back(aux.superficie[i]->Duplica());
 	}
 
 
@@ -883,9 +924,25 @@ bool  Mundo::VerificaExistenciaNavios()
 }
 void Mundo::limpaVetores() {
 
-	superficie.clear();
+	for (int i = 0; i < porto.size(); i++) {
+		if (porto[i] != nullptr)
+			delete porto[i];
+
+	}
+	for (int i = 0; i < navios.size(); i++) {
+		if (navios[i] != nullptr)
+			delete navios[i];
+	}
+
+	for (int i = 0; i < superficie.size(); i++) {
+		if (superficie[i] != nullptr)
+			delete superficie[i];
+	}
+
 	porto.clear();
 	navios.clear();
+	superficie.clear();
+	
 
 }
 int Mundo::verificaCelulaPorto(int x, int y) {

@@ -25,6 +25,8 @@ public:
 	int getAgua();
 	virtual void adicionaAgua(int agua);
 	virtual int moveNavio(int direcao, int turnoJogo = 0)override;
+
+	virtual void setPonteiroSaveMundo(Mundo *mundo);
 	
 
 	virtual int getMercadoriaNavio()const { return this->QuantMercadoria; }

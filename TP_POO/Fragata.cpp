@@ -409,6 +409,10 @@ void Fragata::setQuantidadePeixe(int quantpeixe)
 void Fragata::AdicionaQuantidadePeixe(int quantpeixe)
 {
 }
+void Fragata::setPonteiroSaveMundo(Mundo * mundo)
+{
+	this->mundo = mundo;
+}
 string Fragata::combate(int quemVouAtacar) {
 
 	int xNavio = getX(), yNavio = getY();

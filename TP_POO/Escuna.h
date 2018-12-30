@@ -29,6 +29,8 @@ public:
 	virtual void setQuantidadePeixe(int quantpeixe);
 	virtual void AdicionaQuantidadePeixe(int quantpeixe);
 
+	virtual void setPonteiroSaveMundo(Mundo *mundo);
+
 
 	virtual void retiraAgua(int agua);
 	virtual int getMaxSoldados();

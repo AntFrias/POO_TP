@@ -115,6 +115,7 @@ public:
 	virtual void setQuantidadePeixe(int quantpeixe) = 0;
 	virtual void AdicionaQuantidadePeixe(int quantpeixe) = 0;
 
+
 	virtual string TrataNavioTempestade() = 0;
 	virtual const int sou() const =0;
 	virtual string moveNavioAuto(int turnoAtual)=0;
@@ -122,7 +123,9 @@ public:
 	int getNumSoldados();
 	void setNumSoldados(int num);
 
-	
+	virtual void setPonteiroSaveMundo(Mundo *mundo) = 0;
+
+	void InterligaNAvioJogadorMundo();
 
 	int getEstado()const;
 	void setEstado(int estado);
