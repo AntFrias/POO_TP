@@ -1168,10 +1168,6 @@ int Galeao::moveNavio(int direcao, int turnoJogo) {
 	}
 	return MOVE_INVALIDO;
 }
-void Galeao::setPonteiroSaveMundo(Mundo * mundo)
-{
-	this->mundo = mundo;
-}
 void Galeao::adicionaMercadoriaNavio(int quantCarga)
 {
 	if (this->QuantMercadoria + quantCarga <= GALEAO_QUANT_MAX_CARGA)
@@ -1206,6 +1202,10 @@ void Galeao::AdicionaQuantidadePeixe(int quantpeixe)
 {
 	if (this->QuantPeixe + quantpeixe <= GALEAO_QUANT_MAX_CARGA)
 		this->QuantPeixe = this->QuantPeixe - quantpeixe;
+}
+void Galeao::setPonteiroSaveMundo(Mundo * mundo)
+{
+	this->mundo = mundo;
 }
 string Galeao::TrataNavioTempestade()
 {

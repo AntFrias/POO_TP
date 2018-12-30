@@ -2,25 +2,7 @@
 #include "Jogador.h"
 
 using namespace std;
-void Mundo::setPonteiroSaveMundo(Mundo *mundo) {
-	for (int i = 0; i < navios.size(); i++) {
-		if (navios[i] != nullptr)
-			navios[i]->setPonteiroSaveMundo(mundo);
-	}
 
-}
-void Mundo::setPonteiroEventosNull()
-{
-	this->Evento = nullptr;
-}
-void Mundo::InterligaNaviosPosLoad(Navios * aux)
-{
-
-	for (int i = 0; i < navios.size(); i++) {
-		if (navios[i] == aux)
-			navios[i] = aux;
-	}
-}
 void Mundo::EliminaMundoGuardado()
 {
 
@@ -70,6 +52,14 @@ Mundo & Mundo::operator=(const Mundo & aux)
 
 
 	return *this;
+}
+
+void Mundo::setPonteiroSaveMundo(Mundo * mundo)
+{
+	for (int i = 0; i < navios.size(); i++) {
+		if (navios[i] != nullptr)
+			navios[i]->setPonteiroSaveMundo(mundo);
+	}
 }
 
 int Mundo::portosBemColocado() {

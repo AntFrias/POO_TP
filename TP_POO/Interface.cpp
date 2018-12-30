@@ -1217,21 +1217,9 @@ string Interface::CarregarEstadoJogoGuardado()
 
 	this->mundo = this->SaveMundo;
 
-	/*this->jogador.EliminaJogadorGuardado();*/
-
 	this->jogador = this->SaveJogador;
 
 	this->mundo.setPonteiroSaveMundo(&mundo);
-
-	//this->jogador.setPonteiroSaveMundo(&mundo);
-
-	//this->jogador.InterligaNaviosJogadorToMundo();
-
-	//this->mundo.setPonteiroEventosNull();
-
-	
-	
-	
 
 	this->Turno = this->saveTurno;
 
