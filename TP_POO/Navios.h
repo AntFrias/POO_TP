@@ -91,6 +91,8 @@ public:
 	Navios();
 	Navios(Mundo *mundo, char tipo, int x, int y, int quantSoldados, int quantAgua = 0, int estado=normal);
 	
+	virtual Navios * Duplica()const = 0;
+	
 	virtual int moveNavio(int direcao, int turnoJogo = 0)=0;
 	virtual string combate(int quemVouAtacar) = 0;
 	virtual int getMaxAgua() = 0;
@@ -113,6 +115,7 @@ public:
 	virtual void setQuantidadePeixe(int quantpeixe) = 0;
 	virtual void AdicionaQuantidadePeixe(int quantpeixe) = 0;
 
+
 	virtual string TrataNavioTempestade() = 0;
 	virtual const int sou() const =0;
 	virtual string moveNavioAuto(int turnoAtual)=0;
@@ -120,7 +123,9 @@ public:
 	int getNumSoldados();
 	void setNumSoldados(int num);
 
-	
+	virtual void setPonteiroSaveMundo(Mundo *mundo) = 0;
+
+	void InterligaNAvioJogadorMundo();
 
 	int getEstado()const;
 	void setEstado(int estado);

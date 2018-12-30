@@ -1,6 +1,11 @@
 #include "Fragata.h"
 #include "Mundo.h"
 
+Navios * Fragata::Duplica() const
+{
+	return new Fragata(*this);
+}
+
 void Fragata::AbasteceAguaNavio()
 {
 	this->quantAgua = FRAGATA_MAX_AGUA;
@@ -403,6 +408,10 @@ void Fragata::setQuantidadePeixe(int quantpeixe)
 }
 void Fragata::AdicionaQuantidadePeixe(int quantpeixe)
 {
+}
+void Fragata::setPonteiroSaveMundo(Mundo * mundo)
+{
+	this->mundo = mundo;
 }
 string Fragata::combate(int quemVouAtacar) {
 

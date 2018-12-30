@@ -10,6 +10,9 @@ class Galeao : public Navios
 
 public:
 	Galeao(Mundo *mundo, int coordx, int coordy, int estado) : QuantMercadoria(0), QuantPeixe(0), Navios(mundo, 'G',coordx, coordy, 40, 400, estado){};
+
+	virtual Navios * Duplica()const;
+
 	virtual void AbasteceAguaNavio();
 	void soldadosBebemAgua();
 	virtual string moveNavioAuto(int turnoAtual);
@@ -22,6 +25,8 @@ public:
 	int getAgua();
 	virtual void adicionaAgua(int agua);
 	virtual int moveNavio(int direcao, int turnoJogo = 0)override;
+
+	virtual void setPonteiroSaveMundo(Mundo *mundo);
 	
 
 	virtual int getMercadoriaNavio()const { return this->QuantMercadoria; }

@@ -3,6 +3,11 @@
 
 
 
+Navios * Veleiro::Duplica() const
+{
+	return new Veleiro(*this);
+}
+
 void Veleiro::AbasteceAguaNavio()
 {
 	this->quantAgua = VELEIRO_MAX_AGUA;
@@ -349,6 +354,10 @@ void Veleiro::AdicionaQuantidadePeixe(int quantpeixe)
 {
 	if (this->QuantPeixe + quantpeixe <= VELEIRO_QUANT_MAX_CARGA)
 		this->QuantPeixe = this->QuantPeixe + quantpeixe;
+}
+void Veleiro::setPonteiroSaveMundo(Mundo * mundo)
+{
+	this->mundo = mundo;
 }
 string Veleiro::TrataNavioTempestade()
 {

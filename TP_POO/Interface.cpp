@@ -539,6 +539,8 @@ string Interface::mostraStatusNavio() {
 // Metodo Prompt tem como objetivo tratar os comandos introduzidos pelo Jogador	
 void Interface::Prompt() {
 
+
+	Consola::setScreenSize(3200,1800);
 	string linha, acao, configFile;
 	int proxComando = 0;
 	ostringstream os;
@@ -620,6 +622,7 @@ void Interface::Prompt() {
 		
 		//criaNaviosJogador(); //apagar isto daqui
 		criaPiratasAuto();
+
 		os << mundo.mandaVaiPara(this->precoVendaMercadoria, this->precoVendePeixe);
 		jogador.setPortoPrincipal(mundo.getPortoPrincipal());
 		mundo.abasteceNaviosNosPortos();
@@ -629,6 +632,7 @@ void Interface::Prompt() {
 		mundo.VerificaRegeneracaoPeixeMar(this->Turno);
 		jogador.adicionaMoedas(mundo.EsvaziaBancoJogador());
 		os << ExecutaEventos();
+		os << mostraStatusNavio();
 		os << mundo.retiraNavAfundados();
 		Consola::clrscr(); //comentei aqui
 		mostraMapa();
@@ -1160,13 +1164,16 @@ string Interface::PromptFase2(string linha) {
 		}
 		break;
 	case com_saveg:
-		os << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
+		this->GuardaEstadojogo();
+		//os << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
 		break;
 	case com_loadg:
-		os << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
+		this->CarregarEstadoJogoGuardado();
+		//os << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
 		break;
 	case com_delg:
-		os << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
+		this->EliminaEstadoJogoGuardado();
+		//os << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
 		break;
 	default:
 		if (acao != "sair") {
@@ -1185,6 +1192,66 @@ bool Interface::getInsercaoComandoEvento() const
 void Interface::setInsercaoComandoEvento(bool insercao)
 {
 	this->InsercaoEvento = insercao;
+}
+
+string Interface::GuardaEstadojogo()
+{
+	ostringstream os;
+
+	this->SaveJogador = this->jogador;
+
+	this->SaveMundo = this->mundo;
+
+	this->saveTurno = this->Turno;
+
+	os << " Existe um jogo Guardado no Turno  " << this->Turno << " ...!" << endl;
+
+	return os.str();
+}
+
+string Interface::CarregarEstadoJogoGuardado()
+{
+	ostringstream os;
+
+	this->mundo.EliminaMundoGuardado();
+
+	this->mundo = this->SaveMundo;
+
+	/*this->jogador.EliminaJogadorGuardado();*/
+
+	this->jogador = this->SaveJogador;
+
+	this->mundo.setPonteiroSaveMundo(&mundo);
+
+	//this->jogador.setPonteiroSaveMundo(&mundo);
+
+	//this->jogador.InterligaNaviosJogadorToMundo();
+
+	//this->mundo.setPonteiroEventosNull();
+
+	
+	
+	
+
+	this->Turno = this->saveTurno;
+
+	os << " O jogo guardado foi carregado com Sucesso " << endl;
+
+	return os.str();
+}
+
+string Interface::EliminaEstadoJogoGuardado()
+{
+	ostringstream os;
+	
+	// aqui vai ficar o comando para limpar a string
+
+	SaveMundo.EliminaMundoGuardado();
+	SaveJogador.EliminaJogadorGuardado();
+
+	os << " O jogo Guardado foi Apagado " << endl;
+
+	return os.str();
 }
 
 void Interface::mostraLegAndConfig() {

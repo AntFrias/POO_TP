@@ -2,6 +2,75 @@
 #include "Jogador.h"
 
 using namespace std;
+void Mundo::setPonteiroSaveMundo(Mundo *mundo) {
+	for (int i = 0; i < navios.size(); i++) {
+		if (navios[i] != nullptr)
+			navios[i]->setPonteiroSaveMundo(mundo);
+	}
+
+}
+void Mundo::setPonteiroEventosNull()
+{
+	this->Evento = nullptr;
+}
+void Mundo::InterligaNaviosPosLoad(Navios * aux)
+{
+
+	for (int i = 0; i < navios.size(); i++) {
+		if (navios[i] == aux)
+			navios[i] = aux;
+	}
+}
+void Mundo::EliminaMundoGuardado()
+{
+
+	for (int i = 0; i < porto.size(); i++) {
+		if (porto[i] != nullptr)
+			delete porto[i];
+		
+	}
+	for (int i = 0; i < navios.size(); i++) {
+		if (navios[i] != nullptr)
+			delete navios[i];
+	}
+
+	for (int i = 0; i < superficie.size(); i++) {
+		if (superficie[i] != nullptr)
+			delete superficie[i];
+	}
+
+	porto.clear();
+	navios.clear();
+	superficie.clear();
+
+}
+Mundo & Mundo::operator=(const Mundo & aux)
+{
+	if (this == &aux)
+		return *this;
+
+	this->dimX = aux.dimX;
+	this->dimY = aux.dimY;
+	this->EstadoEvento = aux.EstadoEvento;
+	
+	for (int i = 0; i < aux.porto.size(); i++) {
+		if (aux.porto[i] != nullptr)
+			this->porto.push_back(aux.porto[i]->Duplica());
+	}
+
+	for (int i = 0; i < aux.navios.size(); i++) {
+		if (aux.navios[i] != nullptr)
+			this->navios.push_back(aux.navios[i]->Duplica());
+	}
+
+	for (int i = 0; i < aux.superficie.size(); i++) {
+		if (aux.superficie[i] != nullptr)
+			this->superficie.push_back(aux.superficie[i]->Duplica());
+	}
+
+
+	return *this;
+}
 
 int Mundo::portosBemColocado() {
 
@@ -443,7 +512,7 @@ const char Mundo::getPortoPrincipal() {
 void Mundo::criaSuperficie(int x, int y, char tipo, int probPeixe) {
 
 	if (tipo == '+') {
-		superficie.push_back(new Terra(x, y));
+		superficie.push_back(new Terra(x, y, '+'));
 	}
 	else{
 		if ((rand() % 100 + 1) <= probPeixe) {
@@ -740,7 +809,7 @@ string Mundo::trataEventos(int modoExecucao, int TipoEvento, int idNavio, int co
 			epicentroY = coordY;
 
 		}
-		os << " <<<<      Epicentro da Tempestade:  [ " << epicentroX << " : " << " ]     >>>>" << epicentroY << endl;
+		os << " <<<<      Epicentro da Tempestade:  [ " << epicentroX << " : " << epicentroY << " ]     >>>>" << endl;
 		
 		os << TrataEventoTempestade(epicentroX, epicentroY);
 
@@ -855,9 +924,25 @@ bool  Mundo::VerificaExistenciaNavios()
 }
 void Mundo::limpaVetores() {
 
-	superficie.clear();
+	for (int i = 0; i < porto.size(); i++) {
+		if (porto[i] != nullptr)
+			delete porto[i];
+
+	}
+	for (int i = 0; i < navios.size(); i++) {
+		if (navios[i] != nullptr)
+			delete navios[i];
+	}
+
+	for (int i = 0; i < superficie.size(); i++) {
+		if (superficie[i] != nullptr)
+			delete superficie[i];
+	}
+
 	porto.clear();
 	navios.clear();
+	superficie.clear();
+	
 
 }
 int Mundo::verificaCelulaPorto(int x, int y) {

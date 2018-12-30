@@ -1,6 +1,11 @@
 #include "Tartaruga.h"
 #include "Mundo.h"
 
+Navios * Tartaruga::Duplica() const
+{
+	return new Tartaruga(*this);
+}
+
 void Tartaruga::AbasteceAguaNavio()
 {
 	this->quantAgua = TARTARUGA_MAX__AGUA;
@@ -358,6 +363,10 @@ void Tartaruga::setQuantidadePeixe(int quantpeixe)
 }
 void Tartaruga::AdicionaQuantidadePeixe(int quantpeixe)
 {
+}
+void Tartaruga::setPonteiroSaveMundo(Mundo * mundo)
+{
+	this->mundo = mundo;
 }
 string Tartaruga::TrataNavioTempestade()
 {

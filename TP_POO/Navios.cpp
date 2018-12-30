@@ -4,6 +4,10 @@
 Navios::Navios()
 {
 }
+void Navios::InterligaNAvioJogadorMundo()
+{
+	mundo->InterligaNaviosPosLoad(this);
+}
 int Navios::getEstado()const {
 	return this->estado;
 }
@@ -21,6 +25,7 @@ Navios::Navios(Mundo *mundo, char tipo, int x, int y, int quantSoldados, int qua
 	this->x = x;
 	this->y = y;
 }
+
 
 int Navios::randNumber(int nSoldados) {
 
