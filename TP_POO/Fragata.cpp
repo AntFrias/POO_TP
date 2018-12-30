@@ -240,6 +240,8 @@ string Fragata::acao(int xaAtacar, int yaAtacar) {
 			this->quantSoldados -= soldadosPerdidos;// este perdeu 20% da sua popula��o
 			navioaAtacar->setNumSoldados(navioaAtacar->getNumSoldados() - (soldadosPerdidos * 2));// o outro perde 2 vezes mais que o outro
 
+			os << "O Navio " << this->getId() << " ficou com " << this->quantSoldados << " soldados." << endl;
+			os << "O Navio " << navioaAtacar->getId() << " ficou com " << navioaAtacar->getNumSoldados() << " soldados." << endl;
 
 			if (navioaAtacar->getNumSoldados() <= 0) {
 				//set afundado
@@ -254,8 +256,7 @@ string Fragata::acao(int xaAtacar, int yaAtacar) {
 					this->adicionaAgua(navioaAtacar->getAgua());
 
 			}
-			os << "O Navio " << this->getId() << " ficou com " << this->quantSoldados << " soldados." << endl;
-			os << "O Navio " << navioaAtacar->getId() << " ficou com " << navioaAtacar->getNumSoldados() << " soldados." << endl;
+			
 		}
 		else { //o atacado ganhou 
 
@@ -263,9 +264,12 @@ string Fragata::acao(int xaAtacar, int yaAtacar) {
 			if (soldadosPerdidos == 0)
 				soldadosPerdidos = 1;
 			os << "O Navio " << this->getId() << " perdeu esta investida, ira perder " << soldadosPerdidos * 2 << " soldados." << endl;
-			os << "O Navio " << navioaAtacar->getId() << " ganhour esta investida, ira perder " << soldadosPerdidos << " soldados." << endl;
+			os << "O Navio " << navioaAtacar->getId() << " ganhou esta investida, ira perder " << soldadosPerdidos << " soldados." << endl;
 			navioaAtacar->setNumSoldados(navioaAtacar->getNumSoldados() - soldadosPerdidos);// o atacado perde 20% da sua popula��o
 			this->quantSoldados -= soldadosPerdidos * 2; //este perde 2 vezes mais que o outro
+
+			os << "O Navio " << this->getId() << " ficou com  " << this->quantSoldados << " soldados." << endl;
+			os << "O Navio " << navioaAtacar->getId() << " ficou com " << navioaAtacar->getNumSoldados() << " soldados." << endl;
 
 			if (this->quantSoldados <= 0) {
 				//set afundar 
@@ -280,8 +284,7 @@ string Fragata::acao(int xaAtacar, int yaAtacar) {
 					navioaAtacar->adicionaAgua(this->getAgua());
 
 			}
-			os << "O Navio " << this->getId() << " ficou com  " << this->quantSoldados << " soldados." << endl;
-			os << "O Navio " << navioaAtacar->getId() << " ficou com " << navioaAtacar->getNumSoldados() << " soldados." << endl;
+
 		}
 		os << "-------------Fim_Combate----------------" << endl << endl;
 	}
