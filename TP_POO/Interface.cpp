@@ -1216,11 +1216,13 @@ string Interface::CarregarEstadoJogoGuardado()
 
 	this->mundo.EliminaMundoGuardado();
 
+	this->jogador.EliminaJogadorGuardado();
+
 	this->mundo = this->SaveMundo;
 
 	this->jogador = this->SaveJogador;
 
-	this->mundo.setPonteiroSaveMundo(&this->mundo);
+	//this->mundo.setPonteiroSaveMundo(&this->mundo);
 
 	this->Turno = this->saveTurno;
 
@@ -1236,12 +1238,10 @@ string Interface::EliminaEstadoJogoGuardado()
 	Mundo aux;
 
 	///aqui vai ficar o comando para limpar a string
-	//this->SaveMundo.setPonteiroSaveMundo(&aux);
-	//this->SaveMundo.setPonteiroSaveMundo(&aux);
-
-	/*this->SaveMundo.EliminaMundoGuardado();
-	this->SaveJogador.EliminaJogadorGuardado();*/
-	//this->SaveJogador.setPonteiroSaveMundo(&aux);
+	this->SaveMundo.EliminaMundoGuardado();
+	
+	this->SaveJogador.EliminaJogadorGuardado();
+	
 
 
 	os << " O jogo Guardado foi Apagado " << endl;

@@ -6,7 +6,6 @@ Jogador::Jogador(){
 void Jogador::EliminaJogadorGuardado()
 {
 	
-
 	navios.clear();
 }
 
@@ -21,8 +20,15 @@ Jogador & Jogador::operator=(const Jogador & aux)
 	
 	for (int i = 0; i < aux.navios.size(); i++) {
 
-		if (aux.navios[i] != nullptr)
-			this->navios.push_back(aux.navios[i]->Duplica());
+
+
+		if (aux.navios[i] != nullptr){
+
+			Navios *temp = aux.navios[i]->Duplica();
+
+			this->navios.push_back(temp);
+
+		}
 	}
 		
 
