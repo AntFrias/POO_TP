@@ -94,7 +94,7 @@ string Navios::AlteraSoldadosPosEvento(int prob)
 	os << "Quantidade Soldados Perdidos pelo navio apos ataque " << this->id << ": " << soldadosPerdidos << endl;
 	os << "Total de Soldados que permanecem no navio : " << this->quantSoldados << endl;
 
-	if (quantSoldados == 0 || quantSoldados == 1 )
+	if (quantSoldados <= 0 )
 		this->estado = aDeriva;
 
 	return os.str();

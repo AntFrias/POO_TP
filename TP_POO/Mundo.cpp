@@ -21,6 +21,8 @@ void Mundo::EliminaMundoGuardado()
 			delete superficie[i];
 	}
 
+	//delete Evento; // aqui rebenta o load game sucessivamente
+
 	porto.clear();
 	navios.clear();
 	superficie.clear();
