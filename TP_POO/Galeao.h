@@ -26,9 +26,6 @@ public:
 	virtual void adicionaAgua(int agua);
 	virtual int moveNavio(int direcao, int turnoJogo = 0)override;
 
-	virtual void setPonteiroSaveMundo(Mundo *mundo);
-	
-
 	virtual int getMercadoriaNavio()const { return this->QuantMercadoria; }
 	virtual void setMercadoriaNavio(int Quant); // este metodo mete a quantidade total de mercadoria  =  Quant}
 	virtual void adicionaMercadoriaNavio(int quantCarga);
@@ -38,6 +35,8 @@ public:
 	virtual int getQuantidadePeixe()const;
 	virtual void setQuantidadePeixe(int quantpeixe);
 	virtual void AdicionaQuantidadePeixe(int quantpeixe);
+
+	virtual void setPonteiroSaveMundo(Mundo *mundo);
 
 	string TrataNavioTempestade();
 	int FmoveEsquerda();

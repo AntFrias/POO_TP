@@ -3,23 +3,6 @@
 
 Jogador::Jogador(){
 }
-
-void Jogador::InterligaNaviosJogadorToMundo() {
-
-	for (int i = 0; i < navios.size(); i++) {
-		if ( navios[i] != nullptr)
-			navios[i]->InterligaNAvioJogadorMundo();
-	}
-}
-void Jogador::setPonteiroSaveMundo(Mundo * mundo)
-{
-
-	for (int i = 0; i < navios.size(); i++) {
-		if (navios[i] != nullptr)
-			navios[i]->setPonteiroSaveMundo(mundo);
-	}
-}
-
 void Jogador::EliminaJogadorGuardado()
 {
 	for (int i = 0; i < navios.size(); i++)

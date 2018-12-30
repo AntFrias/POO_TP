@@ -91,15 +91,11 @@ public:
 
 	Mundo(){};
 
-	void setPonteiroSaveMundo(Mundo * mundo);
-
-	void setPonteiroEventosNull();
-
-	void InterligaNaviosPosLoad(Navios *aux);
-
 	void EliminaMundoGuardado();
 
 	Mundo & operator=(const Mundo &aux);
+
+	void setPonteiroSaveMundo(Mundo *mundo);
 
 	int portosBemColocado();
 

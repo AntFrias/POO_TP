@@ -4,10 +4,6 @@
 Navios::Navios()
 {
 }
-void Navios::InterligaNAvioJogadorMundo()
-{
-	mundo->InterligaNaviosPosLoad(this);
-}
 int Navios::getEstado()const {
 	return this->estado;
 }
