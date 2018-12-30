@@ -5,12 +5,11 @@ Jogador::Jogador(){
 }
 void Jogador::EliminaJogadorGuardado()
 {
-	for (int i = 0; i < navios.size(); i++)
-		if(navios[i] != nullptr)
-			delete navios[i];
+	
 
 	navios.clear();
 }
+
 
 Jogador & Jogador::operator=(const Jogador & aux)
 {
@@ -30,7 +29,13 @@ Jogador & Jogador::operator=(const Jogador & aux)
 	return *this;
 
 }
-
+void Jogador::setPonteiroSaveMundo(Mundo * mundo)
+{
+	for (int i = 0; i < navios.size(); i++) {
+		if (navios[i] != nullptr)
+			navios[i]->setPonteiroSaveMundo(mundo);
+	}
+}
 void Jogador::setMundo(Mundo *mundo){
 
 	this->mundo = mundo;

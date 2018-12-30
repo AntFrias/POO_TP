@@ -36,6 +36,8 @@ public:
 
 	Jogador & operator=(const Jogador& aux);
 
+	void setPonteiroSaveMundo(Mundo * mundo);
+
 	void setMundo(Mundo * mundo);
 
 	Navios * getNavio(int id);

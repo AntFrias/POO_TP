@@ -366,7 +366,8 @@ void Tartaruga::AdicionaQuantidadePeixe(int quantpeixe)
 }
 void Tartaruga::setPonteiroSaveMundo(Mundo * mundo)
 {
-	this->mundo = mundo;
+
+		this->mundo = mundo;
 }
 string Tartaruga::TrataNavioTempestade()
 {
