@@ -107,10 +107,10 @@ void Mundo::abasteceNaviosNosPortos() {
 
 
 	for (unsigned int i = 0; i < porto.size(); i++) {
-		for (unsigned int j = 0; j < navios.size();j++) {
+		for (unsigned int j = 0; j < navios.size(); j++) {
 			if ((navios[j]->getEstado() == normal || navios[j]->getEstado() == autoMove || navios[j]->getEstado() == vaiPara) && (navios[j]->getX() == porto[i]->getX()) && (navios[j]->getY() == porto[i]->getY())) {
-				
-				if (porto[i]->verificaPortoAmigo()==true) {
+
+				if (porto[i]->verificaPortoAmigo() == true) {
 					if (navios[j]->sou() == FRAGATA) {
 						navios[j]->AbasteceAguaNavio();
 					}
@@ -123,12 +123,13 @@ void Mundo::abasteceNaviosNosPortos() {
 					if (navios[j]->sou() == ESCUNA) {
 						navios[j]->AbasteceAguaNavio();
 					}
+					if (navios[j]->sou() == TARTARUGA) {
+						navios[j]->AbasteceAguaNavio();
+					}
 				}
 			}
 		}
 	}
-
-
 }
 
 void Mundo::verificaaDeriva() {
@@ -696,13 +697,6 @@ string Mundo::TrataEventoMotim(int estadoMotim, int modoExecucao, int idNavio) {
 							indice = i;
 							break;
 						}
-						else
-							if (navios[i]->sou() == ESCUNA || navios[i]->sou() == GALEAO){
-								
-								navios[i]->setEstado(afundado);
-
-								break;
-							}
 				}
 			}
 	
@@ -711,7 +705,7 @@ string Mundo::TrataEventoMotim(int estadoMotim, int modoExecucao, int idNavio) {
 			// so navio for apanhado por 1 motim,  e for pirata fica � deriva
 			if (navios[indice]->getEstado() == pirata) {
 					
-				os << " Os Piratas Foram tomar Banho, o Navio ir� ficar � deriva Temporariamente ..!" << endl;
+				os << " Os Piratas Foram tomar Banho, o Navio ira ficar a deriva Temporariamente ..!" << endl;
 				
 				estado = navios[indice]->getEstado();
 
@@ -720,16 +714,21 @@ string Mundo::TrataEventoMotim(int estadoMotim, int modoExecucao, int idNavio) {
 			} // se o navio for apanhado por 1 motim e for do jogador fica em modo pirata
 			else if (navios[indice]->getEstado() == normal || navios[indice]->getEstado() == autoMove) {
 					
-				os << " O NAvio do Jogador vai se tornar Pirata Temporariamente " << endl;
+				os << " O Navio do Jogador vai se tornar Pirata Temporariamente " << endl;
 				
 				estado = navios[indice]->getEstado();
 
 				navios[indice]->setEstado(pirata);
 			}
+			if (navios[indice]->sou() == ESCUNA || navios[indice]->sou() == GALEAO) {
+
+				navios[indice]->setEstado(afundado);
+
+			}
 				
 		}
 		else
-			os << " N�o Existem Navios para ser realizado o Motim no Mundo" << endl;
+			os << " Nao Existem Navios para ser realizado o Motim no Mundo" << endl;
 	}
 	else {
 		

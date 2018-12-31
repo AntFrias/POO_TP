@@ -1182,15 +1182,18 @@ string Interface::PromptFase2(string linha) {
 		}
 		break;
 	case com_saveg:
-		this->GuardaEstadojogo();
+		if (this->SaveNome.size() > 0)
+			this->GuardaEstadojogo();
 		//os << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
 		break;
 	case com_loadg:
-		this->CarregarEstadoJogoGuardado();
+		if ( this->SaveNome.size() > 0 )
+			this->CarregarEstadoJogoGuardado();
 		//os << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
 		break;
 	case com_delg:
-		this->EliminaEstadoJogoGuardado();
+		if (this->SaveNome.size() > 0)	
+			this->EliminaEstadoJogoGuardado();
 		//os << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
 		break;
 	default:
