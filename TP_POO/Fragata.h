@@ -37,6 +37,9 @@ public:
 	virtual void setQuantidadePeixe(int quantpeixe);
 	virtual void AdicionaQuantidadePeixe(int quantpeixe);
 
+	virtual bool getBotaVermelha()const;
+	virtual void setBotaVermelha(bool Bota);
+
 	virtual void setPonteiroSaveMundo(Mundo *mundo);
 	
 	string TrataNavioTempestade();

@@ -317,6 +317,13 @@ string Veleiro::combate(int quemVouAtacar) {
 
 	return os.str();
 }
+bool Veleiro::getBotaVermelha() const
+{
+	return false;
+}
+void Veleiro::setBotaVermelha(bool Bota)
+{
+}
 int Veleiro::getMercadoriaNavio() const
 {
 	return this->QuantMercadoria;

@@ -94,7 +94,9 @@ class Interface
 	Mundo SaveMundo;
 	Jogador jogador;
 	Jogador SaveJogador;
+	string SaveNome;
 	int saveTurno;
+
 
 	int moedas;
 	int probPirata;

@@ -257,6 +257,17 @@ string Mundo::mandaVaiPara(int precoVendaMercadoria, int precoVendaPeixe) {
 
 					os << " Quantidade de Mercadoria Apos deposito no Porto: " << navios[i]->getMercadoriaNavio() << endl;
 
+					if (navios[i]->getBotaVermelha() == true) {
+
+						os << " Saldo do banco de dados Depois de receber Pagamento da Bota Vermelha : " << aux->getBancoJogador() << endl;
+
+						aux->setBancoJogador(aux->getBancoJogador() + navios[i]->getNumSoldados() * PRECO_BOTA_VERMELHA);
+
+						navios[i]->setBotaVermelha(false);
+
+						os << " Saldo do banco de dados Depois de receber Pagamento da Bota Vermelha : " << aux->getBancoJogador() << endl;
+					}
+
 					os << "____________________________________________________________________________________________________________" << endl;
 
 				}
@@ -684,7 +695,14 @@ string Mundo::TrataEventoMotim(int estadoMotim, int modoExecucao, int idNavio) {
 						if (navios[i]->getId() == idNavio && navios[i] != nullptr){
 							indice = i;
 							break;
-					}
+						}
+						else
+							if (navios[i]->sou() == ESCUNA || navios[i]->sou() == GALEAO){
+								
+								navios[i]->setEstado(afundado);
+
+								break;
+							}
 				}
 			}
 	
@@ -768,6 +786,12 @@ string Mundo::TrataEventoCalmaria(int epiX, int epiY, int estado) {
 				for (unsigned int j = 0; j < navios.size();j++) {
 					if (Calmaria[k] == navios[j]->getId() && navios[j] != nullptr){
 						navios[j]->setEstado(EstadoAntigo[k]);
+					}
+					if (navios[j]->sou() == ESCUNA) {
+
+						navios[j]->setBotaVermelha(true);
+
+						os << "O navio com o ID : " << navios[k]->getId() << " e uma escuna e Pescou uma Bota Vermelha " << endl;
 					}
 				}
 			}
