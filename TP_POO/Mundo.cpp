@@ -685,14 +685,14 @@ string Mundo::TrataEventoMotim(int estadoMotim, int modoExecucao, int idNavio) {
 
 					indice = rand() % navios.size();
 
-					if (navios[indice]->getEstado() == normal || navios[indice]->getEstado() == pirata || navios[indice]->getEstado() == autoMove)
+					if (navios[indice]->getEstado() == normal || navios[indice]->getEstado() == autoMove)
 						break;
 
-				} while (navios[indice]->getEstado() != normal || navios[indice]->getEstado() != pirata || navios[indice]->getEstado() != autoMove);
+				} while (navios[indice]->getEstado() != normal || navios[indice]->getEstado() != autoMove);
 			}
 			else {
 				for (int i = 0; i < navios.size(); i++) {
-					if (navios[i]->getEstado() == normal || navios[i]->getEstado() == pirata || navios[i]->getEstado() == autoMove)
+					if (navios[i]->getEstado() == normal || navios[i]->getEstado() == autoMove)
 						if (navios[i]->getId() == idNavio && navios[i] != nullptr){
 							indice = i;
 							break;
@@ -700,21 +700,11 @@ string Mundo::TrataEventoMotim(int estadoMotim, int modoExecucao, int idNavio) {
 				}
 			}
 	
-			os << " O navio com o ID" << navios[indice]->getId() << "foi apanhado por 1 Motim" << endl;
-					
-			// so navio for apanhado por 1 motim,  e for pirata fica � deriva
-			if (navios[indice]->getEstado() == pirata) {
-					
-				os << " Os Piratas Foram tomar Banho, o Navio ira ficar a deriva Temporariamente ..!" << endl;
-				
-				estado = navios[indice]->getEstado();
+			os << "O navio com o ID " << navios[indice]->getId() << " foi apanhado por 1 Motim" << endl;
 
-				navios[indice]->setEstado(aDeriva);
-
-			} // se o navio for apanhado por 1 motim e for do jogador fica em modo pirata
-			else if (navios[indice]->getEstado() == normal || navios[indice]->getEstado() == autoMove) {
+			if (navios[indice]->getEstado() == normal || navios[indice]->getEstado() == autoMove) {
 					
-				os << " O Navio do Jogador vai se tornar Pirata Temporariamente " << endl;
+				os << "O Navio do Jogador vai se tornar Pirata Temporariamente " << endl;
 				
 				estado = navios[indice]->getEstado();
 
@@ -728,7 +718,7 @@ string Mundo::TrataEventoMotim(int estadoMotim, int modoExecucao, int idNavio) {
 				
 		}
 		else
-			os << " Nao Existem Navios para ser realizado o Motim no Mundo" << endl;
+			os << "Nao Existem Navios para ser realizado o Motim no Mundo" << endl;
 	}
 	else {
 		
@@ -757,11 +747,11 @@ string Mundo::TrataEventoCalmaria(int epiX, int epiY, int estado) {
 
 				if (x >= (epiX - RANGE_EVENTO) && x <= (epiX + RANGE_EVENTO) && y >= (epiY - RANGE_EVENTO) && y <= (epiY + RANGE_EVENTO)) {
 
-					os << " Foi Encontrado um Navio com o id " << navios[s]->getId() << " na posicao [ " << x << " : " << y << " ] " << endl;
+					os << "Foi Encontrado um Navio com o id " << navios[s]->getId() << " na posicao [ " << x << " : " << y << " ] " << endl;
 
-					os << " O navio com o Id " << navios[s]->getId() << " : Vai ser afetado por uma calmaria" << endl;
+					os << "O navio com o Id " << navios[s]->getId() << " : Vai ser afetado por uma calmaria" << endl;
 
-					os << " O estado antigo do Navio com o ID " << navios[s]->getId() << "era : " << navios[s]->getEstado() << "  .. !" << endl;
+					os << "O estado antigo do Navio com o ID " << navios[s]->getId() << " era : " << navios[s]->getEstado() << "  .. !" << endl;
 
 					if (navios[s]->getEstado() != calmaria && navios[s]->getEstado() != afundado) {
 
@@ -776,7 +766,7 @@ string Mundo::TrataEventoCalmaria(int epiX, int epiY, int estado) {
 			}
 		}
 		else
-			os << " N�o Existem Navios no Mundo..!" << endl;
+			os << "Nao Existem Navios no Mundo..!" << endl;
 
 	}
 	else {
@@ -906,7 +896,7 @@ string Mundo::trataEventos(int modoExecucao, int TipoEvento, int idNavio, int co
 			
 			if (navios[indice]->getNumSoldados() > 0 && navios[indice] != nullptr) {
 
-				os << " Navio com o ID :  " << navios[indice]->getId() << "  vai sofrer ataque de sereia" << endl;
+				os << " Navio com o ID :  " << navios[indice]->getId() << "  vai sofrer ataque de sereia " << endl;
 
 				os << TrataEventoSereias(indice);
 

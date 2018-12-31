@@ -96,7 +96,7 @@ string Interface::GeradorEvento(int ModoExecucao, int tipoEvento, int idNavio, i
 					else {
 						if ((rand() % 100 + 1) <= this->probTempestade) {
 
-							os << "Vai ser Gerada uma Tempestade " << endl;
+							os << " Vai ser Gerada uma Tempestade " << endl;
 						
 						
 						
@@ -932,14 +932,14 @@ string Interface::PromptFase2(string linha) {
 					os << "Compra efetuada com sucesso!" << endl;
 				}
 				else if (compraNavio(tipo) == COMPRA_SEM_MOEDAS) {
-					os << "Compra n�o efetuada <-> Jogador Sem Moedas" << endl;
+					os << "Compra nao efetuada <-> Jogador Sem Moedas" << endl;
 				}
 				else if ((compraNavio(tipo) == TIPO_NAVIO_INVALIDO)) {
 					os << "Compra nao efetuada <-> N�o existe porto principal" << endl;
 				}
 			}
 			else {
-				os << " [ Sintaxe " << acao << " Invalida..! Sintaxe :" << acao << " <N> ]" << endl;
+				os << "[ Sintaxe " << acao << " Invalida..! Sintaxe :" << acao << " <N> ]" << endl;
 			}
 			
 			os << "Saldo atual do Jogador: " << jogador.getMoedas() << endl;

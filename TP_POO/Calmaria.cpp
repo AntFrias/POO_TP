@@ -28,7 +28,7 @@ string Calmaria::TrataEvento(int modoExecucao, int idNavio, int coordX, int coor
 		}
 	}
 
-	os << " Gerou-se uma calmaria nas coordenadas:  [ " << epicentroX << " : " << epicentroY << " ] " <<  endl;
+	os << "Gerou-se uma calmaria nas coordenadas:  [ " << epicentroX << " : " << epicentroY << " ] " <<  endl;
 
 	if (this->TTL > 0){
 
