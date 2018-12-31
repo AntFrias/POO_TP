@@ -1203,6 +1203,13 @@ void Galeao::AdicionaQuantidadePeixe(int quantpeixe)
 	if (this->QuantPeixe + quantpeixe <= GALEAO_QUANT_MAX_CARGA)
 		this->QuantPeixe = this->QuantPeixe - quantpeixe;
 }
+bool Galeao::getBotaVermelha() const
+{
+	return false;
+}
+void Galeao::setBotaVermelha(bool Bota)
+{
+}
 void Galeao::setPonteiroSaveMundo(Mundo * mundo)
 {
 

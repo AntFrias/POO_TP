@@ -302,6 +302,7 @@ bool Interface::verificaLeComandos(string aux) {
 	
 
 	if (buffer >> acao) {
+
 		switch (FiltaComandos(acao)) {
 		case com_exec:
 			//verifica se o ficheiro existe
@@ -399,7 +400,7 @@ bool Interface::verificaLeComandos(string aux) {
 			break;
 			//############################################################################################################################################
 		case com_moedas:
-			if (buffer >> idNavio) {
+			if (buffer >> idNavio && count(aux.begin(), aux.end(), ' ') == 1) {
 				return true;
 			}
 			else
@@ -412,10 +413,12 @@ bool Interface::verificaLeComandos(string aux) {
 			if (buffer >> idNavio && buffer >> tipo) {
 
 				if ((tipo >= 'A' && tipo <= 'Z') || (tipo >= 'a' && tipo <= 'z')) {
+
 					return true;
 				}
 				else
 					if (buffer2 >> acao && buffer2 >> idNavio && buffer2 >> x && buffer2 >> y) {
+
 						return true;
 					}
 					else
@@ -427,6 +430,7 @@ bool Interface::verificaLeComandos(string aux) {
 			//############################################################################################################################################
 		case com_comprasold:
 			if (buffer >> idNavio && buffer >> nSoldados && count(aux.begin(), aux.end(), ' ') == 2) {
+
 				return true;
 			}
 			else
@@ -434,15 +438,27 @@ bool Interface::verificaLeComandos(string aux) {
 			break;
 			//############################################################################################################################################
 		case com_saveg:
-			return true;
+			if ( buffer >> this->SaveNome && count(aux.begin(), aux.end(), ' ') == 1) {
+				return true;
+			}
+			else
+				return false;
 			break;
 			//############################################################################################################################################
 		case com_loadg:
-			return true;
+			if (buffer >> this->SaveNome && count(aux.begin(), aux.end(), ' ') == 1) {
+				return true;
+			}
+			else
+				return false;
 			break;
 			//############################################################################################################################################
 		case com_delg:
-			return true;
+			if (buffer >> this->SaveNome && count(aux.begin(), aux.end(), ' ') == 1) {
+				return true;
+			}
+			else
+				return false;
 			break;
 			//############################################################################################################################################
 		case com_sair:
@@ -570,6 +586,7 @@ void Interface::Prompt() {
 		//atribui��o do porto principal
 	jogador.setPortoPrincipal( mundo.getPortoPrincipal() );
 	//chamar aqui o verificar porto bem
+
 
 	//
 	/*
@@ -1165,15 +1182,18 @@ string Interface::PromptFase2(string linha) {
 		}
 		break;
 	case com_saveg:
-		this->GuardaEstadojogo();
+		if (this->SaveNome.size() > 0)
+			this->GuardaEstadojogo();
 		//os << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
 		break;
 	case com_loadg:
-		this->CarregarEstadoJogoGuardado();
+		if ( this->SaveNome.size() > 0 )
+			this->CarregarEstadoJogoGuardado();
 		//os << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
 		break;
 	case com_delg:
-		this->EliminaEstadoJogoGuardado();
+		if (this->SaveNome.size() > 0)	
+			this->EliminaEstadoJogoGuardado();
 		//os << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
 		break;
 	default:
@@ -1213,16 +1233,14 @@ string Interface::GuardaEstadojogo()
 string Interface::CarregarEstadoJogoGuardado()
 {
 	ostringstream os;
-
+	// limpa os vetores existentes para receber os novos navios do saveGame
 	this->mundo.EliminaMundoGuardado();
 
 	this->jogador.EliminaJogadorGuardado();
 
 	this->mundo = this->SaveMundo;
 
-	this->jogador = this->SaveJogador;
-
-	//this->mundo.setPonteiroSaveMundo(&this->mundo);
+	this->jogador = this->SaveJogador;;
 
 	this->Turno = this->saveTurno;
 

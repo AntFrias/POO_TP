@@ -115,6 +115,9 @@ public:
 	virtual void setQuantidadePeixe(int quantpeixe) = 0;
 	virtual void AdicionaQuantidadePeixe(int quantpeixe) = 0;
 
+	virtual bool getBotaVermelha()const = 0;
+	virtual void setBotaVermelha(bool Bota) = 0;
+
 	virtual void setPonteiroSaveMundo(Mundo *mundo) = 0;
 
 

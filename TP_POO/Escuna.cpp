@@ -1602,6 +1602,14 @@ void Escuna::setPonteiroSaveMundo(Mundo * mundo)
 	
 		this->mundo = mundo;
 }
+bool Escuna::getBotaVermelha() const
+{
+	return  this->BotaVermelha;
+}
+void Escuna::setBotaVermelha(bool Bota)
+{
+	this->BotaVermelha = Bota;
+}
 string Escuna::TrataNavioTempestade()
 {
 	int QuantCargaPerder, probAfundar;

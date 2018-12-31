@@ -107,10 +107,10 @@ void Mundo::abasteceNaviosNosPortos() {
 
 
 	for (unsigned int i = 0; i < porto.size(); i++) {
-		for (unsigned int j = 0; j < navios.size();j++) {
+		for (unsigned int j = 0; j < navios.size(); j++) {
 			if ((navios[j]->getEstado() == normal || navios[j]->getEstado() == autoMove || navios[j]->getEstado() == vaiPara) && (navios[j]->getX() == porto[i]->getX()) && (navios[j]->getY() == porto[i]->getY())) {
-				
-				if (porto[i]->verificaPortoAmigo()==true) {
+
+				if (porto[i]->verificaPortoAmigo() == true) {
 					if (navios[j]->sou() == FRAGATA) {
 						navios[j]->AbasteceAguaNavio();
 					}
@@ -123,12 +123,13 @@ void Mundo::abasteceNaviosNosPortos() {
 					if (navios[j]->sou() == ESCUNA) {
 						navios[j]->AbasteceAguaNavio();
 					}
+					if (navios[j]->sou() == TARTARUGA) {
+						navios[j]->AbasteceAguaNavio();
+					}
 				}
 			}
 		}
 	}
-
-
 }
 
 void Mundo::verificaaDeriva() {
@@ -256,6 +257,17 @@ string Mundo::mandaVaiPara(int precoVendaMercadoria, int precoVendaPeixe) {
 					os << " Mercadoria do banco de dados depois de receber Mercadoria da escuna : " << aux->getMercadoria() << endl;
 
 					os << " Quantidade de Mercadoria Apos deposito no Porto: " << navios[i]->getMercadoriaNavio() << endl;
+
+					if (navios[i]->getBotaVermelha() == true) {
+
+						os << " Saldo do banco de dados Depois de receber Pagamento da Bota Vermelha : " << aux->getBancoJogador() << endl;
+
+						aux->setBancoJogador(aux->getBancoJogador() + navios[i]->getNumSoldados() * PRECO_BOTA_VERMELHA);
+
+						navios[i]->setBotaVermelha(false);
+
+						os << " Saldo do banco de dados Depois de receber Pagamento da Bota Vermelha : " << aux->getBancoJogador() << endl;
+					}
 
 					os << "____________________________________________________________________________________________________________" << endl;
 
@@ -684,7 +696,7 @@ string Mundo::TrataEventoMotim(int estadoMotim, int modoExecucao, int idNavio) {
 						if (navios[i]->getId() == idNavio && navios[i] != nullptr){
 							indice = i;
 							break;
-					}
+						}
 				}
 			}
 	
@@ -693,7 +705,7 @@ string Mundo::TrataEventoMotim(int estadoMotim, int modoExecucao, int idNavio) {
 			// so navio for apanhado por 1 motim,  e for pirata fica � deriva
 			if (navios[indice]->getEstado() == pirata) {
 					
-				os << " Os Piratas Foram tomar Banho, o Navio ir� ficar � deriva Temporariamente ..!" << endl;
+				os << " Os Piratas Foram tomar Banho, o Navio ira ficar a deriva Temporariamente ..!" << endl;
 				
 				estado = navios[indice]->getEstado();
 
@@ -702,16 +714,21 @@ string Mundo::TrataEventoMotim(int estadoMotim, int modoExecucao, int idNavio) {
 			} // se o navio for apanhado por 1 motim e for do jogador fica em modo pirata
 			else if (navios[indice]->getEstado() == normal || navios[indice]->getEstado() == autoMove) {
 					
-				os << " O NAvio do Jogador vai se tornar Pirata Temporariamente " << endl;
+				os << " O Navio do Jogador vai se tornar Pirata Temporariamente " << endl;
 				
 				estado = navios[indice]->getEstado();
 
 				navios[indice]->setEstado(pirata);
 			}
+			if (navios[indice]->sou() == ESCUNA || navios[indice]->sou() == GALEAO) {
+
+				navios[indice]->setEstado(afundado);
+
+			}
 				
 		}
 		else
-			os << " N�o Existem Navios para ser realizado o Motim no Mundo" << endl;
+			os << " Nao Existem Navios para ser realizado o Motim no Mundo" << endl;
 	}
 	else {
 		
@@ -768,6 +785,12 @@ string Mundo::TrataEventoCalmaria(int epiX, int epiY, int estado) {
 				for (unsigned int j = 0; j < navios.size();j++) {
 					if (Calmaria[k] == navios[j]->getId() && navios[j] != nullptr){
 						navios[j]->setEstado(EstadoAntigo[k]);
+					}
+					if (navios[j]->sou() == ESCUNA) {
+
+						navios[j]->setBotaVermelha(true);
+
+						os << "O navio com o ID : " << navios[k]->getId() << " e uma escuna e Pescou uma Bota Vermelha " << endl;
 					}
 				}
 			}
