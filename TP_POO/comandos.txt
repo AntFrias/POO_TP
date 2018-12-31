@@ -3,5 +3,3 @@ compranav F
 compranav G
 compranav E
 compranav T
-pirata F 1 1
-pirata F 1 5

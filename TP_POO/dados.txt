@@ -1,7 +1,7 @@
 linhas 10
 colunas 20
 moedas 2000
-probpirata 25
+probpirata 0
 preconavio 100
 precosoldado 1
 precovendpeixe 1
@@ -9,18 +9,18 @@ precocompmercad 2
 precovendmercad 3
 soldadosporto 100
 probevento 10
-probtempestade 100
-probsereias 100
-probcalmaria 10
-probmotin 10
+probtempestade 0
+probsereias 0
+probcalmaria 0
+probmotin 0
 probpeixe 10
 .............+++++++
 ...........+++++++++
-...........A+++.++++
-.............++.++++
-..............+.++++
-.................B++
+...........A++++++++
+.............+++++++
+..............++++++
+.................b++
 .................+++
 ..................++
-...................b
+...................+
 ....................

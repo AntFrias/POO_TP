@@ -268,7 +268,17 @@ int Interface::verificaFimdoJogo() {
 		Consola::clrscr();
 		Consola::gotoxy(20, 7);
 		Consola::setTextSize(60,60);
+		
+		int dinheiroFinal = 0;
+		const vector <const Navios *>  auxNavio = jogador.getVetorNaviosJogador();
+		for (unsigned int i = 0; i < auxNavio.size(); i++) {
+			dinheiroFinal += 100;
+		}
+		dinheiroFinal+= jogador.getMoedas();
+
 		cout << "Parabens!!! Ganhou o Jogo!!!" << endl;
+		cout << "            Pontuacao: " << dinheiroFinal <<endl;
+
 		cin.get();
 		return 1;
 	}
@@ -276,7 +286,16 @@ int Interface::verificaFimdoJogo() {
 		Consola::clrscr();
 		Consola::gotoxy(20, 7);
 		Consola::setTextSize(60, 60);
-		cout << "Parabens!!! Perdeu o Jogo!!!" << endl;
+
+		int dinheiroFinal = 0;
+		const vector <const Navios *>  auxNavio = jogador.getVetorNaviosJogador();
+		for (unsigned int i = 0; i < auxNavio.size(); i++) {
+			dinheiroFinal += 100;
+		}
+		dinheiroFinal += jogador.getMoedas();
+
+		cout << "Perdeu o Jogo :-( " << endl;
+		cout << "           Pontuacao: " << dinheiroFinal << endl;
 		cin.get();
 		return 1;
 	}
