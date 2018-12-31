@@ -409,6 +409,13 @@ void Fragata::setQuantidadePeixe(int quantpeixe)
 void Fragata::AdicionaQuantidadePeixe(int quantpeixe)
 {
 }
+bool Fragata::getBotaVermelha() const
+{
+	return false;
+}
+void Fragata::setBotaVermelha(bool Bota)
+{
+}
 void Fragata::setPonteiroSaveMundo(Mundo * mundo)
 {
 

@@ -364,6 +364,13 @@ void Tartaruga::setQuantidadePeixe(int quantpeixe)
 void Tartaruga::AdicionaQuantidadePeixe(int quantpeixe)
 {
 }
+bool Tartaruga::getBotaVermelha() const
+{
+	return false;
+}
+void Tartaruga::setBotaVermelha(bool Bota)
+{
+}
 void Tartaruga::setPonteiroSaveMundo(Mundo * mundo)
 {
 

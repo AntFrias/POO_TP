@@ -9,9 +9,10 @@ class Escuna : public Navios
 {
 	int QuantMercadoria;
 	int QuantPeixe;
+	bool BotaVermelha;
 
 public:
-	Escuna(Mundo *mundo, int coordx, int coordy, int estado) : QuantMercadoria(0), QuantPeixe(0), Navios(mundo,'E',coordx, coordy, 10, 100, estado) {};
+	Escuna(Mundo *mundo, int coordx, int coordy, int estado) : QuantMercadoria(0), QuantPeixe(0), BotaVermelha(false), Navios(mundo,'E',coordx, coordy, 10, 100, estado) {};
 	
 	virtual Navios * Duplica()const;
 	
@@ -30,6 +31,9 @@ public:
 	virtual void AdicionaQuantidadePeixe(int quantpeixe);
 
 	virtual void setPonteiroSaveMundo(Mundo *mundo);
+
+	virtual bool getBotaVermelha()const;
+	virtual void setBotaVermelha(bool Bota);
 
 	virtual void retiraAgua(int agua);
 	virtual int getMaxSoldados();

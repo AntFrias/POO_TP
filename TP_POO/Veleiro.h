@@ -29,6 +29,9 @@ public:
 	virtual int moveNavio(int direcao, int turnoJogo = 0);
 	virtual string combate(int quemVouAtacar);
 
+	virtual bool getBotaVermelha()const;
+	virtual void setBotaVermelha(bool Bota);
+
 	virtual int getMercadoriaNavio()const;
 	virtual void setMercadoriaNavio(int quantCarga);
 	virtual void adicionaMercadoriaNavio(int quantCarga);
