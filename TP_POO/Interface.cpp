@@ -268,7 +268,17 @@ int Interface::verificaFimdoJogo() {
 		Consola::clrscr();
 		Consola::gotoxy(20, 7);
 		Consola::setTextSize(60,60);
+		
+		int dinheiroFinal = 0;
+		const vector <const Navios *>  auxNavio = jogador.getVetorNaviosJogador();
+		for (unsigned int i = 0; i < auxNavio.size(); i++) {
+			dinheiroFinal += 100;
+		}
+		dinheiroFinal+= jogador.getMoedas();
+
 		cout << "Parabens!!! Ganhou o Jogo!!!" << endl;
+		cout << "            Pontuacao: " << dinheiroFinal <<endl;
+
 		cin.get();
 		return 1;
 	}
@@ -276,7 +286,16 @@ int Interface::verificaFimdoJogo() {
 		Consola::clrscr();
 		Consola::gotoxy(20, 7);
 		Consola::setTextSize(60, 60);
-		cout << "Parabens!!! Perdeu o Jogo!!!" << endl;
+
+		int dinheiroFinal = 0;
+		const vector <const Navios *>  auxNavio = jogador.getVetorNaviosJogador();
+		for (unsigned int i = 0; i < auxNavio.size(); i++) {
+			dinheiroFinal += 100;
+		}
+		dinheiroFinal += jogador.getMoedas();
+
+		cout << "Perdeu o Jogo :-( " << endl;
+		cout << "           Pontuacao: " << dinheiroFinal << endl;
 		cin.get();
 		return 1;
 	}
@@ -1184,17 +1203,22 @@ string Interface::PromptFase2(string linha) {
 	case com_saveg:
 		if (this->SaveNome.size() > 0)
 			this->GuardaEstadojogo();
-		//os << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
+		else
+			os << " [ Erro..! o comando introduzido esta incorrecto... Sitaxe: saveg <NOME>  ]" << endl;
 		break;
 	case com_loadg:
 		if ( this->SaveNome.size() > 0 )
 			this->CarregarEstadoJogoGuardado();
-		//os << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
+		else
+			os << " [ Erro..! o comando introduzido esta incorrecto... Sitaxe: loadg <NOME>  ]" << endl;
 		break;
 	case com_delg:
-		if (this->SaveNome.size() > 0)	
+		if (this->SaveNome.size() > 0){
 			this->EliminaEstadoJogoGuardado();
-		//os << "[ COMANDO : " << acao << " ainda nao Implementado ] " << endl;
+			this->SaveNome.clear();
+		}
+		else
+			os << " [ Erro..! o comando introduzido esta incorrecto... Sitaxe: delg <NOME>  ]" << endl;
 		break;
 	default:
 		if (acao != "sair") {
